@@ -223,7 +223,7 @@
             "image_height_mobile": 180,
             "image_height_desktop": 180,
             "image_fit": "cover",
-            "background_color": "#051a5d",
+            "background_color": "#ececec",
             "border_color": "#d9d4c5",
             "title_color": "#160000",
             "title_size": 28,
