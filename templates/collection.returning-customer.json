@@ -192,6 +192,22 @@
     "new_kv_bundle_section_KpDCVe": {
       "type": "new-kv-bundle-section",
       "blocks": {
+        "collection_zWaJM3": {
+          "type": "collection",
+          "settings": {
+            "collection": "fragrances",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
+        "collection_wb4k4R": {
+          "type": "collection",
+          "settings": {
+            "collection": "calming-serene-scents",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
         "collection_zCi4r3": {
           "type": "collection",
           "settings": {
@@ -212,14 +228,6 @@
           "type": "collection",
           "settings": {
             "collection": "floral-romantic-scents",
-            "products_limit": 12,
-            "badge_text": ""
-          }
-        },
-        "collection_zWaJM3": {
-          "type": "collection",
-          "settings": {
-            "collection": "fragrances",
             "products_limit": 12,
             "badge_text": ""
           }
@@ -259,23 +267,15 @@
             "cta_text_color": "#ffffff",
             "cta_border_color": "#051a5d"
           }
-        },
-        "collection_wb4k4R": {
-          "type": "collection",
-          "settings": {
-            "collection": "calming-serene-scents",
-            "products_limit": 12,
-            "badge_text": ""
-          }
         }
       },
       "block_order": [
+        "collection_zWaJM3",
+        "collection_wb4k4R",
         "collection_zCi4r3",
         "collection_KAtDWC",
         "collection_jz8H33",
-        "collection_zWaJM3",
-        "interrupter_i7q7xP",
-        "collection_wb4k4R"
+        "interrupter_i7q7xP"
       ],
       "name": "new kv Collection Tabs",
       "settings": {
