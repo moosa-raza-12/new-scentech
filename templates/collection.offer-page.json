@@ -222,7 +222,7 @@
         "promo_banner_enabled": false,
         "promo_banner_bold_text": "Winter Sale:",
         "promo_banner_text": "All scents priced at €27,95",
-        "progress_empty_text": "Learn more about our diffusers",
+        "progress_empty_text": "",
         "progress_start_text": "Start adding scents to unlock rewards!",
         "progress_complete_text": "🎉 Amazing! All gifts unlocked!",
         "text_free": "FREE",
