@@ -1,0 +1,2957 @@
+<cart-drawer {% if request.design_mode %}handle-section-events{% endif %} class="cart-drawer drawer drawer--lg" id="cart-drawer">
+  {%- if cart.item_count == 0 -%}
+    {%- comment -%}-- EMPTY CART STATE --{%- endcomment -%}
+    <div class="cart-empty">
+      {%- comment -%}-- Header --{%- endcomment -%}
+      <div class="cart-empty__header">
+        <div class="cart-empty__header-left">
+          <span class="cart-empty__header-title">{{ section.settings.empty_header_text }}</span>
+          <cart-count class="count-bubble count-bubble--lg cart-empty__count">{{ cart.item_count }}</cart-count>
+        </div>
+        <button is="close-button" class="cart-empty__close" aria-label="{{ 'general.accessibility.close' | t | escape }}">
+          {%- render 'icon' with 'close' -%}
+        </button>
+      </div>
+
+      {%- comment -%}-- Scrollable body --{%- endcomment -%}
+      <div class="cart-empty__body">
+        {%- comment -%}-- Title & description --{%- endcomment -%}
+        <div class="cart-empty__intro">
+          {%- if section.settings.empty_title != blank -%}
+            <div class="cart-empty__title">{{ section.settings.empty_title }}</div>
+          {%- endif -%}
+          {%- if section.settings.empty_description != blank -%}
+            <p class="cart-empty__description">{{ section.settings.empty_description }}</p>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%}-- Two category cards --{%- endcomment -%}
+        <div class="cart-empty__cards">
+          {%- comment -%}-- Card 1 --{%- endcomment -%}
+          <div class="cart-empty__card" {% if section.settings.empty_card_1_bg_color != blank %}style="background-color: {{ section.settings.empty_card_1_bg_color }};"{% endif %}>
+            {%- if section.settings.empty_card_1_image != blank -%}
+              <div class="cart-empty__card-image">
+                {{ section.settings.empty_card_1_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'cart-empty__card-img' }}
+              </div>
+            {%- endif -%}
+            <div class="cart-empty__card-body">
+              {%- if section.settings.empty_card_1_title != blank -%}
+                <h3 class="cart-empty__card-title">{{ section.settings.empty_card_1_title }}</h3>
+              {%- endif -%}
+              {%- if section.settings.empty_card_1_description != blank -%}
+                <p class="cart-empty__card-desc">{{ section.settings.empty_card_1_description }}</p>
+              {%- endif -%}
+              {%- if section.settings.empty_card_1_button_text != blank -%}
+                <a href="{{ section.settings.empty_card_1_button_url }}" class="cart-empty__card-btn">
+                  {{ section.settings.empty_card_1_button_text }}
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+
+          {%- comment -%}-- Card 2 --{%- endcomment -%}
+          <div class="cart-empty__card" {% if section.settings.empty_card_2_bg_color != blank %}style="background-color: {{ section.settings.empty_card_2_bg_color }};"{% endif %}>
+            {%- if section.settings.empty_card_2_image != blank -%}
+              <div class="cart-empty__card-image">
+                {{ section.settings.empty_card_2_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'cart-empty__card-img' }}
+              </div>
+            {%- endif -%}
+            <div class="cart-empty__card-body">
+              {%- if section.settings.empty_card_2_title != blank -%}
+                <h3 class="cart-empty__card-title">{{ section.settings.empty_card_2_title }}</h3>
+              {%- endif -%}
+              {%- if section.settings.empty_card_2_description != blank -%}
+                <p class="cart-empty__card-desc">{{ section.settings.empty_card_2_description }}</p>
+              {%- endif -%}
+              {%- if section.settings.empty_card_2_button_text != blank -%}
+                <a href="{{ section.settings.empty_card_2_button_url }}" class="cart-empty__card-btn">
+                  {{ section.settings.empty_card_2_button_text }}
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%}-- Bottom CTA --{%- endcomment -%}
+      {%- if section.settings.empty_bottom_button_text != blank -%}
+        <div class="cart-empty__footer">
+          <a href="{{ section.settings.empty_bottom_button_url }}" class="cart-empty__footer-btn">
+            {{ section.settings.empty_bottom_button_text }}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.167 10h11.666M10.833 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- else -%}
+    {%- comment -%}-- FILLED CART STATE --{%- endcomment -%}
+    {%- comment -%}
+      IMPORTANT: .cart-drawer__inner is required for the theme JS _onCartChanged() to find and
+      replace the inner HTML on AJAX cart updates. Do NOT remove it.
+    {%- endcomment -%}
+    <div class="cart-drawer__inner kv-cart">
+      {%- comment -%}-- Header --{%- endcomment -%}
+      <div class="kv-cart__header">
+        <div class="kv-cart__header-left">
+          <span class="kv-cart__header-title">{{ section.settings.empty_header_text }}</span>
+          <cart-count class="kv-cart__count">{{ cart.item_count }}</cart-count>
+        </div>
+        <button is="close-button" class="kv-cart__close" aria-label="{{ 'general.accessibility.close' | t | escape }}">
+          {%- render 'icon' with 'close' -%}
+        </button>
+      </div>
+
+      {%- comment -%}-- Free shipping bar --{%- endcomment -%}
+      {%- if settings.cart_show_free_shipping_threshold -%}
+        <div class="kv-cart__shipping-bar">
+          {%- render 'kv-free-shipping-bar', kv_threshold: section.settings.kv_shipping_threshold, kv_unreached_text: section.settings.kv_shipping_unreached_text, kv_reached_text: section.settings.kv_shipping_reached_text, kv_reached_gifts_text: section.settings.kv_shipping_reached_gifts_text -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%}-- Categorized line items --{%- endcomment -%}
+      <div class="kv-cart__items">
+        {%- liquid
+          assign kv_categories = ''
+          assign kv_has_free_gifts = false
+          for line_item in cart.items
+            if line_item.final_price == 0
+              assign kv_cat = section.settings.free_gifts_category_text
+              assign kv_has_free_gifts = true
+            else
+              assign kv_cat = line_item.product.metafields.custom.minicart_product_category | strip | default: 'Other'
+            endif
+            assign kv_cat_check = '|||' | append: kv_cat | append: '|||'
+            assign kv_categories_check = '|||' | append: kv_categories | append: '|||'
+            unless kv_categories_check contains kv_cat_check
+              if kv_categories != ''
+                assign kv_categories = kv_categories | append: '|||'
+              endif
+              assign kv_categories = kv_categories | append: kv_cat
+            endunless
+          endfor
+
+          assign kv_category_list_raw = kv_categories | split: '|||'
+          assign kv_sorted_categories = ''
+          for cat in kv_category_list_raw
+            if cat == section.settings.free_gifts_category_text
+            elsif cat == 'Scents'
+            else
+              if kv_sorted_categories != ''
+                assign kv_sorted_categories = kv_sorted_categories | append: '|||'
+              endif
+              assign kv_sorted_categories = kv_sorted_categories | append: cat
+            endif
+          endfor
+          assign kv_has_scents = false
+          for cat in kv_category_list_raw
+            if cat == 'Scents'
+              assign kv_has_scents = true
+              break
+            endif
+          endfor
+          assign kv_final = ''
+          if kv_has_free_gifts
+            assign kv_final = section.settings.free_gifts_category_text
+          endif
+          if kv_has_scents
+            if kv_final != ''
+              assign kv_final = kv_final | append: '|||'
+            endif
+            assign kv_final = kv_final | append: 'Scents'
+          endif
+          if kv_sorted_categories != ''
+            if kv_final != ''
+              assign kv_final = kv_final | append: '|||'
+            endif
+            assign kv_final = kv_final | append: kv_sorted_categories
+          endif
+          assign kv_category_list = kv_final | split: '|||'
+        -%}
+
+        {%- for category in kv_category_list -%}
+          <details class="kv-cart__accordion" open>
+            <summary class="kv-cart__accordion-header">
+              <span class="kv-cart__accordion-title">{{ category }}</span>
+              {% comment %} <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg> {% endcomment %}
+              <svg  class="kv-cart__accordion-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <g opacity="0.2">
+                  <path d="M13 6L8 11L3 6" stroke="#160000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+              </svg>
+            </summary>
+
+            <div class="kv-cart__accordion-body">
+              {%- for line_item in cart.items -%}
+                {%- if line_item.final_price == 0 -%}
+                  {%- assign item_cat = section.settings.free_gifts_category_text -%}
+                {%- else -%}
+                  {%- assign item_cat = line_item.product.metafields.custom.minicart_product_category | strip | default: 'Other' -%}
+                {%- endif -%}
+                {%- if item_cat == category -%}
+                  {%- if line_item.product.metafields.custom.inventory_stock_date != blank -%}
+                    {%- assign stock_date_epoch = line_item.product.metafields.custom.inventory_stock_date | date: '%s' | plus: 0 -%}
+                    {%- assign today_epoch = 'now' | date: '%Y-%m-%d' | date: '%s' | plus: 0 -%}
+                    {%- if stock_date_epoch >= today_epoch -%}
+                      <div class="kv-cart__stock-date-notice">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M7 14C6.04 14 5.13 13.82 4.28 13.46C3.44 13.1 2.7 12.59 2.06 11.95C1.41 11.31 0.91 10.56 0.54 9.71C0.18 8.87 0 7.96 0 7C0 6.04 0.18 5.13 0.54 4.29C0.91 3.44 1.41 2.69 2.06 2.05C2.7 1.41 3.44 0.9 4.28 0.54C5.13 0.18 6.04 0 7 0C7.96 0 8.87 0.18 9.71 0.54C10.56 0.9 11.3 1.41 11.94 2.05C12.59 2.69 13.08 3.44 13.45 4.29C13.82 5.13 14 6.04 14 7C14 7.96 13.82 8.87 13.45 9.71C13.08 10.56 12.59 11.31 11.94 11.95C11.3 12.59 10.56 13.1 9.71 13.46C8.87 13.82 7.96 14 7 14ZM6.35 10.5H8.18V8.67H6.35V10.5ZM6.35 7.58H8.18V3.5H6.35V7.58Z" fill="#924B14"/>
+                        </svg>
+                        <span>The {{ line_item.product.title }} is on Pre-Order. Delivers on {{ line_item.product.metafields.custom.inventory_stock_date | date: "%b %e" }}.</span>
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+                  <line-item class="kv-cart__line-item">
+                    {%- if line_item.image != blank -%}
+                      <div class="kv-cart__line-item-media">
+                        {{- line_item.image | image_url: width: line_item.image.width | image_tag: loading: 'lazy', sizes: '(max-width: 740px) 56px, 64px', widths: '56,64,112,128', class: 'kv-cart__line-item-img' -}}
+                        {%- if line_item.final_price == 0 and line_item.quantity > 0 -%}
+                          <span class="kv-cart__gift-qty-badge">{{ line_item.quantity }}</span>
+                        {%- endif -%}
+                        <pill-loader class="pill-loader"></pill-loader>
+                      </div>
+                    {%- endif -%}
+
+                    <div class="kv-cart__line-item-info">
+                      <div class="kv-cart__line-item-name-row">
+                        {%- if line_item.url != blank -%}
+                          <a href="{{ line_item.url }}" class="kv-cart__line-item-name">{{ line_item.product.title | default: line_item.title }}</a>
+                        {%- else -%}
+                          <span class="kv-cart__line-item-name">{{ line_item.product.title | default: line_item.title }}</span>
+                        {%- endif -%}
+                        {%- if line_item.product.metafields.custom.scent_popup_description != blank or line_item.product.metafields.custom.scent_details != blank -%}
+                          <button class="kv-cart__line-item-info-icon kv-scent-info-btn"
+                            type="button"
+                            aria-label="View details"
+                            data-product-id="{{ line_item.product.id }}"
+                            data-product-title="{{ line_item.product.title | escape }}"
+                            data-product-description="{{ line_item.product.metafields.custom.scent_popup_description | default: line_item.product.description | strip_html | strip | escape }}"
+                            data-product-details="{{ line_item.product.metafields.custom.scent_details | escape }}"
+                            data-product-image="{% if line_item.product.metafields.custom.scent_image %}{{ line_item.product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif line_item.product.featured_image %}{{ line_item.product.featured_image | image_url: width: 1200 }}{% endif %}"
+                            data-product-variant="{{ line_item.product.metafields.custom.quantity_value | default: line_item.variant.title | escape }}"
+                            data-product-badge="{{ line_item.product.metafields.custom.collection_card_badge | escape }}">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                          </button>
+                        {%- endif -%}
+                      </div>
+
+                      {%- if line_item.final_price == 0 -%}
+                        {%- if line_item.variant.compare_at_price and line_item.variant.compare_at_price > 0 -%}
+                          <span class="kv-cart__line-item-worth">({{ section.settings.worth_text }} {{ line_item.variant.compare_at_price | money }})</span>
+                        {%- elsif line_item.original_price > 0 -%}
+                          <span class="kv-cart__line-item-worth">({{ section.settings.worth_text }} {{ line_item.original_price | money }})</span>
+                        {%- endif -%}
+                      {%- else -%}
+                        <span class="kv-cart__line-item-price">{{ line_item.final_price | money }}</span>
+                      {%- endif -%}
+
+                      {%- unless line_item.product.has_only_default_variant or line_item.gift_card -%}
+                        <span class="kv-cart__line-item-variant">{{ line_item.variant.title }}</span>
+                      {%- endunless -%}
+
+                      {%- if line_item.selling_plan_allocation -%}
+                        <span class="kv-cart__line-item-variant">{{ line_item.selling_plan_allocation.selling_plan.name }}</span>
+                      {%- endif -%}
+
+                      {%- if line_item.product.metafields.custom.minicart_info_text != blank -%}
+                        <div class="kv-cart__line-item-notice">
+                          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 14C6.04 14 5.13 13.82 4.28 13.46C3.44 13.1 2.7 12.59 2.06 11.95C1.41 11.31 0.91 10.56 0.54 9.71C0.18 8.87 0 7.96 0 7C0 6.04 0.18 5.13 0.54 4.29C0.91 3.44 1.41 2.69 2.06 2.05C2.7 1.41 3.44 0.9 4.28 0.54C5.13 0.18 6.04 0 7 0C7.96 0 8.87 0.18 9.71 0.54C10.56 0.9 11.3 1.41 11.94 2.05C12.59 2.69 13.08 3.44 13.45 4.29C13.82 5.13 14 6.04 14 7C14 7.96 13.82 8.87 13.45 9.71C13.08 10.56 12.59 11.31 11.94 11.95C11.3 12.59 10.56 13.1 9.71 13.46C8.87 13.82 7.96 14 7 14ZM6.35 10.5H8.18V8.67H6.35V10.5ZM6.35 7.58H8.18V3.5H6.35V7.58Z" fill="#924B14"/>
+                          </svg>
+                          <span>{{ line_item.product.metafields.custom.minicart_info_text }}</span>
+                        </div>
+                      {%- endif -%}
+
+                      {%- if line_item.line_level_discount_allocations != blank -%}
+                        <ul class="kv-cart__line-item-discounts">
+                          {%- for discount_allocation in line_item.line_level_discount_allocations -%}
+                            <li class="kv-cart__discount-badge">
+                              {%- render 'icon' with 'discount' -%} {{ discount_allocation.discount_application.title }} (-{{ discount_allocation.amount | money }})
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+                    </div>
+
+                    <div class="kv-cart__line-item-actions">
+                      {%- if line_item.final_price == 0 -%}
+                        <span class="kv-cart__gift-badge">{{ section.settings.free_gift_badge_text }}</span>
+                      {%- else -%}
+                        <line-item-quantity class="kv-cart__qty-wrap">
+                          <button type="button" class="kv-cart__qty-btn" data-kv-qty-action="decrease" aria-label="{{ 'cart.order.change_quantity' | t | escape }}">−</button>
+                          <input class="kv-cart__qty-input" type="text" is="quantity-input" inputmode="numeric" {% if line_item.variant.inventory_management != blank and line_item.variant.inventory_policy == 'deny' %}max="{{ line_item.variant.inventory_quantity }}"{% endif %} data-line-key="{{ line_item.key }}" aria-label="{{ 'cart.order.change_quantity' | t | escape }}" value="{{ line_item.quantity }}">
+                          <button type="button" class="kv-cart__qty-btn" data-kv-qty-action="increase" aria-label="{{ 'cart.order.change_quantity' | t | escape }}">+</button>
+                        </line-item-quantity>
+                      {%- endif -%}
+                    </div>
+                  </line-item>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </details>
+        {%- endfor -%}
+
+        {%- comment -%}-- Add Something Extra (custom slider via blocks) --{%- endcomment -%}
+        {%- capture extra_cards -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'extra_product' -%}
+              {%- assign ep = block.settings.product -%}
+              {%- if ep != blank and ep.available -%}
+                {%- assign already_in_cart = false -%}
+                {%- for line_item in cart.items -%}
+                  {%- if line_item.product.id == ep.id -%}
+                    {%- assign already_in_cart = true -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                {%- unless already_in_cart -%}
+                  {%- assign ep_variant = ep.selected_or_first_available_variant -%}
+                  <div class="kv-extra__card" {{ block.shopify_attributes }}>
+                    <div class="kv-extra__card-img-wrap">
+                      {%- if ep.featured_image != blank -%}
+                        {{ ep.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', class: 'kv-extra__card-img' }}
+                      {%- endif -%}
+                    </div>
+                    <div class="kv-extra__card-body">
+                      <div class="kv-extra__card-name-row">
+                        <span class="kv-extra__card-name">{{ ep.title }}</span>
+                        {%- if block.settings.show_info_icon -%}
+                          {%- if ep.metafields.custom.scent_popup_description != blank or ep.metafields.custom.scent_details != blank -%}
+                            <button class="kv-extra__card-info kv-scent-info-btn"
+                              type="button"
+                              aria-label="View details"
+                              data-product-id="{{ ep.id }}"
+                              data-product-title="{{ ep.title | escape }}"
+                              data-product-description="{{ ep.metafields.custom.scent_popup_description | default: ep.description | strip_html | strip | escape }}"
+                              data-product-details="{{ ep.metafields.custom.scent_details | escape }}"
+                              data-product-image="{% if ep.metafields.custom.scent_image %}{{ ep.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif ep.featured_image %}{{ ep.featured_image | image_url: width: 1200 }}{% endif %}"
+                              data-product-variant="{{ ep.metafields.custom.quantity_value | default: ep_variant.title | escape }}"
+                              data-product-badge="{{ ep.metafields.custom.collection_card_badge | escape }}">
+                              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                            </button>
+                          {%- else -%}
+                            <a href="{{ ep.url }}" class="kv-extra__card-info" aria-label="More info about {{ ep.title | escape }}">
+                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7.25" stroke="#999" stroke-width="1.5"/><path d="M7.25 7H8.75V11.5" stroke="#999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="4.75" r="0.75" fill="#999"/></svg>
+                            </a>
+                          {%- endif -%}
+                        {%- endif -%}
+                      </div>
+                      <span class="kv-extra__card-price">{{ ep_variant.price | money }}</span>
+                    </div>
+                    <form method="post" action="/cart/add" class="kv-extra__card-form">
+                      <input type="hidden" name="id" value="{{ ep_variant.id }}">
+                      <input type="hidden" name="quantity" value="1">
+                      <button type="submit" class="kv-extra__card-add-btn" {% unless ep_variant.available %}disabled{% endunless %}>
+                        {%- if ep_variant.available -%}
+                          {{ section.settings.extra_add_button_text | default: '+ Add' }}
+                        {%- else -%}
+                          {{ section.settings.extra_sold_out_text | default: 'Sold out' }}
+                        {%- endif -%}
+                      </button>
+                    </form>
+                  </div>
+                {%- endunless -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+
+        {%- if extra_cards != blank -%}
+          <div class="kv-extra">
+            <div class="kv-extra__header">
+              <span class="kv-extra__title">{{ section.settings.extra_slider_title | default: 'Add Something Extra' }}</span>
+            </div>
+            <div class="kv-extra__swiper swiper">
+              <div class="kv-extra__track swiper-wrapper">
+                {{ extra_cards }}
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%}
+      IMPORTANT: slot="footer" is required for the theme JS _onCartChanged() to find and
+      replace the footer on AJAX cart updates. Do NOT remove it.
+    {%- endcomment -%}
+    <div class="kv-cart__footer" slot="footer">
+      <div class="kv-cart__footer-inner">
+        {% for discount_application in cart.cart_level_discount_applications %}
+          <div class="kv-cart__discount-row">
+            <div class="kv-cart__discount-label">
+              {%- render 'icon' with 'discount' -%} {{- discount_application.title -}}
+            </div>
+            <span class="kv-cart__discount-amount">-{{ discount_application.total_allocated_amount | money }}</span>
+          </div>
+        {% endfor %}
+
+        {% if section.settings.kv_inventory_text != blank %}
+          <div class="kv-cart__inventory-notice">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5.99694 12C5.17287 12 4.39776 11.8449 3.6716 11.5347C2.94952 11.2245 2.31311 10.7939 1.76237 10.2429C1.21163 9.69184 0.779194 9.05306 0.465069 8.32653C0.155023 7.6 0 6.82449 0 6C0 5.17551 0.155023 4.4 0.465069 3.67347C0.779194 2.94694 1.21163 2.30816 1.76237 1.75714C2.31311 1.20612 2.94952 0.77551 3.6716 0.465306C4.39776 0.155102 5.17287 0 5.99694 0C6.82101 0 7.59612 0.155102 8.32228 0.465306C9.04844 0.77551 9.68689 1.20612 10.2376 1.75714C10.7884 2.30816 11.2188 2.94694 11.5288 3.67347C11.8429 4.4 12 5.17551 12 6C12 6.82449 11.8429 7.6 11.5288 8.32653C11.2188 9.05306 10.7884 9.69184 10.2376 10.2429C9.68689 10.7939 9.04844 11.2245 8.32228 11.5347C7.59612 11.8449 6.82101 12 5.99694 12ZM4.86486 9.33673H7.39827C7.46762 9.33673 7.52269 9.31633 7.56349 9.27551C7.60428 9.23061 7.62468 9.17551 7.62468 9.1102C7.62468 9.05306 7.60428 9.00204 7.56349 8.95714C7.52269 8.91224 7.46762 8.8898 7.39827 8.8898H6.3641V5.02041C6.3641 4.94694 6.3437 4.88776 6.30291 4.84286C6.26211 4.79388 6.20296 4.76939 6.12545 4.76939H4.9077C4.84243 4.76939 4.78939 4.79184 4.7486 4.83673C4.7078 4.88163 4.6874 4.93469 4.6874 4.99592C4.6874 5.05306 4.7078 5.10408 4.7486 5.14898C4.78939 5.19388 4.84243 5.21633 4.9077 5.21633H5.90515V8.8898H4.86486C4.79959 8.8898 4.74452 8.91224 4.69964 8.95714C4.65885 9.00204 4.63845 9.05306 4.63845 9.1102C4.63845 9.17551 4.65885 9.23061 4.69964 9.27551C4.74452 9.31633 4.79959 9.33673 4.86486 9.33673ZM5.9847 3.50816C6.12749 3.50816 6.24783 3.46122 6.34574 3.36735C6.44365 3.26939 6.49261 3.15102 6.49261 3.01224C6.49261 2.86939 6.44365 2.74898 6.34574 2.65102C6.24783 2.54898 6.12749 2.49796 5.9847 2.49796C5.846 2.49796 5.72565 2.54898 5.62366 2.65102C5.52575 2.74898 5.4768 2.86939 5.4768 3.01224C5.4768 3.15102 5.52575 3.26939 5.62366 3.36735C5.72565 3.46122 5.846 3.50816 5.9847 3.50816Z" fill="#924B14"/>
+            </svg>
+            {{ section.settings.kv_inventory_text }}
+          </div>
+        {% endif %}
+
+        {%- if section.settings.show_shipping_text -%}
+          <div class="kv-cart__shipping-text">
+            {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
+              <p>{{ 'cart.general.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}</p>
+            {%- elsif cart.taxes_included -%}
+              <p>{{ 'cart.general.taxes_included_but_shipping_at_checkout' | t }}</p>
+            {%- elsif shop.shipping_policy.body != blank -%}
+              <p>{{ 'cart.general.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}</p>
+            {%- else -%}
+              <p>{{ 'cart.general.taxes_and_shipping_at_checkout' | t }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.show_protection -%}
+        {%- assign protection_price_cents = section.settings.protection_price | times: 100 -%}
+        {%- assign low_cart_price_cents = section.settings.low_cart_product_price | times: 100 -%}
+        {%- assign kv_low_cart_threshold_cents = section.settings.low_cart_threshold | default: 50 | times: 100 -%}
+        
+        {%- comment -%}Determine which protection to show based on cart total{%- endcomment -%}
+        {%- if cart.total_price < kv_low_cart_threshold_cents and section.settings.low_cart_product != blank -%}
+          {%- assign active_protection_title = section.settings.low_cart_product_title -%}
+          {%- assign active_protection_desc = section.settings.low_cart_product_description -%}
+          {%- assign active_protection_price = low_cart_price_cents -%}
+        {%- else -%}
+          {%- assign active_protection_title = section.settings.protection_title -%}
+          {%- assign active_protection_desc = section.settings.protection_description -%}
+          {%- assign active_protection_price = protection_price_cents -%}
+        {%- endif -%}
+        
+        <div class="kv-cart__protection" id="kv-cart-protection">
+          <label class="kv-cart__protection-toggle" for="kv-protection-checkbox">
+            <div class="kv-cart__protection-header">
+              <div class="kv-cart__protection-header-left">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M14.3647 2.59081L8.23966 0.0477773C8.08622 -0.0159102 7.91375 -0.0159414 7.76034 0.0477773L1.63534 2.59081C1.40206 2.68768 1.25 2.91543 1.25 3.16803V6.25943C1.25 10.5161 3.82278 14.3451 7.76381 15.9537C7.91519 16.0154 8.08478 16.0154 8.23619 15.9537C12.1772 14.3451 14.75 10.5161 14.75 6.25943V3.16803C14.75 2.91543 14.598 2.68768 14.3647 2.59081ZM13.5 6.25943C13.5 9.87803 11.375 13.2092 8 14.6961C4.71519 13.2489 2.5 9.97609 2.5 6.25943V3.58528L8 1.30171L13.5 3.58528V6.25943ZM7.30919 8.36612L9.99556 5.67978C10.2396 5.43571 10.6353 5.43568 10.8794 5.67978C11.1235 5.92387 11.1235 6.31959 10.8794 6.56365L7.75112 9.69193C7.507 9.93606 7.11128 9.93596 6.86725 9.69193L5.12056 7.94525C4.87647 7.70115 4.87647 7.30543 5.12056 7.06137C5.36466 6.81731 5.76038 6.81728 6.00444 7.06137L7.30919 8.36612Z" fill="#160000"/>
+                </svg>
+                <span class="kv-cart__protection-title" id="kv-protection-title">{{ active_protection_title }}</span>
+              </div>
+              <span class="kv-cart__protection-price" id="kv-protection-price">{{ active_protection_price | money }}</span>
+            </div>
+            <p class="kv-cart__protection-desc" id="kv-protection-desc">{{ active_protection_desc }}</p>
+            <input type="checkbox" id="kv-protection-checkbox" class="kv-cart__protection-checkbox" checked>
+          </label>
+        </div>
+      {%- endif -%}
+
+      {%- liquid
+        assign kv_protection_variant_id = 53581603471706
+        if section.settings.protection_product != blank
+          assign kv_protection_variant_id = section.settings.protection_product.selected_or_first_available_variant.id
+        endif
+        
+        assign kv_low_cart_variant_id = ''
+        if section.settings.low_cart_product != blank
+          assign kv_low_cart_variant_id = section.settings.low_cart_product.selected_or_first_available_variant.id
+        endif
+        
+        assign kv_low_cart_threshold_cents = section.settings.low_cart_threshold | default: 50 | times: 100
+        assign protection_price_cents = section.settings.protection_price | times: 100
+        assign low_cart_price_cents = section.settings.low_cart_product_price | times: 100
+      -%}
+      <div class="kv-cart__checkout-buttons" 
+           data-protection-variant-id="{{ kv_protection_variant_id }}"
+           data-low-cart-variant-id="{{ kv_low_cart_variant_id }}"
+           data-low-cart-threshold="{{ kv_low_cart_threshold_cents }}"
+           data-protection-price="{{ protection_price_cents }}"
+           data-low-cart-price="{{ low_cart_price_cents }}"
+           data-protection-title="{{ section.settings.protection_title | escape }}"
+           data-low-cart-title="{{ section.settings.low_cart_product_title | escape }}"
+           data-protection-desc="{{ section.settings.protection_description | escape }}"
+           data-low-cart-desc="{{ section.settings.low_cart_product_description | escape }}">
+        {%- if section.settings.show_checkout_button -%}
+          {%- comment -%}Calculate total with appropriate protection price{%- endcomment -%}
+          {%- if cart.total_price < kv_low_cart_threshold_cents and section.settings.low_cart_product != blank -%}
+            {%- assign total_with_protection = cart.total_price | plus: low_cart_price_cents -%}
+            {%- assign original_total_with_protection = cart.original_total_price | plus: low_cart_price_cents -%}
+          {%- else -%}
+            {%- assign total_with_protection = cart.total_price | plus: protection_price_cents -%}
+            {%- assign original_total_with_protection = cart.original_total_price | plus: protection_price_cents -%}
+          {%- endif -%}
+          
+          <button type="button" class="kv-cart__checkout-btn kv-cart__checkout-btn--primary" id="kv-checkout-secure">
+            <span>{{ section.settings.secure_checkout_text | default: 'Secure Checkout' }}</span>
+            <span class="kv-cart__checkout-separator"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="3" viewBox="0 0 3 3" fill="none"><path d="M0 3V0H3V3H0Z" fill="white"/></svg></span>
+            <span class="kv-cart__checkout-prices">
+              {%- if cart.total_discount > 0 -%}
+                <span class="kv-cart__checkout-original-price" id="kv-original-price-with-protection">{{ original_total_with_protection | money }}</span>
+              {%- endif -%}
+              <span id="kv-price-with-protection">{{ total_with_protection | money }}</span>
+            </span>
+          </button>
+        {%- endif -%}
+
+        {%- if section.settings.show_protection -%}
+          <button type="button" class="kv-cart__checkout-btn kv-cart__checkout-btn--secondary" id="kv-checkout-without">
+            <span>{{ section.settings.without_protection_text | default: 'Checkout Without Protection' }}</span>
+            <span class="kv-cart__checkout-separator"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="3" viewBox="0 0 3 3" fill="none"><path d="M0 3V0H3V3H0Z" fill="currentColor"/></svg></span>
+            <span class="kv-cart__checkout-prices">
+              <span>{{ cart.total_price | money }}</span>
+            </span>
+          </button>
+        {%- endif -%}
+      </div>
+
+      {%- liquid
+        assign has_date_out_of_stock = false
+        assign has_date_with_stock = false
+        assign latest_stock_epoch = 0
+        assign latest_stock_date_raw = ''
+        assign preorder_items_list = ''
+        assign today_epoch = 'now' | date: '%Y-%m-%d' | date: '%s' | plus: 0
+
+        for line_item in cart.items
+          assign item_inv_qty = line_item.variant.inventory_quantity | default: 0
+          if item_inv_qty > 0
+            assign has_date_with_stock = true
+          endif
+          if line_item.product.metafields.custom.inventory_stock_date != blank
+            assign item_stock_epoch = line_item.product.metafields.custom.inventory_stock_date | date: '%s' | plus: 0
+            if item_stock_epoch >= today_epoch
+              if item_inv_qty <= 0
+                assign has_date_out_of_stock = true
+                if item_stock_epoch > latest_stock_epoch
+                  assign latest_stock_epoch = item_stock_epoch
+                  assign latest_stock_date_raw = line_item.product.metafields.custom.inventory_stock_date
+                endif
+                assign item_entry = line_item.quantity | append: 'x ' | append: line_item.product.title
+                if preorder_items_list == ''
+                  assign preorder_items_list = item_entry
+                else
+                  assign preorder_items_list = preorder_items_list | append: '|||' | append: item_entry
+                endif
+              endif
+            endif
+          endif
+        endfor
+      -%}
+
+      {%- if has_date_out_of_stock -%}
+        <div class="kv-cart__preorder-notice" data-preorder-stock-date="{{ latest_stock_date_raw }}">
+          <div class="kv-cart__preorder-notice-row">
+            <span class="kv-cart__preorder-notice-label">{{ section.settings.text_expected_delivery | default: "Expected delivery:" }}</span>
+            <span class="kv-cart__preorder-notice-dates" id="kv-cart-preorder-dates"></span>
+          </div>
+          <div class="kv-cart__preorder-notice-info">
+            <span class="kv-cart__preorder-collapsed">{{ section.settings.text_preorder_collapsed | default: "There are pre-order items in the cart." }} <a href="javascript:void(0)" class="kv-cart__preorder-toggle" data-action="expand">Read more</a></span>
+            <span class="kv-cart__preorder-expanded" style="display: none;">{{ section.settings.text_preorder_expanded | default: "There are pre-order items in the cart. Due to this your order will be sent out slightly later, when the scents have reached our warehouse." }}<br><br>{{ section.settings.text_preorder_affected_label | default: "The affected products in your cart are:" }}
+              {%- assign preorder_items_arr = preorder_items_list | split: '|||' -%}
+              {%- for item in preorder_items_arr -%}
+                <br><strong>{{ item }}</strong>
+              {%- endfor -%}
+              <br><br>{{ section.settings.text_preorder_contact | default: "For any questions or concerns please reach out to our team." }} <a href="javascript:void(0)" class="kv-cart__preorder-toggle" data-action="collapse">Read less</a>
+            </span>
+          </div>
+        </div>
+      {%- elsif has_date_with_stock -%}
+        <div class="kv-cart__preorder-notice" id="kv-cart-instock-notice">
+          <div class="kv-cart__preorder-notice-row">
+            <span class="kv-cart__preorder-notice-label">{{ section.settings.text_expected_delivery | default: "Expected delivery:" }}</span>
+            <span class="kv-cart__preorder-notice-dates" id="kv-cart-instock-dates"></span>
+          </div>
+          <div class="kv-cart__preorder-notice-info">
+            <span class="kv-cart__preorder-collapsed">{{ section.settings.text_instock_collapsed | default: "Your order ships out today from the Netherlands." }} <a href="javascript:void(0)" class="kv-cart__preorder-toggle" data-action="expand">Read more</a></span>
+            <span class="kv-cart__preorder-expanded" style="display: none;">{{ section.settings.text_instock_expanded | default: "Your order ships out today from the Netherlands. These items are in stock at our warehouse in Gorinchem and are shipped by our reliable delivery partners." }}<br><br>{{ section.settings.text_preorder_contact | default: "For any questions or concerns please reach out to our team." }} <a href="javascript:void(0)" class="kv-cart__preorder-toggle" data-action="collapse">Read less</a></span>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</cart-drawer>
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+<style>
+  .cart-drawer{
+    --drawer-footer-padding:0px !important;
+  }
+  @media screen and (min-width: 700px) {
+    .drawer--lg {
+        width: 430px !important;
+    }
+  }
+  .drawer{
+    padding:0px !important;
+  }
+  .drawer::part(body){
+    padding:0px !important;
+  }
+
+  /* ==============================
+     EMPTY CART STATE
+     ============================== */
+  .cart-empty {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #fff;
+  }
+
+  /* -- Header -- */
+  .cart-empty__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    align-self: stretch;
+    padding: 7px 20px;
+    height: 60px;
+    border: 1px solid #e1dede;
+  }
+  .cart-empty__header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cart-empty__header-title {
+    color: #160000;
+    font-family: "Bai Jamjuree";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+  .cart-empty__count {
+    display: flex;
+    width: 27px;
+    height: 27px;
+    /* padding: 6px 12px; */
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    opacity: 1 !important;
+  }
+  .cart-empty__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cart-empty__close svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* -- Body (scrollable) -- */
+  .cart-empty__body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 24px 20px 24px 20px;
+  }
+
+  /* -- Intro text -- */
+  .cart-empty__intro {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .cart-empty__title {
+    color: #160000;
+    font-family: "Bai Jamjuree";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding-bottom: 16px;
+  }
+  .cart-empty__description {
+    color: #162518;
+    text-align: center;
+    font-family: "Bai Jamjuree";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    max-width: 320px;
+    margin: 0 auto;
+    opacity: 0.6;
+    padding-bottom: 24px;
+  }
+
+  /* -- Cards grid -- */
+  .cart-empty__cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .cart-empty__card {
+    border-radius: 8px;
+    overflow: hidden;
+    background: #F9F6F3;
+    backdrop-filter: blur(2px);
+    display: flex;
+    flex-direction: column;
+  }
+  .cart-empty__card-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+  .cart-empty__card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .cart-empty__card-body {
+    padding: 0 12px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+  .cart-empty__card-title {
+    color: #160000;
+    text-align: left;
+    leading-trim: both;
+    text-edge: cap;
+    font-family: "Bai Jamjuree";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-top: 10px;
+  }
+  .cart-empty__card-desc {
+    color: rgba(22, 0, 0, 0.80);
+    leading-trim: both;
+    text-edge: cap;
+    font-family: "Bai Jamjuree";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .cart-empty__card-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 16px;
+    margin-top: 8px;
+    border-radius: 6px;
+    background: #160000;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: opacity 0.2s;
+    font-family: "Bai Jamjuree";
+    font-size: 14px;
+    font-style: normal;
+    line-height: normal;
+  }
+  .cart-empty__card-btn:hover {
+    opacity: 0.85;
+  }
+
+  /* -- Footer CTA -- */
+  .cart-empty__footer {
+    padding: 20px;
+    margin-top: auto;
+    flex-shrink: 0;
+    background: #F6F5F1;
+  }
+  .cart-empty__footer-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+    padding: 16px 0;
+    border-radius: 8px;
+    background: #160000;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: opacity 0.2s;
+  }
+  .cart-empty__footer-btn:hover {
+    opacity: 0.85;
+  }
+  .cart-empty__footer-btn svg {
+    width: 23px;
+    height: 24px;
+    aspect-ratio: 16 / 13;
+    flex-shrink: 0;
+  }
+
+  /* ==============================
+     FILLED CART STATE
+     ============================== */
+  .kv-cart {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #fff;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  /* -- Header -- */
+  .kv-cart__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    padding: 7px 20px;
+    border-bottom: 1px solid #e1dede;
+    height: 60px;
+  }
+  .kv-cart__header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .kv-cart__header-title {
+    color: #160000;
+    font-family: "Bai Jamjuree";
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
+  }
+  .kv-cart__count {
+    background: #160000;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 27px;
+    height: 27px;
+    padding: 0 6px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  .kv-cart__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: #160000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .kv-cart__close svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* -- Free shipping bar -- */
+  .kv-cart__shipping-bar {
+    flex-shrink: 0;
+  }
+
+  /* -- Items scrollable area -- */
+  .kv-cart__items {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 0;
+  }
+
+  /* -- Accordion -- */
+  .kv-cart__accordion {
+    /* border-bottom: 1px solid #e8e5e1; */
+  }
+  .kv-cart__accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 20px 8px 20px;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+      position: relative;
+    }
+    .kv-cart__accordion-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 20px;
+      right: 20px;
+      height: 1px;
+      background: rgba(22, 37, 24, 0.20);
+    }
+  .kv-cart__accordion-header::-webkit-details-marker,
+  .kv-cart__accordion-header::marker {
+    display: none;
+    content: '';
+  }
+  .kv-cart__accordion-title {
+    color: #160000;
+    font-family: "Bai Jamjuree";
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
+  }
+  .kv-cart__accordion-chevron {
+    transition: transform 0.25s ease;
+    color: #888;
+    flex-shrink: 0;
+  }
+  .kv-cart__accordion[open] > .kv-cart__accordion-header .kv-cart__accordion-chevron {
+    transform: rotate(180deg);
+  }
+  .kv-cart__accordion-body {
+    padding: 0 24px 0px;
+  }
+
+  /* -- Line item -- */
+  .kv-cart__line-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 0px 0px 0px;
+  }
+  .kv-cart__line-item + .kv-cart__line-item {
+    /* border-top: 1px solid #f0eeeb; */
+  }
+
+  /* Media */
+  .kv-cart__line-item-media {
+    position: relative;
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    background: #f7f5f2;
+  }
+  .kv-cart__line-item-img {
+    border-radius: 8px;
+  }
+  .kv-cart__line-item-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Gift quantity badge on image */
+  .kv-cart__gift-qty-badge {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 99px;
+    border: 1px solid #FFF;
+    background: #5C220A;
+    position: absolute;
+    right: -8px;
+    top: -8px;
+    color: #FFF;
+    font-family: "Bai Jamjuree", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    z-index: 1;
+    box-sizing: border-box;
+  }
+
+  /* Info */
+  .kv-cart__line-item-info {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .kv-cart__line-item-name-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .kv-cart__line-item-info-icon {
+    width: 14px;
+    height: 14px;
+    display: inline-flex;
+    flex-shrink: 0;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .kv-cart__line-item-info-icon:hover {
+    opacity: 0.6;
+  }
+  .kv-cart__line-item-name {
+    color: #160000;
+    leading-trim: both;
+    text-edge: cap;
+    font-family: N27;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .kv-cart__line-item-name:hover {
+    text-decoration: underline;
+  }
+  .kv-cart__line-item-worth {
+    color: #888;
+    font-family: "Bai Jamjuree";
+    font-size: 12px;
+    font-weight: 400;
+  }
+  .kv-cart__line-item-price {
+    color: #162518;
+    leading-trim: both;
+    text-edge: cap;
+    font-family: "Bai Jamjuree";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .kv-cart__line-item-variant {
+    color: #888;
+    font-family: "Bai Jamjuree";
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  /* Per-product notice */
+  .kv-cart__line-item-notice {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(146, 75, 20, 0.10);
+    background: rgba(146, 75, 20, 0.05);
+    color: #924B14;
+    font-family: "Bai Jamjuree";
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  .kv-cart__line-item-notice svg {
+    flex-shrink: 0;
+  }
+
+  /* Pre-order / stock date notice above line item */
+  .kv-cart__stock-date-notice {
+    display: none !important;
+    color: #162518;
+    display: flex;
+    align-items: center;
+    leading-trim: both;
+    text-edge: cap;
+    font-family: "Bai Jamjuree";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid rgba(146, 75, 20, 0.10);
+    background: rgba(146, 75, 20, 0.05);
+    /* height: 28px; */
+    margin-top: 8px;
+    /* margin-bottom: 2px; */
+    gap: 8px;
+    /* margin-bottom: 2px; */
+  }
+  .kv-cart__stock-date-notice svg {
+    flex-shrink: 0;
+    min-width: 14px;
+  }
+
+  /* Pre-order footer notice */
+  .kv-cart__preorder-notice {
+    border-radius: 6px;
+    background: rgba(37, 33, 22, 0.05);
+    padding: 10px 12px;
+    margin-top: 12px;
+    font-family: "Bai Jamjuree", sans-serif;
+  }
+  .kv-cart__preorder-notice-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .kv-cart__preorder-notice-label {
+    color: #162518;
+    font-family: "Bai Jamjuree";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+  .kv-cart__preorder-notice-dates {
+    font-size: 10px;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+    padding: 4px 8px;
+    align-items: center;
+    gap: 4px;
+    background: #FFF;
+    border-radius: 6px;
+    color: #162518;
+    font-family: "Bai Jamjuree";
+  }
+  .kv-cart__preorder-notice-info {
+    color: #162518;
+    font-family: "Bai Jamjuree";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .kv-cart__preorder-notice-info .kv-cart__preorder-toggle {
+    color: rgba(22, 0, 0, 0.50);
+    text-decoration: underline;
+    cursor: pointer;
+    display: block;
+    margin-top: 4px;
+  }
+  .kv-cart__preorder-notice-info strong {
+    font-weight: 600;
+  }
+
+  /* Discounts */
+  .kv-cart__line-item-discounts {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .kv-cart__discount-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #924B14;
+    background: rgba(146, 75, 20, 0.08);
+    border-radius: 4px;
+    padding: 2px 6px;
+    display:none;
+  }
+
+  /* -- Actions (right side) -- */
+  .kv-cart__line-item-actions {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Gift badge */
+  .kv-cart__gift-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1.5px solid #5C220A;
+    background: transparent;
+    color: #5C220A;
+    font-family: "Bai Jamjuree";
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    height: 34px;
+  }
+
+  /* Quantity controls */
+  .kv-cart__qty-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .kv-cart__qty-btn {
+    display: flex;
+    width: 34px;
+    height: 34px;
+    /* padding: 11px 32px; */
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    border: 1px solid rgba(22, 37, 24, 0.10);
+    background: rgba(22, 37, 24, 0.05);
+    font-weight: 800;
+  }
+ 
+  .kv-cart__qty-input {
+    width: 24px;
+    text-align: center;
+    border: none;
+    background: none;
+    color: #160000;
+    font-family: "Bai Jamjuree", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0;
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+  .kv-cart__qty-input::-webkit-outer-spin-button,
+  .kv-cart__qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .kv-cart__qty-input:focus {
+    outline: none;
+  }
+
+  /* -- Footer -- */
+  .kv-cart__footer {
+    flex-shrink: 0;
+    background: #F3F4F3;
+    box-shadow: 0 -4px 34px 0 rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    /* gap: 12px; */
+  }
+  .kv-cart__footer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .kv-cart__discount-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .kv-cart__discount-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #924B14;
+    background: rgba(146, 75, 20, 0.08);
+    border-radius: 4px;
+    padding: 2px 6px;
+  }
+  .kv-cart__discount-amount {
+    color: #888;
+    font-size: 13px;
+  }
+  .kv-cart__inventory-notice {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid rgba(146, 75, 20, 0.10);
+    background: rgba(146, 75, 20, 0.05);
+    color: #924B14;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .kv-cart__inventory-notice svg {
+    flex-shrink: 0;
+    min-width: 12px;
+  }
+  .kv-cart__shipping-text {
+    font-size: 12px;
+    color: #888;
+  }
+  .kv-cart__shipping-text p {
+    margin: 0;
+  }
+  .kv-cart__shipping-text a {
+    color: #160000;
+    text-decoration: underline;
+  }
+
+  /* Checkout buttons */
+  .kv-cart__checkout-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .kv-cart__checkout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-family: "Bai Jamjuree", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    border: none;
+  }
+  .kv-cart__checkout-btn:hover {
+    opacity: 0.9;
+  }
+  .kv-cart__checkout-btn--primary {
+    background: #160000;
+    color: #fff;
+  }
+  .kv-cart__checkout-btn--secondary {
+    background: #fff;
+    color: #160000;
+    border: 1.5px solid #160000;
+  }
+  .kv-cart__checkout-prices {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .kv-cart__checkout-original-price {
+    text-decoration: line-through;
+    opacity: 0.6;
+    font-weight: 400;
+  }
+  .kv-cart__checkout-separator {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Protection addon */
+  .kv-cart__protection {
+    padding-bottom: 16px;
+  }
+  .kv-cart__protection-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .kv-cart__protection-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .kv-cart__protection-header-left {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .kv-cart__protection-header-left svg {
+    flex-shrink: 0;
+  }
+  .kv-cart__protection-title {
+    color: #160000;
+    font-family: N27;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .kv-cart__protection-price {
+    color: #160000;
+    leading-trim: both;
+    text-edge: cap;
+    font-family: N27;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .kv-cart__protection-desc {
+    color: #162518;
+    font-family: "Bai Jamjuree";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    width: 80%;
+  }
+  .kv-cart__protection-checkbox {
+    display: none;
+  }
+
+  /* -- Add Something Extra slider -- */
+  .kv-extra {
+    flex-shrink: 0;
+    padding: 24px 0 20px;
+    overflow: hidden;
+  }
+  .kv-extra__header {
+    padding: 0 20px 8px;
+    position: relative;
+  }
+  .kv-extra__header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: rgba(22, 37, 24, 0.20);
+  }
+  .kv-extra__title {
+    color: #160000;
+    font-family: "Bai Jamjuree";
+    font-size: 15px;
+    font-weight: 600;
+    line-height: normal;
+  }
+  .kv-extra__swiper {
+    padding-top: 16px;
+    overflow: visible;
+    padding: 16px 20px 0;
+}
+.kv-extra__track {
+    display: flex;
+    padding: 0;
+}
+
+  /* Card — single row: image | name+price | + Add button */
+  .kv-extra__card {
+    width: 310px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 12px;
+    background: #F3F4F3;
+    border-radius: 14px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  .kv-extra__card-img-wrap {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f7f5f2;
+    flex-shrink: 0;
+  }
+  .kv-extra__card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .kv-extra__card-body {
+    flex: 1 1 0%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .kv-extra__card-name-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .kv-extra__card-name {
+    color: #160000;
+    leading-trim: both;
+    text-edge: cap;
+    font-family: N27;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .kv-extra__card-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #999;
+    text-decoration: none;
+  }
+  .kv-extra__card-info:hover {
+    color: #666;
+  }
+  .kv-extra__card-price {
+    color: #162518;
+    leading-trim: both;
+    text-edge: cap;
+    font-family: "Bai Jamjuree";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .kv-extra__card-form {
+    flex-shrink: 0;
+  }
+  .kv-extra__card-add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1.5px solid #9a7a5a;
+    background: transparent;
+    color: #6b4f2e;
+    font-family: "Bai Jamjuree";
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    height: 34px;
+    width: 80px;
+  }
+  .kv-extra__card-add-btn:hover {
+    background: #f9f6f3;
+  }
+  .kv-extra__card-add-btn[disabled] {
+    opacity: 0.5;
+    cursor: default;
+    border-color: #ccc;
+    color: #999;
+  }
+
+  /* ==============================
+     SCENT MODAL – same styles as kv-bundle-section
+     (needed on pages where the bundle section is absent)
+     ============================== */
+  @font-face {
+    font-family: 'Kento';
+    src: url('https://cdn.shopify.com/s/files/1/0888/1219/2090/files/Kento-Bold.woff2?v=1764052251') format('woff2'),
+         url('https://cdn.shopify.com/s/files/1/0888/1219/2090/files/Kento-Bold.woff?v=1764052252') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+  .kv-scent-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    pointer-events: none;
+  }
+  .kv-scent-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .kv-scent-modal {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 10000;
+    max-height: 90vh;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out;
+    max-width: 800px;
+    margin: auto;
+    border-radius: 16px 16px 0 0;
+    background: #fff;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .kv-scent-modal.active {
+    transform: translateY(0);
+  }
+  .kv-scent-modal-close {
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 32px; height: 32px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.2s;
+    border-radius: 99px;
+    background: #160000;
+  }
+
+  
+.kv-scent-modal-image {
+    width: 100%;
+    height: 360px;
+    overflow: hidden;
+}
+  .kv-scent-modal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .kv-scent-modal-content {
+    background: #DED9C5;
+    overflow-y: auto;
+  }
+  .kv-scent-modal-content-header {
+    padding: 16px;
+    border-bottom: 1px solid rgba(22, 0, 0, 0.10);
+    background: #F1EFE8;
+  }
+  .kv-scent-modal-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .kv-scent-modal-tag {
+    padding: 6px 12px;
+    color: #160000;
+    text-align: center;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border-radius: 20px;
+    background: #DED9C5;
+    font-family: 'N27';
+  }
+  .kv-scent-modal-tag-special {
+    color: #FFF;
+    background: #5C220A;
+  }
+  .kv-scent-modal-tags,
+  .kv-scent-modal-title,
+  .kv-scent-modal-description {
+    max-width: 672px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .kv-scent-modal-title {
+    margin: 0;
+    font-family: 'Kento', sans-serif;
+    text-transform: uppercase;
+    color: #160000;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin: 20px 0 16px;
+  }
+  .kv-scent-modal-description {
+    color: #160000;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+  .kv-scent-modal-details {
+    padding: 16px 20px 24px;
+  }
+  .kv-scent-modal-details h3 {
+    margin: 0 auto 12px;
+    letter-spacing: 0.05em;
+    text-transform: capitalize;
+    color: #160000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    max-width: 672px;
+    font-family: 'N27';
+  }
+  .kv-scent-modal-details-content {
+    color: #160000;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    max-width: 672px;
+    margin: auto;
+  }
+  .kv-scent-modal-details-content span {
+    margin: 0 0 6px 0;
+    display: block;
+  }
+  .kv-scent-modal-details-content br {
+    display: none;
+  }
+  .kv-scent-modal-add {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    border-radius: 8px;
+    background: #5c220a;
+    color: #FFF;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 32px auto 0;
+    max-width: 672px;
+    display: flex;
+    justify-content: center;
+  }
+  .kv-scent-modal-add:hover {
+    opacity: 0.9;
+  }
+
+body .kv-cart__footer .kv-cart__protection-toggle {
+    display: none;
+}
+
+body .kv-cart__footer .kv-cart__checkout-btn--secondary {
+    background: #160000;
+    color: #ffffff;
+    border: 1.5px solid #ffffff;
+}
+
+body .kv-cart__footer .kv-cart__checkout-btn--primary {
+    display: none;
+}
+
+body .kv-cart__protection {
+    padding-bottom: 0;
+}
+
+  @media (max-width: 767.98px) { 
+  
+    .kv-scent-modal-image {
+    height: 190px;
+}
+  
+  }
+</style>
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Cart drawer won't appear to your customers if you have set the cart type to Page in the global theme settings."
+    },
+    {
+      "type": "paragraph",
+      "content": "Free shipping bar can be configured in global cart settings."
+    },
+    {
+      "type": "header",
+      "content": "Free shipping bar"
+    },
+    {
+      "type": "text",
+      "id": "kv_shipping_threshold",
+      "label": "Free shipping minimum amount",
+      "info": "Enter the amount in your store's main currency (e.g. 50).",
+      "default": "50"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "kv_shipping_unreached_text",
+      "label": "Below threshold text",
+      "info": "Use {amount} for the remaining amount (currency symbol is auto-added). Use bold for emphasis.",
+      "default": "Spend <strong>{amount}</strong> more to get <strong>FREE SHIPPING</strong>!"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "kv_shipping_reached_text",
+      "label": "Above threshold text",
+      "default": "Nice work! <strong>FREE SHIPPING</strong> unlocked"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "kv_shipping_reached_gifts_text",
+      "label": "Above threshold with gifts text",
+      "info": "Use {x} for the number of free gifts. Use bold for emphasis.",
+      "default": "Nice work! <strong>FREE SHIPPING</strong> and <strong>{x}X GIFTS</strong> unlocked"
+    },
+    {
+      "type": "header",
+      "content": "Empty cart state"
+    },
+    {
+      "type": "text",
+      "id": "empty_header_text",
+      "label": "Header text",
+      "default": "Cart"
+    },
+    {
+      "type": "richtext",
+      "id": "empty_title",
+      "label": "Title",
+      "default": "<p>Your cart is empty,<br>let's set the mood.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_description",
+      "label": "Description",
+      "default": "Explore Scentech fragrances and smart diffusers designed to transform your space whether you want calm, focus, or energy."
+    },
+    {
+      "type": "header",
+      "content": "Empty cart — Card 1"
+    },
+    {
+      "type": "color",
+      "id": "empty_card_1_bg_color",
+      "label": "Card 1 background color",
+      "default": "#F9F6F3"
+    },
+    {
+      "type": "image_picker",
+      "id": "empty_card_1_image",
+      "label": "Card 1 image"
+    },
+    {
+      "type": "text",
+      "id": "empty_card_1_title",
+      "label": "Card 1 title",
+      "default": "Fragrances"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_card_1_description",
+      "label": "Card 1 description",
+      "default": "Crafted with the best ingredients for clean, long-lasting mood-setting scent."
+    },
+    {
+      "type": "text",
+      "id": "empty_card_1_button_text",
+      "label": "Card 1 button text",
+      "default": "Explore"
+    },
+    {
+      "type": "url",
+      "id": "empty_card_1_button_url",
+      "label": "Card 1 button URL"
+    },
+    {
+      "type": "header",
+      "content": "Empty cart — Card 2"
+    },
+    {
+      "type": "color",
+      "id": "empty_card_2_bg_color",
+      "label": "Card 2 background color",
+      "default": "#F9F6F3"
+    },
+    {
+      "type": "image_picker",
+      "id": "empty_card_2_image",
+      "label": "Card 2 image"
+    },
+    {
+      "type": "text",
+      "id": "empty_card_2_title",
+      "label": "Card 2 title",
+      "default": "Diffusers"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_card_2_description",
+      "label": "Card 2 description",
+      "default": "Commercial-grade scenting for home—even coverage up to 50 m²."
+    },
+    {
+      "type": "text",
+      "id": "empty_card_2_button_text",
+      "label": "Card 2 button text",
+      "default": "Explore"
+    },
+    {
+      "type": "url",
+      "id": "empty_card_2_button_url",
+      "label": "Card 2 button URL"
+    },
+    {
+      "type": "header",
+      "content": "Empty cart — Bottom button"
+    },
+    {
+      "type": "text",
+      "id": "empty_bottom_button_text",
+      "label": "Button text",
+      "default": "Explore Deals"
+    },
+    {
+      "type": "url",
+      "id": "empty_bottom_button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "kv_inventory_text",
+      "label": "kv_inventory_text",
+      "default": "Pre-Order: Smart Aroma Diffuser Pro Feb 3rd. The rest of your order ships now. Pre-order scents are shipped seperately free of charge!"
+    },
+    {
+      "type": "header",
+      "content": "Pre-Order / Delivery Notice"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text_expected_delivery",
+      "label": "Expected Delivery Label",
+      "default": "Expected delivery:"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text_preorder_collapsed",
+      "label": "Pre-Order Notice (collapsed)",
+      "default": "There are pre-order items in the cart."
+    },
+    {
+      "type": "textarea",
+      "id": "text_preorder_expanded",
+      "label": "Pre-Order Notice (expanded)",
+      "default": "There are pre-order items in the cart. Due to this your order will be sent out slightly later, when the scents have reached our warehouse."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text_preorder_affected_label",
+      "label": "Affected Products Label",
+      "default": "The affected products in your cart are:"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text_preorder_contact",
+      "label": "Contact Text",
+      "default": "For any questions or concerns please reach out to our team."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text_instock_collapsed",
+      "label": "In-Stock Notice (collapsed)",
+      "default": "Your order ships out today from the Netherlands."
+    },
+    {
+      "type": "textarea",
+      "id": "text_instock_expanded",
+      "label": "In-Stock Notice (expanded)",
+      "default": "Your order ships out today from the Netherlands. These items are in stock at our warehouse in Gorinchem and are shipped by our reliable delivery partners."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart_note",
+      "label": "Show cart note",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping_text",
+      "label": "Show shipping text",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_cart_button",
+      "label": "Show view cart button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_checkout_button",
+      "label": "Show checkout button",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Protection addon"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_protection",
+      "label": "Show protection addon",
+      "default": true
+    },
+    {
+      "type": "product",
+      "id": "protection_product",
+      "label": "Protection product"
+    },
+    {
+      "type": "text",
+      "id": "protection_title",
+      "label": "Protection title",
+      "default": "Peace of Mind Protection + 60-Day Returns"
+    },
+    {
+      "type": "textarea",
+      "id": "protection_description",
+      "label": "Protection description",
+      "default": "Coverage for loss, damage, or theft, plus an extended 60-day return window - so you can shop confidently."
+    },
+    {
+      "type": "text",
+      "id": "protection_price",
+      "label": "Protection price (in main currency unit, e.g. 9.99)",
+      "default": "9.99"
+    },
+    {
+      "type": "header",
+      "content": "Low Cart Value Product"
+    },
+    {
+      "type": "product",
+      "id": "low_cart_product",
+      "label": "Product for cart value under $50",
+      "info": "This product will be added when cart value is less than $50"
+    },
+    {
+      "type": "text",
+      "id": "low_cart_threshold",
+      "label": "Low cart value threshold (in main currency unit)",
+      "info": "Cart value below this amount will use the low cart product (e.g., 50)",
+      "default": "50"
+    },
+    {
+      "type": "text",
+      "id": "low_cart_product_title",
+      "label": "Low cart product title",
+      "info": "Title shown in the protection toggle for low cart value",
+      "default": "Low Cart Protection"
+    },
+    {
+      "type": "textarea",
+      "id": "low_cart_product_description",
+      "label": "Low cart product description",
+      "info": "Description shown in the protection toggle for low cart value",
+      "default": "Special protection for orders under $50."
+    },
+    {
+      "type": "text",
+      "id": "low_cart_product_price",
+      "label": "Low cart product price (in main currency unit, e.g. 4.99)",
+      "default": "4.99"
+    },
+    {
+      "type": "text",
+      "id": "secure_checkout_text",
+      "label": "Secure checkout button text",
+      "default": "Secure Checkout"
+    },
+    {
+      "type": "text",
+      "id": "without_protection_text",
+      "label": "Without protection button text",
+      "default": "Checkout Without Protection"
+    },
+    {
+      "type": "header",
+      "content": "Add Something Extra slider"
+    },
+    {
+      "type": "text",
+      "id": "extra_slider_title",
+      "label": "Slider heading",
+      "default": "Add Something Extra"
+    },
+    {
+      "type": "text",
+      "id": "extra_add_button_text",
+      "label": "Add button text",
+      "info": "Text shown on the add button when the product is available",
+      "default": "+ Add"
+    },
+    {
+      "type": "text",
+      "id": "extra_sold_out_text",
+      "label": "Sold out button text",
+      "info": "Text shown on the button when the product is sold out",
+      "default": "Sold out"
+    },
+    {
+      "type": "header",
+      "content": "Text Labels"
+    },
+    {
+      "type": "text",
+      "id": "worth_text",
+      "label": "Worth label text",
+      "info": "Text displayed before the price for free gifts (e.g., 'worth')",
+      "default": "worth"
+    },
+    {
+      "type": "text",
+      "id": "free_gift_badge_text",
+      "label": "Free gift badge text",
+      "info": "Text displayed in the badge for free gifts",
+      "default": "FREE GIFT"
+    },
+    {
+      "type": "text",
+      "id": "free_gifts_category_text",
+      "label": "Free gifts category text",
+      "info": "Category name for free gift items",
+      "default": "Free Gifts"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "extra_product",
+      "name": "Extra product",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_info_icon",
+          "label": "Show info icon",
+          "default": true
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+
+<style>
+
+  .kv_inventory_text {
+    margin-left: 0;
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid rgba(146, 75, 20, 0.10);
+    background: rgba(146, 75, 20, 0.05);
+    padding: 12px 16px;
+    color: #924B14;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: none;
+    align-items: center;
+    gap: 6px;
+}
+
+.kv_inventory_text svg {
+    min-width: 12px;
+}
+</style>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  /* Quantity +/- button handler for kv-cart (event-delegated so it survives AJAX DOM replacement) */
+  (function() {
+    var drawer = document.getElementById('cart-drawer');
+    if (!drawer) return;
+    drawer.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-kv-qty-action]');
+      if (!btn) return;
+      var wrap = btn.closest('.kv-cart__qty-wrap');
+      if (!wrap) return;
+      var input = wrap.querySelector('input[is="quantity-input"]');
+      if (!input) return;
+      var current = parseInt(input.value) || 1;
+      if (btn.getAttribute('data-kv-qty-action') === 'decrease') {
+        if (current <= 1) {
+          /* Remove item from cart when quantity goes to 0 */
+          var lineKey = input.getAttribute('data-line-key');
+          if (lineKey) {
+            fetch('/cart/change.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify({ id: lineKey, quantity: 0 })
+            })
+            .then(function(r) { return r.json(); })
+            .then(function() {
+              document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+            });
+          }
+          return;
+        }
+        input.quantity = current - 1;
+      } else {
+        input.quantity = current + 1;
+      }
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+
+    /* AJAX add-to-cart for "Add Something Extra" cards */
+    drawer.addEventListener('submit', function(e) {
+      var form = e.target.closest('.kv-extra__card-form');
+      if (!form) return;
+      e.preventDefault();
+      var addBtn = form.querySelector('.kv-extra__card-add-btn');
+      if (!addBtn || addBtn.disabled) return;
+      addBtn.disabled = true;
+      addBtn.textContent = 'Adding…';
+
+      var formData = new FormData(form);
+      var body = JSON.stringify({
+        id: Number(formData.get('id')),
+        quantity: Number(formData.get('quantity'))
+      });
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: body
+      })
+      .then(function(r) { return r.json(); })
+      .then(function() {
+        document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+      })
+      .catch(function() {
+        addBtn.disabled = false;
+        addBtn.textContent = '+ Add';
+      });
+    });
+
+    /* ---- Swiper slider for "Add Something Extra" ---- */
+    var swiperInstance = null;
+    var isInitializing = false;
+
+    function initSwiperSlider() {
+      /* Prevent multiple simultaneous initializations */
+      if (isInitializing) return;
+      
+      var swiperContainer = drawer.querySelector('.kv-extra__swiper');
+      if (!swiperContainer) return;
+      
+      /* Check if Swiper is already initialized on this container */
+      if (swiperContainer.swiper) {
+        /* Swiper already exists, just update it */
+        swiperContainer.swiper.update();
+        return;
+      }
+
+      isInitializing = true;
+      
+      /* Destroy old instance if any */
+      if (swiperInstance) {
+        try {
+          swiperInstance.destroy(true, true);
+        } catch (e) {
+          /* Ignore errors during destruction */
+        }
+        swiperInstance = null;
+      }
+
+      /* Small delay to ensure DOM is stable */
+      setTimeout(function() {
+        try {
+          /* Initialize Swiper */
+          swiperInstance = new Swiper(swiperContainer, {
+            slidesPerView: 'auto',
+            spaceBetween: 10,
+            grabCursor: true,
+            slideClass: 'kv-extra__card',
+            wrapperClass: 'kv-extra__track',
+            resistance: true,
+            resistanceRatio: 0.85,
+            observer: false,
+            observeParents: false,
+            observeSlideChildren: false,
+            slidesPerGroup: 1,
+            speed: 400,
+            touchRatio: 1,
+            threshold: 5,
+          });
+        } catch (e) {
+          console.error('Swiper initialization error:', e);
+        }
+        isInitializing = false;
+      }, 50);
+    }
+
+    /* Track last initialization time to debounce */
+    var lastInitTime = 0;
+    var initDebounceDelay = 500; /* ms */
+
+    function initAllSliders() {
+      var now = Date.now();
+      if (now - lastInitTime < initDebounceDelay) {
+        /* Too soon after last init, skip */
+        return;
+      }
+      lastInitTime = now;
+      initSwiperSlider();
+    }
+
+    /* Run immediately */
+    initAllSliders();
+
+    /* Watch for cart content changes with debouncing */
+    var mutationTimeout;
+    var drawerObserver = new MutationObserver(function(mutations) {
+      /* Check if mutation is related to cart content, not Swiper classes */
+      var shouldReinit = false;
+      for (var i = 0; i < mutations.length; i++) {
+        var mutation = mutations[i];
+        /* Only reinit if cart content actually changed (not just class changes) */
+        if (mutation.type === 'childList' && 
+            mutation.target.classList && 
+            !mutation.target.classList.contains('swiper-wrapper') &&
+            !mutation.target.classList.contains('kv-extra__swiper')) {
+          shouldReinit = true;
+          break;
+        }
+      }
+      
+      if (shouldReinit) {
+        clearTimeout(mutationTimeout);
+        mutationTimeout = setTimeout(initAllSliders, 300);
+      }
+    });
+    drawerObserver.observe(drawer, { childList: true, subtree: true });
+
+    /* Also re-init when the drawer becomes visible (attribute change or class) */
+    var attrObserver = new MutationObserver(function() {
+      if (drawer.hasAttribute('open') || drawer.classList.contains('is-open')) {
+        setTimeout(initAllSliders, 200);
+      }
+    });
+    attrObserver.observe(drawer, { attributes: true, attributeFilter: ['open', 'class', 'aria-hidden'] });
+
+    /* Fallback: listen for theme cart events */
+    document.addEventListener('cart:refresh', function() {
+      setTimeout(initAllSliders, 500);
+    });
+    document.documentElement.addEventListener('cart:refresh', function() {
+      setTimeout(initAllSliders, 500);
+    });
+
+  })();
+</script>
+
+<script>
+  /* Protection toggle — both buttons always visible, checkbox only controls
+     which cart attributes are sent (protection on/off) */
+  (function() {
+    var drawer = document.getElementById('cart-drawer');
+    if (!drawer) return;
+
+    function initProtectionToggle() {
+      var checkbox = drawer.querySelector('#kv-protection-checkbox');
+      if (!checkbox) return;
+
+      checkbox.addEventListener('change', function() {
+        /* Update cart attribute so the checkout knows whether protection is selected */
+        fetch('/cart/update.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ attributes: { 'Protection': checkbox.checked ? 'Yes' : 'No' } })
+        });
+      });
+    }
+
+    initProtectionToggle();
+
+    /* Re-init after AJAX cart refresh */
+    var protectionObserver = new MutationObserver(function() {
+      setTimeout(initProtectionToggle, 200);
+    });
+    protectionObserver.observe(drawer, { childList: true, subtree: true });
+  })();
+</script>
+
+<script>
+  /* Dynamic Protection Display — Update protection toggle and prices based on cart value */
+  (function() {
+    var drawer = document.getElementById('cart-drawer');
+    if (!drawer) return;
+
+    function updateProtectionDisplay() {
+      var wrapper = drawer.querySelector('.kv-cart__checkout-buttons');
+      if (!wrapper) return;
+
+      var lowCartThreshold = parseInt(wrapper.getAttribute('data-low-cart-threshold')) || 0;
+      var protectionPrice = parseInt(wrapper.getAttribute('data-protection-price')) || 0;
+      var lowCartPrice = parseInt(wrapper.getAttribute('data-low-cart-price')) || 0;
+      var lowCartVariantId = wrapper.getAttribute('data-low-cart-variant-id');
+      
+      var protectionTitle = wrapper.getAttribute('data-protection-title') || '';
+      var lowCartTitle = wrapper.getAttribute('data-low-cart-title') || '';
+      var protectionDesc = wrapper.getAttribute('data-protection-desc') || '';
+      var lowCartDesc = wrapper.getAttribute('data-low-cart-desc') || '';
+
+      /* Fetch current cart to check total */
+      fetch('/cart.js', { headers: { 'Accept': 'application/json' } })
+        .then(function(r) { return r.json(); })
+        .then(function(cart) {
+          var isLowCart = lowCartVariantId && cart.total_price < lowCartThreshold;
+          var activePrice = isLowCart ? lowCartPrice : protectionPrice;
+          var activeTitle = isLowCart ? lowCartTitle : protectionTitle;
+          var activeDesc = isLowCart ? lowCartDesc : protectionDesc;
+
+          /* Update protection toggle elements */
+          var titleEl = drawer.querySelector('#kv-protection-title');
+          var priceEl = drawer.querySelector('#kv-protection-price');
+          var descEl = drawer.querySelector('#kv-protection-desc');
+
+          if (titleEl) titleEl.textContent = activeTitle;
+          if (descEl) descEl.textContent = activeDesc;
+          
+          /* Format price */
+          if (priceEl && activePrice) {
+            var formattedPrice = Shopify.formatMoney(activePrice, window.theme.moneyFormat || '${{amount}}');
+            priceEl.textContent = formattedPrice;
+          }
+
+          /* Update checkout button price */
+          var priceWithProtection = drawer.querySelector('#kv-price-with-protection');
+          var originalPriceWithProtection = drawer.querySelector('#kv-original-price-with-protection');
+          
+          if (priceWithProtection) {
+            var totalWithProtection = cart.total_price + activePrice;
+            var formattedTotal = Shopify.formatMoney(totalWithProtection, window.theme.moneyFormat || '${{amount}}');
+            priceWithProtection.textContent = formattedTotal;
+          }
+          
+          if (originalPriceWithProtection && cart.total_discount > 0) {
+            var originalTotalWithProtection = cart.original_total_price + activePrice;
+            var formattedOriginalTotal = Shopify.formatMoney(originalTotalWithProtection, window.theme.moneyFormat || '${{amount}}');
+            originalPriceWithProtection.textContent = formattedOriginalTotal;
+          }
+        })
+        .catch(function(err) {
+          console.error('Error updating protection display:', err);
+        });
+    }
+
+    /* Update on drawer open */
+    var attrObserver = new MutationObserver(function() {
+      if (drawer.hasAttribute('open') || drawer.classList.contains('is-open')) {
+        setTimeout(updateProtectionDisplay, 100);
+      }
+    });
+    attrObserver.observe(drawer, { attributes: true, attributeFilter: ['open', 'class', 'aria-hidden'] });
+
+    /* Update after cart changes */
+    document.addEventListener('cart:refresh', function() {
+      setTimeout(updateProtectionDisplay, 300);
+    });
+    document.documentElement.addEventListener('cart:refresh', function() {
+      setTimeout(updateProtectionDisplay, 300);
+    });
+
+    /* Initial update */
+    setTimeout(updateProtectionDisplay, 200);
+  })();
+</script>
+
+<script>
+  /* Checkout buttons — Secure Checkout adds protection product (or low cart product if under threshold) then redirects,
+     Checkout Without Protection just redirects to checkout */
+  (function() {
+    var drawer = document.getElementById('cart-drawer');
+    if (!drawer) return;
+
+    function initCheckoutButtons() {
+      var btnSecure  = drawer.querySelector('#kv-checkout-secure');
+      var btnWithout = drawer.querySelector('#kv-checkout-without');
+      var wrapper    = drawer.querySelector('.kv-cart__checkout-buttons');
+      var protectionVariantId = wrapper ? wrapper.getAttribute('data-protection-variant-id') : null;
+      var lowCartVariantId = wrapper ? wrapper.getAttribute('data-low-cart-variant-id') : null;
+      var lowCartThreshold = wrapper ? parseInt(wrapper.getAttribute('data-low-cart-threshold')) : 0;
+
+      if (btnSecure && !btnSecure.dataset.kvBound) {
+        btnSecure.dataset.kvBound = '1';
+        btnSecure.addEventListener('click', function() {
+          btnSecure.disabled = true;
+
+          /* First fetch the cart to check total and what's already in it */
+          fetch('/cart.js', { headers: { 'Accept': 'application/json' } })
+            .then(function(r) { return r.json(); })
+            .then(function(cart) {
+              /* Determine which product to add based on cart total */
+              var variantToAdd = null;
+              var variantToRemove = null;
+              
+              if (lowCartVariantId && cart.total_price < lowCartThreshold) {
+                /* Cart is under threshold, use low cart product */
+                variantToAdd = lowCartVariantId;
+                /* If cart is under threshold, remove protection product if it exists */
+                variantToRemove = protectionVariantId;
+              } else if (protectionVariantId) {
+                /* Cart is above threshold or no low cart product set, use protection product */
+                variantToAdd = protectionVariantId;
+                /* If cart is above threshold, remove low cart product if it exists */
+                variantToRemove = lowCartVariantId;
+              }
+
+              if (!variantToAdd) {
+                /* No product configured, go straight to checkout */
+                window.location.href = '/checkout';
+                return;
+              }
+
+              /* Check what's currently in the cart */
+              var targetItemInCart = cart.items.find(function(item) {
+                return String(item.variant_id) === String(variantToAdd);
+              });
+              
+              var wrongItemInCart = variantToRemove ? cart.items.find(function(item) {
+                return String(item.variant_id) === String(variantToRemove);
+              }) : null;
+
+              /* Create a promise chain for cart operations */
+              var cartOperations = Promise.resolve();
+
+              /* First, remove the wrong protection product if it's in cart */
+              if (wrongItemInCart) {
+                cartOperations = cartOperations.then(function() {
+                  return fetch('/cart/change.js', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ id: wrongItemInCart.key, quantity: 0 })
+                  });
+                });
+              }
+
+              /* Then, add the correct protection product if not already in cart */
+              if (!targetItemInCart) {
+                cartOperations = cartOperations.then(function() {
+                  return fetch('/cart/add.js', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ id: Number(variantToAdd), quantity: 1 })
+                  });
+                });
+              }
+
+              /* Finally, redirect to checkout */
+              cartOperations.then(function() {
+                window.location.href = '/checkout';
+              }).catch(function() {
+                /* Fallback: redirect anyway */
+                window.location.href = '/checkout';
+              });
+            })
+            .catch(function() {
+              /* Fallback: redirect anyway */
+              window.location.href = '/checkout';
+            });
+        });
+      }
+
+      if (btnWithout && !btnWithout.dataset.kvBound) {
+        btnWithout.dataset.kvBound = '1';
+        btnWithout.addEventListener('click', function() {
+          btnWithout.disabled = true;
+
+          /* Check if either the protection or low cart product is in the cart and remove it */
+          fetch('/cart.js', { headers: { 'Accept': 'application/json' } })
+            .then(function(r) { return r.json(); })
+            .then(function(cart) {
+              var itemsToRemove = [];
+              
+              /* Check for protection product */
+              if (protectionVariantId) {
+                var protectionItem = cart.items.find(function(item) {
+                  return String(item.variant_id) === String(protectionVariantId);
+                });
+                if (protectionItem) itemsToRemove.push(protectionItem.key);
+              }
+              
+              /* Check for low cart product */
+              if (lowCartVariantId) {
+                var lowCartItem = cart.items.find(function(item) {
+                  return String(item.variant_id) === String(lowCartVariantId);
+                });
+                if (lowCartItem) itemsToRemove.push(lowCartItem.key);
+              }
+
+              if (itemsToRemove.length > 0) {
+                /* Remove items sequentially */
+                var removePromises = itemsToRemove.map(function(key) {
+                  return fetch('/cart/change.js', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ id: key, quantity: 0 })
+                  });
+                });
+                return Promise.all(removePromises).then(function() {
+                  window.location.href = '/checkout';
+                });
+              } else {
+                window.location.href = '/checkout';
+              }
+            })
+            .catch(function() {
+              window.location.href = '/checkout';
+            });
+        });
+      }
+    }
+
+    initCheckoutButtons();
+
+    /* Re-init after AJAX cart refresh (DOM replacement) */
+    var checkoutObserver = new MutationObserver(function() {
+      setTimeout(initCheckoutButtons, 200);
+    });
+    checkoutObserver.observe(drawer, { childList: true, subtree: true });
+  })();
+</script>
+
+<script>
+  /* Scent modal for cart drawer — reuses kv-bundle-section's #kv-scent-modal,
+     or creates an identical one when the bundle section isn't on the page */
+  (function() {
+    var openedFromCart = false;
+
+    /* Ensure the modal + overlay exist (bundle section may or may not be present) */
+    function ensureModal() {
+      var modal   = document.getElementById('kv-scent-modal');
+      var overlay = document.getElementById('kv-scent-modal-overlay');
+      if (modal && overlay) return { modal: modal, overlay: overlay };
+
+      /* Build same HTML as kv-bundle-section.liquid */
+      overlay = document.createElement('div');
+      overlay.className = 'kv-scent-modal-overlay';
+      overlay.id = 'kv-scent-modal-overlay';
+
+      modal = document.createElement('div');
+      modal.className = 'kv-scent-modal';
+      modal.id = 'kv-scent-modal';
+      modal.setAttribute('aria-hidden', 'true');
+      modal.innerHTML =
+        '<button class="kv-scent-modal-close" type="button" aria-label="Close">' +
+          '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<path d="M10.8426 0.196845C10.9333 0.105994 11.0342 0.0479495 11.1452 0.0227129C11.2612 -0.00757098 11.3772 -0.00757098 11.4932 0.0227129C11.6091 0.0479495 11.7125 0.105994 11.8033 0.196845C11.889 0.28265 11.947 0.383596 11.9773 0.499685C12.0076 0.615773 12.0076 0.731861 11.9773 0.84795C11.947 0.964038 11.889 1.06498 11.8033 1.15079L1.15949 11.8032C1.07376 11.889 0.972892 11.947 0.856897 11.9773C0.740902 12.0076 0.624907 12.0076 0.508912 11.9773C0.392916 11.947 0.289529 11.889 0.198751 11.8032C0.107972 11.7174 0.0474526 11.6164 0.017193 11.5003C-0.00802338 11.3842 -0.00550175 11.2681 0.0247579 11.1521C0.0550175 11.036 0.113015 10.935 0.198751 10.8492L10.8426 0.196845ZM11.8033 10.8492C11.889 10.935 11.9445 11.036 11.9697 11.1521C12 11.2681 12 11.3842 11.9697 11.5003C11.9445 11.6164 11.889 11.7174 11.8033 11.8032C11.7176 11.894 11.6142 11.9521 11.4932 11.9773C11.3772 12.0076 11.2612 12.0076 11.1452 11.9773C11.0292 11.947 10.9283 11.889 10.8426 11.8032L0.198751 1.15079C0.113015 1.06498 0.0550175 0.964038 0.0247579 0.84795C-0.000458479 0.731861 -0.000458479 0.615773 0.0247579 0.499685C0.0550175 0.383596 0.113015 0.28265 0.198751 0.196845C0.284486 0.105994 0.385352 0.0479495 0.501347 0.0227129C0.617342 -0.00757098 0.733337 -0.00757098 0.849332 0.0227129C0.970371 0.0479495 1.07376 0.105994 1.15949 0.196845L11.8033 10.8492Z" fill="white"/>' +
+          '</svg>' +
+        '</button>' +
+        '<div class="kv-scent-modal-image"><img src="" alt="" id="kv-scent-modal-img"></div>' +
+        '<div class="kv-scent-modal-content">' +
+          '<div class="kv-scent-modal-content-header">' +
+            '<div class="kv-scent-modal-content-header-inner">' +
+            '<div class="kv-scent-modal-tags">' +
+              '<span class="kv-scent-modal-tag" id="kv-scent-modal-variant"></span>' +
+              '<span class="kv-scent-modal-tag kv-scent-modal-tag-special" id="kv-scent-modal-badge"></span>' +
+            '</div>' +
+            '<h2 class="kv-scent-modal-title" id="kv-scent-modal-title"></h2>' +
+            '<p class="kv-scent-modal-description" id="kv-scent-modal-description"></p>' +
+          '</div>' +
+          '</div>' +
+          '<div class="kv-scent-modal-details">' +
+            '<h3>Scent Details</h3>' +
+            '<div class="kv-scent-modal-details-content" id="kv-scent-modal-details"></div>' +
+            '<button class="kv-scent-modal-add" type="button" id="kv-scent-modal-add">+ Add</button>' +
+          '</div>' +
+        '</div>';
+
+      document.body.appendChild(overlay);
+      document.body.appendChild(modal);
+
+      /* Bind close handlers for the freshly-created modal */
+      modal.querySelector('.kv-scent-modal-close').addEventListener('click', closeModal);
+      overlay.addEventListener('click', closeModal);
+
+      return { modal: modal, overlay: overlay };
+    }
+
+    function closeModal() {
+      var modal   = document.getElementById('kv-scent-modal');
+      var overlay = document.getElementById('kv-scent-modal-overlay');
+      if (modal)   modal.classList.remove('active');
+      if (overlay) overlay.classList.remove('active');
+      document.body.style.overflow = '';
+
+      /* Restore Add button for bundle-section usage */
+      var addBtn = document.getElementById('kv-scent-modal-add');
+      if (addBtn) addBtn.style.display = '';
+
+      openedFromCart = false;
+    }
+
+    function openModal(btn) {
+      var els     = ensureModal();
+      var modal   = els.modal;
+      var overlay = els.overlay;
+
+      var title   = btn.getAttribute('data-product-title') || '';
+      var desc    = btn.getAttribute('data-product-description') || '';
+      var details = btn.getAttribute('data-product-details') || '';
+      var image   = btn.getAttribute('data-product-image') || '';
+      var variant = btn.getAttribute('data-product-variant') || '';
+      var badge   = btn.getAttribute('data-product-badge') || '';
+
+      /* Populate the modal (same IDs as kv-bundle-section) */
+      var elTitle   = document.getElementById('kv-scent-modal-title');
+      var elDesc    = document.getElementById('kv-scent-modal-description');
+      var elDetails = document.getElementById('kv-scent-modal-details');
+      var elImg     = document.getElementById('kv-scent-modal-img');
+      var elVariant = document.getElementById('kv-scent-modal-variant');
+      var elBadge   = document.getElementById('kv-scent-modal-badge');
+      var elAdd     = document.getElementById('kv-scent-modal-add');
+
+      if (elTitle)   elTitle.textContent = title;
+      if (elDesc)    elDesc.textContent = desc;
+      if (elDetails) elDetails.innerHTML = details ? details.replace(/\n/g, '<br>') : '';
+      if (elVariant) elVariant.textContent = variant;
+
+      if (elBadge) {
+        elBadge.textContent = badge;
+        elBadge.style.display = badge ? '' : 'none';
+      }
+
+      if (elImg) {
+        if (image) {
+          elImg.src = image;
+          elImg.alt = title;
+          elImg.parentElement.style.display = 'block';
+        } else {
+          elImg.parentElement.style.display = 'none';
+        }
+      }
+
+      /* Hide Add button — not needed inside cart */
+      if (elAdd) elAdd.style.display = 'none';
+
+      openedFromCart = true;
+      overlay.classList.add('active');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    /* Intercept clicks/mousedowns/touchstart on the scent modal so they
+       never reach the cart drawer's focus-trap "allowOutsideClick" handler */
+    function interceptEvent(e) {
+      if (!openedFromCart) return;
+      var modal   = document.getElementById('kv-scent-modal');
+      var overlay = document.getElementById('kv-scent-modal-overlay');
+      var hitModal   = modal   && (modal === e.target   || modal.contains(e.target));
+      var hitOverlay = overlay && overlay === e.target;
+
+      if (hitModal || hitOverlay) {
+        e.stopImmediatePropagation();
+        if (e.type === 'click' && (hitOverlay || e.target.closest('.kv-scent-modal-close'))) {
+          closeModal();
+        }
+      }
+    }
+    document.addEventListener('click',      interceptEvent, true);
+    document.addEventListener('mousedown',  interceptEvent, true);
+    document.addEventListener('touchstart', interceptEvent, true);
+
+    /* Open handler — capture phase so we fire BEFORE the bundle section's
+       own handler (which has the kv-minicart guard that blocks opening) */
+    document.addEventListener('click', function(e) {
+      var infoBtn = e.target.closest('.kv-scent-info-btn');
+      if (!infoBtn) return;
+      if (!infoBtn.closest('#cart-drawer')) return;
+
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      openModal(infoBtn);
+    }, true);
+
+  })();
+</script>
+
+<script>
+  /* Force reload when navigating back from checkout page */
+  (function() {
+    /* Use the Performance Navigation API to detect if page was loaded via back button */
+    if (window.performance && window.performance.navigation) {
+      /* Check if page was loaded via back/forward navigation (type 2) */
+      if (window.performance.navigation.type === 2) {
+        /* User came back via browser back button, force reload */
+        window.location.reload();
+      }
+    }
+
+    /* Also use the newer PerformanceNavigationTiming API as fallback */
+    if (window.performance && window.performance.getEntriesByType) {
+      var navEntries = window.performance.getEntriesByType('navigation');
+      if (navEntries.length > 0 && navEntries[0].type === 'back_forward') {
+        /* User came back via browser back button, force reload */
+        window.location.reload();
+      }
+    }
+
+    /* Listen for pageshow event (fires when page is loaded from cache) */
+    window.addEventListener('pageshow', function(event) {
+      /* If page is loaded from cache (bfcache), reload it */
+      if (event.persisted) {
+        window.location.reload();
+      }
+    });
+
+    /* Store a flag before navigating to checkout */
+    document.addEventListener('click', function(e) {
+      var checkoutBtn = e.target.closest('#kv-checkout-secure, #kv-checkout-without');
+      if (checkoutBtn) {
+        /* Set flag in sessionStorage before going to checkout */
+        try {
+          sessionStorage.setItem('kv_from_checkout', 'true');
+        } catch (err) {
+          /* Ignore if sessionStorage is not available */
+        }
+      }
+    });
+
+    /* Check if we came back from checkout and force reload */
+    try {
+      if (sessionStorage.getItem('kv_from_checkout') === 'true') {
+        /* Clear the flag */
+        sessionStorage.removeItem('kv_from_checkout');
+        /* Force reload if not already reloading */
+        if (!sessionStorage.getItem('kv_reloaded')) {
+          sessionStorage.setItem('kv_reloaded', 'true');
+          window.location.reload();
+        } else {
+          /* Clean up reload flag */
+          sessionStorage.removeItem('kv_reloaded');
+        }
+      }
+    } catch (err) {
+      /* Ignore if sessionStorage is not available */
+    }
+  })();
+</script>
+
+<script>
+  function getAmsterdamToday() {
+    var now = new Date();
+    var ams = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' }));
+    if (ams.getHours() > 22 || (ams.getHours() === 22 && ams.getMinutes() >= 59)) {
+      ams.setDate(ams.getDate() + 1);
+    }
+    ams.setHours(0, 0, 0, 0);
+    return ams;
+  }
+
+  function getShippingDate() {
+    var today = getAmsterdamToday();
+    var day = today.getDay();
+    if (day === 0) today.setDate(today.getDate() + 1);
+    if (day === 6) today.setDate(today.getDate() + 2);
+    return today;
+  }
+
+  /* Read more / Read less toggle for cart drawer pre-order notice */
+  (function() {
+    document.addEventListener('click', function(e) {
+      var toggle = e.target.closest('.kv-cart__preorder-toggle');
+      if (!toggle) return;
+      e.preventDefault();
+      var infoBlock = toggle.closest('.kv-cart__preorder-notice-info');
+      if (!infoBlock) return;
+      var collapsed = infoBlock.querySelector('.kv-cart__preorder-collapsed');
+      var expanded = infoBlock.querySelector('.kv-cart__preorder-expanded');
+      if (toggle.dataset.action === 'expand') {
+        collapsed.style.display = 'none';
+        expanded.style.display = '';
+      } else {
+        collapsed.style.display = '';
+        expanded.style.display = 'none';
+      }
+    });
+
+    var kvCountryCode = '{{ localization.country.iso_code }}';
+    var kvDeliveryDays = {
+      nl: {{ settings.delivery_days_nl | default: 1 }},
+      be: {{ settings.delivery_days_be | default: 1 }},
+      de: {{ settings.delivery_days_de | default: 2 }},
+      euMin: {{ settings.delivery_days_eu_min | default: 3 }},
+      euMax: {{ settings.delivery_days_eu_max | default: 4 }},
+      rowMin: {{ settings.delivery_days_row_min | default: 6 }},
+      rowMax: {{ settings.delivery_days_row_max | default: 10 }}
+    };
+    var kvEuCountries = ['AT','BG','HR','CY','CZ','DK','EE','FI','FR','GR','HU','IE','IT','LV','LT','LU','MT','PL','PT','RO','SK','SI','ES','SE'];
+    var kvMonthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+    function getMarketDeliveryDays() {
+      switch (kvCountryCode) {
+        case 'NL': return { min: kvDeliveryDays.nl, max: kvDeliveryDays.nl };
+        case 'BE': return { min: kvDeliveryDays.be, max: kvDeliveryDays.be };
+        case 'DE': return { min: kvDeliveryDays.de, max: kvDeliveryDays.de };
+        default:
+          if (kvEuCountries.indexOf(kvCountryCode) !== -1) {
+            return { min: kvDeliveryDays.euMin, max: kvDeliveryDays.euMax };
+          }
+          return { min: kvDeliveryDays.rowMin, max: kvDeliveryDays.rowMax };
+      }
+    }
+
+    function formatDeliveryRange(baseDate, minDays, maxDays) {
+      var startDate = new Date(baseDate);
+      startDate.setDate(startDate.getDate() + minDays);
+      var endDate = new Date(baseDate);
+      endDate.setDate(endDate.getDate() + maxDays);
+      if (minDays === maxDays) {
+        return startDate.getDate() + ' ' + kvMonthNames[startDate.getMonth()];
+      } else if (startDate.getMonth() === endDate.getMonth()) {
+        return startDate.getDate() + ' - ' + endDate.getDate() + ' ' + kvMonthNames[endDate.getMonth()];
+      } else {
+        return startDate.getDate() + ' ' + kvMonthNames[startDate.getMonth()] + ' - ' + endDate.getDate() + ' ' + kvMonthNames[endDate.getMonth()];
+      }
+    }
+
+    function updateInstockDates() {
+      var instockDatesEl = document.getElementById('kv-cart-instock-dates');
+      if (!instockDatesEl) return;
+      var days = getMarketDeliveryDays();
+      instockDatesEl.textContent = formatDeliveryRange(getShippingDate(), days.min, days.max);
+    }
+
+    function updatePreorderDates() {
+      var preorderDatesEl = document.getElementById('kv-cart-preorder-dates');
+      if (!preorderDatesEl) return;
+      var notice = preorderDatesEl.closest('.kv-cart__preorder-notice');
+      if (!notice) return;
+      var stockDateStr = notice.getAttribute('data-preorder-stock-date');
+      if (!stockDateStr) return;
+      var stockDate = new Date(stockDateStr);
+      if (isNaN(stockDate.getTime())) return;
+      var days = getMarketDeliveryDays();
+      preorderDatesEl.textContent = formatDeliveryRange(stockDate, days.min, days.max);
+    }
+
+    function updateAllDates() {
+      updateInstockDates();
+      updatePreorderDates();
+    }
+
+    updateAllDates();
+
+    document.addEventListener('cart:refresh', function() {
+      setTimeout(updateAllDates, 300);
+    });
+    document.documentElement.addEventListener('cart:refresh', function() {
+      setTimeout(updateAllDates, 300);
+    });
+
+    var drawer = document.querySelector('cart-drawer');
+    if (drawer) {
+      var datesObserver = new MutationObserver(function() {
+        setTimeout(updateAllDates, 100);
+      });
+      datesObserver.observe(drawer, { childList: true, subtree: true });
+    }
+  })();
+</script>

@@ -1,0 +1,307 @@
+<script>
+  window.all_products = {
+    {% for product in collections.all.products %}
+      "{{ product.handle }}": {
+        metafields: {
+          custom: {
+            key_notes: {{ product.metafields.custom.key_notes | json }}
+          }
+        }
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  };
+</script>
+
+<script>
+  window.SimpleBundles = {
+    productVariants: {}
+  };
+
+  {% if product %}
+    {% for variant in product.variants %}
+      {% assign variant_options_v2 = variant.metafields.simple_bundles.variant_options_v2.value %}
+      {% assign variant_options_v1 = variant.metafields.simple_bundles.variant_options.value %}
+      {% if variant_options_v1 or variant_options_v2 %}
+        {% capture bundle_options_selector_html %}
+          {% render 'simple-bundles-options', variant: variant, div_id: 'simple-bundles-io-options' %}
+        {% endcapture %}
+        window.SimpleBundles.productVariants[{{ variant.id }}] = {
+          id: {{ variant.id }},
+          title: {{ variant.title | json }},
+          variant_options: {{ variant_options_v1 | json }},
+          variant_options_v2: {{ variant_options_v2 | json }},
+          bundle_options_selector_html: {{ bundle_options_selector_html | json }}
+        };
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  
+  (function () {
+    var forms = document.querySelectorAll('form[action*="cart/Add" i]');
+
+    function updateBundleSelection(form, variantId) {
+      var bundleSelectionField = form.querySelector(
+        'input[name="properties[_bundle_selection]"]'
+      );
+      var variantOptionsV2 =
+        window.SimpleBundles.productVariants[variantId].variant_options_v2;
+      var variantOptions =
+        window.SimpleBundles.productVariants[variantId].variant_options;
+
+      if (variantOptionsV2) {
+        var selectionValues = variantOptionsV2.map(function (optionGroup) {
+          return optionGroup
+            .map(function (option) {
+              var selectField = form.querySelector(
+                '[type="hidden"][name="properties[' + option.optionName + ']"]'
+              );
+              return selectField ? selectField.value : "";
+            })
+            .join(" ++ ");
+        });
+        bundleSelectionField.value = selectionValues.join(" <> ");
+      } else if (variantOptions) {
+        var selectionValues = variantOptions.map(function (option) {
+          var selectField = form.querySelector(
+            '[name="properties[' + option.optionName + ']"]'
+          );
+          return selectField ? selectField.value : "";
+        });
+        
+        bundleSelectionField.value = selectionValues.join(" <> ");
+      }
+    }
+
+    function setHiddenFields(select, variantId) {
+      forms.forEach(function (form) {
+        var hiddenField = form.querySelector(
+          'input[type="hidden"][name="' + select.name + '"]'
+        );
+
+        if (hiddenField) {
+          hiddenField.value = select.value;
+        } else {
+          hiddenField = document.createElement("input");
+          hiddenField.type = "hidden";
+          hiddenField.name = select.name;
+          hiddenField.value = select.value;
+          form.appendChild(hiddenField);
+        }
+
+        select.addEventListener("click", function () {
+          hiddenField.value = select.value;
+          updateBundleSelection(form, variantId);
+        });
+      });
+    }
+
+    function handleVariantChange(form) {
+      var submitButton = form.querySelector(
+        'button[type="submit"], input[type="submit"]'
+      );
+      var variantIdInput = form.querySelector(
+        'input[name="id"], select[name="id"]'
+      );
+      var variantId = variantIdInput ? variantIdInput.value : null;
+
+      if (!variantId || !window.SimpleBundles.productVariants[variantId]) {
+        return;
+      }
+
+      var bundleOptionsHtml =
+        window.SimpleBundles.productVariants[variantId]
+          .bundle_options_selector_html;
+      var optionsContainer = document.querySelector(
+        "[data-simple-bundles-options]"
+      );
+
+      if (optionsContainer) {
+        optionsContainer.innerHTML = "";
+        optionsContainer.insertAdjacentHTML("afterbegin", bundleOptionsHtml);
+      } else if (submitButton) {
+        var existingOptions = form.querySelector("[data-simple-bundles-options]");
+        if (existingOptions) {
+          existingOptions.remove();
+        }
+
+        optionsContainer = document.createElement("div");
+        optionsContainer.setAttribute("data-simple-bundles-options", "");
+        optionsContainer.insertAdjacentHTML("afterbegin", bundleOptionsHtml);
+        form.insertAdjacentElement("afterbegin", optionsContainer);
+      }
+
+      var selectFields = optionsContainer
+        ? optionsContainer.querySelectorAll('[type="radio"]')
+        : [];
+      selectFields.forEach(function (select) {
+        setHiddenFields(select, variantId);
+      });
+
+      var bundleSelectionField = form.querySelector(
+        'input[name="properties[_bundle_selection]"]'
+      );
+
+      if (!bundleSelectionField) {
+        bundleSelectionField = document.createElement("input");
+        bundleSelectionField.type = "hidden";
+        bundleSelectionField.name = "properties[_bundle_selection]";
+        form.appendChild(bundleSelectionField);
+      }
+
+      updateBundleSelection(form, variantId);
+    }
+
+    function initialize() {
+      forms.forEach(function (form) {
+        handleVariantChange(form);
+        setTimeout(() => {
+          handleVariantChange(form);
+        }, 500);
+
+        var observer = new MutationObserver(function () {
+          handleVariantChange(form);
+        });
+
+        var variantIdField = form.querySelector(
+          'input[name="id"], select[name="id"]'
+        );
+
+        if (variantIdField) {
+          observer.observe(variantIdField, { attributes: true });
+        }
+      });
+    };
+
+    // This will be fired on the initial page load
+    document.addEventListener("DOMContentLoaded", initialize);
+
+    // This will be fired when the user navigates to the document
+    window.addEventListener("pageshow", function (event) {
+      // The 'persisted' property is true when the page is loaded from the bfcache
+      if (event.persisted) {
+        initialize();
+      }
+    });
+  })();
+</script>
+
+<script>
+function wait(selector, callBack) {
+  const interval = setInterval(() => {
+    const element = document.querySelector(selector);
+    if (element) {
+      setTimeout(callBack, 200);
+      clearInterval(interval);
+    }
+  }, 300);
+  setTimeout(() => {
+    clearInterval(interval);
+  }, 10000);
+}
+
+wait("#simple-bundles-io-options", () => {
+  setTimeout(() => {
+    setVariants();
+  }, 500);
+});
+
+function setVariants() {
+  // Function to update the selected variant text
+  function updateSelectedVariant(event) {
+    const input = event.target;
+
+    const selectedVariantContainer = input
+  .closest('.variant-block')
+  ?.querySelector('.selected-variant');
+
+     // Nieuw: Zoek de key_notes op en toon ze
+  const variantTitle = input.value;
+  const allProducts = window.all_products || {}; // <-- Zorg dat je deze via Liquid beschikbaar maakt
+  const handle = variantTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const product = allProducts[handle];
+
+  const selectedKeynotesContainer = input
+    .closest('.variant-block')
+    ?.querySelector('.selected-keynotes');
+
+  if (selectedKeynotesContainer && product?.metafields?.custom?.key_notes) {
+  selectedKeynotesContainer.innerHTML = `<span style="color: #5e5e5e;">Belangrijkste geurtonen:</span> ${product.metafields.custom.key_notes}`;
+} else if (selectedKeynotesContainer) {
+  selectedKeynotesContainer.textContent = "";
+}
+
+    if (selectedVariantContainer) {
+      selectedVariantContainer.textContent = input.value;
+    }
+  }
+
+  // Attach the event listener to all radio buttons within the #simple-bundles-io-options container
+  const variantInputs = document.querySelectorAll('#simple-bundles-io-options input[type="radio"]');
+
+  variantInputs.forEach(function (input) {
+    input.addEventListener("change", updateSelectedVariant);
+  });
+
+  // Trigger update for the initially checked radio buttons
+  variantInputs.forEach(function (input) {
+    if (input.checked) {
+      updateSelectedVariant({ target: input });
+    }
+  });
+}
+
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const scentSlug = new URLSearchParams(window.location.search).get("scent");
+    if (!scentSlug) return;
+
+    const scentMap = {
+      "calming-lavender": "Calming Lavender",
+      "soft-harmony": "Soft Harmony",
+      "classic-charm": "Classic Charm",
+      "pure-nirvana": "Pure Nirvana",
+      "wild-blossom": "Wild Blossom",
+      "tea-whisper": "Tea Whisper",
+      "energize": "Energize",
+      "pure-blossom": "Pure Blossom",
+      "garden-mist": "Garden Mist",
+      "dark-elixer": "Dark Elixir",
+      "endless-path": "Endless Path",
+      "amber-glow": "Amber Glow"
+    };
+
+    const scentLabel = scentMap[scentSlug.toLowerCase()];
+    if (!scentLabel) return;
+
+    const trySelectScent = () => {
+      const inputs = document.querySelectorAll('input[type="radio"][name="properties[Kies uw geur]"]');
+      if (inputs.length === 0) return false;
+
+      for (const input of inputs) {
+        if (input.value.trim().toLowerCase() === scentLabel.toLowerCase()) {
+          input.checked = true;
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+          return true;
+        }
+      }
+      return false;
+    };
+
+    // Try immediately
+    if (trySelectScent()) return;
+
+    // Wait for options to load
+    const observer = new MutationObserver(() => {
+      if (trySelectScent()) {
+        observer.disconnect(); // Done observing
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  });
+</script>

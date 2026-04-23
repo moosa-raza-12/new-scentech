@@ -1,0 +1,166 @@
+{% comment %}
+  Announcement Bar
+  Scentech — aanpasbare banner bovenaan de pagina
+{% endcomment %}
+
+<style>
+  #announcement-bar-{{ section.id }} {
+    --color-bg:     {{ section.settings.color_bg }};
+    --color-text:   {{ section.settings.color_text }};
+    --color-accent: {{ section.settings.color_accent }};
+    --font-body:    '{{ section.settings.font_body }}', sans-serif;
+  }
+
+  #announcement-bar-{{ section.id }} .announcement-banner {
+    position: relative;
+    min-height: 44px;
+    padding: 8px 16px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 12px;
+    row-gap: 4px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0em;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  #announcement-bar-{{ section.id }} .announcement-banner span {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  #announcement-bar-{{ section.id }} .announcement-banner strong {
+    color: var(--color-text);
+    font-weight: 700;
+  }
+
+  @media (max-width: 860px) {
+    #announcement-bar-{{ section.id }} .announcement-banner {
+      flex-direction: column;
+      padding: 10px 16px;
+      font-size: 12px;
+    }
+    #announcement-bar-{{ section.id }} .announcement-banner .divider {
+      display: none;
+    }
+  }
+</style>
+
+<div id="announcement-bar-{{ section.id }}">
+  <div class="announcement-banner">
+    {% if section.settings.show_span1 %}
+      <span>{{ section.settings.span1_text }}</span>
+    {% endif %}
+    {% if section.settings.show_span1 and section.settings.show_span2 %}
+      <span class="divider">|</span>
+    {% endif %}
+    {% if section.settings.show_span2 %}
+      <span>{{ section.settings.span2_text }}</span>
+    {% endif %}
+    {% if section.settings.show_span2 and section.settings.show_span3 %}
+      <span class="divider">|</span>
+    {% endif %}
+    {% if section.settings.show_span3 %}
+      <span>{{ section.settings.span3_text }}</span>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "tag": "div",
+  "class": "announcement-bar-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Banterteksten"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_span1",
+      "label": "Toon tekst 1",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "span1_text",
+      "label": "Bannertekst 1",
+      "default": "🎁 <strong>Gratis diffuser</strong> vanaf 5 geuren"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_span2",
+      "label": "Toon tekst 2",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "span2_text",
+      "label": "Bannertekst 2",
+      "default": "⭐⭐⭐⭐⭐ 4.8 stars • 85K+ reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_span3",
+      "label": "Toon tekst 3",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "span3_text",
+      "label": "Bannertekst 3",
+      "default": "🚚 Gratis verzending vanaf €50"
+    },
+    {
+      "type": "header",
+      "content": "Kleuren"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Achtergrondkleur",
+      "default": "#160000"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Tekstkleur",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accentkleur (goud)",
+      "default": "#FFB74A"
+    },
+    {
+      "type": "header",
+      "content": "Lettertype"
+    },
+    {
+      "type": "select",
+      "id": "font_body",
+      "label": "Lettertype",
+      "options": [
+        { "value": "Bai Jamjuree", "label": "Bai Jamjuree" },
+        { "value": "Playfair Display", "label": "Playfair Display" },
+        { "value": "Inter", "label": "Inter" }
+      ],
+      "default": "Bai Jamjuree"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Bar"
+    }
+  ]
+}
+{% endschema %}

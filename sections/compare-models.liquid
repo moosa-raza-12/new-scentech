@@ -1,0 +1,535 @@
+{{- 'product-block.css' | asset_url | stylesheet_tag: preload: true -}}
+
+<div class="compare-models-wrapper">
+  <button 
+    type="button"
+    id="compare-btn-{{ section.id }}"
+    class="compare-trigger-link"
+    aria-label="Compare models">
+    <span>{{ section.settings.button_text | default: 'Compare Models' }}</span>
+  </button>
+
+  <div id="compare-modal-{{ section.id }}" class="compare-modal" style="display: none;" aria-hidden="true">
+    <div class="compare-modal__backdrop"></div>
+    <div class="compare-modal__content">
+      <button class="compare-modal__close" aria-label="Close modal" type="button">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      
+      <div class="compare-modal__header">
+        <h2 class="h3">{{ section.settings.modal_title | default: 'Compare Models' }}</h2>
+      </div>
+      
+      <div class="compare-modal__grid">
+        <!-- Model 1 -->
+        <div class="compare-column">
+          <div class="product-header">
+            <h3 class="product-title">{{ section.settings.model1_title | default: 'Model 1' }}</h3>
+            <p class="product-subtitle">{{ section.settings.model1_subtitle }}</p>
+          </div>
+
+          {% if section.settings.model1_main_image != blank %}
+            <div class="product-image">
+              <img 
+                src="{{ section.settings.model1_main_image | image_url: width: 300 }}"
+                alt="{{ section.settings.model1_title | default: 'Model 1' }}"
+                loading="lazy">
+            </div>
+          {% endif %}
+
+          {% if section.settings.model1_price != blank or section.settings.model1_price_detail != blank %}
+            <div class="product-pricing">
+              {% if section.settings.model1_price != blank %}
+                <div class="price-main">{{ section.settings.model1_price }}</div>
+              {% endif %}
+              {% if section.settings.model1_price_detail != blank %}
+                <div class="price-detail">{{ section.settings.model1_price_detail }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          <div class="feature-rows">
+            {% for i in (1..8) %}
+              {% assign icon_key = 'model1_feature' | append: i | append: '_icon' %}
+              {% assign title_key = 'model1_feature' | append: i | append: '_title' %}
+              {% assign desc_key = 'model1_feature' | append: i | append: '_description' %}
+              
+              {% if section.settings[title_key] != blank or section.settings[desc_key] != blank %}
+                <div class="feature-row">
+                  {% if section.settings[icon_key] != blank %}
+                    <div class="feature-icon">
+                      <img 
+                        src="{{ section.settings[icon_key] | image_url: width: 60 }}" 
+                        alt="Feature icon"
+                        width="40" 
+                        height="40">
+                    </div>
+                  {% endif %}
+                  
+                  <div class="feature-content">
+                    {% if section.settings[title_key] != blank %}
+                      <h4 class="feature-title">{{ section.settings[title_key] }}</h4>
+                    {% endif %}
+                    {% if section.settings[desc_key] != blank %}
+                      <p class="feature-description">{{ section.settings[desc_key] }}</p>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Model 2 -->
+        <div class="compare-column">
+          <div class="product-header">
+            <h3 class="product-title">{{ section.settings.model2_title | default: 'Model 2' }}</h3>
+            <p class="product-subtitle">{{ section.settings.model2_subtitle }}</p>
+          </div>
+
+          {% if section.settings.model2_main_image != blank %}
+            <div class="product-image">
+              <img 
+                src="{{ section.settings.model2_main_image | image_url: width: 300 }}"
+                alt="{{ section.settings.model2_title | default: 'Model 2' }}"
+                loading="lazy">
+            </div>
+          {% endif %}
+
+          {% if section.settings.model2_price != blank or section.settings.model2_price_detail != blank %}
+            <div class="product-pricing">
+              {% if section.settings.model2_price != blank %}
+                <div class="price-main">{{ section.settings.model2_price }}</div>
+              {% endif %}
+              {% if section.settings.model2_price_detail != blank %}
+                <div class="price-detail">{{ section.settings.model2_price_detail }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          <div class="feature-rows">
+            {% for i in (1..8) %}
+              {% assign icon_key = 'model2_feature' | append: i | append: '_icon' %}
+              {% assign title_key = 'model2_feature' | append: i | append: '_title' %}
+              {% assign desc_key = 'model2_feature' | append: i | append: '_description' %}
+              
+              {% if section.settings[title_key] != blank or section.settings[desc_key] != blank %}
+                <div class="feature-row">
+                  {% if section.settings[icon_key] != blank %}
+                    <div class="feature-icon">
+                      <img 
+                        src="{{ section.settings[icon_key] | image_url: width: 60 }}" 
+                        alt="Feature icon"
+                        width="40" 
+                        height="40">
+                    </div>
+                  {% endif %}
+                  
+                  <div class="feature-content">
+                    {% if section.settings[title_key] != blank %}
+                      <h4 class="feature-title">{{ section.settings[title_key] }}</h4>
+                    {% endif %}
+                    {% if section.settings[desc_key] != blank %}
+                      <p class="feature-description">{{ section.settings[desc_key] }}</p>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function initializeCompareModal(sectionId) {
+  const openBtn = document.getElementById('compare-btn-' + sectionId);
+  const modal = document.getElementById('compare-modal-' + sectionId);
+
+  if (!openBtn || !modal) return;
+
+  const closeBtn = modal.querySelector('.compare-modal__close');
+  const backdrop = modal.querySelector('.compare-modal__backdrop');
+
+  function closeModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+    modal.setAttribute('aria-hidden', 'true');
+    openBtn.focus();
+  }
+
+  openBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    modal.setAttribute('aria-hidden', 'false');
+    closeBtn.focus();
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.style.display === 'flex') {
+      closeModal();
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => initializeCompareModal('{{ section.id }}'));
+
+document.addEventListener('shopify:section:load', function(event) {
+  if (event.detail.sectionId === '{{ section.id }}') {
+    initializeCompareModal('{{ section.id }}');
+  }
+});
+</script>
+
+{% schema %}
+{
+  "name": "Compare Models",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Compare Models"
+    },
+    {
+      "type": "text",
+      "id": "modal_title",
+      "label": "Modal Title",
+      "default": "Compare Models"
+    },
+
+    {
+      "type": "header",
+      "content": "Model 1"
+    },
+    {
+      "type": "text",
+      "id": "model1_title",
+      "label": "Model 1 Title",
+      "default": "Model 1"
+    },
+    {
+      "type": "text",
+      "id": "model1_subtitle",
+      "label": "Model 1 Subtitle"
+    },
+    {
+      "type": "image_picker",
+      "id": "model1_main_image",
+      "label": "Model 1 Main Image"
+    },
+    {
+      "type": "text",
+      "id": "model1_price",
+      "label": "Model 1 Price"
+    },
+    {
+      "type": "text",
+      "id": "model1_price_detail",
+      "label": "Model 1 Price Details"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model1_feature1_icon",
+      "label": "Feature 1 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model1_feature1_title",
+      "label": "Feature 1 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model1_feature1_description",
+      "label": "Feature 1 Description"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model1_feature2_icon",
+      "label": "Feature 2 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model1_feature2_title",
+      "label": "Feature 2 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model1_feature2_description",
+      "label": "Feature 2 Description"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model1_feature3_icon",
+      "label": "Feature 3 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model1_feature3_title",
+      "label": "Feature 3 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model1_feature3_description",
+      "label": "Feature 3 Description"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model1_feature4_icon",
+      "label": "Feature 4 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model1_feature4_title",
+      "label": "Feature 4 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model1_feature4_description",
+      "label": "Feature 4 Description"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model1_feature5_icon",
+      "label": "Feature 5 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model1_feature5_title",
+      "label": "Feature 5 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model1_feature5_description",
+      "label": "Feature 5 Description"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model1_feature6_icon",
+      "label": "Feature 6 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model1_feature6_title",
+      "label": "Feature 6 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model1_feature6_description",
+      "label": "Feature 6 Description"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model1_feature7_icon",
+      "label": "Feature 7 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model1_feature7_title",
+      "label": "Feature 7 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model1_feature7_description",
+      "label": "Feature 7 Description"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model1_feature8_icon",
+      "label": "Feature 8 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model1_feature8_title",
+      "label": "Feature 8 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model1_feature8_description",
+      "label": "Feature 8 Description"
+    },
+
+    {
+      "type": "header",
+      "content": "Model 2"
+    },
+    {
+      "type": "text",
+      "id": "model2_title",
+      "label": "Model 2 Title",
+      "default": "Model 2"
+    },
+    {
+      "type": "text",
+      "id": "model2_subtitle",
+      "label": "Model 2 Subtitle"
+    },
+    {
+      "type": "image_picker",
+      "id": "model2_main_image",
+      "label": "Model 2 Main Image"
+    },
+    {
+      "type": "text",
+      "id": "model2_price",
+      "label": "Model 2 Price"
+    },
+    {
+      "type": "text",
+      "id": "model2_price_detail",
+      "label": "Model 2 Price Details"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model2_feature1_icon",
+      "label": "Feature 1 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model2_feature1_title",
+      "label": "Feature 1 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model2_feature1_description",
+      "label": "Feature 1 Description"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model2_feature2_icon",
+      "label": "Feature 2 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model2_feature2_title",
+      "label": "Feature 2 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model2_feature2_description",
+      "label": "Feature 2 Description"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model2_feature3_icon",
+      "label": "Feature 3 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model2_feature3_title",
+      "label": "Feature 3 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model2_feature3_description",
+      "label": "Feature 3 Description"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model2_feature4_icon",
+      "label": "Feature 4 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model2_feature4_title",
+      "label": "Feature 4 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model2_feature4_description",
+      "label": "Feature 4 Description"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model2_feature5_icon",
+      "label": "Feature 5 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model2_feature5_title",
+      "label": "Feature 5 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model2_feature5_description",
+      "label": "Feature 5 Description"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model2_feature6_icon",
+      "label": "Feature 6 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model2_feature6_title",
+      "label": "Feature 6 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model2_feature6_description",
+      "label": "Feature 6 Description"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model2_feature7_icon",
+      "label": "Feature 7 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model2_feature7_title",
+      "label": "Feature 7 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model2_feature7_description",
+      "label": "Feature 7 Description"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "model2_feature8_icon",
+      "label": "Feature 8 Icon"
+    },
+    {
+      "type": "text",
+      "id": "model2_feature8_title",
+      "label": "Feature 8 Title"
+    },
+    {
+      "type": "textarea",
+      "id": "model2_feature8_description",
+      "label": "Feature 8 Description"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Compare Models",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}

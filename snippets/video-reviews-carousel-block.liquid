@@ -1,0 +1,321 @@
+{%- comment -%}
+  Snippet: video-reviews-carousel-block.liquid
+  Gebruik: {%- render 'video-reviews-carousel-block', block: block -%}
+{%- endcomment -%}
+
+{%- assign has_videos = false -%}
+{%- for i in (1..8) -%}
+  {%- assign vid_key = 'video_' | append: i -%}
+  {%- assign vid = block.settings[vid_key] -%}
+  {%- if vid != blank -%}{%- assign has_videos = true -%}{%- endif -%}
+{%- endfor -%}
+
+{%- if has_videos -%}
+
+<div class="vrc-block" id="vrc-{{ block.id }}" style="--vrc-accent: {{ block.settings.heading_color | default: '#160000' }}; --vrc-bg: {{ block.settings.background_color | default: '#ffffff' }};">
+
+  {%- if block.settings.heading != blank -%}
+    <h2 class="vrc-heading" style="color: {{ block.settings.heading_color | default: '#160000' }};">
+      {{ block.settings.heading }}
+    </h2>
+  {%- endif -%}
+
+  <div class="vrc-scroll">
+
+    {%- for i in (1..8) -%}
+      {%- assign vid_key      = 'video_'           | append: i -%}
+      {%- assign thumb_key    = 'thumbnail_'       | append: i -%}
+      {%- assign name_key     = 'reviewer_name_'   | append: i -%}
+      {%- assign avatar_key   = 'reviewer_avatar_' | append: i -%}
+      {%- assign verified_key = 'verified_'        | append: i -%}
+
+      {%- assign vid      = block.settings[vid_key] -%}
+      {%- assign thumb    = block.settings[thumb_key] -%}
+      {%- assign rname    = block.settings[name_key] -%}
+      {%- assign ravatar  = block.settings[avatar_key] -%}
+      {%- assign verified = block.settings[verified_key] -%}
+
+      {%- if vid == blank -%}{%- continue -%}{%- endif -%}
+
+      {%- assign video_url = nil -%}
+      {%- if vid.sources -%}
+        {%- for source in vid.sources -%}
+          {%- if source.format == 'mp4' and video_url == nil -%}
+            {%- assign video_url = source.url -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if video_url == nil -%}
+          {%- assign video_url = vid.sources[0].url -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if video_url == nil -%}{%- continue -%}{%- endif -%}
+
+      <div class="vrc-item">
+        <div class="vrc-wrapper">
+
+          {%- if thumb != blank -%}
+            <img
+              src="{{ thumb | image_url: width: 400 }}"
+              alt="{{ rname | default: 'Video review' | escape }}"
+              class="vrc-thumbnail"
+              loading="lazy"
+              width="170"
+              height="300"
+            >
+          {%- endif -%}
+
+          <video
+            src="{{ video_url }}"
+            preload="metadata"
+            playsinline
+            class="vrc-video"
+            controlsList="nodownload nofullscreen noremoteplayback"
+          ></video>
+
+          <button class="vrc-toggle-btn" aria-label="Speel video af">
+            <span class="vrc-play-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 5.14v14l11-7-11-7z"/>
+              </svg>
+            </span>
+            <span class="vrc-pause-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+              </svg>
+            </span>
+          </button>
+
+          {%- if rname != blank -%}
+            <div class="vrc-reviewer">
+              {%- if ravatar != blank -%}
+                <img
+                  src="{{ ravatar | image_url: width: 80, height: 80, crop: 'center' }}"
+                  alt="{{ rname | escape }}"
+                  class="vrc-avatar"
+                  loading="lazy"
+                  width="22"
+                  height="22"
+                >
+              {%- endif -%}
+              <span class="vrc-name">
+                {{ rname }}
+                {%- if verified -%}
+                  <svg class="vrc-badge" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Geverifieerd">
+                    <circle cx="12" cy="12" r="10" fill="#3797F0"/>
+                    <path d="M8.5 12.5L10.75 14.75 15.5 9.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {%- endif -%}
+              </span>
+            </div>
+          {%- endif -%}
+
+        </div>
+      </div>
+    {%- endfor -%}
+
+  </div>
+</div>
+
+<style>
+  .vrc-block {
+    background: var(--vrc-bg, #fff);
+    padding: 24px 16px 20px;
+  }
+  .vrc-heading {
+    font-size: clamp(16px, 3vw, 20px);
+    font-weight: 700;
+    text-align: left;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+  }
+  .vrc-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+  }
+  .vrc-scroll::-webkit-scrollbar { height: 3px; }
+  .vrc-scroll::-webkit-scrollbar-track { background: #f0eded; border-radius: 10px; }
+  .vrc-scroll::-webkit-scrollbar-thumb { background: var(--vrc-accent, #160000); border-radius: 10px; }
+
+  .vrc-item {
+    flex: 0 0 auto;
+    width: 150px;
+    height: 267px;
+    scroll-snap-align: start;
+  }
+  .vrc-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #1a0a0a;
+  }
+  .vrc-thumbnail {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+  .vrc-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .vrc-video::-webkit-media-controls { display: none !important; }
+
+  .vrc-toggle-btn {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 3;
+  }
+  .vrc-play-icon,
+  .vrc-pause-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 50%;
+    color: var(--vrc-accent, #160000);
+    transition: opacity 0.3s ease;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  .vrc-play-icon svg,
+  .vrc-pause-icon svg { width: 20px; height: 20px; }
+
+  .vrc-pause-icon { display: none; }
+  .vrc-wrapper.is-playing .vrc-play-icon { display: none; }
+  .vrc-wrapper.is-playing .vrc-pause-icon { display: flex; }
+  .vrc-wrapper.is-playing.icon-hidden .vrc-pause-icon { opacity: 0; pointer-events: none; }
+
+  .vrc-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 56px;
+    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%);
+    pointer-events: none;
+    border-radius: 0 0 12px 12px;
+    z-index: 2;
+  }
+
+  .vrc-reviewer {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    z-index: 4;
+  }
+  .vrc-avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid rgba(255,255,255,0.7);
+    flex-shrink: 0;
+  }
+  .vrc-name {
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    line-height: 1;
+  }
+  .vrc-badge { width: 13px; height: 13px; flex-shrink: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vrc-thumbnail, .vrc-play-icon, .vrc-pause-icon { transition: none; }
+  }
+</style>
+
+<script>
+(function () {
+  var block = document.getElementById('vrc-{{ block.id }}');
+  if (!block) return;
+
+  block.querySelectorAll('.vrc-wrapper').forEach(function(wrapper) {
+    var video = wrapper.querySelector('.vrc-video');
+    var btn   = wrapper.querySelector('.vrc-toggle-btn');
+    var thumb = wrapper.querySelector('.vrc-thumbnail');
+
+    if (!video || !btn) return;
+
+    btn.addEventListener('click', function() {
+      if (video.paused) {
+        block.querySelectorAll('.vrc-video').forEach(function(v) {
+          if (v !== video) {
+            v.pause();
+            var w = v.closest('.vrc-wrapper');
+            if (w) {
+              w.classList.remove('is-playing', 'icon-hidden');
+              var t = w.querySelector('.vrc-thumbnail');
+              if (t) t.style.display = '';
+            }
+          }
+        });
+
+        video.muted = false;
+        video.play().catch(function(){});
+        wrapper.classList.add('is-playing');
+        btn.setAttribute('aria-label', 'Pauzeer video');
+        if (thumb) thumb.style.display = 'none';
+
+        clearTimeout(wrapper._vrcTimer);
+        wrapper._vrcTimer = setTimeout(function() {
+          wrapper.classList.add('icon-hidden');
+        }, 900);
+
+      } else {
+        video.pause();
+        wrapper.classList.remove('is-playing', 'icon-hidden');
+        btn.setAttribute('aria-label', 'Speel video af');
+        if (thumb) thumb.style.display = '';
+      }
+    });
+
+    wrapper.addEventListener('mouseenter', function() {
+      if (wrapper.classList.contains('is-playing')) {
+        clearTimeout(wrapper._vrcTimer);
+        wrapper.classList.remove('icon-hidden');
+      }
+    });
+    wrapper.addEventListener('mouseleave', function() {
+      if (wrapper.classList.contains('is-playing')) {
+        wrapper._vrcTimer = setTimeout(function() {
+          wrapper.classList.add('icon-hidden');
+        }, 600);
+      }
+    });
+
+    video.addEventListener('ended', function() {
+      wrapper.classList.remove('is-playing', 'icon-hidden');
+      btn.setAttribute('aria-label', 'Speel video af');
+      if (thumb) thumb.style.display = '';
+    });
+  });
+})();
+</script>
+
+{%- endif -%}

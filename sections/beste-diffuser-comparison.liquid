@@ -1,0 +1,745 @@
+{% comment %}
+  Beste Diffuser Comparison
+  Scentech — Ranked vergelijking #1–#4 met criteria-scores
+{% endcomment %}
+
+<style>
+  #bdc-{{ section.id }} {
+    --color-bg:       {{ section.settings.color_bg }};
+    --color-text:     {{ section.settings.color_text }};
+    --color-accent:   {{ section.settings.color_accent }};
+    --color-badge-bg: {{ section.settings.color_badge_bg }};
+    --color-winner-border: {{ section.settings.color_accent }};
+    --font-body: 'Bai Jamjuree', sans-serif;
+  }
+
+  #bdc-{{ section.id }} .bdc-wrapper {
+    background: var(--color-bg);
+    padding: clamp(48px, 7vw, 96px) 24px;
+    font-family: var(--font-body);
+  }
+
+  #bdc-{{ section.id }} .bdc-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  #bdc-{{ section.id }} .bdc-section-header {
+    margin-bottom: 48px;
+  }
+
+  #bdc-{{ section.id }} .bdc-section-header h2 {
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+    margin: 0 0 12px 0;
+    line-height: 1.25;
+  }
+
+  #bdc-{{ section.id }} .bdc-section-header p {
+    font-size: 15px;
+    color: var(--color-text);
+    opacity: 0.65;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 640px;
+  }
+
+  /* Item card */
+  #bdc-{{ section.id }} .bdc-item {
+    background: #ffffff;
+    border: 1px solid rgba(35, 31, 32, 0.10);
+    border-radius: 8px;
+    padding: 28px 28px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(35, 31, 32, 0.04);
+  }
+
+  #bdc-{{ section.id }} .bdc-item--winner {
+    border: 2px solid var(--color-winner-border);
+    background: #fffdf5;
+    box-shadow: 0 4px 16px rgba(35, 31, 32, 0.08);
+  }
+
+  #bdc-{{ section.id }} .bdc-item__inner {
+    display: flex;
+    gap: 28px;
+    align-items: stretch;
+  }
+
+  #bdc-{{ section.id }} .bdc-item__image {
+    flex: 0 0 200px;
+    width: 200px;
+    min-height: 100%;
+  }
+
+  #bdc-{{ section.id }} .bdc-item__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+  }
+
+  #bdc-{{ section.id }} .bdc-item__image-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    background: linear-gradient(160deg, #F5EFE8 0%, #EAE0D4 100%);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #8A8A8A;
+    letter-spacing: 0.06em;
+    text-align: center;
+  }
+
+  #bdc-{{ section.id }} .bdc-item__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Rank row */
+  #bdc-{{ section.id }} .bdc-item__top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  #bdc-{{ section.id }} .bdc-rank {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-text);
+    opacity: 0.45;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  #bdc-{{ section.id }} .bdc-badge {
+    background: var(--color-badge-bg);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  /* Title row */
+  #bdc-{{ section.id }} .bdc-item__title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  #bdc-{{ section.id }} .bdc-item__title {
+    font-size: clamp(17px, 2.2vw, 20px);
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  #bdc-{{ section.id }} .bdc-overall-score {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  #bdc-{{ section.id }} .bdc-overall-score__stars {
+    color: var(--color-accent);
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+
+  #bdc-{{ section.id }} .bdc-overall-score__number {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  /* Summary */
+  #bdc-{{ section.id }} .bdc-item__summary {
+    font-size: 14px;
+    color: var(--color-text);
+    opacity: 0.65;
+    line-height: 1.65;
+    margin: 0 0 20px 0;
+  }
+
+  /* Criteria */
+  #bdc-{{ section.id }} .bdc-criteria {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+
+  #bdc-{{ section.id }} .bdc-criteria tr {
+    border-bottom: 1px solid rgba(35, 31, 32, 0.07);
+  }
+
+  #bdc-{{ section.id }} .bdc-criteria tr:last-child {
+    border-bottom: none;
+  }
+
+  #bdc-{{ section.id }} .bdc-criteria td {
+    padding: 9px 0;
+    vertical-align: middle;
+    color: var(--color-text);
+  }
+
+  #bdc-{{ section.id }} .bdc-criteria__label {
+    font-weight: 600;
+    width: 38%;
+    min-width: 120px;
+  }
+
+  #bdc-{{ section.id }} .bdc-criteria__stars {
+    color: var(--color-accent);
+    font-size: 13px;
+    letter-spacing: 1px;
+    width: 90px;
+  }
+
+  #bdc-{{ section.id }} .bdc-criteria__note {
+    opacity: 0.55;
+    font-size: 13px;
+    padding-left: 12px;
+  }
+
+  /* Link */
+  #bdc-{{ section.id }} .bdc-item__link {
+    display: inline-block;
+    background: var(--color-text);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    margin-top: 4px;
+  }
+
+  #bdc-{{ section.id }} .bdc-item__link:hover {
+    opacity: 0.82;
+  }
+
+  @media (max-width: 600px) {
+    #bdc-{{ section.id }} .bdc-wrapper {
+      padding: 40px 16px;
+    }
+    #bdc-{{ section.id }} .bdc-item {
+      padding: 20px 16px;
+    }
+    #bdc-{{ section.id }} .bdc-item__inner {
+      flex-direction: column;
+    }
+    #bdc-{{ section.id }} .bdc-item__image {
+      flex: none;
+      width: 100%;
+    }
+    #bdc-{{ section.id }} .bdc-item__image img,
+    #bdc-{{ section.id }} .bdc-item__image-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+    }
+    #bdc-{{ section.id }} .bdc-criteria__note {
+      display: none;
+    }
+    #bdc-{{ section.id }} .bdc-item__title-row {
+      flex-direction: column;
+      gap: 6px;
+    }
+    #bdc-{{ section.id }} .bdc-item__link {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<section id="bdc-{{ section.id }}">
+  <div class="bdc-wrapper">
+    <div class="bdc-inner">
+
+      {%- if section.settings.heading != blank or section.settings.intro != blank -%}
+        <div class="bdc-section-header">
+          {%- if section.settings.heading != blank -%}
+            <h2>{{ section.settings.heading }}</h2>
+          {%- endif -%}
+          {%- if section.settings.intro != blank -%}
+            <p>{{ section.settings.intro }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- for block in section.blocks -%}
+        {%- assign rank = block.settings.rank -%}
+        <div class="bdc-item {% if rank == 1 %}bdc-item--winner{% endif %}" {{ block.shopify_attributes }}>
+
+          <!-- Rang + badge (boven de image+content rij) -->
+          <div class="bdc-item__top">
+            <span class="bdc-rank">#{{ rank }}</span>
+            {%- if block.settings.badge_text != blank -%}
+              <span class="bdc-badge">{{ block.settings.badge_text }}</span>
+            {%- endif -%}
+          </div>
+
+          <div class="bdc-item__inner">
+
+          <!-- Afbeelding -->
+          <div class="bdc-item__image">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 400 | image_tag: alt: block.settings.title, loading: 'lazy' }}
+            {%- else -%}
+              <div class="bdc-item__image-placeholder">Geen foto</div>
+            {%- endif -%}
+          </div>
+
+          <!-- Content -->
+          <div class="bdc-item__content">
+
+          <!-- Titel + eindscore -->
+          <div class="bdc-item__title-row">
+            <h3 class="bdc-item__title">{{ block.settings.title }}</h3>
+            {%- if block.settings.score_overall != blank -%}
+              <div class="bdc-overall-score">
+                <span class="bdc-overall-score__stars">
+                  {%- assign filled = block.settings.score_stars -%}
+                  {%- for i in (1..5) -%}
+                    {%- if i <= filled -%}★{%- else -%}☆{%- endif -%}
+                  {%- endfor -%}
+                </span>
+                <span class="bdc-overall-score__number">{{ block.settings.score_overall }}</span>
+              </div>
+            {%- endif -%}
+          </div>
+
+          <!-- Samenvatting -->
+          {%- if block.settings.summary != blank -%}
+            <p class="bdc-item__summary">{{ block.settings.summary }}</p>
+          {%- endif -%}
+
+          <!-- Criteria tabel -->
+          <table class="bdc-criteria">
+            {%- assign criteria_labels = block.settings.crit_1_label | append: '|||' | append: block.settings.crit_2_label | append: '|||' | append: block.settings.crit_3_label | append: '|||' | append: block.settings.crit_4_label | append: '|||' | append: block.settings.crit_5_label | split: '|||' -%}
+            {%- assign criteria_stars = block.settings.crit_1_stars | append: '|||' | append: block.settings.crit_2_stars | append: '|||' | append: block.settings.crit_3_stars | append: '|||' | append: block.settings.crit_4_stars | append: '|||' | append: block.settings.crit_5_stars | split: '|||' -%}
+            {%- assign criteria_notes = block.settings.crit_1_note | append: '|||' | append: block.settings.crit_2_note | append: '|||' | append: block.settings.crit_3_note | append: '|||' | append: block.settings.crit_4_note | append: '|||' | append: block.settings.crit_5_note | split: '|||' -%}
+
+            {%- for label in criteria_labels -%}
+              {%- if label != blank -%}
+                {%- assign star_count = criteria_stars[forloop.index0] | plus: 0 -%}
+                <tr>
+                  <td class="bdc-criteria__label">{{ label }}</td>
+                  <td class="bdc-criteria__stars">
+                    {%- for i in (1..5) -%}
+                      {%- if i <= star_count -%}★{%- else -%}☆{%- endif -%}
+                    {%- endfor -%}
+                  </td>
+                  <td class="bdc-criteria__note">{{ criteria_notes[forloop.index0] }}</td>
+                </tr>
+              {%- endif -%}
+            {%- endfor -%}
+          </table>
+
+          <!-- Link knop -->
+          {%- if block.settings.show_link and block.settings.link_url != blank -%}
+            <a href="{{ block.settings.link_url }}" class="bdc-item__link">
+              {{ block.settings.link_text | default: 'Bekijk product →' }}
+            </a>
+          {%- endif -%}
+
+          </div><!-- /bdc-item__content -->
+          </div><!-- /bdc-item__inner -->
+        </div>
+      {%- endfor -%}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Diffuser Vergelijking",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Sectietitel",
+      "default": "De beste aroma diffusers vergeleken — onze top 4"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro tekst",
+      "default": "We hebben de vier populairste typen aroma diffusers gerangschikt op vijf criteria die er voor thuisgebruik écht toe doen."
+    },
+    {
+      "type": "header",
+      "content": "Kleuren"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Achtergrond",
+      "default": "#F1F1F1"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Tekst",
+      "default": "#231F20"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent (sterren)",
+      "default": "#FFB74A"
+    },
+    {
+      "type": "color",
+      "id": "color_badge_bg",
+      "label": "Badge achtergrond",
+      "default": "#160000"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Productafbeelding"
+        },
+        {
+          "type": "header",
+          "content": "Positie & titel"
+        },
+        {
+          "type": "range",
+          "id": "rank",
+          "label": "Rang",
+          "min": 1,
+          "max": 4,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Naam",
+          "default": "Scentech Cold Air Diffuser"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge tekst (bijv. Beste keuze)",
+          "default": "Beste keuze"
+        },
+        {
+          "type": "textarea",
+          "id": "summary",
+          "label": "Korte omschrijving",
+          "default": "Dezelfde technologie als luxe hotels. Geen water, geen warmte."
+        },
+        {
+          "type": "header",
+          "content": "Eindscore"
+        },
+        {
+          "type": "range",
+          "id": "score_stars",
+          "label": "Sterren (1–5)",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "score_overall",
+          "label": "Score tekst (bijv. 9.2/10)",
+          "default": "9.2/10"
+        },
+        {
+          "type": "header",
+          "content": "Criterium 1"
+        },
+        {
+          "type": "text",
+          "id": "crit_1_label",
+          "label": "Naam criterium 1",
+          "default": "Geurkracht"
+        },
+        {
+          "type": "range",
+          "id": "crit_1_stars",
+          "label": "Score (1–5)",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "crit_1_note",
+          "label": "Toelichting",
+          "default": "Cold air = geen verlies van geurmoleculen"
+        },
+        {
+          "type": "header",
+          "content": "Criterium 2"
+        },
+        {
+          "type": "text",
+          "id": "crit_2_label",
+          "label": "Naam criterium 2",
+          "default": "Gebruiksgemak"
+        },
+        {
+          "type": "range",
+          "id": "crit_2_stars",
+          "label": "Score (1–5)",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "crit_2_note",
+          "label": "Toelichting",
+          "default": "Plug & play, app-bediening"
+        },
+        {
+          "type": "header",
+          "content": "Criterium 3"
+        },
+        {
+          "type": "text",
+          "id": "crit_3_label",
+          "label": "Naam criterium 3",
+          "default": "Slimme bediening"
+        },
+        {
+          "type": "range",
+          "id": "crit_3_stars",
+          "label": "Score (1–5)",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "crit_3_note",
+          "label": "Toelichting",
+          "default": "Schema + intensiteit via app"
+        },
+        {
+          "type": "header",
+          "content": "Criterium 4"
+        },
+        {
+          "type": "text",
+          "id": "crit_4_label",
+          "label": "Naam criterium 4",
+          "default": "Design"
+        },
+        {
+          "type": "range",
+          "id": "crit_4_stars",
+          "label": "Score (1–5)",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "text",
+          "id": "crit_4_note",
+          "label": "Toelichting",
+          "default": "Premium, past in elk interieur"
+        },
+        {
+          "type": "header",
+          "content": "Criterium 5"
+        },
+        {
+          "type": "text",
+          "id": "crit_5_label",
+          "label": "Naam criterium 5",
+          "default": "Kosten per dag"
+        },
+        {
+          "type": "range",
+          "id": "crit_5_stars",
+          "label": "Score (1–5)",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "text",
+          "id": "crit_5_note",
+          "label": "Toelichting",
+          "default": "<€1 per dag (€27,95 / 30–60 dagen)"
+        },
+        {
+          "type": "header",
+          "content": "Link knop"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_link",
+          "label": "Toon link knop",
+          "default": false
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Knoptekst",
+          "default": "Bekijk Scentech →"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Diffuser Vergelijking",
+      "blocks": [
+        {
+          "type": "product",
+          "settings": {
+            "rank": 1,
+            "title": "Scentech Cold Air Diffuser",
+            "badge_text": "Beste keuze",
+            "summary": "Dezelfde technologie als luxe hotels — nu voor thuis. Geen water, geen warmte. De geur blijft volledig intact van eerste tot laatste druppel.",
+            "score_stars": 5,
+            "score_overall": "9.2/10",
+            "crit_1_label": "Geurkracht",
+            "crit_1_stars": 5,
+            "crit_1_note": "Cold air = geen verlies van geurmoleculen",
+            "crit_2_label": "Gebruiksgemak",
+            "crit_2_stars": 5,
+            "crit_2_note": "Plug & play, app-bediening",
+            "crit_3_label": "Slimme bediening",
+            "crit_3_stars": 5,
+            "crit_3_note": "Schema + intensiteit via app",
+            "crit_4_label": "Design",
+            "crit_4_stars": 4,
+            "crit_4_note": "Premium, past in elk interieur",
+            "crit_5_label": "Kosten per dag",
+            "crit_5_stars": 4,
+            "crit_5_note": "<€1 per dag (€27,95 / 30–60 dagen)",
+            "show_link": true,
+            "link_text": "Bekijk Scentech →"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "rank": 2,
+            "title": "Professioneel HVAC-geursysteem",
+            "badge_text": "",
+            "summary": "Dezelfde cold air technologie, maar bedoeld voor commerciële installaties. Krachtig, maar vereist technische kennis en kost al snel €1.500–€5.000+.",
+            "score_stars": 4,
+            "score_overall": "7.1/10",
+            "crit_1_label": "Geurkracht",
+            "crit_1_stars": 5,
+            "crit_1_note": "Professioneel, krachtig",
+            "crit_2_label": "Gebruiksgemak",
+            "crit_2_stars": 2,
+            "crit_2_note": "Installatievereisten, niet plug & play",
+            "crit_3_label": "Slimme bediening",
+            "crit_3_stars": 4,
+            "crit_3_note": "Aanwezig, maar complex",
+            "crit_4_label": "Design",
+            "crit_4_stars": 3,
+            "crit_4_note": "Technisch, niet woonkamervriendelijk",
+            "crit_5_label": "Kosten per dag",
+            "crit_5_stars": 1,
+            "crit_5_note": "Aanschaf al €1.500+, plus installatie",
+            "show_link": false
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "rank": 3,
+            "title": "Ultrasone diffuser",
+            "badge_text": "",
+            "summary": "Populair op bol.com. Water verdunt de olie en warmte breekt de geur af. Resultaat: zwak, vluchtig en na een uur al weg.",
+            "score_stars": 3,
+            "score_overall": "5.4/10",
+            "crit_1_label": "Geurkracht",
+            "crit_1_stars": 2,
+            "crit_1_note": "Water + warmte = verlies van geurintensiteit",
+            "crit_2_label": "Gebruiksgemak",
+            "crit_2_stars": 4,
+            "crit_2_note": "Eenvoudig, water bijvullen",
+            "crit_3_label": "Slimme bediening",
+            "crit_3_stars": 2,
+            "crit_3_note": "Beperkt of geen app",
+            "crit_4_label": "Design",
+            "crit_4_stars": 3,
+            "crit_4_note": "Plastic, functioneel",
+            "crit_5_label": "Kosten per dag",
+            "crit_5_stars": 4,
+            "crit_5_note": "Goedkoop in aanschaf, olie snel op",
+            "show_link": false
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "rank": 4,
+            "title": "Plug-in / spray (Ambipur e.d.)",
+            "badge_text": "",
+            "summary": "Overal verkrijgbaar en goedkoop. De geur is kunstmatig, werkt alleen lokaal en je hebt geen controle.",
+            "score_stars": 2,
+            "score_overall": "3.8/10",
+            "crit_1_label": "Geurkracht",
+            "crit_1_stars": 2,
+            "crit_1_note": "Oppervlakkig, lokaal effect",
+            "crit_2_label": "Gebruiksgemak",
+            "crit_2_stars": 5,
+            "crit_2_note": "Insteken en klaar",
+            "crit_3_label": "Slimme bediening",
+            "crit_3_stars": 1,
+            "crit_3_note": "Geen",
+            "crit_4_label": "Design",
+            "crit_4_stars": 3,
+            "crit_4_note": "Neutraal, verdwijnt in de muur",
+            "crit_5_label": "Kosten per dag",
+            "crit_5_stars": 2,
+            "crit_5_note": "Cartridges zijn duur per geurdag",
+            "show_link": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

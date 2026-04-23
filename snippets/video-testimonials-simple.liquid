@@ -1,0 +1,246 @@
+{%- comment -%}
+Usage: {% render 'video-testimonials', block: block, snippet_id: block.id %}
+{%- endcomment -%}
+
+{%- assign has_videos = false -%}
+{%- for i in (1..6) -%}
+  {%- assign video_key = 'video_' | append: i -%}
+  {%- if block.settings[video_key] -%}
+    {%- assign has_videos = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if has_videos -%}
+<div class="video-testimonials-block">
+  <h2 class="h6" style="margin-bottom: 20px; text-align: center; display: block;">
+    {{ block.settings.title | default: "Loved by 200,000+ happy customers." }}
+  </h2>
+
+  <div class="video-slider-container" style="margin-top: 10px; margin-bottom: 10px;">
+    <div class="swiper video-testimonials-slider" id="video-testimonials-{{ snippet_id | default: 'default' }}">
+      <div class="swiper-wrapper">
+        {%- for i in (1..6) -%}
+          {%- assign video_key = 'video_' | append: i -%}
+          {%- assign thumbnail_key = 'thumbnail_' | append: i -%}
+          {%- assign alt_key = 'alt_' | append: i -%}
+          
+          {%- if block.settings[video_key] -%}
+            <div class="swiper-slide">
+              <div class="video-slide" onclick="loadVideo(this, '{{ block.settings[video_key].sources[1].url | default: block.settings[video_key].sources[0].url }}')">
+                <div class="thumbnailimg">
+                  <!-- SVG Play Button -->
+                  <svg class="play-button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                    <path d="M64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576C178.6 576 64 461.4 64 320zM252.3 211.1C244.7 215.3 240 223.4 240 232L240 408C240 416.7 244.7 424.7 252.3 428.9C259.9 433.1 269.1 433 276.6 428.4L420.6 340.4C427.7 336 432.1 328.3 432.1 319.9C432.1 311.5 427.7 303.8 420.6 299.4L276.6 211.4C269.2 206.9 259.9 206.7 252.3 210.9z"/>
+                  </svg>
+                  {%- if block.settings[thumbnail_key] -%}
+                    <img 
+                      src="{{ block.settings[thumbnail_key] | image_url: width: 270 }}" 
+                      class="video-thumbnail" 
+                      alt="{{ block.settings[alt_key] | default: 'Video Preview' }}"
+                      loading="lazy"
+                    >
+                  {%- elsif block.settings[video_key] -%}
+                    <img 
+                      src="{{ block.settings[video_key].preview_image | image_url: width: 270 }}" 
+                      class="video-thumbnail" 
+                      alt="{{ block.settings[alt_key] | default: 'Video Preview' }}"
+                      loading="lazy"
+                    >
+                  {%- endif -%}
+                </div>
+                
+                <video width="100%" height="100%" controls style="display:none; border-radius: 8px; position: absolute; top: 0; left: 0; object-fit: cover;">
+                  <source type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                
+                <div class="video-play-overlay" style="display:none;">
+                  <i class="fa-solid fa-play"></i>
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    
+    <div class="swiper-scrollbar swiper-scrollbar-horizontal" style="margin-top: 10px;">
+      <div class="swiper-scrollbar-drag"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+.video-testimonials-block {
+  margin: 2rem 0;
+}
+
+.video-testimonials-slider {
+  overflow: hidden;
+  scroll-behavior: smooth; /* Smooth scrolling for the container */
+}
+
+.video-slide {
+  position: relative;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 9/16;
+}
+
+.thumbnailimg {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 9/16;
+}
+
+.thumbnailimg .play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2rem; /* Set the size of the play button to 2rem */
+  height: 2rem;
+  fill: white; /* Change the color of the play button */
+  z-index: 2;
+  opacity: 0.9;
+}
+
+.video-slide:hover .thumbnailimg .play-button {
+  opacity: 1;
+}
+
+.video-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.video-play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  z-index: 3;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.video-play-overlay i {
+  font-size: 3rem;
+  color: white;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+}
+
+.video-play-overlay:hover i {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.swiper-scrollbar {
+  background: rgba(0,0,0,0.1);
+  height: 4px;
+  border-radius: 2px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.swiper-scrollbar-drag {
+  background: #928d6f ;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.swiper-scrollbar-drag:hover {
+  background: linear-gradient(90deg, #5B1A8B 0%, #C935E0 100%);
+}
+
+/* Mobile Margin Bottom */
+@media (max-width: 768px) {
+  .video-testimonials-block {
+    margin-bottom: 30px; /* Adds 30px margin at the bottom for mobile */
+  }
+}
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      const swiperContainer = document.querySelector('#video-testimonials-{{ snippet_id | default: 'default' }}');
+      const scrollbarEl = swiperContainer.parentElement.querySelector('.swiper-scrollbar');
+      
+      if (swiperContainer && scrollbarEl && typeof Swiper !== 'undefined') {
+        const swiper = new Swiper(swiperContainer, {
+          slidesPerView: 3.5, 
+          spaceBetween: 10,
+          freeMode: true,
+          scrollbar: {
+            el: scrollbarEl,
+            hide: false,
+            draggable: true,
+            dragSize: 'auto',
+            snapOnRelease: false,
+          },
+          mousewheel: {
+            forceToAxis: true,
+          },
+          breakpoints: {
+            320: {
+              slidesPerView: 2.75, 
+              spaceBetween: 8,
+            },
+            768: {
+              slidesPerView: 3.5, 
+              spaceBetween: 10,
+            },
+            1024: {
+              slidesPerView: 3.5, 
+              spaceBetween: 10,
+            }
+          }
+        });
+      }
+    }, 100);
+  });
+
+  function loadVideo(element, videoUrl) {
+    const thumbnail = element.querySelector('.thumbnailimg');
+    const video = element.querySelector('video');
+    const playOverlay = element.querySelector('.video-play-overlay');
+    const source = video.querySelector('source');
+    
+    if (thumbnail && video && source && videoUrl) {
+      source.src = videoUrl;
+      thumbnail.style.display = 'none';
+      video.style.display = 'block';
+      video.load();
+      video.play();
+      
+      video.addEventListener('pause', function() {
+        playOverlay.style.display = 'flex';
+      });
+      
+      video.addEventListener('play', function() {
+        playOverlay.style.display = 'none';
+      });
+      
+      playOverlay.addEventListener('click', function() {
+        video.play();
+      });
+    }
+  }
+</script>
+{%- endif -%}

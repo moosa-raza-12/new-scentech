@@ -1,0 +1,218 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+BUY BUTTONS
+----------------------------------------------------------------------------------------------------------------------
+
+This component is used to show the buy buttons
+
+********************************************
+Supported variables
+********************************************
+
+* product: the product from which to show the buttons
+* show_payment_button: if we show or not the dynamic checkout button
+* show_gift_card_recipient: for gift card products, an optional message/email to be sent to the recipient
+* show_quantity_selector: if we show the quantity selector to the left of buy buttons (default: false)
+* button_size: the size of the button (default to xl if none is passed)
+* atc_button_background: the background of the ATC button
+* atc_button_text_color: the text color of the ATC button
+* payment_button_background: the custom dynamic checkout button background
+* payment_button_text_color: the custom dynamic checkout button text color
+* form_id: if specified, define the form ID linked to this input
+* show_shipping_info: toggle to show/hide shipping information (default: false)
+{%- endcomment -%}
+
+{%- assign variant_picker_block = section.blocks | where: 'type', 'variant_picker' | first -%}
+
+{%- assign recipient_feature_active = false -%}
+{%- assign show_quantity_selector = show_quantity_selector | default: false -%}
+
+{%- if product.gift_card? and show_gift_card_recipient -%}
+  {%- assign recipient_feature_active = true -%}
+  {%- assign show_payment_button = false -%}
+{%- endif -%}
+
+{%- form 'product', product, is: 'product-form', id: form_id -%}
+  <input type="hidden" {% if variant_picker_block != blank %}disabled{% endif %} name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+  {%- assign button_disabled = false -%}
+  {%- assign button_size = button_size | default: 'xl' -%}
+
+  {%- if product.selected_or_first_available_variant == nil -%}
+    {%- capture button_content -%}{{ 'product.general.unavailable_button' | t }}{%- endcapture -%}
+    {%- assign button_disabled = true -%}
+  {%- elsif product.selected_or_first_available_variant.available -%}
+    {%- if product.template_suffix contains 'pre-order' -%}
+      {%- capture button_content -%}{{ 'product.general.pre_order_button' | t }}{%- endcapture -%}
+    {%- else -%}
+      {%- capture button_content -%}<span style="display:inline-flex;align-items:center;gap:12px;">{{ 'product.general.add_to_cart_button' | t }} <svg xmlns="http://www.w3.org/2000/svg" width="3" height="3" viewBox="0 0 3 3" fill="none" style="width:3px;height:3px;flex-shrink:0;"><path d="M0 3V0H3V3H0Z" fill="white"/></svg> {{ product.selected_or_first_available_variant.price | money }}</span>{%- endcapture -%}
+    {%- endif -%}
+  {%- else -%}
+    {%- capture button_content -%}{{ 'product.general.sold_out_button' | t }}{%- endcapture -%}
+    {%- assign button_disabled = true -%}
+  {%- endif -%}
+
+  <div class="v-stack gap-4">
+    {%- if recipient_feature_active -%}
+      <gift-card-recipient class="gift-card-recipient v-stack gap-3">
+        {%- assign checkbox_label = 'gift_card.recipient.checkbox' | t -%}
+        {%- render 'checkbox', label: checkbox_label, name: 'properties[__shopify_send_gift_card_to_recipient]' -%}
+
+        <div class="gift-card-recipient__fields" hidden>
+          <div class="fieldset">
+            {%- liquid
+              assign recipient_email_label = 'gift_card.recipient.email_label' | t
+              render 'input', type: 'email', label: recipient_email_label, name: 'properties[Recipient email]', value: form.email, required: true
+
+              assign recipient_name_label = 'gift_card.recipient.name_label' | t
+              render 'input', label: recipient_name_label, name: 'properties[Recipient name]', value: form.name
+
+              assign send_on_label = 'gift_card.recipient.send_on_label' | t
+              render 'input', type: 'date', label: send_on_label, name: 'properties[Send on]', value: form.send_on, pattern: '\d{4}-\d{2}-\d{2}'
+              render 'input', type: 'hidden', name: 'properties[__shopify_offset]'
+
+              assign message_label = 'gift_card.recipient.message_label' | t
+              render 'input', label: message_label, name: 'properties[Message]', value: form.message, multiline: 3, maxlength: 200, show_max_characters_count: true
+            -%}
+          </div>
+        </div>
+      </gift-card-recipient>
+    {%- endif -%}
+
+    {%- comment -%} Shipping Information Section {%- endcomment -%}
+    {%- if show_shipping_info -%}
+      <div class="shipping-info-container" style="margin-bottom: -15px;">
+        <div class="shipping-info" style="display: flex; align-items: center; gap: 8px; margin-top: 0px; margin-bottom: 4px;">
+          <!-- Icon -->
+          <svg role="presentation" fill="none" focusable="false" stroke-width="2" width="20" height="20" class="icon icon-picto-truck" viewBox="0 0 24 24">
+            <path d="M19 17.798h1.868a1.714 1.714 0 0 0 1.715-1.715V11.25a3.274 3.274 0 0 0-3.275-3.274H14.395l-.097 7.869" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M8.71 18.175c1.565 0 3.094-.16 4.572-.321m-9.94-.087a1.78 1.78 0 0 1-1.576-1.56c-.189-1.594-.407-3.256-.407-4.96 0-1.705.216-3.366.405-4.96a1.783 1.783 0 0 1 1.577-1.56c1.725-.186 3.523-.409 5.37-.409s3.644.223 5.368.408a1.783 1.783 0 0 1 1.578 1.56c.066.564.136 1.135.199 1.714" stroke="currentColor"></path>
+            <path d="M16.061 21.069a2.894 2.894 0 1 1 0-5.793 2.894 2.894 0 0 1 0 5.794v-.001ZM5.832 21.069a2.894 2.894 0 1 1 0-5.792 2.894 2.894 0 0 1 0 5.793v-.001Z" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+
+          <!-- Text -->
+          <p class="shipping-text" style="margin: 0; font-size: var(--font-body-size); color: var(--color-foreground);">
+            {% if product.metafields.custom.free_shipping_text_and_number != blank %}
+              {{ product.metafields.custom.free_shipping_text_and_number }}
+            {% else %}
+              Gratis verzending boven €50
+            {% endif %}
+          </p>
+        </div>
+        
+        <div class="shipping-info" style="display: flex; align-items: center; gap: 8px; margin-top: 0px; margin-bottom: 4px;">
+          <!-- SVG Icoon laden vanuit assets -->
+          <img src="{{ 'rotate-left-solid.svg' | asset_url }}" alt="30-day money back guarantee" width="20" height="20">
+
+          <!-- Text -->
+          <p class="shipping-text" style="margin: 0; font-size: var(--font-body-size); color: var(--color-foreground);">
+            {% if product.metafields.custom.return_window != blank %}
+              {{ product.metafields.custom.return_window }}
+            {% else %}
+              30 dagen retourgarantie
+            {% endif %}
+          </p>
+        </div>
+        
+        <div class="shipping-info" style="display: flex; align-items: center; gap: 8px; margin-top: 0px; margin-bottom: 16px;">
+          <!-- SVG Icoon laden vanuit assets -->
+          <img src="{{ 'award-solid.svg' | asset_url }}" alt="warranty guarantee" width="20" height="20">
+
+          <!-- Text -->
+          <p class="shipping-text" style="margin: 0; font-size: var(--font-body-size); color: var(--color-foreground);">
+            {% if product.metafields.custom.warranty != blank %}
+              {{ product.metafields.custom.warranty }}
+            {% else %}
+              1 jaar garantie
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Buy Buttons Container with Optional Quantity Selector {%- endcomment -%}
+    <div class="buy-buttons-container {% if show_quantity_selector %}buy-buttons-container--with-quantity{% endif %}">
+      
+      {%- comment -%} Quantity Selector (left side) {%- endcomment -%}
+      {%- if show_quantity_selector and product.available -%}
+        <div class="product-info__quantity-selector">
+          <quantity-selector class="quantity-selector" style="display: flex; border: 1px solid lightgrey; border-radius: 3rem; overflow: hidden; background: white; min-height: 56px; align-items: center;">
+            <button type="button" class="quantity-selector__button" aria-label="{{ 'product.quantity.decrease_quantity' | t }}" style="padding: 0 1rem; background: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #666; height: 100%;">
+              {% render 'icon' with 'minus', width: 12, height: 2 %}
+            </button>
+            <input id="{{ form_id }}-quantity" type="text" is="quantity-input" inputmode="numeric" class="quantity-selector__input" name="quantity" form="{{ form_id }}" size="2" value="1" min="1" autocomplete="off" style="border: none; text-align: center; width: 3rem; background: transparent; font-weight: 500; height: 100%; outline: none;">
+            <button type="button" class="quantity-selector__button" aria-label="{{ 'product.quantity.increase_quantity' | t }}" style="padding: 0 1rem; background: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #666; height: 100%;">
+              {% render 'icon' with 'plus', width: 12, height: 12 %}
+            </button>
+          </quantity-selector>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Buy Buttons (right side) {%- endcomment -%}
+      <buy-buttons class="buy-buttons {% if show_payment_button %}buy-buttons--multiple{% endif %} {% if show_quantity_selector %}buy-buttons--with-quantity-selector{% endif %}" template="{{ product.template_suffix | escape }}" form="{{ form_id }}" style="{% if show_quantity_selector %}flex: 1;{% endif %}">
+        {%- render 'button', content: button_content, type: 'submit', size: button_size, disabled: button_disabled, secondary: show_payment_button, subdued: button_disabled, background: atc_button_background, text_color: atc_button_text_color -%}
+
+        {%- if show_payment_button -%}
+          {{- form | payment_button -}}
+
+          <style>
+            #{{ form_id }} .shopify-payment-button {
+              {%- unless product.selected_or_first_available_variant.available -%}
+                display: none;
+              {%- endunless -%}
+
+              {%- if payment_button_background != blank and payment_button_background != 'rgba(0,0,0,0)' -%}
+                --button-background: {{ payment_button_background.rgb }};
+              {%- endif -%}
+
+              {%- if payment_button_text_color != blank and payment_button_text_color != 'rgba(0,0,0,0)' -%}
+                --button-text-color: {{ payment_button_text_color.rgb }};
+              {%- endif -%}
+            }
+          </style>
+        {%- endif -%}
+      </buy-buttons>
+    </div>
+
+    {%- comment -%} Additional CSS for responsive behavior {%- endcomment -%}
+    <style>
+      .buy-buttons-container--with-quantity {
+        display: flex !important;
+        gap: 1rem;
+        align-items: center;
+      }
+      
+      .buy-buttons--with-quantity-selector {
+        flex: 1;
+      }
+      
+      .quantity-selector__button:hover {
+        background-color: var(--color-background-2) !important;
+      }
+      
+      .quantity-selector__input:focus {
+        outline: 2px solid var(--color-accent);
+        outline-offset: -2px;
+      }
+      
+      @media screen and (max-width: 749px) {
+        .buy-buttons-container--with-quantity {
+          gap: 0.2rem !important;
+          align-items: stretch !important;
+        }
+        
+        .product-info__quantity-selector {
+          align-self: flex-start !important;
+        }
+        .button--xl {
+            padding: 17px 10px !important;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .quantity-selector {
+          width: 110px !important;
+        }
+      }
+    </style>
+  </div>
+{%- endform -%}

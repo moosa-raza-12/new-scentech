@@ -1,0 +1,199 @@
+{%- comment -%}
+  Article Layout — minimale header voor vergelijkings- en blogpagina's
+  Vervangt de volledige header-group met alleen een logo-balk
+{%- endcomment -%}
+
+<!doctype html>
+
+<html lang="{{ request.locale.iso_code }}" dir="{% render 'direction' %}">
+  <head>
+    <meta name="facebook-domain-verification" content="qv7i01wc9vpq7vv0nufzle3ovfl7bv" />
+    <meta name="facebook-domain-verification" content="7edgky2k5bb6zy5aao7ttybbrzj64x" />
+    <meta name="facebook-domain-verification" content="ipgpfieqzvubqxig28u17hojk4yura" />
+    <meta name="facebook-domain-verification" content="8gj45idtcv5p5fc50s0flxkn3oenv2" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="theme-color" content="{{ settings.header_background }}">
+
+    <title>{% if page_title == blank %}{{ shop.name }}{% else %}{{ page_title }}{% if current_page != 1 %} &ndash; {{ 'general.page' | t: page: current_page }}{% endif %}{% endif %}</title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if settings.favicon -%}
+      <link rel="shortcut icon" href="{{ settings.favicon | image_url: width: 96 }}">
+      <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180 }}">
+    {%- endif -%}
+
+    <link rel="preconnect" href="https://cdn.shopify.com">
+    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">
+
+    {%- unless settings.heading_font.system? -%}
+      <link rel="preload" href="{{ settings.heading_font | font_url }}" as="font" type="font/woff2" crossorigin>
+    {%- endunless -%}
+
+    {%- unless settings.text_font.system? -%}
+      <link rel="preload" href="{{ settings.text_font | font_url }}" as="font" type="font/woff2" crossorigin>
+    {%- endunless -%}
+
+    {%- render 'social-meta-tags' -%}
+    {%- render 'microdata-schema' -%}
+    {%- render 'css-variables' -%}
+    {%- render 'js-variables' -%}
+
+    <script>
+      if (!(HTMLScriptElement.supports && HTMLScriptElement.supports('importmap'))) {
+        const importMapPolyfill = document.createElement('script');
+        importMapPolyfill.async = true;
+        importMapPolyfill.src = "{{ 'es-module-shims.min.js' | asset_url }}";
+        document.head.appendChild(importMapPolyfill);
+      }
+    </script>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "vendor": "{{ 'vendor.min.js' | asset_url }}",
+          "theme": "{{ 'theme.js' | asset_url }}",
+          "photoswipe": "{{ 'photoswipe.min.js' | asset_url }}"
+        }
+      }
+    </script>
+
+    <script type="module" src="{{ 'vendor.min.js' | asset_url }}"></script>
+    <script type="module" src="{{ 'theme.js' | asset_url }}"></script>
+
+    {{ content_for_header }}
+
+    {{- 'theme.css' | asset_url | stylesheet_tag: preload: true -}}
+
+    <script>
+      (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:5290035,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "sgpfyeb0eb");
+    </script>
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+    <style>
+      .article-nav {
+        background: rgba(255, 255, 255, 0.92);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(35, 31, 32, 0.08);
+        box-shadow: 0 1px 8px rgba(35, 31, 32, 0.06);
+        padding: 0 clamp(16px, 4vw, 32px);
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .article-nav__logo {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        min-height: 44px;
+        cursor: pointer;
+      }
+
+      .article-nav__logo img {
+        height: 18px;
+        width: auto;
+        display: block;
+      }
+
+      .article-nav__cta {
+        font-family: 'Bai Jamjuree', sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        color: #ffffff;
+        background: #160000;
+        padding: 0 18px;
+        height: 36px;
+        border-radius: 6px;
+        text-decoration: none;
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+        box-shadow: 0 2px 8px rgba(22, 0, 0, 0.18);
+        letter-spacing: 0.01em;
+        flex-shrink: 0;
+      }
+
+      .article-nav__cta:hover {
+        background: #2d0000;
+        box-shadow: 0 4px 14px rgba(22, 0, 0, 0.28);
+        transform: translateY(-1px);
+      }
+
+      .article-nav__cta:active {
+        transform: translateY(0);
+        box-shadow: 0 1px 4px rgba(22, 0, 0, 0.18);
+      }
+
+      /* CTA verborgen op alle schermformaten — sticky CTA onderaan doet het werk */
+      .article-nav {
+        justify-content: center;
+      }
+      .article-nav__cta {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body class="{% if settings.show_page_transition %}page-transition{% endif %} {% if settings.zoom_image_on_hover %}zoom-image--enabled{% endif %}">
+    {%- render 'shadow-dom-templates' -%}
+
+    <a href="#main" class="skip-to-content sr-only">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+    <!-- Minimale logo-balk -->
+    <header class="article-nav">
+      <a href="/" class="article-nav__logo" aria-label="{{ shop.name }}">
+        <img src="{{ 'scentech-logo-black.png' | asset_url }}" alt="{{ shop.name }}" height="22">
+      </a>
+      <a href="{{ routes.root_url }}collections/fall-sale" class="article-nav__cta">
+        Bekijk #1 keuze →
+      </a>
+    </header>
+
+    <main role="main" id="main" class="anchor">
+      {{ content_for_layout }}
+    </main>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script async src="https://cdn.sufio.com/infoweb/scripts/vat.js" id="sufio-vat-script"></script>
+    <script>
+      document.getElementById("sufio-vat-script").onload = function() {
+        SufioVAT.init({
+          customerEmail: {{ customer.email | json }},
+          customerMetafields: {{ customer.metafields.sufio | json }},
+          cartAttributes: {{ cart.attributes | json }}
+        });
+        SufioVAT.onCart();
+      };
+    </script>
+  </body>
+</html>

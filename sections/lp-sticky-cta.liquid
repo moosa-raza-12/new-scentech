@@ -1,0 +1,255 @@
+{% comment %}
+  LP Sticky CTA
+  Scentech — Sticky CTA balk onderaan het scherm (verschijnt bij scrollen)
+{% endcomment %}
+
+<style>
+  #lp-sticky-cta-{{ section.id }} {
+    --color-bg:       {{ section.settings.color_bg }};
+    --color-btn-bg:   {{ section.settings.color_btn_bg }};
+    --color-btn-text: {{ section.settings.color_btn_text }};
+    --color-trust:    {{ section.settings.color_trust_text }};
+    --font-btn:       '{{ section.settings.font_btn }}', sans-serif;
+  }
+
+  #lp-sticky-cta-{{ section.id }} .sticky-cta {
+    position: fixed;
+    bottom: 32px;
+    left: 0;
+    right: 0;
+    width: fit-content;
+    margin: 0 auto;
+    z-index: 1000;
+    transform: translateY(150%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  #lp-sticky-cta-{{ section.id }} .sticky-cta.is-visible {
+    transform: translateY(0);
+  }
+
+  #lp-sticky-cta-{{ section.id }} .sticky-cta__btn {
+    display: inline-block;
+    background: var(--color-btn-bg);
+    color: var(--color-btn-text);
+    padding: 16px 40px;
+    font-family: var(--font-btn);
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 4px;
+    text-decoration: none;
+    box-shadow: 0 5px 30px rgba(35, 31, 32, 0.15);
+    transition: transform 0.2s, opacity 0.2s;
+  }
+
+  #lp-sticky-cta-{{ section.id }} .sticky-cta__btn:hover {
+    opacity: 0.88;
+    transform: scale(1.02);
+  }
+
+  #lp-sticky-cta-{{ section.id }} .sticky-cta__trust {
+    display: none;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-trust);
+    text-align: center;
+    font-family: var(--font-btn);
+  }
+
+  #lp-sticky-cta-{{ section.id }} .sticky-cta__product {
+    display: none;
+  }
+
+  @media (max-width: 860px) {
+    #lp-sticky-cta-{{ section.id }} .sticky-cta {
+      bottom: 0;
+      right: 0;
+      left: 0;
+      width: auto;
+      margin: 0;
+      background: var(--color-bg);
+      padding: 12px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+      border-top: 1px solid rgba(35, 31, 32, 0.12);
+    }
+
+    #lp-sticky-cta-{{ section.id }} .sticky-cta__product {
+      display: flex;
+    }
+
+    #lp-sticky-cta-{{ section.id }} .sticky-cta__title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-btn-bg);
+      font-family: var(--font-btn);
+    }
+
+    #lp-sticky-cta-{{ section.id }} .sticky-cta__btn {
+      width: 100%;
+      text-align: center;
+      padding: 16px 24px;
+      font-size: 16px;
+      border-radius: 4px;
+    }
+
+    #lp-sticky-cta-{{ section.id }} .sticky-cta__trust {
+      display: {% if section.settings.show_trust %}block{% else %}none{% endif %} !important;
+    }
+  }
+</style>
+
+<div id="lp-sticky-cta-{{ section.id }}">
+  <div class="sticky-cta" id="stickyCta-{{ section.id }}">
+
+    {% if section.settings.show_mobile_title %}
+      <div class="sticky-cta__product">
+        <span class="sticky-cta__title">{{ section.settings.mobile_title }}</span>
+      </div>
+    {% endif %}
+
+    <a href="{{ section.settings.cta_url }}" class="sticky-cta__btn">{{ section.settings.cta_text }}</a>
+
+    {% if section.settings.show_trust %}
+      <div class="sticky-cta__trust">{{ section.settings.trust_text }}</div>
+    {% endif %}
+
+  </div>
+</div>
+
+<script>
+  (function() {
+    document.addEventListener("DOMContentLoaded", function() {
+      var stickyCta = document.getElementById("stickyCta-{{ section.id }}");
+      var hero = document.querySelector(".lp-hero-section");
+      var HIDE_NEAR_BOTTOM = 300;
+
+      if (!stickyCta) return;
+
+      function checkVisibility() {
+        var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var distanceFromBottom = scrollHeight - window.scrollY;
+        var heroBottom = hero ? hero.getBoundingClientRect().bottom : 0;
+        var pastHero = heroBottom <= 0;
+        var nearBottom = distanceFromBottom < HIDE_NEAR_BOTTOM;
+
+        if (pastHero && !nearBottom) {
+          stickyCta.classList.add("is-visible");
+        } else {
+          stickyCta.classList.remove("is-visible");
+        }
+      }
+
+      window.addEventListener("scroll", checkVisibility, { passive: true });
+      checkVisibility();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "LP Sticky CTA",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "header",
+      "content": "CTA knop"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Knoptekst",
+      "default": "Save 52% + Free Shipping"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Knop URL"
+    },
+    {
+      "type": "header",
+      "content": "Trust tekst"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust",
+      "label": "Toon trust tekst (mobiel)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trust_text",
+      "label": "Trust tekst",
+      "default": "⭐⭐⭐⭐⭐ 4.8 stars • 85K+ reviews • 1M+ members"
+    },
+    {
+      "type": "header",
+      "content": "Mobiele titel"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_title",
+      "label": "Toon mobiele titel",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "mobile_title",
+      "label": "Mobiele titel tekst",
+      "default": "Smart Aroma Diffuser 2"
+    },
+    {
+      "type": "header",
+      "content": "Kleuren"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Achtergrond (mobiel balk)",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_btn_bg",
+      "label": "Knop achtergrondkleur",
+      "default": "#160000"
+    },
+    {
+      "type": "color",
+      "id": "color_btn_text",
+      "label": "Knop tekstkleur",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_trust_text",
+      "label": "Trust tekst kleur",
+      "default": "#8A8A8A"
+    },
+    {
+      "type": "header",
+      "content": "Lettertype"
+    },
+    {
+      "type": "select",
+      "id": "font_btn",
+      "label": "Lettertype knop",
+      "options": [
+        { "value": "Bai Jamjuree", "label": "Bai Jamjuree" },
+        { "value": "Playfair Display", "label": "Playfair Display" },
+        { "value": "Inter", "label": "Inter" }
+      ],
+      "default": "Bai Jamjuree"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Sticky CTA"
+    }
+  ]
+}
+{% endschema %}

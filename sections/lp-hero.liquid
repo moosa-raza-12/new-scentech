@@ -1,0 +1,510 @@
+{% comment %}
+  LP Hero Section
+  Scentech — Hero sectie met headline, CTA knoppen, social proof en hero afbeelding
+{% endcomment %}
+
+<style>
+  #lp-hero-{{ section.id }} {
+    --color-bg:       {{ section.settings.color_bg }};
+    --color-text:     {{ section.settings.color_text }};
+    --color-accent:   {{ section.settings.color_accent }};
+    --color-btn-bg:   {{ section.settings.color_btn_bg }};
+    --color-btn-text: {{ section.settings.color_btn_text }};
+    --font-heading:   '{{ section.settings.font_heading }}', sans-serif;
+    --font-body:      '{{ section.settings.font_body }}', sans-serif;
+    --font-btn:       '{{ section.settings.font_btn }}', sans-serif;
+  }
+
+  #lp-hero-{{ section.id }} .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    background: var(--color-bg);
+  }
+
+  #lp-hero-{{ section.id }} .hero__text {
+    padding: clamp(30px, 6vh, 72px) clamp(24px, 5vw, 56px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  #lp-hero-{{ section.id }} .hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin-bottom: 24px;
+    opacity: 0.6;
+  }
+
+  #lp-hero-{{ section.id }} .hero__eyebrow::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--color-text);
+    opacity: 0.4;
+  }
+
+  #lp-hero-{{ section.id }} .hero__headline {
+    font-family: var(--font-heading);
+    font-size: clamp(28px, 3.5vw, 46px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    margin-bottom: clamp(12px, 2.5vh, 20px);
+  }
+
+  #lp-hero-{{ section.id }} .hero__headline em {
+    font-style: italic;
+    color: var(--color-text);
+  }
+
+  #lp-hero-{{ section.id }} .hero__subhead {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-text);
+    opacity: 0.75;
+    margin-bottom: 10px;
+    line-height: 1.7;
+  }
+
+  #lp-hero-{{ section.id }} .hero__problem {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 1.2vw, 15px);
+    color: var(--color-text);
+    opacity: 0.65;
+    margin-bottom: clamp(20px, 4vh, 36px);
+    line-height: 1.7;
+  }
+
+  #lp-hero-{{ section.id }} .hero__problem strong {
+    color: var(--color-text);
+    opacity: 1;
+    font-weight: 500;
+  }
+
+  #lp-hero-{{ section.id }} .hero__cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 36px;
+    width: 100%;
+  }
+
+  #lp-hero-{{ section.id }} .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-btn);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0em;
+    padding: 17px 40px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+    background: var(--color-btn-bg);
+    color: var(--color-btn-text);
+    border: 1px solid var(--color-btn-bg);
+  }
+
+  #lp-hero-{{ section.id }} .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-btn);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0em;
+    padding: 17px 40px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid rgba(35, 31, 32, 0.12);
+  }
+
+  #lp-hero-{{ section.id }} .hero__social-proof {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(35, 31, 32, 0.12);
+    width: 100%;
+  }
+
+  #lp-hero-{{ section.id }} .stars {
+    color: var(--color-accent);
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  #lp-hero-{{ section.id }} .hero__social-proof-text {
+    font-size: 13px;
+    color: var(--color-text);
+    opacity: 0.65;
+    font-family: var(--font-body);
+  }
+
+  #lp-hero-{{ section.id }} .hero__social-proof-text strong {
+    color: var(--color-text);
+    opacity: 1;
+    font-weight: 600;
+  }
+
+  #lp-hero-{{ section.id }} .hero__image {
+    position: relative;
+    background: #F1F1F1;
+    overflow: hidden;
+  }
+
+  #lp-hero-{{ section.id }} .hero__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #lp-hero-{{ section.id }} .lp-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    background: linear-gradient(160deg, #F5EFE8 0%, #EAE0D4 40%, #DDD0BC 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #8A8A8A;
+    letter-spacing: 0.08em;
+  }
+
+  #lp-hero-{{ section.id }} .hero__badge {
+    position: absolute;
+    bottom: 36px;
+    left: 28px;
+    background: #FFFFFF;
+    padding: 16px 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(35, 31, 32, 0.1);
+    max-width: 230px;
+  }
+
+  #lp-hero-{{ section.id }} .hero__badge-quote {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 13px;
+    color: #231F20;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  #lp-hero-{{ section.id }} .hero__badge-author {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8A8A8A;
+    font-family: var(--font-body);
+  }
+
+  @media (max-width: 860px) {
+    #lp-hero-{{ section.id }} .hero {
+      grid-template-columns: 1fr;
+    }
+    #lp-hero-{{ section.id }} .hero__image {
+      max-height: 420px;
+      order: -1;
+    }
+    #lp-hero-{{ section.id }} .hero__text {
+      padding: 48px 24px 56px;
+    }
+    #lp-hero-{{ section.id }} .hero__headline {
+      font-size: 28px;
+    }
+    #lp-hero-{{ section.id }} .btn-primary,
+    #lp-hero-{{ section.id }} .btn-secondary {
+      width: 100%;
+    }
+  }
+</style>
+
+<section id="lp-hero-{{ section.id }}" class="lp-hero-section">
+  <div class="hero">
+
+    <div class="hero__text">
+
+      {% if section.settings.show_eyebrow %}
+        <span class="hero__eyebrow">{{ section.settings.eyebrow_text }}</span>
+      {% endif %}
+
+      <h1 class="hero__headline">{{ section.settings.headline }}</h1>
+
+      <p class="hero__subhead">{{ section.settings.subheadline }}</p>
+
+      <p class="hero__problem">{{ section.settings.problem_text }}</p>
+
+      <div class="hero__cta-group">
+        <a href="{{ section.settings.cta_primary_url }}" class="btn-primary">{{ section.settings.cta_primary_text }}</a>
+        {% if section.settings.show_cta_secondary %}
+          <a href="{{ section.settings.cta_secondary_url }}" class="btn-secondary">{{ section.settings.cta_secondary_text }}</a>
+        {% endif %}
+      </div>
+
+      {% if section.settings.show_social_proof %}
+        <div class="hero__social-proof">
+          <span class="stars">★★★★★</span>
+          <p class="hero__social-proof-text">
+            <strong>{{ section.settings.rating_number }}</strong> — {{ section.settings.social_proof_text }}
+          </p>
+        </div>
+      {% endif %}
+
+    </div>
+
+    <div class="hero__image">
+      {% if section.settings.hero_image != blank %}
+        {{ section.settings.hero_image | image_url: width: 1200 | image_tag: alt: section.settings.headline }}
+      {% else %}
+        <div class="lp-placeholder">Voeg afbeelding toe</div>
+      {% endif %}
+
+      {% if section.settings.show_badge %}
+        <div class="hero__badge">
+          <p class="hero__badge-quote">{{ section.settings.badge_quote }}</p>
+          <p class="hero__badge-author">{{ section.settings.badge_author }}</p>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP Hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Eyebrow label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_eyebrow",
+      "label": "Toon eyebrow tekst",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Eyebrow tekst",
+      "default": "Luxe Hotelgeuren"
+    },
+    {
+      "type": "header",
+      "content": "Headline & teksten"
+    },
+    {
+      "type": "textarea",
+      "id": "headline",
+      "label": "Koptekst (h1)",
+      "default": "5 redenen waarom deze diffuser je huis laat ruiken als een luxe hotel"
+    },
+    {
+      "type": "text",
+      "id": "subheadline",
+      "label": "Subtekst",
+      "default": "Voelt het bij jou ook alsof je echt alles al hebt geprobeerd?"
+    },
+    {
+      "type": "textarea",
+      "id": "problem_text",
+      "label": "Probleemtekst",
+      "default": "Geurstokjes. Kaarsen. Een waterdiffuser met witte rook.\nEn toch — een week later ruik je niks meer.\n\nJe wilt gewoon één ding: dat gevoel van een luxe hotel. Warm. Uitnodigend. Elke dag als je thuiskomt."
+    },
+    {
+      "type": "header",
+      "content": "CTA knoppen"
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_text",
+      "label": "Primaire knoptekst",
+      "default": "Bekijk de Diffuser 2 →"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_url",
+      "label": "Primaire knop URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta_secondary",
+      "label": "Toon secundaire knop",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_text",
+      "label": "Secundaire knoptekst",
+      "default": "Ontdek waarom ↓"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_url",
+      "label": "Secundaire knop URL"
+    },
+    {
+      "type": "header",
+      "content": "Social proof"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_proof",
+      "label": "Toon social proof balk",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating_number",
+      "label": "Cijfer (bijv. 4.7/5)",
+      "default": "4.7/5"
+    },
+    {
+      "type": "text",
+      "id": "social_proof_text",
+      "label": "Social proof tekst",
+      "default": "meer dan 70 tevreden klanten"
+    },
+    {
+      "type": "header",
+      "content": "Hero afbeelding"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero afbeelding"
+    },
+    {
+      "type": "header",
+      "content": "Badge (citaat op foto)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Toon badge / citaat",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "badge_quote",
+      "label": "Badge citaattekst",
+      "default": "\"Net of je in een deluxe hotel bent. Zalig thuiskomen.\""
+    },
+    {
+      "type": "text",
+      "id": "badge_author",
+      "label": "Badge auteur",
+      "default": "— Steven, klant ★★★★★"
+    },
+    {
+      "type": "header",
+      "content": "Kleuren"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Achtergrondkleur",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Tekstkleur",
+      "default": "#231F20"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accentkleur (goud)",
+      "default": "#FFB74A"
+    },
+    {
+      "type": "color",
+      "id": "color_btn_bg",
+      "label": "Knop achtergrondkleur",
+      "default": "#160000"
+    },
+    {
+      "type": "color",
+      "id": "color_btn_text",
+      "label": "Knop tekstkleur",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Lettertypes"
+    },
+    {
+      "type": "select",
+      "id": "font_heading",
+      "label": "Lettertype koptekst",
+      "options": [
+        { "value": "Bai Jamjuree", "label": "Bai Jamjuree" },
+        { "value": "Playfair Display", "label": "Playfair Display" },
+        { "value": "Inter", "label": "Inter" }
+      ],
+      "default": "Bai Jamjuree"
+    },
+    {
+      "type": "select",
+      "id": "font_body",
+      "label": "Lettertype bodytekst",
+      "options": [
+        { "value": "Bai Jamjuree", "label": "Bai Jamjuree" },
+        { "value": "Playfair Display", "label": "Playfair Display" },
+        { "value": "Inter", "label": "Inter" }
+      ],
+      "default": "Bai Jamjuree"
+    },
+    {
+      "type": "select",
+      "id": "font_btn",
+      "label": "Lettertype knoppen",
+      "options": [
+        { "value": "Bai Jamjuree", "label": "Bai Jamjuree" },
+        { "value": "Playfair Display", "label": "Playfair Display" },
+        { "value": "Inter", "label": "Inter" }
+      ],
+      "default": "Bai Jamjuree"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Hero"
+    }
+  ]
+}
+{% endschema %}

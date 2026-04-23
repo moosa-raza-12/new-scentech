@@ -1,0 +1,553 @@
+{% comment %}
+  Bundle Builder Snippet - Original Layout with Optimized JS
+  Save as: snippets/bundle-builder.liquid
+  
+  Usage in template:
+  {% render 'bundle-builder', 
+     title: 'Build Your Bundle',
+     preselected_product: settings.bundle_preselected_product,
+     bundle_collection: settings.bundle_collection,
+     max_selections: 2,
+     is_pro_bundle: true,
+     bundle_product_id: settings.pro_bundle_product_id
+  %}
+{% endcomment %}
+
+{% liquid
+  assign bundle_title = title
+  assign step1_title = step1_title | default: 'Your Diffuser'
+  assign step2_title = step2_title | default: 'Choose Your Add-ons'
+  assign max_selections = max_selections | default: 2
+  assign add_to_cart_text = add_to_cart_text | default: 'Add Bundle to Cart'
+  assign is_pro_bundle = is_pro_bundle | default: false
+  assign bundle_product_id = bundle_product_id
+%}
+
+<div class="bundle-builder" data-section-id="bundle-{{ section.id | default: 'standalone' }}">
+  <div class="bundle-builder__container page-width">
+    
+    <!-- Bundle Header -->
+    {% if bundle_title != blank %}
+      <div class="bundle-builder__header">
+        <h2 class="bundle-builder__title">{{ bundle_title }}</h2>
+        {% if description != blank %}
+          <div class="bundle-builder__description">
+            {{ description }}
+          </div>
+        {% endif %}
+      </div>
+    {% elsif description != blank %}
+      <div class="bundle-builder__header">
+        <div class="bundle-builder__description">
+          {{ description }}
+        </div>
+      </div>
+    {% endif %}
+
+    <!-- Bundle Steps -->
+    <div class="bundle-builder__steps">
+      
+      <!-- Step 1: Preselected Product -->
+      <div class="bundle-step bundle-step--preselected">
+        <div class="bundle-step__header">
+          <h3 class="bundle-step__title">{{ step1_title }}</h3>
+        </div>
+        
+        {% if preselected_product != blank %}
+          {% assign preselected_product_obj = all_products[preselected_product] %}
+          <div class="bundle-product bundle-product--preselected" 
+               data-product-id="{{ preselected_product_obj.id }}"
+               data-product-keynotes="{{ preselected_product_obj.metafields.custom.key_notes | escape }}"
+               data-product-price="{{ preselected_product_obj.price }}"
+               data-variant-id="{{ preselected_product_obj.first_available_variant.id }}">
+            <div class="bundle-product__image">
+              <img src="{{ preselected_product_obj.featured_image | image_url: width: 200 }}" 
+                   alt="{{ preselected_product_obj.title }}" 
+                   loading="lazy">
+            </div>
+            <div class="bundle-product__info">
+              <h4 class="bundle-product__title">{{ preselected_product_obj.title }}</h4>
+              <div class="bundle-product__price" data-price="{{ preselected_product_obj.price | divided_by: 100.0 }}">
+                {{ preselected_product_obj.price | money }}
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <div class="bundle-product bundle-product--preselected" 
+               data-product-id="{{ product.id }}"
+               data-product-keynotes="{{ product.metafields.custom.key_notes | escape }}"
+               data-product-price="{{ product.selected_or_first_available_variant.price }}"
+               data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+            <div class="bundle-product__image">
+              <img src="{{ product.featured_image | image_url: width: 200 }}" 
+                   alt="{{ product.title }}" 
+                   loading="lazy">
+            </div>
+            <div class="bundle-product__info">
+              <h4 class="bundle-product__title">{{ product.title }}</h4>
+              <div class="bundle-product__price" data-price="{{ product.selected_or_first_available_variant.price | divided_by: 100.0 }}">
+                {{ product.selected_or_first_available_variant.price | money }}
+              </div>
+              <p class="bundle-product__note">Selected variant from above will be included</p>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Step 2: Collection Products -->
+      <div class="bundle-step bundle-step--collection">
+        <div class="bundle-step__header">
+          <h3 class="bundle-step__title">{{ step2_title }}</h3>
+          <p class="bundle-step__subtitle">Select {{ max_selections }} scent(s){% if is_pro_bundle %} (required for Pro Bundle){% endif %}</p>
+        </div>
+        
+        {% if bundle_collection != blank %}
+          {% assign collection_products = collections[bundle_collection] %}
+          <div class="bundle-products-compact">
+            <div class="bundle-product-group">
+              <div class="bundle-product-swatches">
+                {% for addon_product in collection_products.products limit: 12 %}
+                  {% unless addon_product.id == product.id %}
+                    <div class="bundle-product-swatch" 
+                         data-product-id="{{ addon_product.id }}"
+                         data-product-title="{{ addon_product.title }}"
+                         data-product-price="{{ addon_product.price }}"
+                         data-variant-id="{{ addon_product.first_available_variant.id }}"
+                         data-product-keynotes="{{ addon_product.metafields.custom.key_notes | escape }}">
+                      <div class="bundle-product-swatch__image">
+                        <img src="{{ addon_product.featured_image | image_url: width: 80 }}" 
+                             alt="{{ addon_product.title }}" 
+                             loading="lazy"
+                             title="{{ addon_product.title }}">
+                      </div>
+                      <div class="bundle-product-swatch__quantity" style="display: none;">1</div>
+                    </div>
+                  {% endunless %}
+                {% endfor %}
+              </div>
+              
+              <!-- Simple selected products display -->
+              <div class="selected-products-display" id="selected-products-display" style="display: none;">
+                <span id="selected-products-text"></span>
+                <div class="selection-progress">
+                  <span id="selection-count">0</span> of {{ max_selections }} selected
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Bundle Summary & Add to Cart -->
+    <div class="bundle-builder__summary">
+      <div class="bundle-summary">
+        <div class="bundle-summary__items" id="bundle-summary-items" style="display: none;">
+          <!-- Dynamic content populated by JavaScript -->
+        </div>
+        <div class="bundle-summary__total" style="display: none;">
+          <span class="bundle-summary__total-label">Total:</span>
+          <span class="bundle-summary__total-price" id="bundle-total-price">$0.00</span>
+        </div>
+        <div class="bundle-validation-message" id="bundle-validation-message" style="display: none;"></div>
+        <button type="button" 
+                class="btn product-form__cart-submit" 
+                id="add-bundle-to-cart"
+                disabled>
+          {{ add_to_cart_text }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Load CSS -->
+{{ 'bundle-builder.css' | asset_url | stylesheet_tag }}
+
+<!-- Optimized JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const bundleBuilder = document.querySelector('.bundle-builder[data-section-id="bundle-{{ section.id | default: 'standalone' }}"]');
+  if (!bundleBuilder) return;
+
+  // Cache DOM elements
+  const preselectedProduct = bundleBuilder.querySelector('.bundle-product--preselected');
+  const swatches = bundleBuilder.querySelectorAll('.bundle-product-swatch');
+  const selectedDisplay = bundleBuilder.querySelector('#selected-products-display');
+  const selectedText = bundleBuilder.querySelector('#selected-products-text');
+  const selectionCount = bundleBuilder.querySelector('#selection-count');
+  const validationMessage = bundleBuilder.querySelector('#bundle-validation-message');
+  const addToCartBtn = bundleBuilder.querySelector('#add-bundle-to-cart');
+  
+  // Config
+  const maxSelections = {{ max_selections | default: 2 }};
+  const isProBundle = {{ is_pro_bundle | json }};
+
+  // State
+  let selectedProducts = [];
+  let preselectedData = null;
+
+  // Initialize preselected product
+  if (preselectedProduct) {
+    preselectedData = {
+      id: preselectedProduct.dataset.productId,
+      title: preselectedProduct.querySelector('.bundle-product__title').textContent,
+      price: parseInt(preselectedProduct.dataset.productPrice) / 100,
+      variantId: preselectedProduct.dataset.variantId,
+      keyNotes: preselectedProduct.dataset.productKeynotes || ''
+    };
+  }
+
+  // Handle swatch clicks
+  swatches.forEach(swatch => {
+    swatch.addEventListener('click', function() {
+      const productId = this.dataset.productId;
+      const productTitle = this.dataset.productTitle;
+      const price = parseInt(this.dataset.productPrice) / 100;
+      const variantId = this.dataset.variantId;
+      const keyNotes = this.dataset.productKeynotes || '';
+      
+      const existingProduct = selectedProducts.find(p => p.id === productId);
+      const totalSelected = selectedProducts.reduce((sum, p) => sum + p.quantity, 0);
+
+      if (existingProduct) {
+        // Existing product: increment quantity if under limit, or remove if at limit
+        if (totalSelected < maxSelections) {
+          existingProduct.quantity++;
+        } else {
+          // At max capacity - remove this product entirely
+          selectedProducts = selectedProducts.filter(p => p.id !== productId);
+        }
+      } else {
+        // New product selection
+        if (totalSelected >= maxSelections) {
+          // Auto-replace oldest selection instead of showing error
+          if (selectedProducts.length > 0) {
+            const oldestProduct = selectedProducts[0];
+            if (oldestProduct.quantity > 1) {
+              // Reduce quantity of oldest product
+              oldestProduct.quantity--;
+            } else {
+              // Remove oldest product entirely
+              selectedProducts.shift();
+            }
+          }
+        }
+        
+        // Add new product
+        selectedProducts.push({ id: productId, title: productTitle, price, variantId, keyNotes, quantity: 1 });
+      }
+
+      updateDisplay();
+      validate();
+    });
+  });
+
+  function updateDisplay() {
+    // Update swatches
+    swatches.forEach(swatch => {
+      const productId = swatch.dataset.productId;
+      const product = selectedProducts.find(p => p.id === productId);
+      const quantityEl = swatch.querySelector('.bundle-product-swatch__quantity');
+
+      if (product) {
+        swatch.classList.add('selected');
+        if (maxSelections === 1) {
+          quantityEl.style.display = 'none';
+        } else {
+          quantityEl.textContent = product.quantity;
+          quantityEl.style.display = 'flex';
+        }
+      } else {
+        swatch.classList.remove('selected');
+        quantityEl.style.display = 'none';
+      }
+    });
+
+    // Update selection display
+    const totalSelected = selectedProducts.reduce((sum, p) => sum + p.quantity, 0);
+    selectionCount.textContent = totalSelected;
+
+    if (selectedProducts.length > 0) {
+      const productNames = selectedProducts.map(product => {
+        const keyNotes = product.keyNotes ? ` - ${product.keyNotes}` : '';
+        const quantityText = product.quantity > 1 ? ` (x${product.quantity})` : '';
+        return `${product.title}${keyNotes}${quantityText}`;
+      }).join(', ');
+      
+      selectedText.textContent = `Selected: ${productNames}`;
+      selectedDisplay.style.display = 'block';
+    } else {
+      selectedDisplay.style.display = 'none';
+    }
+  }
+
+  function validate() {
+    const totalSelected = selectedProducts.reduce((sum, p) => sum + p.quantity, 0);
+    let isValid = true;
+    let message = '';
+
+    if (isProBundle) {
+      if (totalSelected < maxSelections) {
+        isValid = false;
+        message = `Pro Bundle requires exactly ${maxSelections} scents. Please select ${maxSelections - totalSelected} more.`;
+      } else if (totalSelected > maxSelections) {
+        isValid = false;
+        message = `Pro Bundle requires exactly ${maxSelections} scents. You have selected ${totalSelected}.`;
+      }
+    } else {
+      isValid = preselectedData || selectedProducts.length > 0;
+      if (!isValid) {
+        message = 'Please select at least one product.';
+      }
+    }
+
+    showMessage(message, isValid ? 'success' : 'error');
+    addToCartBtn.disabled = !isValid;
+  }
+
+  function showMessage(message, type) {
+    if (message) {
+      validationMessage.textContent = message;
+      validationMessage.style.display = 'block';
+      validationMessage.style.color = type === 'error' ? '#dc3545' : '#28a745';
+    } else {
+      validationMessage.style.display = 'none';
+    }
+  }
+
+  // Add to cart
+  addToCartBtn.addEventListener('click', function() {
+    if (this.disabled) return;
+
+    const originalText = this.textContent;
+    this.textContent = 'Adding to Cart...';
+    this.disabled = true;
+
+    // Get the current product's price (bundle price)
+    let bundlePrice = 0;
+    let bundleVariantId = null;
+    
+    // Method 1: Try data-product-json
+    const currentProduct = document.querySelector('[data-product-json]');
+    if (currentProduct) {
+      try {
+        const productData = JSON.parse(currentProduct.textContent);
+        bundlePrice = productData.price;
+        bundleVariantId = productData.variants[0].id;
+        console.log('Bundle product found via data-product-json:', productData.title, bundlePrice);
+      } catch (e) {
+        console.error('Could not parse product data from data-product-json');
+      }
+    }
+    
+    // Method 2: Try global product variable (common in Shopify themes)
+    if (!bundleVariantId && typeof product !== 'undefined') {
+      bundlePrice = product.price;
+      bundleVariantId = product.variants[0].id;
+      console.log('Bundle product found via global product variable:', product.title, bundlePrice);
+    }
+    
+    // Method 3: Try meta tags
+    if (!bundleVariantId) {
+      const productIdMeta = document.querySelector('meta[property="product:price:amount"]');
+      const variantIdMeta = document.querySelector('meta[name="variant-id"]');
+      if (productIdMeta && variantIdMeta) {
+        bundlePrice = Math.round(parseFloat(productIdMeta.content) * 100);
+        bundleVariantId = variantIdMeta.content;
+        console.log('Bundle product found via meta tags:', bundlePrice, bundleVariantId);
+      }
+    }
+    
+    // Method 4: Extract from form (most reliable)
+    if (!bundleVariantId) {
+      const productForm = document.querySelector('form[action*="/cart/add"]');
+      if (productForm) {
+        const variantSelect = productForm.querySelector('select[name="id"], input[name="id"]');
+        if (variantSelect) {
+          bundleVariantId = variantSelect.value || variantSelect.options[variantSelect.selectedIndex].value;
+          console.log('Bundle variant found via form:', bundleVariantId);
+        }
+        
+        // Get price from price element
+        const priceElement = productForm.closest('.product').querySelector('.price__current, .product__price, [data-price]');
+        if (priceElement) {
+          const priceText = priceElement.textContent.replace(/[^\d,.-]/g, '').replace(',', '.');
+          bundlePrice = Math.round(parseFloat(priceText) * 100);
+          console.log('Bundle price found via price element:', bundlePrice);
+        }
+      }
+    }
+
+    console.log('Final bundle detection:', { bundlePrice, bundleVariantId });
+
+    if (bundlePrice && bundleVariantId) {
+      // Add as bundle product with line properties
+      const properties = {};
+      
+      // UNIQUE ID FIX - This single line prevents bundle conflicts
+      properties['_bundle_id'] = Date.now() + '-' + Math.random().toString(36).substr(2, 5);
+      
+      // Add diffuser info
+      if (preselectedData) {
+        properties['✓ Diffuser'] = preselectedData.title;
+        properties['_Diffuser_SKU'] = preselectedData.variantId; // Hidden SKU for fulfillment
+      }
+      
+      // Add scent selections
+      selectedProducts.forEach((product, index) => {
+        const scentKey = `✓ Scent ${index + 1}`;
+        const skuKey = `_Scent_${index + 1}_SKU`; // Hidden SKU for fulfillment
+        
+        if (product.quantity > 1) {
+          properties[scentKey] = `${product.title} (x${product.quantity})`;
+        } else {
+          properties[scentKey] = product.title;
+        }
+        properties[skuKey] = product.variantId;
+      });
+      
+      // Add bundle metadata (hidden from customer)
+      properties['_bundle_type'] = 'custom_bundle';
+      properties['_created_with'] = 'bundle_builder';
+
+      console.log('Adding bundle product:', bundleVariantId, 'with properties:', properties);
+
+      // Add bundle product with properties
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: bundleVariantId,
+          quantity: 1,
+          properties: properties
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 422) {
+          throw new Error(data.description);
+        }
+        
+        console.log('Bundle added successfully:', data);
+        this.textContent = 'Added to Cart!';
+        
+        // Trigger cart events
+        document.dispatchEvent(new CustomEvent('cart:change', { detail: { cart: data } }));
+        document.dispatchEvent(new CustomEvent('cart:refresh'));
+        
+        setTimeout(() => {
+          this.textContent = originalText;
+          this.disabled = false;
+          validate();
+        }, 2000);
+      })
+      .catch(error => {
+        console.error('Bundle add failed:', error);
+        showMessage('Error adding to cart. Please try again.', 'error');
+        this.textContent = originalText;
+        this.disabled = false;
+      });
+    } else {
+      console.warn('Bundle product not detected, falling back to individual SKUs');
+      console.log('Detection results:', { bundlePrice, bundleVariantId });
+      
+      showMessage('Bundle product not found. Adding individual items instead.', 'error');
+      
+      // Fallback: add individual SKUs if bundle approach fails
+      const items = [];
+      
+      if (preselectedData) {
+        items.push({ id: preselectedData.variantId, quantity: 1 });
+      }
+      
+      selectedProducts.forEach(product => {
+        for (let i = 0; i < product.quantity; i++) {
+          items.push({ id: product.variantId, quantity: 1 });
+        }
+      });
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: items })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 422) {
+          throw new Error(data.description);
+        }
+        
+        this.textContent = 'Added to Cart!';
+        document.dispatchEvent(new CustomEvent('cart:refresh'));
+        
+        setTimeout(() => {
+          this.textContent = originalText;
+          this.disabled = false;
+          validate();
+        }, 2000);
+      })
+      .catch(error => {
+        showMessage('Error adding to cart. Please try again.', 'error');
+        this.textContent = originalText;
+        this.disabled = false;
+      });
+    }
+  });
+
+  // Initialize
+  updateDisplay();
+  validate();
+});
+</script>
+
+<style>
+.selected-products-display {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: rgb(var(--color-foreground));
+  font-weight: 500;
+}
+
+.selection-progress {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.bundle-product-swatch {
+  position: relative;
+}
+
+.bundle-product-swatch__quantity {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: rgb(var(--color-accent));
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.bundle-validation-message {
+  margin: 8px 0;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+  background: rgba(var(--color-foreground), 0.05);
+}
+
+/* Reduce spacing above button */
+.bundle-builder__summary {
+  margin-top: 16px;
+  padding-top: 12px;
+}
+</style>

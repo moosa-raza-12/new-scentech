@@ -1,0 +1,195 @@
+<style>
+  .shipping-info {
+  display: grid;
+  margin-top: 12px; /* optioneel om afstand boven de groep te creëren */
+}
+  .thumbnail-swatch {
+    --swatch-size: 58px;
+    width: var(--swatch-size);
+    height: var(--swatch-size);
+    border-radius: 4px;
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .thumbnail-swatch > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    display: block;
+  }
+
+  input[type="radio"]:checked + .thumbnail-swatch {
+    --swatch-size: 60px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+  }
+
+  input[type="radio"]:checked + .thumbnail-swatch:before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 4px;
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 2px black;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+  }
+
+  .thumbnail-swatch:before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 4px;
+    opacity: 0;
+    transform: scale(0.95);
+    box-shadow: 0 0 0 2px black;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+  }
+
+  .variant-picker__option-values {
+    gap: 6px;
+  }
+
+  .variant-input input[type="radio"] {
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .scroll-area {
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 767px) {
+    .variant-input-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      display: grid;
+    }
+
+    .variant-input-wrap::-webkit-scrollbar {
+      display: none;
+    }
+
+    .variant-picker__option-values {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 58px;
+      gap: 12px;
+      align-items: center;
+      width: max-content;
+    }
+
+    .variant-input {
+      display: contents;
+    }
+
+    .selected-keynotes {
+      margin-bottom: 16px
+    }
+  }
+</style>
+
+<div id="{{ div_id }}">
+  {% for variant_option in variant.metafields.simple_bundles.variant_options.value %}
+    {% assign option_name_param = variant_option.optionName | handleize | append: "-" | append: forloop.index %}
+    <div class="variant-block">
+      <p class="selected-variant-container">
+        <strong>{{ variant_option.optionName }}:</strong>
+        <span class="selected-variant"></span>
+      </p>
+      <p class="selected-keynotes"></p>
+
+      {% assign option_values = variant_option.optionValues | split: "," %}
+      {% assign option_inventories = variant_option.optionInventories | split: "," %}
+
+      <fieldset class="variant-input-wrap">
+        <div class="scroll-area">
+          <div class="variant-picker__option-values">
+            {% for option_value in option_values %}
+              {% assign value = option_value | strip %}
+              {% assign radio_param = option_name_param | append: "-" | append: value | handleize %}
+              {% assign value_handle = value | handleize %}
+              {% assign product = all_products[value_handle] %}
+              {% assign inventory = option_inventories[forloop.index0] | plus: 0 %}
+
+            <!-- DEBUG: {{ value }} (index {{ forloop.index0 }}) => voorraad: {{ inventory }} -->
+            
+
+
+              {% if inventory < 1 %}
+                {% continue %}
+              {% endif %}
+
+              <div class="variant-input">
+                <input
+                  type="radio"
+                  id="{{ radio_param }}"
+                  name="properties[{{ variant_option.optionName }}]"
+                  value="{{ value }}"
+                  data-inventory="{{ inventory }}"
+                  {% if forloop.index == 1 %}checked{% endif %}
+                  autocomplete="off"
+                />
+                <label class="thumbnail-swatch border" for="{{ radio_param }}">
+                  <span class="sr-only">{{ value }}</span>
+                  {% if product and product.featured_image %}
+                    <img src="{{ product.featured_image | image_url: width: 60, height: 60, crop: 'center' }}" alt="{{ value }}" />
+                  {% else %}
+                    <div style="width:100%; height:100%; background:#eee; display:flex; align-items:center; justify-content:center; font-size:10px; border-radius:4px;">
+                      No image
+                    </div>
+                  {% endif %}
+                </label>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  {% endfor %}
+  <!-- DEBUG -->
+</div>
+  <div class="shipping-info" style="display: flex; align-items: center; gap: 8px; margin-top: 0px; margin-bottom: 4px;">
+  <!-- Icon -->
+  <svg role="presentation" fill="none" focusable="false" stroke-width="2" width="20" height="20" class="icon icon-picto-truck" viewBox="0 0 24 24">
+    <path d="M19 17.798h1.868a1.714 1.714 0 0 0 1.715-1.715V11.25a3.274 3.274 0 0 0-3.275-3.274H14.395l-.097 7.869" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M8.71 18.175c1.565 0 3.094-.16 4.572-.321m-9.94-.087a1.78 1.78 0 0 1-1.576-1.56c-.189-1.594-.407-3.256-.407-4.96 0-1.705.216-3.366.405-4.96a1.783 1.783 0 0 1 1.577-1.56c1.725-.186 3.523-.409 5.37-.409s3.644.223 5.368.408a1.783 1.783 0 0 1 1.578 1.56c.066.564.136 1.135.199 1.714" stroke="currentColor"></path>
+    <path d="M16.061 21.069a2.894 2.894 0 1 1 0-5.793 2.894 2.894 0 0 1 0 5.794v-.001ZM5.832 21.069a2.894 2.894 0 1 1 0-5.792 2.894 2.894 0 0 1 0 5.793v-.001Z" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+  </svg>
+
+  <!-- Text -->
+  <p class="shipping-text" style="margin: 0; font-size: var(--font-body-size); color: var(--color-foreground);">
+    {{ product.metafields.custom.free_shipping_text_and_number }}
+  </p>
+</div>
+<div class="shipping-info" style="display: flex; align-items: center; gap: 8px; margin-top: 0px; margin-bottom: 4px;">
+  <!-- SVG Icoon laden vanuit assets -->
+  <img src="{{ 'rotate-left-solid.svg' | asset_url }}" alt="30-day money back guarantee" width="20" height="20">
+
+  <!-- Text -->
+  <p class="shipping-text" style="margin: 0; font-size: var(--font-body-size); color: var(--color-foreground);">
+    {{ product.metafields.custom.return_window }}
+  </p>
+</div>
+<div class="shipping-info" style="display: flex; align-items: center; gap: 8px; margin-top: 0px; margin-bottom: 16px;">
+  <!-- SVG Icoon laden vanuit assets -->
+  <img src="{{ 'award-solid.svg' | asset_url }}" alt="30-day money back guarantee" width="20" height="20">
+
+    <!-- Text -->
+   <p class="shipping-text" style="margin: 0; font-size: var(--font-body-size); color: var(--color-foreground);">
+    {% if product.metafields.custom.warranty != blank %}
+      {{ product.metafields.custom.warranty }}
+    {% else %}
+      1 jaar garantie
+    {% endif %}
+  </p>
+</div>

@@ -1,0 +1,618 @@
+<style>
+  /* =============================================
+     Comparison Popup – Base Styles
+     ============================================= */
+
+  .cmp-popup__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .cmp-popup__overlay.is-open {
+    display: flex;
+  }
+
+  .cmp-popup__backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .cmp-popup__overlay.is-open .cmp-popup__backdrop {
+    opacity: 1;
+  }
+
+  .cmp-popup__panel {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    max-height: 90dvh;
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 -4px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .cmp-popup__overlay.is-open .cmp-popup__panel {
+    transform: translateY(0);
+  }
+
+  .cmp-popup__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 5;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: {{ close_bg }};
+    color: {{ close_color }};
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+  }
+
+  .cmp-popup__close:hover {
+    opacity: 0.7;
+  }
+
+  .cmp-popup__body {
+    overflow-x: auto;
+    overflow-y: auto;
+    overscroll-behavior-x: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 45px 0 0;
+    background: #F1EFE8;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -6px 12px 0 rgba(52, 57, 61, 0.20);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .cmp-popup__body::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cmp-popup__table {
+    display: table;
+    width: max-content;
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .cmp-popup__row {
+    display: table-row;
+    height: 60px;
+  }
+
+  .cmp-popup__row:not(:last-child) .cmp-popup__cell {
+    border-bottom: 1px dashed {{ border_color }};
+  }
+
+  .cmp-popup__cell {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 14px 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: {{ text_color }};
+    width: 120px;
+    max-width: 120px;
+    text-align: center;
+  }
+
+  .cmp-popup__cell--label {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: #F1EFE8;
+    text-align: left;
+    font-weight: 400;
+    font-size: 14px;
+    white-space: nowrap;
+    padding-left: 12px;
+    padding-right: 10px;
+    font-family: 'N27';
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .cmp-popup__btn-row .cmp-popup__cell--label {
+    background: #F1EFE8;
+  }
+
+  .cmp-popup__label-inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .cmp-popup__label-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    object-fit: contain;
+  }
+
+  .cmp-popup__product-header {
+    padding: 12px 8px 10px;
+    text-align: center;
+  }
+
+  .cmp-popup__product-header.cmp-scent-info-btn {
+    cursor: pointer;
+  }
+
+  .cmp-popup__info-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+
+  .cmp-popup__info-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .cmp-popup__row:first-child .cmp-popup__cell:first-child {
+    vertical-align: bottom;
+  }
+
+  .cmp-popup__product-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin: 0 auto 6px;
+    display: block;
+  }
+
+  .cmp-popup__product-name {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: {{ text_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: 'N27';
+  }
+
+  .cmp-popup__cell-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 12px;
+    line-height: 1.4;
+    font-family: 'Bai Jamjuree';
+  }
+
+  .cmp-popup__info-trigger {
+    position: relative;
+    display: inline-flex;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    color: {{ info_icon_color }};
+    flex-shrink: 0;
+  }
+
+  .cmp-popup__info-trigger svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .cmp-popup__tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: {{ tooltip_bg }};
+    color: {{ tooltip_text_color }};
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: normal;
+    width: max-content;
+    max-width: 220px;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        right:-10px !important;
+  }
+
+  .cmp-popup__tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: {{ tooltip_bg }};
+  }
+
+  .cmp-popup__info-trigger:hover .cmp-popup__tooltip,
+  .cmp-popup__info-trigger:focus .cmp-popup__tooltip,
+  .cmp-popup__info-trigger.is-active .cmp-popup__tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .cmp-popup__cell--last .cmp-popup__tooltip {
+    left: auto;
+    right: 0;
+    transform: none;
+  }
+
+  .cmp-popup__cell--last .cmp-popup__tooltip::after {
+    left: auto;
+    right: 12px;
+    transform: none;
+  }
+
+  .cmp-popup__btn-row .cmp-popup__cell {
+    padding: 16px;
+    border-bottom: none;
+  }
+
+  .cmp-popup__learn-more {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: "Bai Jamjuree";
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    background: {{ button_bg }};
+    color: {{ button_text_color }};
+  }
+
+  .cmp-popup__learn-more:hover {
+    opacity: 0.8;
+  }
+
+  .cmp-popup__scrollbar-track {
+    padding: 4px 20px 12px;
+    background: #F1EFE8;
+  }
+
+  @media screen and (min-width: 1024px) {
+    .cmp-popup__scrollbar-track {
+      border-bottom: none;
+    }
+  }
+
+  .cmp-popup__scrollbar {
+    height: 3px;
+    background: {{ scrollbar_track_color }};
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .cmp-popup__scrollbar-thumb {
+    height: 100%;
+    background: {{ scrollbar_thumb_color }};
+    border-radius: 3px;
+    width: 30%;
+    transition: transform 0.1s ease-out;
+  }
+
+  @media screen and (max-width: 749px) {
+    .cmp-popup__cell {
+      width: 135px;
+      max-width: 135px;
+      padding: 10px 8px;
+      font-size: 13px;
+    }
+
+    .cmp-popup__cell--label {
+      padding-left: 10px;
+      padding-right: 8px;
+      font-size: 13px;
+    }
+
+    .cmp-popup__label-icon {
+      width: 22px;
+      height: 22px;
+    }
+
+    .cmp-popup__product-img {
+      width: 70px;
+      height: 70px;
+    }
+
+    .cmp-popup__product-name {
+      font-size: 12px;
+    }
+
+    .cmp-popup__row:first-child .cmp-popup__cell--label {
+      vertical-align: bottom;
+    }
+  }
+
+  /* =============================================
+     Scent Details Modal – Comparison Popup version.
+     This is a self-contained duplicate of the
+     bundle section's scent modal. Edit these styles
+     freely without affecting the original.
+     ============================================= */
+
+  .cmp-scent-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    pointer-events: none;
+  }
+
+  .cmp-scent-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .cmp-scent-modal {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    max-height: 90vh;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out;
+    max-width: 800px;
+    margin: auto;
+    border-radius: 16px 16px 0 0;
+    background: #fff;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cmp-scent-modal.active {
+    transform: translateY(0);
+  }
+
+  .cmp-scent-modal__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.2s;
+    border-radius: 99px;
+    background: #160000;
+  }
+
+.cmp-scent-modal__image {
+    width: 100%;
+    height: 420px;
+    overflow: hidden;
+}
+
+.cmp-scent-modal__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    object-position: top;
+}
+
+  .cmp-scent-modal__content {
+    background: #DED9C5;
+    overflow-y: auto;
+  }
+
+  .cmp-scent-modal__content-header {
+    padding: 16px;
+    border-bottom: 1px solid rgba(22, 0, 0, 0.10);
+    background: #F1EFE8;
+  }
+
+  .cmp-scent-modal__tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .cmp-scent-modal__tag {
+    padding: 6px 12px;
+    color: #160000;
+    text-align: center;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border-radius: 20px;
+    background: #DED9C5;
+    font-family: 'N27';
+  }
+
+  .cmp-scent-modal__tag--special {
+    color: #FFF;
+    background: #162518;
+  }
+
+  .cmp-scent-modal__tags,
+  .cmp-scent-modal__title,
+  .cmp-scent-modal__description {
+    max-width: 672px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .cmp-scent-modal__title {
+    margin: 0;
+    font-family: 'Kento', sans-serif;
+    text-transform: uppercase;
+    color: #160000;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin: 20px 0 16px;
+  }
+
+  .cmp-scent-modal__description {
+    color: #160000;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+
+  .cmp-scent-modal__details {
+    padding: 16px 20px 24px;
+  }
+
+  .cmp-scent-modal__details h3 {
+    margin: 0 auto 12px;
+    letter-spacing: 0.05em;
+    text-transform: capitalize;
+    color: #160000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    max-width: 672px;
+    font-family: 'N27';
+  }
+
+  .cmp-scent-modal__details-content {
+    color: #160000;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    max-width: 672px;
+    margin: auto;
+  }
+
+  .cmp-scent-modal__details-content span {
+    margin: 0 0 6px 0;
+    display: block;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+  }
+
+  .cmp-scent-modal__details-content br {
+    display: none;
+  }
+
+  /* --- Info popup footer: CTA button + notice --- */
+
+  .cmp-scent-modal__footer {
+    padding: 0 16px 20px;
+    background: #DED9C5;
+  }
+
+  .cmp-scent-modal__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 672px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    border: none;
+border-radius: 8px;
+background: #162518;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Bai Jamjuree", sans-serif;
+    line-height: normal;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .cmp-scent-modal__cta:hover {
+    opacity: 0.9;
+  }
+
+  .cmp-scent-modal__cta-text {
+    white-space: nowrap;
+  }
+
+  .cmp-scent-modal__cta-price {
+    text-decoration: line-through;
+    opacity: 0.7;
+    white-space: nowrap;
+    font-weight: 400;
+  }
+
+  .cmp-scent-modal__cta-free {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .cmp-scent-modal__notice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 672px;
+    margin: 10px auto 0;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(22, 37, 24, 0.10);
+    background: rgba(22, 37, 24, 0.05);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #162518;
+    font-family: 'Bai Jamjuree';
+  }
+
+  .cmp-scent-modal__notice-icon {
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    fill: #162518;
+  }
+
+  @media (max-width: 767.98px) { 
+  .cmp-scent-modal__image {
+    height: 280px;
+}
+  }
+</style>

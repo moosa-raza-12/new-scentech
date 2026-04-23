@@ -1,0 +1,209 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+KV FREE SHIPPING BAR
+----------------------------------------------------------------------------------------------------------------------
+Custom free shipping bar for the cart drawer with 3 states:
+1. Below threshold: "Spend {amount} more to get FREE SHIPPING!"
+2. Above threshold: "Nice work! FREE SHIPPING unlocked"
+3. Above threshold with free gifts: "Nice work! FREE SHIPPING and {x} GIFTS unlocked"
+
+Uses section settings from cart-drawer for customizable text (inline_richtext for bold).
+{%- endcomment -%}
+
+{%- liquid
+  assign kv_gift_placeholder = '{x}'
+  assign kv_amount_placeholder = '{amount}'
+  assign kv_threshold_cents = kv_threshold | times: 100
+  assign kv_shipping_total = 0
+
+  for line_item in cart.items
+    if line_item.requires_shipping
+      assign kv_shipping_total = kv_shipping_total | plus: line_item.final_line_price
+    endif
+  endfor
+
+  assign total_cart_discount = 0
+  for discount_application in cart.cart_level_discount_applications
+    assign total_cart_discount = total_cart_discount | plus: discount_application.total_allocated_amount
+  endfor
+  assign kv_shipping_total = kv_shipping_total | minus: total_cart_discount
+
+  assign kv_remaining = kv_threshold_cents | minus: kv_shipping_total
+  if kv_remaining < 0
+    assign kv_remaining = 0
+  endif
+
+  assign kv_free_gift_count = 0
+  for line_item in cart.items
+    if line_item.final_price == 0
+      assign kv_free_gift_count = kv_free_gift_count | plus: line_item.quantity
+    endif
+  endfor
+
+  if kv_threshold_cents > 0
+    assign kv_progress = kv_shipping_total | times: 100 | divided_by: kv_threshold_cents
+    if kv_progress > 100
+      assign kv_progress = 100
+    endif
+  else
+    assign kv_progress = 100
+  endif
+
+  assign kv_reached = false
+  if kv_shipping_total >= kv_threshold_cents
+    assign kv_reached = true
+  endif
+
+  assign kv_display_text = ''
+  if kv_reached
+    if kv_free_gift_count > 0
+      assign kv_gift_count_str = kv_free_gift_count | append: ''
+      assign kv_display_text = kv_reached_gifts_text | split: kv_gift_placeholder | join: kv_gift_count_str
+    else
+      assign kv_display_text = kv_reached_text
+    endif
+  else
+    assign kv_remaining_formatted = kv_remaining | money
+    assign kv_display_text = kv_unreached_text | split: kv_amount_placeholder | join: kv_remaining_formatted
+  endif
+-%}
+
+<div class="kv-shipping-bar {% if kv_reached %}kv-shipping-bar--reached{% else %}kv-shipping-bar--unreached{% endif %}"
+     id="kv-shipping-bar"
+     data-threshold="{{ kv_threshold_cents }}"
+     data-total="{{ kv_shipping_total }}"
+     data-money-format="{{ shop.money_format | escape }}">
+  <div class="kv-shipping-bar__inner">
+    <span class="kv-shipping-bar__text" data-kv-shipping-text>{{ kv_display_text }}</span>
+    <div class="kv-shipping-bar__progress-track">
+      <div class="kv-shipping-bar__progress-fill" style="width: {{ kv_progress }}%;" data-kv-shipping-progress></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .kv-shipping-bar {
+    background: #F9F6F3;
+    padding: 10px 20px;
+  }
+  .kv-shipping-bar__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .kv-shipping-bar__text {
+    color: #160000;
+    font-family: "Bai Jamjuree", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: normal;
+    text-align: center;
+  }
+  .kv-shipping-bar__text strong,
+  .kv-shipping-bar__text b {
+    font-weight: 700;
+  }
+  .kv-shipping-bar__progress-track {
+    width: 100%;
+    height: 4px;
+    background: rgba(22, 0, 0, 0.10);
+    border-radius: 99px;
+    overflow: hidden;
+    display: none;
+  }
+  .kv-shipping-bar__progress-fill {
+    height: 100%;
+    background: #160000;
+    border-radius: 99px;
+    transition: width 0.4s ease;
+    min-width: 0;
+    max-width: 100%;
+  }
+</style>
+
+<script>
+  /* KV Free Shipping Bar — dynamically updates on cart changes */
+  (function() {
+    var barEl = document.getElementById('kv-shipping-bar');
+    if (!barEl) return;
+
+    var threshold    = parseInt(barEl.getAttribute('data-threshold')) || 0;
+    var moneyFormat  = barEl.getAttribute('data-money-format') || '${{amount}}';
+
+    /* Customizer texts (with placeholders) */
+    var unreachedTpl = {{ kv_unreached_text | json }};
+    var reachedTpl   = {{ kv_reached_text | json }};
+    var giftsTpl     = {{ kv_reached_gifts_text | json }};
+
+    function formatMoney(cents) {
+      var amount = (cents / 100).toFixed(2).replace(/\.00$/, '');
+      return moneyFormat.replace(/\{\{\s*amount\s*\}\}/, amount)
+                        .replace(/\{\{\s*amount_no_decimals\s*\}\}/, Math.round(cents / 100))
+                        .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/, (cents / 100).toFixed(2).replace('.', ','))
+                        .replace(/\{\{\s*amount_no_decimals_with_comma_separator\s*\}\}/, Math.round(cents / 100));
+    }
+
+    function updateBar(cart) {
+      var shippingTotal = 0;
+      var freeGiftCount = 0;
+      var totalCartDiscount = 0;
+
+      cart.items.forEach(function(item) {
+        if (item.requires_shipping) {
+          shippingTotal += item.final_line_price;
+        }
+        if (item.final_price === 0) {
+          freeGiftCount += item.quantity;
+        }
+      });
+
+      if (cart.cart_level_discount_applications) {
+        cart.cart_level_discount_applications.forEach(function(d) {
+          totalCartDiscount += d.total_allocated_amount;
+        });
+      }
+      shippingTotal = Math.max(0, shippingTotal - totalCartDiscount);
+
+      var remaining = Math.max(0, threshold - shippingTotal);
+      var progress  = threshold > 0 ? Math.min(100, (shippingTotal / threshold) * 100) : 100;
+      var reached   = shippingTotal >= threshold;
+
+      var text;
+      if (reached) {
+        if (freeGiftCount > 0) {
+          text = giftsTpl.replace('{x}', freeGiftCount);
+        } else {
+          text = reachedTpl;
+        }
+        barEl.classList.add('kv-shipping-bar--reached');
+        barEl.classList.remove('kv-shipping-bar--unreached');
+      } else {
+        text = unreachedTpl.replace('{amount}', formatMoney(remaining));
+        barEl.classList.add('kv-shipping-bar--unreached');
+        barEl.classList.remove('kv-shipping-bar--reached');
+      }
+
+      var textEl = barEl.querySelector('[data-kv-shipping-text]');
+      var fillEl = barEl.querySelector('[data-kv-shipping-progress]');
+      if (textEl) textEl.innerHTML = text;
+      if (fillEl) fillEl.style.width = progress + '%';
+    }
+
+    /* Listen for cart changes and refresh the bar */
+    document.addEventListener('cart:change', function(e) {
+      if (e.detail && e.detail.cart) updateBar(e.detail.cart);
+    });
+
+    document.addEventListener('cart:refresh', function() {
+      fetch('/cart.js', { headers: { 'Accept': 'application/json' } })
+        .then(function(r) { return r.json(); })
+        .then(updateBar);
+    });
+    document.documentElement.addEventListener('cart:refresh', function() {
+      fetch('/cart.js', { headers: { 'Accept': 'application/json' } })
+        .then(function(r) { return r.json(); })
+        .then(updateBar);
+    });
+  })();
+</script>

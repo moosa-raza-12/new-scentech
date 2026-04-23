@@ -1,0 +1,15 @@
+{%- comment -%}
+  Scentech AB Price Tester
+  Installatie in Shopify theme:
+  1. Kopieer dit bestand naar snippets/ab-tester.liquid
+  2. Kopieer ab-tester.js naar assets/ab-tester.js
+  3. Voeg toe in layout/theme.liquid vlak vóór </body>:
+     {%- render 'ab-tester' -%}
+{%- endcomment -%}
+<script>
+  window.AB_TESTER_CONFIG = {
+    backendUrl: 'https://ab.scentech.store',
+    currency: '{{ shop.currency }}',
+  };
+</script>
+<script src="{{ 'ab-tester.js' | asset_url }}"></script>

@@ -1,0 +1,228 @@
+{%- comment -%}
+------------------------------------------------------------------------------------------------------------------------
+NOTE TO DEVELOPERS: welcome to Impact theme! We hope that you will enjoy editing this theme as much as we did for
+  developing it. We have put a lot of work to make this theme as developer friendly as possible by offering you
+  hooks to integrate into critical parts of the theme. You will find the complete technical documentation (including
+  all events, dependencies...) in the "documentation.txt" file, located in the Assets folder.
+------------------------------------------------------------------------------------------------------------------------
+{%- endcomment -%}
+
+<!doctype html>
+
+<html lang="{{ request.locale.iso_code }}" dir="{% render 'direction' %}">
+  <head>
+    <meta name="facebook-domain-verification" content="qv7i01wc9vpq7vv0nufzle3ovfl7bv" />
+    <meta name="facebook-domain-verification" content="7edgky2k5bb6zy5aao7ttybbrzj64x" />
+    <meta name="facebook-domain-verification" content="ipgpfieqzvubqxig28u17hojk4yura" />
+    <meta name="facebook-domain-verification" content="8gj45idtcv5p5fc50s0flxkn3oenv2" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="theme-color" content="{{ settings.header_background }}">
+
+    <meta name="facebook-domain-verification" content="ipgpfieqzvubqxig28u17hojk4yura" />
+
+    <title>{% if page_title == blank %}{{ shop.name }}{% else %}{{ page_title }}{% if current_page != 1 %} &ndash; {{ 'general.page' | t: page: current_page }}{% endif %}{% endif %}</title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if settings.favicon -%}
+      <link rel="shortcut icon" href="{{ settings.favicon | image_url: width: 96 }}">
+      <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180 }}">
+    {%- endif -%}
+
+    {%- comment -%}Few prefetch to increase performance on commonly used third-parties{%- endcomment -%}
+    <link rel="preconnect" href="https://cdn.shopify.com">
+    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">
+
+    {%- unless settings.heading_font.system? -%}
+      <link rel="preload" href="{{ settings.heading_font | font_url }}" as="font" type="font/woff2" crossorigin>
+    {%- endunless -%}
+
+    {%- unless settings.text_font.system? -%}
+      <link rel="preload" href="{{ settings.text_font | font_url }}" as="font" type="font/woff2" crossorigin>
+    {%- endunless -%}
+
+    {% comment %} INTELLIGEMS SCRIPT {% endcomment %}
+    <script>
+    window.Shopify = window.Shopify || {theme: {id: {{ theme.id }}, role: '{{ theme.role }}' } };
+    window._template = {
+        directory: "{{ template.directory }}",
+        name: "{{ template.name }}",
+        suffix: "{{ template.suffix }}"
+    };
+    window.__productIdFromTemplate = {{ product.id | json }};
+    window.__plpCollectionIdFromTemplate = {{ collection.id | json }};
+    window.igProductData = (function() {
+      const data = {};
+      {%- if template.name == 'collection' -%}
+        {%- for product in collection.products -%}
+          data["{{ product.id }}"] = {
+            productId: {{ product.id | json }},
+            handle: {{ product.handle | json }},
+            tags: {{ product.tags | json }},
+            collectionIds: [{% for col in product.collections %}{{ col.id }}{% unless forloop.last %},{% endunless %}{% endfor %}],
+            inventory: {% assign total = 0 %}{% for v in product.variants %}{% assign total = total | plus: v.inventory_quantity %}{% endfor %}{{ total }},
+            lowestVariantPrice: {{ product.price_min }}
+          };
+        {%- endfor -%}
+      {%- elsif template.name == 'product' -%}
+        data["{{ product.id }}"] = {
+          productId: {{ product.id | json }},
+          handle: {{ product.handle | json }},
+          tags: {{ product.tags | json }},
+          collectionIds: [{% for col in product.collections %}{{ col.id }}{% unless forloop.last %},{% endunless %}{% endfor %}],
+          inventory: {% assign total = 0 %}{% for v in product.variants %}{% assign total = total | plus: v.inventory_quantity %}{% endfor %}{{ total }},
+          lowestVariantPrice: {{ product.price_min }}
+        };
+      {%- endif -%}
+      return data;
+    })();
+  </script>
+
+    {%- render 'social-meta-tags' -%}
+    {%- render 'microdata-schema' -%}
+    {%- render 'css-variables' -%}
+    {%- render 'js-variables' -%}
+
+
+  
+  <script type="module" fetchpriority="high" src="https://cdn.intelligems.io/esm/7542e7a3dec6/bundle.js" data-em-disable async></script>
+
+    <script>
+      if (!(HTMLScriptElement.supports && HTMLScriptElement.supports('importmap'))) {
+        const importMapPolyfill = document.createElement('script');
+        importMapPolyfill.async = true;
+        importMapPolyfill.src = "{{ 'es-module-shims.min.js' | asset_url }}";
+
+        document.head.appendChild(importMapPolyfill);
+      }
+    </script>
+
+    <script type="importmap">
+      {%- comment -%}On Safari 16.3 and lower, a polyfill is used to load importmap{%- endcomment -%}
+      {
+        "imports": {
+          "vendor": "{{ 'vendor.min.js' | asset_url }}",
+          "theme": "{{ 'theme.js' | asset_url }}",
+          "photoswipe": "{{ 'photoswipe.min.js' | asset_url }}"
+        }
+      }
+    </script>
+
+    <script type="module" src="{{ 'vendor.min.js' | asset_url }}"></script>
+    <script type="module" src="{{ 'theme.js' | asset_url }}"></script>
+
+    {{ content_for_header }}
+
+    {{- 'theme.css' | asset_url | stylesheet_tag: preload: true -}}
+
+    <!-- Hotjar Tracking Code for Site 5290035 (name missing) -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:5290035,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "sgpfyeb0eb");
+</script>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  </head>
+  
+<body
+  class="
+    {% if settings.show_page_transition %}page-transition{% endif %}
+    {% if settings.zoom_image_on_hover %} zoom-image--enabled{% endif %}
+    {% if request.page_type == 'product' %}
+      product-template{% if template.suffix != blank %} product-template--{{ template.suffix | handle }}{% else %} product-template--default{% endif %}
+      {% if template.suffix contains 'diffuser' or template.suffix contains 'bundle' or template.suffix contains 'bundles' %} diffuser{% endif %}
+    {% endif %}
+  ">
+    {%- render 'shadow-dom-templates' -%}
+
+    <a href="#main" class="skip-to-content sr-only">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+    {%- if request.page_type != 'password' -%}
+      {%- sections 'header-group' -%}
+      {%- sections 'overlay-group' -%}
+
+      {%- if settings.cart_type == 'popover' -%}
+        <cart-notification-drawer open-from="bottom" class="quick-buy-drawer drawer"></cart-notification-drawer>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if request.page_type == 'customers/account' or request.page_type == 'customers/order' or request.page_type == 'customers/addresses' -%}
+      {%- section 'account-banner' -%}
+    {%- endif -%}
+
+    <main role="main" id="main" class="anchor">
+      {{ content_for_layout }}
+
+      {%- comment -%}
+      IMPLEMENTATION NOTE: due to the very complex logic of margin/padding collapsing in Impact, the footer group is
+      added into the main element to ensure that dynamic sections added into the footer group are properly laid out.
+      {%- endcomment -%}
+      {%- if request.page_type != 'password' -%}
+        {%- sections 'footer-group' -%}
+      {%- endif -%}
+
+         {% if template contains 'blog' or template contains 'article' %}
+  <style>
+    #shopify-chat {
+      display: none !important;
+    }
+  </style>
+{% endif %}
+<style>
+    body.diffuser .product-info__buy-buttons .buy-buttons-container .button[type=submit], body .product-quick-add .button {
+    color: #160000;
+    background: #f5f5f3;
+    border: 1px solid #160000;
+}
+
+body.diffuser .product-info__block-item .promo-banner, .product-quick-add .sticky-promo-banner {
+    background: #160000;
+}
+
+body.diffuser .product-info__block-item .promo-banner .promo-banner__title, .product-quick-add .sticky-promo-banner .sticky-promo-banner__title{
+    color: #fff;
+}
+
+body.diffuser .product-info__block-item .promo-banner  .promo-banner__subtitle, .product-quick-add .sticky-promo-banner .sticky-promo-banner__subtitle{
+    color: #fff;
+}
+
+body.diffuser .product-info__block-item .promo-banner  svg, .product-quick-add .sticky-promo-banner svg {
+    stroke: #fff;
+}
+  </style>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    </main>
+       <script async src="https://cdn.sufio.com/infoweb/scripts/vat.js" id="sufio-vat-script"></script>
+    <script>
+      document.getElementById("sufio-vat-script").onload = function() {
+        SufioVAT.init({
+            customerEmail: {{ customer.email | json }},
+            customerMetafields: {{ customer.metafields.sufio | json }},
+            cartAttributes: {{ cart.attributes | json }}
+        });
+        SufioVAT.onCart();
+    };
+</script> 
+  
+  </body>
+</html>

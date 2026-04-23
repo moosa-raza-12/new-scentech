@@ -1,0 +1,540 @@
+{% doc %}
+  @prompt
+    announcement bar with a countdown timer that sticks to the top of the screen and makes sure that the countdown timer is under the message on mobile and next to the message on desktop or also under the message on desktop if the message takes too much space. i want to be able to adjust font size, when the timer ends, colors, spacing, message, etc., make sure i can add a link on the entire timer bar so when people click anywhere in the bar or background of the bar they go to the sale page and let me change the destination of the link
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-announcement-bar-{{ ai_gen_id }} {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+    z-index: 999;
+    display: block;
+  }
+
+  .ai-announcement-bar-link-{{ ai_gen_id }} {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .ai-announcement-bar-link-{{ ai_gen_id }}:hover {
+    color: inherit;
+  }
+
+  .ai-announcement-bar-container-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: {{ block.settings.spacing }}px;
+    padding: {{ block.settings.vertical_padding }}px {{ block.settings.horizontal_padding }}px;
+    flex-wrap: wrap;
+  }
+
+  .ai-announcement-bar-message-{{ ai_gen_id }} {
+    font-size: {{ block.settings.message_font_size }}px;
+    text-align: center;
+    flex-shrink: 1;
+    max-width: 100%;
+  }
+
+  .ai-announcement-bar-timer-{{ ai_gen_id }} {
+    display: flex;
+    gap: {{ block.settings.timer_spacing }}px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .ai-announcement-bar-timer-unit-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ai-announcement-bar-timer-value-{{ ai_gen_id }} {
+    font-size: {{ block.settings.timer_font_size }}px;
+    font-weight: 700;
+    line-height: 1;
+    background-color: {{ block.settings.timer_background }};
+    color: {{ block.settings.timer_text_color }};
+    padding: {{ block.settings.timer_padding }}px;
+    border-radius: {{ block.settings.timer_border_radius }}px;
+    min-width: {{ block.settings.timer_min_width }}px;
+    text-align: center;
+  }
+
+  .ai-announcement-bar-timer-label-{{ ai_gen_id }} {
+    font-size: {{ block.settings.timer_label_font_size }}px;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  .ai-announcement-bar-separator-{{ ai_gen_id }} {
+    font-size: {{ block.settings.timer_font_size }}px;
+    font-weight: 700;
+    opacity: 0.6;
+  }
+
+  .ai-announcement-bar-expired-{{ ai_gen_id }} {
+    font-size: {{ block.settings.message_font_size }}px;
+    text-align: center;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ai-announcement-bar-container-{{ ai_gen_id }} {
+      {% if block.settings.desktop_layout == 'row' %}
+        flex-wrap: nowrap;
+      {% else %}
+        flex-wrap: wrap;
+      {% endif %}
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-announcement-bar-container-{{ ai_gen_id }} {
+      flex-direction: column;
+      gap: {{ block.settings.mobile_spacing }}px;
+    }
+
+    .ai-announcement-bar-message-{{ ai_gen_id }} {
+      font-size: {{ block.settings.message_font_size | times: 0.9 }}px;
+    }
+
+    .ai-announcement-bar-timer-value-{{ ai_gen_id }} {
+      font-size: {{ block.settings.timer_font_size | times: 0.9 }}px;
+      padding: {{ block.settings.timer_padding | times: 0.8 }}px;
+      min-width: {{ block.settings.timer_min_width | times: 0.8 }}px;
+    }
+
+    .ai-announcement-bar-timer-label-{{ ai_gen_id }} {
+      font-size: {{ block.settings.timer_label_font_size | times: 0.9 }}px;
+    }
+
+    .ai-announcement-bar-separator-{{ ai_gen_id }} {
+      font-size: {{ block.settings.timer_font_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<announcement-countdown-{{ ai_gen_id }}
+  class="ai-announcement-bar-{{ ai_gen_id }}"
+  data-end-date="{{ block.settings.end_date }}"
+  data-end-time="{{ block.settings.end_time }}"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.bar_link != blank %}
+    <a href="{{ block.settings.bar_link }}" class="ai-announcement-bar-link-{{ ai_gen_id }}">
+  {% endif %}
+    <div class="ai-announcement-bar-container-{{ ai_gen_id }}">
+      {% if block.settings.message != blank %}
+        <div class="ai-announcement-bar-message-{{ ai_gen_id }}">
+          {{ block.settings.message }}
+        </div>
+      {% endif %}
+
+      <div class="ai-announcement-bar-timer-{{ ai_gen_id }}" data-timer>
+        {% if block.settings.show_days %}
+          <div class="ai-announcement-bar-timer-unit-{{ ai_gen_id }}">
+            <div class="ai-announcement-bar-timer-value-{{ ai_gen_id }}" data-days>00</div>
+            <div class="ai-announcement-bar-timer-label-{{ ai_gen_id }}">{{ block.settings.days_label }}</div>
+          </div>
+          {% if block.settings.show_separator %}
+            <div class="ai-announcement-bar-separator-{{ ai_gen_id }}">:</div>
+          {% endif %}
+        {% endif %}
+
+        {% if block.settings.show_hours %}
+          <div class="ai-announcement-bar-timer-unit-{{ ai_gen_id }}">
+            <div class="ai-announcement-bar-timer-value-{{ ai_gen_id }}" data-hours>00</div>
+            <div class="ai-announcement-bar-timer-label-{{ ai_gen_id }}">{{ block.settings.hours_label }}</div>
+          </div>
+          {% if block.settings.show_separator %}
+            <div class="ai-announcement-bar-separator-{{ ai_gen_id }}">:</div>
+          {% endif %}
+        {% endif %}
+
+        {% if block.settings.show_minutes %}
+          <div class="ai-announcement-bar-timer-unit-{{ ai_gen_id }}">
+            <div class="ai-announcement-bar-timer-value-{{ ai_gen_id }}" data-minutes>00</div>
+            <div class="ai-announcement-bar-timer-label-{{ ai_gen_id }}">{{ block.settings.minutes_label }}</div>
+          </div>
+          {% if block.settings.show_separator %}
+            <div class="ai-announcement-bar-separator-{{ ai_gen_id }}">:</div>
+          {% endif %}
+        {% endif %}
+
+        {% if block.settings.show_seconds %}
+          <div class="ai-announcement-bar-timer-unit-{{ ai_gen_id }}">
+            <div class="ai-announcement-bar-timer-value-{{ ai_gen_id }}" data-seconds>00</div>
+            <div class="ai-announcement-bar-timer-label-{{ ai_gen_id }}">{{ block.settings.seconds_label }}</div>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="ai-announcement-bar-expired-{{ ai_gen_id }}" data-expired style="display: none;">
+        {{ block.settings.expired_message }}
+      </div>
+    </div>
+  {% if block.settings.bar_link != blank %}
+    </a>
+  {% endif %}
+</announcement-countdown-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AnnouncementCountdown{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.endDate = this.dataset.endDate;
+        this.endTime = this.dataset.endTime;
+        this.timer = this.querySelector('[data-timer]');
+        this.expiredMessage = this.querySelector('[data-expired]');
+        this.daysEl = this.querySelector('[data-days]');
+        this.hoursEl = this.querySelector('[data-hours]');
+        this.minutesEl = this.querySelector('[data-minutes]');
+        this.secondsEl = this.querySelector('[data-seconds]');
+        this.interval = null;
+      }
+
+      connectedCallback() {
+        if (!this.endDate || !this.endTime) {
+          return;
+        }
+
+        this.startCountdown();
+      }
+
+      disconnectedCallback() {
+        if (this.interval) {
+          clearInterval(this.interval);
+        }
+      }
+
+      startCountdown() {
+        const endDateTime = new Date(this.endDate + 'T' + this.endTime).getTime();
+
+        const updateTimer = () => {
+          const now = new Date().getTime();
+          const distance = endDateTime - now;
+
+          if (distance < 0) {
+            clearInterval(this.interval);
+            this.showExpiredMessage();
+            return;
+          }
+
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          if (this.daysEl) this.daysEl.textContent = String(days).padStart(2, '0');
+          if (this.hoursEl) this.hoursEl.textContent = String(hours).padStart(2, '0');
+          if (this.minutesEl) this.minutesEl.textContent = String(minutes).padStart(2, '0');
+          if (this.secondsEl) this.secondsEl.textContent = String(seconds).padStart(2, '0');
+        };
+
+        updateTimer();
+        this.interval = setInterval(updateTimer, 1000);
+      }
+
+      showExpiredMessage() {
+        if (this.timer) {
+          this.timer.style.display = 'none';
+        }
+        if (this.expiredMessage) {
+          this.expiredMessage.style.display = 'block';
+        }
+      }
+    }
+
+    customElements.define('announcement-countdown-{{ ai_gen_id }}', AnnouncementCountdown{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Countdown bar",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "message",
+      "label": "Message",
+      "default": "Limited time offer - Sale ends in:"
+    },
+    {
+      "type": "url",
+      "id": "bar_link",
+      "label": "Bar link"
+    },
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "End date",
+      "info": "Format: YYYY-MM-DD (e.g., 2026-01-31)",
+      "default": "2026-01-31"
+    },
+    {
+      "type": "text",
+      "id": "end_time",
+      "label": "End time",
+      "info": "Format: HH:MM (24-hour, e.g., 23:59)",
+      "default": "23:59"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "expired_message",
+      "label": "Expired message",
+      "default": "Sale has ended"
+    },
+    {
+      "type": "header",
+      "content": "Timer display"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_days",
+      "label": "Show days",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hours",
+      "label": "Show hours",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_minutes",
+      "label": "Show minutes",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_seconds",
+      "label": "Show seconds",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_separator",
+      "label": "Show separator between units",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Timer labels"
+    },
+    {
+      "type": "text",
+      "id": "days_label",
+      "label": "Days label",
+      "default": "Days"
+    },
+    {
+      "type": "text",
+      "id": "hours_label",
+      "label": "Hours label",
+      "default": "Hours"
+    },
+    {
+      "type": "text",
+      "id": "minutes_label",
+      "label": "Minutes label",
+      "default": "Mins"
+    },
+    {
+      "type": "text",
+      "id": "seconds_label",
+      "label": "Seconds label",
+      "default": "Secs"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "label": "Desktop layout",
+      "options": [
+        {
+          "value": "row",
+          "label": "Message and timer side by side"
+        },
+        {
+          "value": "wrap",
+          "label": "Wrap when message is too long"
+        }
+      ],
+      "default": "wrap"
+    },
+    {
+      "type": "range",
+      "id": "spacing",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Space between message and timer",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_spacing",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile vertical spacing",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "timer_spacing",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Space between timer units",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "vertical_padding",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "horizontal_padding",
+      "min": 8,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Horizontal padding",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#160000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "timer_background",
+      "label": "Timer background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "timer_text_color",
+      "label": "Timer text",
+      "default": "#160000"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "message_font_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Message font size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "timer_font_size",
+      "min": 14,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Timer font size",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "timer_label_font_size",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Timer label font size",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Timer style"
+    },
+    {
+      "type": "range",
+      "id": "timer_padding",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Timer padding",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "timer_border_radius",
+      "min": 0,
+      "max": 16,
+      "step": 2,
+      "unit": "px",
+      "label": "Timer border radius",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "timer_min_width",
+      "min": 30,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Timer minimum width",
+      "default": 45
+    }
+  ],
+  "presets": [
+    {
+      "name": "Countdown bar"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,465 @@
+{% comment %}
+  Article Hero
+  Scentech — Editorial hero voor vergelijkings- en blogpagina's
+{% endcomment %}
+
+<style>
+  #article-hero-{{ section.id }} {
+    --color-bg:      {{ section.settings.color_bg }};
+    --color-text:    {{ section.settings.color_text }};
+    --color-accent:  {{ section.settings.color_accent }};
+    --color-muted:   {{ section.settings.color_muted }};
+    --font-body: 'Bai Jamjuree', sans-serif;
+  }
+
+  #article-hero-{{ section.id }} .ah-wrapper {
+    background: var(--color-bg);
+    padding: clamp(32px, 5vw, 64px) 24px clamp(24px, 4vw, 48px);
+    font-family: var(--font-body);
+  }
+
+  #article-hero-{{ section.id }} .ah-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* Breadcrumb */
+  #article-hero-{{ section.id }} .ah-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--color-muted);
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  #article-hero-{{ section.id }} .ah-breadcrumb a {
+    color: var(--color-muted);
+    text-decoration: none;
+  }
+
+  #article-hero-{{ section.id }} .ah-breadcrumb a:hover {
+    color: var(--color-text);
+  }
+
+  #article-hero-{{ section.id }} .ah-breadcrumb__sep {
+    opacity: 0.4;
+  }
+
+  #article-hero-{{ section.id }} .ah-breadcrumb__current {
+    color: var(--color-text);
+    opacity: 0.6;
+  }
+
+  /* Headline */
+  #article-hero-{{ section.id }} .ah-headline {
+    font-size: clamp(26px, 4vw, 42px);
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin: 0 0 12px 0;
+  }
+
+  #article-hero-{{ section.id }} .ah-subheadline {
+    font-size: clamp(15px, 2vw, 18px);
+    color: var(--color-text);
+    opacity: 0.6;
+    line-height: 1.5;
+    margin: 0 0 28px 0;
+    max-width: 680px;
+  }
+
+  /* Divider */
+  #article-hero-{{ section.id }} .ah-divider {
+    border: none;
+    border-top: 1px solid rgba(35, 31, 32, 0.10);
+    margin: 0 0 20px 0;
+  }
+
+  /* Meta row */
+  #article-hero-{{ section.id }} .ah-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  #article-hero-{{ section.id }} .ah-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #article-hero-{{ section.id }} .ah-author__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  #article-hero-{{ section.id }} .ah-author__avatar-placeholder {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    flex-shrink: 0;
+  }
+
+  #article-hero-{{ section.id }} .ah-author__info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  #article-hero-{{ section.id }} .ah-author__name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  #article-hero-{{ section.id }} .ah-author__label {
+    font-size: 11px;
+    color: var(--color-muted);
+    letter-spacing: 0.04em;
+  }
+
+  #article-hero-{{ section.id }} .ah-meta__sep {
+    width: 1px;
+    height: 28px;
+    background: rgba(35, 31, 32, 0.12);
+    flex-shrink: 0;
+  }
+
+  #article-hero-{{ section.id }} .ah-meta__item {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  #article-hero-{{ section.id }} .ah-meta__label {
+    font-size: 11px;
+    color: var(--color-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  #article-hero-{{ section.id }} .ah-meta__value {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  /* Trust bar */
+  #article-hero-{{ section.id }} .ah-trust {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 14px 16px;
+    background: rgba(35, 31, 32, 0.03);
+    border-radius: 6px;
+    border: 1px solid rgba(35, 31, 32, 0.07);
+    margin-top: 4px;
+  }
+
+  #article-hero-{{ section.id }} .ah-trust__rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  #article-hero-{{ section.id }} .ah-trust__stars {
+    color: var(--color-accent);
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  #article-hero-{{ section.id }} .ah-trust__sep {
+    color: var(--color-muted);
+    opacity: 0.4;
+  }
+
+  #article-hero-{{ section.id }} .ah-trust__methodology {
+    font-size: 12px;
+    color: var(--color-muted);
+    font-style: italic;
+  }
+
+  #article-hero-{{ section.id }} .ah-trust__badge {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    border: 1px solid rgba(35, 31, 32, 0.15);
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 600px) {
+    #article-hero-{{ section.id }} .ah-wrapper {
+      padding: 24px 16px 20px;
+    }
+    #article-hero-{{ section.id }} .ah-meta__sep {
+      display: none;
+    }
+    #article-hero-{{ section.id }} .ah-trust__badge {
+      margin-left: 0;
+    }
+  }
+</style>
+
+<section id="article-hero-{{ section.id }}">
+  <div class="ah-wrapper">
+    <div class="ah-inner">
+
+      {%- if section.settings.show_breadcrumb -%}
+        <nav class="ah-breadcrumb" aria-label="Breadcrumb">
+          {%- if section.settings.breadcrumb_1_label != blank -%}
+            <a href="{{ section.settings.breadcrumb_1_url | default: '/' }}">{{ section.settings.breadcrumb_1_label }}</a>
+            <span class="ah-breadcrumb__sep">›</span>
+          {%- endif -%}
+          {%- if section.settings.breadcrumb_2_label != blank -%}
+            <a href="{{ section.settings.breadcrumb_2_url | default: '/' }}">{{ section.settings.breadcrumb_2_label }}</a>
+            <span class="ah-breadcrumb__sep">›</span>
+          {%- endif -%}
+          <span class="ah-breadcrumb__current">{{ section.settings.headline | truncate: 40 }}</span>
+        </nav>
+      {%- endif -%}
+
+      <h1 class="ah-headline">{{ section.settings.headline }}</h1>
+
+      {%- if section.settings.subheadline != blank -%}
+        <p class="ah-subheadline">{{ section.settings.subheadline }}</p>
+      {%- endif -%}
+
+      <hr class="ah-divider">
+
+      <div class="ah-meta">
+        <!-- Auteur -->
+        <div class="ah-author">
+          {%- if section.settings.author_avatar != blank -%}
+            {{ section.settings.author_avatar | image_url: width: 72 | image_tag: class: 'ah-author__avatar', alt: section.settings.author_name }}
+          {%- else -%}
+            <div class="ah-author__avatar-placeholder">
+              {{ section.settings.author_name | slice: 0 | upcase }}
+            </div>
+          {%- endif -%}
+          <div class="ah-author__info">
+            <span class="ah-author__name">{{ section.settings.author_name }}</span>
+            {%- if section.settings.author_label != blank -%}
+              <span class="ah-author__label">{{ section.settings.author_label }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="ah-meta__sep"></div>
+
+        <!-- Datum -->
+        {%- if section.settings.updated_date != blank -%}
+          <div class="ah-meta__item">
+            <span class="ah-meta__label">Bijgewerkt</span>
+            <span class="ah-meta__value">{{ section.settings.updated_date }}</span>
+          </div>
+          <div class="ah-meta__sep"></div>
+        {%- endif -%}
+
+        <!-- Leestijd -->
+        {%- if section.settings.read_time != blank -%}
+          <div class="ah-meta__item">
+            <span class="ah-meta__label">Leestijd</span>
+            <span class="ah-meta__value">{{ section.settings.read_time }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Trust bar -->
+      {%- if section.settings.show_trust -%}
+        <div class="ah-trust">
+          <div class="ah-trust__rating">
+            <span class="ah-trust__stars">★★★★★</span>
+            {{ section.settings.rating_text }}
+          </div>
+          <span class="ah-trust__sep">·</span>
+          {%- if section.settings.methodology_text != blank -%}
+            <span class="ah-trust__methodology">{{ section.settings.methodology_text }}</span>
+          {%- endif -%}
+          {%- if section.settings.badge_text != blank -%}
+            <span class="ah-trust__badge">{{ section.settings.badge_text }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Article Hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Koptekst"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Hoofdtitel (H1)",
+      "default": "De Beste Aroma Diffuser van 2026"
+    },
+    {
+      "type": "text",
+      "id": "subheadline",
+      "label": "Subtitel",
+      "default": "En waarom de meeste mensen de verkeerde kopen"
+    },
+    {
+      "type": "header",
+      "content": "Breadcrumb"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Toon breadcrumb",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_1_label",
+      "label": "Niveau 1 label",
+      "default": "Home"
+    },
+    {
+      "type": "url",
+      "id": "breadcrumb_1_url",
+      "label": "Niveau 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_2_label",
+      "label": "Niveau 2 label",
+      "default": "Aroma Diffusers"
+    },
+    {
+      "type": "url",
+      "id": "breadcrumb_2_url",
+      "label": "Niveau 2 URL"
+    },
+    {
+      "type": "header",
+      "content": "Auteur"
+    },
+    {
+      "type": "image_picker",
+      "id": "author_avatar",
+      "label": "Profielfoto (optioneel)"
+    },
+    {
+      "type": "text",
+      "id": "author_name",
+      "label": "Naam auteur",
+      "default": "Bart van der Sterren"
+    },
+    {
+      "type": "text",
+      "id": "author_label",
+      "label": "Expertise label",
+      "default": "Geurexpert · Scentech"
+    },
+    {
+      "type": "header",
+      "content": "Meta"
+    },
+    {
+      "type": "text",
+      "id": "updated_date",
+      "label": "Bijgewerkt datum",
+      "default": "April 2026"
+    },
+    {
+      "type": "text",
+      "id": "read_time",
+      "label": "Leestijd",
+      "default": "5 minuten"
+    },
+    {
+      "type": "header",
+      "content": "Trust balk"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust",
+      "label": "Toon trust balk",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating tekst",
+      "default": "4.7/5 · 5.785+ klanten"
+    },
+    {
+      "type": "text",
+      "id": "methodology_text",
+      "label": "Methodologie tekst",
+      "default": "Beoordeeld op 5 criteria: geurkracht, gebruiksgemak, bediening, design en kosten"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge tekst",
+      "default": "Eigen tests"
+    },
+    {
+      "type": "header",
+      "content": "Kleuren"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Achtergrond",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Tekst",
+      "default": "#231f20"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent (sterren)",
+      "default": "#ffb74a"
+    },
+    {
+      "type": "color",
+      "id": "color_muted",
+      "label": "Subtekst",
+      "default": "#8a8a8a"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Article Hero"
+    }
+  ]
+}
+{% endschema %}

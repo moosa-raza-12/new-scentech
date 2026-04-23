@@ -1,0 +1,1016 @@
+{%- assign popup_id = 'comparison-popup-' | append: section.id -%}
+{%- assign column_blocks = section.blocks -%}
+{%- assign total_columns = column_blocks | size -%}
+
+{%- render 'comparison-popup-styles',
+  close_bg: section.settings.close_bg | default: '#3d2c1e',
+  close_color: section.settings.close_color | default: '#ffffff',
+  border_color: section.settings.border_color | default: '#eae5df',
+  text_color: section.settings.text_color | default: '#3d2c1e',
+  info_icon_color: section.settings.info_icon_color | default: '#a89585',
+  tooltip_bg: section.settings.tooltip_bg | default: '#3d2c1e',
+  tooltip_text_color: section.settings.tooltip_text_color | default: '#ffffff',
+  button_bg: section.settings.button_bg | default: '#f5f0eb',
+  button_text_color: section.settings.button_text_color | default: '#3d2c1e',
+  scrollbar_track_color: section.settings.scrollbar_track_color | default: '#eae5df',
+  scrollbar_thumb_color: section.settings.scrollbar_thumb_color | default: '#3d2c1e'
+-%}
+
+<div id="{{ popup_id }}" class="cmp-popup__overlay" aria-hidden="true" data-comparison-popup>
+  <div class="cmp-popup__backdrop" data-comparison-close></div>
+
+  <div class="cmp-popup__panel">
+    <button class="cmp-popup__close" aria-label="Close" data-comparison-close type="button">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <div class="cmp-popup__body" data-comparison-scroll>
+      <div class="cmp-popup__table">
+
+        {%- comment -%}--- Row 1: Product row (image + name + product info only) ---{%- endcomment -%}
+        <div class="cmp-popup__row">
+          <div class="cmp-popup__cell cmp-popup__cell--label">
+            <div class="cmp-popup__label-inner">
+              {%- if section.settings.product_row_icon != blank -%}
+                <img
+                  class="cmp-popup__label-icon"
+                  src="{{ section.settings.product_row_icon | image_url: width: 60 }}"
+                  alt=""
+                  loading="lazy"
+                  width="28"
+                  height="28">
+              {%- endif -%}
+              <span>{{ section.settings.product_row_label | default: 'Product' }}</span>
+            </div>
+          </div>
+          {%- for block in column_blocks -%}
+            {%- assign details_product = block.settings.product_for_details -%}
+            <div class="cmp-popup__cell cmp-popup__product-header{% if details_product != blank %} cmp-scent-info-btn{% endif %}"
+              {{ block.shopify_attributes }}
+              {%- if details_product != blank %}
+              role="button"
+              tabindex="0"
+              aria-label="View {{ block.settings.product_name | escape }} details"
+              data-product-id="{{ details_product.id }}"
+              data-product-title="{{ details_product.title | escape }}"
+              data-product-description="{{ details_product.metafields.custom.scent_popup_description | default: details_product.description | strip_html | strip | escape }}"
+              data-product-details="{{ details_product.metafields.custom.scent_details | escape }}"
+              data-product-image="{% if details_product.metafields.custom.scent_image %}{{ details_product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif details_product.featured_image %}{{ details_product.featured_image | image_url: width: 1200 }}{% endif %}"
+              data-product-variant="{{ details_product.metafields.custom.quantity_value | default: details_product.variants.first.title | escape }}"
+              data-product-badge="{{ details_product.metafields.custom.collection_card_badge | escape }}"
+              data-product-price="{{ details_product.price | money }}"
+              data-cta-text="{{ block.settings.info_cta_text | escape }}"
+              data-cta-free-label="{{ block.settings.info_cta_free_label | escape }}"
+              data-cta-notice="{{ block.settings.info_popup_notice | escape }}"
+              data-details-heading="{{ block.settings.info_details_heading | escape }}"
+              {%- endif %}>
+              {%- if block.settings.product_image != blank -%}
+                <img
+                  class="cmp-popup__product-img"
+                  src="{{ block.settings.product_image | image_url: width: 200 }}"
+                  alt="{{ block.settings.product_name | escape }}"
+                  loading="lazy"
+                  width="80"
+                  height="80">
+              {%- endif -%}
+              <div class="cmp-popup__product-name">
+                {{ block.settings.product_name }}
+                {%- if details_product != blank -%}
+                  <span class="cmp-popup__info-icon" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%}--- Data rows: all labels come from section settings ---{%- endcomment -%}
+        {%- for i in (1..10) -%}
+          {%- assign row_label_key = 'row_' | append: i | append: '_label' -%}
+          {%- assign row_icon_key = 'row_' | append: i | append: '_icon' -%}
+          {%- assign display_label = section.settings[row_label_key] | strip -%}
+
+          {%- if display_label != blank -%}
+            <div class="cmp-popup__row">
+              <div class="cmp-popup__cell cmp-popup__cell--label">
+                <div class="cmp-popup__label-inner">
+                  {%- if section.settings[row_icon_key] != blank -%}
+                    <img
+                      class="cmp-popup__label-icon"
+                      src="{{ section.settings[row_icon_key] | image_url: width: 60 }}"
+                      alt=""
+                      loading="lazy"
+                      width="28"
+                      height="28">
+                  {%- endif -%}
+                  <span>{{ display_label }}</span>
+                </div>
+              </div>
+
+              {%- for block in column_blocks -%}
+                {%- assign cell_text_key = 'row_' | append: i | append: '_text' -%}
+                {%- assign cell_info_key = 'row_' | append: i | append: '_info' -%}
+                <div class="cmp-popup__cell{% if forloop.last %} cmp-popup__cell--last{% endif %}">
+                  <div class="cmp-popup__cell-content">
+                    <span>{{ block.settings[cell_text_key] | default: '—' }}</span>
+                    {%- if block.settings[cell_info_key] != blank -%}
+                      <button class="cmp-popup__info-trigger" type="button" aria-label="Info">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                        <span class="cmp-popup__tooltip">{{ block.settings[cell_info_key] }}</span>
+                      </button>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- comment -%}--- Learn More button row ---{%- endcomment -%}
+        {%- assign has_any_button = false -%}
+        {%- for block in column_blocks -%}
+          {%- if block.settings.button_text != blank -%}
+            {%- assign has_any_button = true -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if has_any_button -%}
+          <div class="cmp-popup__row cmp-popup__btn-row">
+            <div class="cmp-popup__cell cmp-popup__cell--label"></div>
+            {%- for block in column_blocks -%}
+              <div class="cmp-popup__cell">
+                {%- if block.settings.button_text != blank -%}
+                  {%- assign btn_product = block.settings.product_for_details -%}
+                  <button class="cmp-popup__learn-more cmp-scent-info-btn"
+                    type="button"
+                    {%- if btn_product != blank %}
+                    data-product-id="{{ btn_product.id }}"
+                    data-product-title="{{ btn_product.title | escape }}"
+                    data-product-description="{{ btn_product.metafields.custom.scent_popup_description | default: btn_product.description | strip_html | strip | escape }}"
+                    data-product-details="{{ btn_product.metafields.custom.scent_details | escape }}"
+                    data-product-image="{% if btn_product.metafields.custom.scent_image %}{{ btn_product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif btn_product.featured_image %}{{ btn_product.featured_image | image_url: width: 1200 }}{% endif %}"
+                    data-product-variant="{{ btn_product.metafields.custom.quantity_value | default: btn_product.variants.first.title | escape }}"
+                    data-product-badge="{{ btn_product.metafields.custom.collection_card_badge | escape }}"
+                    data-product-price="{{ btn_product.price | money }}"
+                    data-cta-text="{{ block.settings.info_cta_text | escape }}"
+                    data-cta-free-label="{{ block.settings.info_cta_free_label | escape }}"
+                    data-cta-notice="{{ block.settings.info_popup_notice | escape }}"
+                    data-details-heading="{{ block.settings.info_details_heading | escape }}"
+                    {%- endif %}>
+                    {{ block.settings.button_text }}
+                  </button>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+      </div>
+    </div>
+
+    <div class="cmp-popup__scrollbar-track">
+      <div class="cmp-popup__scrollbar">
+        <div class="cmp-popup__scrollbar-thumb" data-comparison-thumb></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- comment -%}--- Scent Details Modal (self-contained duplicate for comparison popup) ---{%- endcomment -%}
+<div class="cmp-scent-modal-overlay" id="cmp-scent-modal-overlay"></div>
+<div class="cmp-scent-modal" id="cmp-scent-modal" aria-hidden="true">
+  <button class="cmp-scent-modal__close" type="button" aria-label="Close">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10.8426 0.196845C10.9333 0.105994 11.0342 0.0479495 11.1452 0.0227129C11.2612 -0.00757098 11.3772 -0.00757098 11.4932 0.0227129C11.6091 0.0479495 11.7125 0.105994 11.8033 0.196845C11.889 0.28265 11.947 0.383596 11.9773 0.499685C12.0076 0.615773 12.0076 0.731861 11.9773 0.84795C11.947 0.964038 11.889 1.06498 11.8033 1.15079L1.15949 11.8032C1.07376 11.889 0.972892 11.947 0.856897 11.9773C0.740902 12.0076 0.624907 12.0076 0.508912 11.9773C0.392916 11.947 0.289529 11.889 0.198751 11.8032C0.107972 11.7174 0.0474526 11.6164 0.017193 11.5003C-0.00802338 11.3842 -0.00550175 11.2681 0.0247579 11.1521C0.0550175 11.036 0.113015 10.935 0.198751 10.8492L10.8426 0.196845ZM11.8033 10.8492C11.889 10.935 11.9445 11.036 11.9697 11.1521C12 11.2681 12 11.3842 11.9697 11.5003C11.9445 11.6164 11.889 11.7174 11.8033 11.8032C11.7176 11.894 11.6142 11.9521 11.4932 11.9773C11.3772 12.0076 11.2612 12.0076 11.1452 11.9773C11.0292 11.947 10.9283 11.889 10.8426 11.8032L0.198751 1.15079C0.113015 1.06498 0.0550175 0.964038 0.0247579 0.84795C-0.000458479 0.731861 -0.000458479 0.615773 0.0247579 0.499685C0.0550175 0.383596 0.113015 0.28265 0.198751 0.196845C0.284486 0.105994 0.385352 0.0479495 0.501347 0.0227129C0.617342 -0.00757098 0.733337 -0.00757098 0.849332 0.0227129C0.970371 0.0479495 1.07376 0.105994 1.15949 0.196845L11.8033 10.8492Z" fill="white"/>
+    </svg>
+  </button>
+  <div class="cmp-scent-modal__image">
+    <img src="" alt="" id="cmp-scent-modal-img">
+  </div>
+  <div class="cmp-scent-modal__content">
+    <div class="cmp-scent-modal__content-header">
+      <div class="cmp-scent-modal__tags">
+        <span class="cmp-scent-modal__tag" id="cmp-scent-modal-variant"></span>
+        <span class="cmp-scent-modal__tag cmp-scent-modal__tag--special" id="cmp-scent-modal-badge"></span>
+      </div>
+      <h2 class="cmp-scent-modal__title" id="cmp-scent-modal-title"></h2>
+      <p class="cmp-scent-modal__description" id="cmp-scent-modal-description"></p>
+    </div>
+    <div class="cmp-scent-modal__details">
+      <h3 id="cmp-scent-modal-details-heading">Scent Details</h3>
+      <div class="cmp-scent-modal__details-content" id="cmp-scent-modal-details"></div>
+    </div>
+    <div class="cmp-scent-modal__footer">
+      <button class="cmp-scent-modal__cta" type="button" id="cmp-scent-modal-cta">
+        <span class="cmp-scent-modal__cta-text" id="cmp-scent-modal-cta-text"></span>
+        <span class="cmp-scent-modal__cta-dot">&middot;</span>
+        <span class="cmp-scent-modal__cta-price" id="cmp-scent-modal-cta-price"></span>
+        <span class="cmp-scent-modal__cta-free" id="cmp-scent-modal-cta-free"></span>
+      </button>
+      <div class="cmp-scent-modal__notice" id="cmp-scent-modal-notice">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <path d="M5.99694 12C5.17287 12 4.39776 11.8449 3.6716 11.5347C2.94952 11.2245 2.31311 10.7939 1.76237 10.2429C1.21163 9.69184 0.779194 9.05306 0.465069 8.32653C0.155023 7.6 0 6.82449 0 6C0 5.17551 0.155023 4.4 0.465069 3.67347C0.779194 2.94694 1.21163 2.30816 1.76237 1.75714C2.31311 1.20612 2.94952 0.77551 3.6716 0.465306C4.39776 0.155102 5.17287 0 5.99694 0C6.82101 0 7.59612 0.155102 8.32228 0.465306C9.04844 0.77551 9.68689 1.20612 10.2376 1.75714C10.7884 2.30816 11.2188 2.94694 11.5288 3.67347C11.8429 4.4 12 5.17551 12 6C12 6.82449 11.8429 7.6 11.5288 8.32653C11.2188 9.05306 10.7884 9.69184 10.2376 10.2429C9.68689 10.7939 9.04844 11.2245 8.32228 11.5347C7.59612 11.8449 6.82101 12 5.99694 12ZM4.86486 9.33673H7.39827C7.46762 9.33673 7.52269 9.31633 7.56349 9.27551C7.60428 9.23061 7.62468 9.17551 7.62468 9.1102C7.62468 9.05306 7.60428 9.00204 7.56349 8.95714C7.52269 8.91224 7.46762 8.8898 7.39827 8.8898H6.3641V5.02041C6.3641 4.94694 6.3437 4.88776 6.30291 4.84286C6.26211 4.79388 6.20296 4.76939 6.12545 4.76939H4.9077C4.84243 4.76939 4.78939 4.79184 4.7486 4.83673C4.7078 4.88163 4.6874 4.93469 4.6874 4.99592C4.6874 5.05306 4.7078 5.10408 4.7486 5.14898C4.78939 5.19388 4.84243 5.21633 4.9077 5.21633H5.90515V8.8898H4.86486C4.79959 8.8898 4.74452 8.91224 4.69964 8.95714C4.65885 9.00204 4.63845 9.05306 4.63845 9.1102C4.63845 9.17551 4.65885 9.23061 4.69964 9.27551C4.74452 9.31633 4.79959 9.33673 4.86486 9.33673ZM5.9847 3.50816C6.12749 3.50816 6.24783 3.46122 6.34574 3.36735C6.44365 3.26939 6.49261 3.15102 6.49261 3.01224C6.49261 2.86939 6.44365 2.74898 6.34574 2.65102C6.24783 2.54898 6.12749 2.49796 5.9847 2.49796C5.846 2.49796 5.72565 2.54898 5.62366 2.65102C5.52575 2.74898 5.4768 2.86939 5.4768 3.01224C5.4768 3.15102 5.52575 3.26939 5.62366 3.36735C5.72565 3.46122 5.846 3.50816 5.9847 3.50816Z" fill="#162518"/>
+      </svg>
+        <span id="cmp-scent-modal-notice-text"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var POPUP_ID = {{ popup_id | json }};
+
+  function init() {
+    var overlay = document.getElementById(POPUP_ID);
+    if (!overlay) return;
+
+    var scrollArea = overlay.querySelector('[data-comparison-scroll]');
+    var thumb = overlay.querySelector('[data-comparison-thumb]');
+    var closeBtns = overlay.querySelectorAll('[data-comparison-close]');
+
+    /* --- Comparison popup open / close --- */
+    function open() {
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      updateThumb();
+    }
+
+    function close() {
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    closeBtns.forEach(function(btn) {
+      btn.addEventListener('click', close);
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        if (scentModal && scentModal.classList.contains('active')) {
+          closeScentModal();
+        } else if (overlay.classList.contains('is-open')) {
+          close();
+        }
+      }
+    });
+
+    function updateThumb() {
+      if (!scrollArea || !thumb) return;
+      var sw = scrollArea.scrollWidth;
+      var cw = scrollArea.clientWidth;
+      if (sw <= cw) {
+        thumb.parentElement.style.display = 'none';
+        return;
+      }
+      thumb.parentElement.style.display = '';
+      var ratio = cw / sw;
+      var thumbW = Math.max(ratio * 100, 15);
+      var scrollRatio = scrollArea.scrollLeft / (sw - cw);
+      var trackAvail = 100 - thumbW;
+      thumb.style.width = thumbW + '%';
+      thumb.style.transform = 'translateX(' + (scrollRatio * trackAvail / (thumbW / 100)) + '%)';
+    }
+
+    if (scrollArea) {
+      scrollArea.addEventListener('scroll', updateThumb, { passive: true });
+      window.addEventListener('resize', updateThumb);
+    }
+
+    /* Touch-toggle for info tooltips on mobile */
+    overlay.addEventListener('click', function(e) {
+      var trigger = e.target.closest('.cmp-popup__info-trigger:not(.cmp-scent-info-btn)');
+      if (!trigger) {
+        overlay.querySelectorAll('.cmp-popup__info-trigger.is-active').forEach(function(t) {
+          if (!t.classList.contains('cmp-scent-info-btn')) t.classList.remove('is-active');
+        });
+        return;
+      }
+      e.preventDefault();
+      var wasActive = trigger.classList.contains('is-active');
+      overlay.querySelectorAll('.cmp-popup__info-trigger.is-active').forEach(function(t) {
+        if (!t.classList.contains('cmp-scent-info-btn')) t.classList.remove('is-active');
+      });
+      if (!wasActive) trigger.classList.add('is-active');
+    });
+
+    /* --- Scent details modal (self-contained) --- */
+    var scentModal = document.getElementById('cmp-scent-modal');
+    var scentOverlay = document.getElementById('cmp-scent-modal-overlay');
+    var scentClose = scentModal ? scentModal.querySelector('.cmp-scent-modal__close') : null;
+    var scentImg = document.getElementById('cmp-scent-modal-img');
+    var scentTitle = document.getElementById('cmp-scent-modal-title');
+    var scentDesc = document.getElementById('cmp-scent-modal-description');
+    var scentDetails = document.getElementById('cmp-scent-modal-details');
+    var scentVariant = document.getElementById('cmp-scent-modal-variant');
+    var scentBadge = document.getElementById('cmp-scent-modal-badge');
+    var scentCtaText = document.getElementById('cmp-scent-modal-cta-text');
+    var scentCtaPrice = document.getElementById('cmp-scent-modal-cta-price');
+    var scentCtaFree = document.getElementById('cmp-scent-modal-cta-free');
+    var scentDetailsHeading = document.getElementById('cmp-scent-modal-details-heading');
+    var scentNotice = document.getElementById('cmp-scent-modal-notice');
+    var scentNoticeText = document.getElementById('cmp-scent-modal-notice-text');
+    var scentFooter = scentModal ? scentModal.querySelector('.cmp-scent-modal__footer') : null;
+
+    function openScentModal(data) {
+      if (!scentModal) return;
+      scentTitle.textContent = data.title || '';
+      scentDesc.textContent = data.description || '';
+      scentVariant.textContent = data.variant || '';
+
+      if (data.badge) {
+        scentBadge.textContent = data.badge;
+        scentBadge.style.display = '';
+      } else {
+        scentBadge.style.display = 'none';
+      }
+
+      if (data.image) {
+        scentImg.src = data.image;
+        scentImg.alt = data.title || '';
+        scentModal.querySelector('.cmp-scent-modal__image').style.display = 'block';
+      } else {
+        scentModal.querySelector('.cmp-scent-modal__image').style.display = 'none';
+      }
+
+      scentDetailsHeading.textContent = data.detailsHeading || 'Scent Details';
+
+      if (data.details) {
+        scentDetails.innerHTML = data.details.replace(/\n/g, '<br>');
+        var detailSpans = scentDetails.querySelectorAll('span');
+        var checkSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 14C6.03464 14 5.12876 13.817 4.28235 13.451C3.43595 13.0895 2.69248 12.5886 2.05196 11.948C1.41144 11.3029 0.90817 10.5595 0.542157 9.71765C0.180719 8.87124 0 7.96536 0 7C0 6.03464 0.180719 5.12876 0.542157 4.28235C0.90817 3.43595 1.41144 2.69248 2.05196 2.05196C2.69248 1.41144 3.43595 0.910458 4.28235 0.54902C5.12876 0.183007 6.03464 0 7 0C7.96536 0 8.87124 0.183007 9.71765 0.54902C10.5641 0.910458 11.3075 1.41144 11.948 2.05196C12.5886 2.69248 13.0895 3.43595 13.451 4.28235C13.817 5.12876 14 6.03464 14 7C14 7.96536 13.817 8.87124 13.451 9.71765C13.0895 10.5595 12.5886 11.3029 11.948 11.948C11.3075 12.5886 10.5641 13.0895 9.71765 13.451C8.87124 13.817 7.96536 14 7 14ZM6.23137 10.349C6.35033 10.349 6.45784 10.3216 6.55392 10.2667C6.65 10.2118 6.73464 10.1294 6.80784 10.0196L10.0333 4.93431C10.0745 4.86569 10.1134 4.79248 10.15 4.71471C10.1866 4.63693 10.2049 4.55915 10.2049 4.48137C10.2049 4.32124 10.1454 4.19543 10.0265 4.10392C9.90752 4.00784 9.77484 3.9598 9.62843 3.9598C9.42712 3.9598 9.26242 4.06503 9.13431 4.27549L6.20392 8.98333L4.81078 7.18529C4.72386 7.07092 4.63922 6.99314 4.55686 6.95196C4.47909 6.91078 4.38987 6.8902 4.28922 6.8902C4.13366 6.8902 4.00327 6.94739 3.89804 7.06177C3.79281 7.17157 3.7402 7.30425 3.7402 7.4598C3.7402 7.53758 3.75392 7.61536 3.78137 7.69314C3.8134 7.76634 3.85458 7.83726 3.9049 7.90588L5.62745 10.0196C5.71895 10.1386 5.81275 10.2232 5.90882 10.2735C6.0049 10.3239 6.11242 10.349 6.23137 10.349Z" fill="black"/></svg> ';
+        detailSpans.forEach(function(span) {
+          span.insertAdjacentHTML('afterbegin', checkSvg);
+        });
+      } else {
+        scentDetails.innerHTML = '';
+      }
+
+      if (data.ctaText) {
+        scentCtaText.textContent = data.ctaText;
+        scentCtaPrice.textContent = data.price || '';
+        scentCtaFree.textContent = data.ctaFreeLabel || 'FREE';
+        scentFooter.style.display = '';
+      } else {
+        scentFooter.style.display = 'none';
+      }
+
+      if (data.notice) {
+        scentNoticeText.textContent = data.notice;
+        scentNotice.style.display = '';
+      } else {
+        scentNotice.style.display = 'none';
+      }
+
+      scentOverlay.classList.add('active');
+      scentModal.classList.add('active');
+      scentModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeScentModal() {
+      if (!scentModal) return;
+      scentOverlay.classList.remove('active');
+      scentModal.classList.remove('active');
+      scentModal.setAttribute('aria-hidden', 'true');
+    }
+
+    if (scentClose) scentClose.addEventListener('click', closeScentModal);
+    if (scentOverlay) scentOverlay.addEventListener('click', closeScentModal);
+
+    var scentCta = document.getElementById('cmp-scent-modal-cta');
+    var isOfferPage = {{ template.suffix | json }} === 'offer-page';
+    if (scentCta) {
+      scentCta.addEventListener('click', function() {
+        if (isOfferPage) {
+          closeScentModal();
+          close();
+        } else {
+          window.location.href = '/collections/fall-sale';
+        }
+      });
+    }
+
+    /* Handle info icon & Learn More clicks inside comparison popup */
+    overlay.addEventListener('click', function(e) {
+      var infoBtn = e.target.closest('.cmp-scent-info-btn');
+      if (!infoBtn) return;
+      e.preventDefault();
+      e.stopPropagation();
+
+      openScentModal({
+        title: infoBtn.getAttribute('data-product-title'),
+        description: infoBtn.getAttribute('data-product-description'),
+        details: infoBtn.getAttribute('data-product-details'),
+        image: infoBtn.getAttribute('data-product-image'),
+        variant: infoBtn.getAttribute('data-product-variant'),
+        badge: infoBtn.getAttribute('data-product-badge'),
+        price: infoBtn.getAttribute('data-product-price'),
+        ctaText: infoBtn.getAttribute('data-cta-text'),
+        ctaFreeLabel: infoBtn.getAttribute('data-cta-free-label'),
+        notice: infoBtn.getAttribute('data-cta-notice'),
+        detailsHeading: infoBtn.getAttribute('data-details-heading')
+      });
+    });
+
+    /* --- Comparison popup triggers --- */
+    var customClass = {{ section.settings.custom_trigger_class | json }};
+
+    document.addEventListener('click', function(e) {
+      var dataTrigger = e.target.closest('[data-open-comparison]');
+      if (dataTrigger) {
+        var targetId = dataTrigger.getAttribute('data-open-comparison');
+        if (targetId === '#' + POPUP_ID || targetId === POPUP_ID) {
+          e.preventDefault();
+          open();
+          return;
+        }
+      }
+
+      if (customClass && customClass.length > 0) {
+        var classTrigger = e.target.closest('.' + customClass);
+        if (classTrigger) {
+          e.preventDefault();
+          open();
+          return;
+        }
+
+        var link = e.target.closest('a[href]');
+        if (link) {
+          var href = link.getAttribute('href') || '';
+          if (href === '#' + customClass || href === '.' + customClass || href === customClass) {
+            e.preventDefault();
+            open();
+          }
+        }
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  document.addEventListener('shopify:section:load', function(e) {
+    if (e.detail.sectionId === '{{ section.id }}') init();
+  });
+
+  document.addEventListener('shopify:section:select', function(e) {
+    if (e.detail.sectionId === '{{ section.id }}') {
+      var overlay = document.getElementById(POPUP_ID);
+      if (overlay) {
+        overlay.classList.add('is-open');
+        overlay.setAttribute('aria-hidden', 'false');
+      }
+    }
+  });
+
+  document.addEventListener('shopify:section:deselect', function(e) {
+    if (e.detail.sectionId === '{{ section.id }}') {
+      var overlay = document.getElementById(POPUP_ID);
+      if (overlay) {
+        overlay.classList.remove('is-open');
+        overlay.setAttribute('aria-hidden', 'true');
+      }
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Comparison Popup",
+  "class": "shopify-section--comparison-popup",
+  "enabled_on": {
+    "groups": ["custom.overlay"]
+  },
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "To trigger this popup, add the attribute data-open-comparison=\"#comparison-popup-SECTION_ID\" to any button or link element. You can find the section ID in the URL when editing this section in the customizer."
+    },
+    {
+      "type": "text",
+      "id": "custom_trigger_class",
+      "label": "Custom trigger CSS class",
+      "info": "Add this class to any button/link on your site to open this popup. Leave empty to use data-attribute triggering only.",
+      "default": "open-comparison-popup"
+    },
+    {
+      "type": "header",
+      "content": "Product row (first row)"
+    },
+    {
+      "type": "text",
+      "id": "product_row_label",
+      "label": "Label",
+      "default": "Product",
+      "info": "Label for the first row (product image and name)."
+    },
+    {
+      "type": "image_picker",
+      "id": "product_row_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "header",
+      "content": "Row 1 (e.g. Price)"
+    },
+    {
+      "type": "text",
+      "id": "row_1_label",
+      "label": "Label",
+      "default": "Price"
+    },
+    {
+      "type": "image_picker",
+      "id": "row_1_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "header",
+      "content": "Row 2"
+    },
+    {
+      "type": "text",
+      "id": "row_2_label",
+      "label": "Label",
+      "default": "Coverage"
+    },
+    {
+      "type": "image_picker",
+      "id": "row_2_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "header",
+      "content": "Row 3"
+    },
+    {
+      "type": "text",
+      "id": "row_3_label",
+      "label": "Label",
+      "default": "Noise level"
+    },
+    {
+      "type": "image_picker",
+      "id": "row_3_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "header",
+      "content": "Row 4"
+    },
+    {
+      "type": "text",
+      "id": "row_4_label",
+      "label": "Label",
+      "default": "Noise level"
+    },
+    {
+      "type": "image_picker",
+      "id": "row_4_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "header",
+      "content": "Row 5"
+    },
+    {
+      "type": "text",
+      "id": "row_5_label",
+      "label": "Label",
+      "default": "Power"
+    },
+    {
+      "type": "image_picker",
+      "id": "row_5_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "header",
+      "content": "Row 6"
+    },
+    {
+      "type": "text",
+      "id": "row_6_label",
+      "label": "Label",
+      "default": "Control"
+    },
+    {
+      "type": "image_picker",
+      "id": "row_6_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "header",
+      "content": "Row 7"
+    },
+    {
+      "type": "text",
+      "id": "row_7_label",
+      "label": "Label",
+      "default": "Lighting"
+    },
+    {
+      "type": "image_picker",
+      "id": "row_7_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "header",
+      "content": "Row 8"
+    },
+    {
+      "type": "text",
+      "id": "row_8_label",
+      "label": "Label"
+    },
+    {
+      "type": "image_picker",
+      "id": "row_8_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "header",
+      "content": "Row 9"
+    },
+    {
+      "type": "text",
+      "id": "row_9_label",
+      "label": "Label"
+    },
+    {
+      "type": "image_picker",
+      "id": "row_9_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "header",
+      "content": "Row 10"
+    },
+    {
+      "type": "text",
+      "id": "row_10_label",
+      "label": "Label"
+    },
+    {
+      "type": "image_picker",
+      "id": "row_10_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#3d2c1e"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Row border color",
+      "default": "#eae5df"
+    },
+    {
+      "type": "color",
+      "id": "info_icon_color",
+      "label": "Info icon color",
+      "default": "#a89585"
+    },
+    {
+      "type": "color",
+      "id": "tooltip_bg",
+      "label": "Tooltip background",
+      "default": "#3d2c1e"
+    },
+    {
+      "type": "color",
+      "id": "tooltip_text_color",
+      "label": "Tooltip text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "close_bg",
+      "label": "Close button background",
+      "default": "#f5f0eb"
+    },
+    {
+      "type": "color",
+      "id": "close_color",
+      "label": "Close button color",
+      "default": "#3d2c1e"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Learn More button background",
+      "default": "#f5f0eb"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Learn More button text color",
+      "default": "#3d2c1e"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Learn More button border",
+      "default": "#d4ccc4"
+    },
+    {
+      "type": "color",
+      "id": "scrollbar_track_color",
+      "label": "Scrollbar track color",
+      "default": "#eae5df"
+    },
+    {
+      "type": "color",
+      "id": "scrollbar_thumb_color",
+      "label": "Scrollbar thumb color",
+      "default": "#3d2c1e"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Product Column",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Product info"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product image"
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Product name",
+          "default": "Product"
+        },
+        {
+          "type": "product",
+          "id": "product_for_details",
+          "label": "Product (for info popup)",
+          "info": "Select the product. The (i) icon will open the scent details popup using this product's metafields (scent_popup_description, scent_details, scent_image, etc.)."
+        },
+        {
+          "type": "header",
+          "content": "Row 1 data"
+        },
+        {
+          "type": "text",
+          "id": "row_1_text",
+          "label": "Row 1 value"
+        },
+        {
+          "type": "text",
+          "id": "row_1_info",
+          "label": "Row 1 info tooltip"
+        },
+        {
+          "type": "header",
+          "content": "Row 2 data"
+        },
+        {
+          "type": "text",
+          "id": "row_2_text",
+          "label": "Row 2 value"
+        },
+        {
+          "type": "text",
+          "id": "row_2_info",
+          "label": "Row 2 info tooltip"
+        },
+        {
+          "type": "header",
+          "content": "Row 3 data"
+        },
+        {
+          "type": "text",
+          "id": "row_3_text",
+          "label": "Row 3 value"
+        },
+        {
+          "type": "text",
+          "id": "row_3_info",
+          "label": "Row 3 info tooltip"
+        },
+        {
+          "type": "header",
+          "content": "Row 4 data"
+        },
+        {
+          "type": "text",
+          "id": "row_4_text",
+          "label": "Row 4 value"
+        },
+        {
+          "type": "text",
+          "id": "row_4_info",
+          "label": "Row 4 info tooltip"
+        },
+        {
+          "type": "header",
+          "content": "Row 5 data"
+        },
+        {
+          "type": "text",
+          "id": "row_5_text",
+          "label": "Row 5 value"
+        },
+        {
+          "type": "text",
+          "id": "row_5_info",
+          "label": "Row 5 info tooltip"
+        },
+        {
+          "type": "header",
+          "content": "Row 6 data"
+        },
+        {
+          "type": "text",
+          "id": "row_6_text",
+          "label": "Row 6 value"
+        },
+        {
+          "type": "text",
+          "id": "row_6_info",
+          "label": "Row 6 info tooltip"
+        },
+        {
+          "type": "header",
+          "content": "Row 7 data"
+        },
+        {
+          "type": "text",
+          "id": "row_7_text",
+          "label": "Row 7 value"
+        },
+        {
+          "type": "text",
+          "id": "row_7_info",
+          "label": "Row 7 info tooltip"
+        },
+        {
+          "type": "header",
+          "content": "Row 8 data"
+        },
+        {
+          "type": "text",
+          "id": "row_8_text",
+          "label": "Row 8 value"
+        },
+        {
+          "type": "text",
+          "id": "row_8_info",
+          "label": "Row 8 info tooltip"
+        },
+        {
+          "type": "header",
+          "content": "Row 9 data"
+        },
+        {
+          "type": "text",
+          "id": "row_9_text",
+          "label": "Row 9 value"
+        },
+        {
+          "type": "text",
+          "id": "row_9_info",
+          "label": "Row 9 info tooltip"
+        },
+        {
+          "type": "header",
+          "content": "Row 10 data"
+        },
+        {
+          "type": "text",
+          "id": "row_10_text",
+          "label": "Row 10 value"
+        },
+        {
+          "type": "text",
+          "id": "row_10_info",
+          "label": "Row 10 info tooltip"
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Learn More"
+        },
+        {
+          "type": "header",
+          "content": "Info popup settings"
+        },
+        {
+          "type": "text",
+          "id": "info_details_heading",
+          "label": "Details section heading",
+          "default": "Scent Details",
+          "info": "Heading shown above the details content in the info popup"
+        },
+        {
+          "type": "text",
+          "id": "info_cta_text",
+          "label": "CTA button text",
+          "default": "Select Scents"
+        },
+        {
+          "type": "text",
+          "id": "info_cta_free_label",
+          "label": "Free label",
+          "default": "FREE",
+          "info": "Text shown after the crossed-out price (e.g. FREE)"
+        },
+        {
+          "type": "text",
+          "id": "info_popup_notice",
+          "label": "Notice text",
+          "default": "This diffuser is free when selecting 7 scents.",
+          "info": "Shown below the CTA button with an info icon"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison Popup",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "product_name": "Smart Aroma Diffuser Lite",
+            "row_1_text": "€94,95",
+            "row_2_text": "50m²",
+            "row_2_info": "The size of a small flat or large living room",
+            "row_3_text": "Whisper Quiet (±59.5dB)",
+            "row_4_text": "Unobtrusive and clean, blends into your interior",
+            "row_5_text": "App control with fixed routines",
+            "row_6_text": "No lighting",
+            "button_text": "Learn More"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "product_name": "Smart Aroma Diffuser 2",
+            "row_1_text": "€149,95",
+            "row_2_text": "65m²",
+            "row_2_info": "The size of a medium flat",
+            "row_3_text": "Completely Silent (±39.5dB)",
+            "row_4_text": "Wrapped in premium taupe fabric",
+            "row_5_text": "App control + button wheel on the device",
+            "row_6_text": "Warm ambiance light",
+            "button_text": "Learn More"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "product_name": "Smart Aroma Diffuser Pro",
+            "row_1_text": "€199,95",
+            "row_2_text": "100m²",
+            "row_2_info": "Large living space or open floor plan",
+            "row_3_text": "Completely Silent (±39.5dB)",
+            "row_4_text": "Designed with premium machined brushed aluminum",
+            "row_5_text": "App control + physical buttons on the device",
+            "row_6_text": "Ambient lighting with the logo",
+            "button_text": "Learn More"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

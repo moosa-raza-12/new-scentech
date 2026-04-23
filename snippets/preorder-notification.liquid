@@ -1,0 +1,113 @@
+{% comment %}
+  Pre-order notification snippet
+  Usage: {% render 'preorder-notification', block: block %}
+{% endcomment %}
+
+<style>
+  .preorder-notification {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: var(--font-body-size);
+    border-radius: 4px;
+    border: 1px solid;
+  }
+  
+  .preorder-notification--warning {
+    background-color: var(--preorder-bg-color, #fff9db);
+    border-color: var(--preorder-border-color, #ffe58f);
+    color: var(--preorder-text-color, #333);
+  }
+  
+  .preorder-notification--error {
+    background-color: var(--unavailable-bg-color, #ffebee);
+    border-color: var(--unavailable-border-color, #ffcdd2);
+    color: var(--unavailable-text-color, #d32f2f);
+  }
+  
+  .preorder-notification--success {
+    background-color: var(--available-bg-color, #e8f5e8);
+    border-color: var(--available-border-color, #c8e6c9);
+    color: var(--available-text-color, #2e7d32);
+  }
+  
+  .debug-info {
+    font-size: 12px;
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 3px;
+    font-family: monospace;
+  }
+  
+  .debug-info--success {
+    color: #2e7d32;
+    background-color: #e8f5e8;
+  }
+  
+  .debug-info--warning {
+    color: #f57f17;
+    background-color: #fff8e1;
+  }
+  
+  .debug-info--error {
+    color: #d32f2f;
+    background-color: #ffebee;
+  }
+</style>
+
+<div style="
+  --preorder-bg-color: {{ block.settings.preorder_bg_color | default: '#fff9db' }};
+  --preorder-border-color: {{ block.settings.preorder_border_color | default: '#ffe58f' }};
+  --preorder-text-color: {{ block.settings.preorder_text_color | default: '#333333' }};
+  --unavailable-bg-color: {{ block.settings.unavailable_bg_color | default: '#ffebee' }};
+  --unavailable-border-color: {{ block.settings.unavailable_border_color | default: '#ffcdd2' }};
+  --unavailable-text-color: {{ block.settings.unavailable_text_color | default: '#d32f2f' }};
+  --available-bg-color: {{ block.settings.available_bg_color | default: '#e8f5e8' }};
+  --available-border-color: {{ block.settings.available_border_color | default: '#c8e6c9' }};
+  --available-text-color: {{ block.settings.available_text_color | default: '#2e7d32' }};
+">
+  {% assign debug = block.settings.enable_debug | default: false %}
+  {% assign preorder_message = block.settings.preorder_message | default: "Door de enorme toename in de vraag naar dit product is het tijdelijk uitverkocht. Als u nu besteld bent u volgende week de eerste die hem geleverd krijgt." %}
+  {% assign unavailable_message = block.settings.unavailable_message | default: "Dit product is momenteel niet beschikbaar." %}
+  {% assign in_stock_message = block.settings.in_stock_message | default: "Op voorraad - Direct leverbaar" %}
+  {% assign show_in_stock_message = block.settings.show_in_stock_message | default: false %}
+  
+  {% if product.available %}
+    {% if product.variants.first.inventory_quantity <= 0 %}
+      {% comment %} Product is available but out of stock - show preorder message {% endcomment %}
+      <div class="preorder-notification preorder-notification--warning">
+        {{ preorder_message }}
+      </div>
+      {% if debug %}
+        <div class="debug-info debug-info--success">
+          [DEBUG] ✅ Toon pre-order tekst — Voorraad: {{ product.variants.first.inventory_quantity }}
+        </div>
+      {% endif %}
+      
+    {% else %}
+      {% comment %} Product is in stock {% endcomment %}
+      {% if show_in_stock_message and in_stock_message != blank %}
+        <div class="preorder-notification preorder-notification--success">
+          {{ in_stock_message }}
+        </div>
+      {% endif %}
+      {% if debug %}
+        <div class="debug-info debug-info--warning">
+          [DEBUG] ⚠️ Voorraad is boven 0: {{ product.variants.first.inventory_quantity }}
+        </div>
+      {% endif %}
+    {% endif %}
+    
+  {% else %}
+    {% comment %} Product is not available at all {% endcomment %}
+    {% if unavailable_message != blank %}
+      <div class="preorder-notification preorder-notification--error">
+        {{ unavailable_message }}
+      </div>
+    {% endif %}
+    {% if debug %}
+      <div class="debug-info debug-info--error">
+        [DEBUG] ❌ Product niet beschikbaar
+      </div>
+    {% endif %}
+  {% endif %}
+</div>

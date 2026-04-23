@@ -1,0 +1,607 @@
+{% comment %}
+  LP Reason Block (herbruikbaar)
+  Scentech — Reden blok met checklist, testimonial, badge en afbeelding
+{% endcomment %}
+
+<style>
+  #lp-reason-{{ section.id }} {
+    --color-text:               {{ section.settings.color_text }};
+    --color-accent:             {{ section.settings.color_accent }};
+    --color-checklist-bg:       {{ section.settings.color_checklist_icon_bg }};
+    --color-testimonial-border: {{ section.settings.color_testimonial_border }};
+    --font-heading:             '{{ section.settings.font_heading }}', sans-serif;
+    --font-body:                '{{ section.settings.font_body }}', sans-serif;
+  }
+
+  {% if section.settings.bg_color == 'cream' %}
+    #lp-reason-{{ section.id }} .rb-outer  { background: #F1F1F1; }
+    #lp-reason-{{ section.id }} .rb-review { background: #FFFFFF; }
+  {% else %}
+    #lp-reason-{{ section.id }} .rb-outer  { background: #FFFFFF; }
+    #lp-reason-{{ section.id }} .rb-review { background: #F1F1F1; }
+  {% endif %}
+
+  /* ── Outer wrapper ── */
+  #lp-reason-{{ section.id }} .rb-outer {
+    padding: clamp(60px, 8vw, 100px) 24px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* ── Grid ── */
+  #lp-reason-{{ section.id }} .rb-grid {
+    max-width: 1080px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 80px);
+    align-items: center;
+  }
+
+  /* Image left (desktop only) */
+  @media (min-width: 861px) {
+    #lp-reason-{{ section.id }} .rb-grid.image-left .rb-image-col { order: 1 !important; }
+    #lp-reason-{{ section.id }} .rb-grid.image-left .rb-text-col  { order: 2 !important; }
+
+    /* Image right (desktop only) */
+    #lp-reason-{{ section.id }} .rb-grid.image-right .rb-text-col  { order: 1 !important; }
+    #lp-reason-{{ section.id }} .rb-grid.image-right .rb-image-col { order: 2 !important; }
+  }
+
+  /* ── Image column ── */
+  #lp-reason-{{ section.id }} .rb-image-col {
+    position: relative;
+  }
+
+  #lp-reason-{{ section.id }} .rb-image {
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 18px 50px rgba(35, 31, 32, 0.10);
+    background: transparent;
+  }
+
+  #lp-reason-{{ section.id }} .rb-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: {{ section.settings.image_fit }};
+    object-position: {{ section.settings.image_focal_point }};
+  }
+
+  /* Fixed aspect-ratio only when cover mode */
+  {% if section.settings.image_fit == 'cover' %}
+  #lp-reason-{{ section.id }} .rb-image {
+    aspect-ratio: 4 / 5;
+  }
+  #lp-reason-{{ section.id }} .rb-image img {
+    height: 100%;
+  }
+  {% endif %}
+
+  /* ── Placeholder ── */
+  #lp-reason-{{ section.id }} .rb-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(160deg, #F5EFE8 0%, #EAE0D4 40%, #DDD0BC 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #8A8A8A;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── Floating badge ── */
+  #lp-reason-{{ section.id }} .rb-badge {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    background: #FFFFFF;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(35, 31, 32, 0.10);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 2;
+  }
+
+  #lp-reason-{{ section.id }} .rb-badge-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--color-checklist-bg);
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  #lp-reason-{{ section.id }} .rb-badge-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text);
+    line-height: 1.3;
+    font-family: var(--font-body);
+  }
+
+  /* ── Text column ── */
+  #lp-reason-{{ section.id }} .rb-text-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #lp-reason-{{ section.id }} .rb-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    color: var(--color-text);
+    opacity: 0.5;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  #lp-reason-{{ section.id }} .rb-eyebrow::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--color-text);
+    opacity: 0.5;
+  }
+
+  #lp-reason-{{ section.id }} .rb-title {
+    font-family: var(--font-heading);
+    font-size: clamp(28px, 3vw, 36px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    margin: 0 0 20px;
+    line-height: 1.2;
+  }
+
+  #lp-reason-{{ section.id }} .rb-desc {
+    font-size: 16px;
+    color: var(--color-text);
+    opacity: 0.75;
+    line-height: 1.7;
+    margin: 0 0 24px;
+    font-family: var(--font-body);
+  }
+
+  /* ── Checklist ── */
+  #lp-reason-{{ section.id }} .rb-checklist {
+    list-style: none;
+    margin: 0 0 32px;
+    padding: 0;
+  }
+
+  #lp-reason-{{ section.id }} .rb-checklist li {
+    position: relative;
+    padding-left: 36px;
+    margin-bottom: 14px;
+    font-size: 15px;
+    color: var(--color-text);
+    font-weight: 500;
+    line-height: 1.4;
+    font-family: var(--font-body);
+  }
+
+  #lp-reason-{{ section.id }} .rb-checklist li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: -2px;
+    width: 22px;
+    height: 22px;
+    background: var(--color-checklist-bg);
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  /* ── Testimonial ── */
+  #lp-reason-{{ section.id }} .rb-review {
+    padding: 24px;
+    border-radius: 8px;
+    border-left: 4px solid var(--color-testimonial-border);
+    box-shadow: 0 2px 8px rgba(35, 31, 32, 0.06);
+  }
+
+  #lp-reason-{{ section.id }} .rb-review-stars {
+    color: var(--color-accent);
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  #lp-reason-{{ section.id }} .rb-review-text {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--color-text);
+    margin: 0 0 12px;
+    line-height: 1.6;
+  }
+
+  #lp-reason-{{ section.id }} .rb-review-author {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text);
+    opacity: 0.6;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: var(--font-body);
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 860px) {
+    #lp-reason-{{ section.id }} .rb-outer {
+      padding: 60px 0;
+    }
+
+    #lp-reason-{{ section.id }} .rb-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    /* Mobile: image always top, text below */
+    #lp-reason-{{ section.id }} .rb-grid .rb-image-col { order: 1 !important; width: 100%; }
+    #lp-reason-{{ section.id }} .rb-grid .rb-text-col  { order: 2 !important; padding: 40px 24px; }
+
+    #lp-reason-{{ section.id }} .rb-image {
+      border-radius: 0;
+      box-shadow: none;
+      aspect-ratio: unset !important;
+    }
+
+    #lp-reason-{{ section.id }} .rb-image img {
+      height: auto !important;
+      width: 100%;
+    }
+  }
+</style>
+
+<section id="lp-reason-{{ section.id }}" class="lp-reason-section">
+  <div class="rb-outer">
+    <div class="rb-grid {% if section.settings.image_position == 'left' %}image-left{% else %}image-right{% endif %}">
+
+      <!-- Tekst kolom -->
+      <div class="rb-text-col">
+
+        {% if section.settings.show_eyebrow %}
+          <span class="rb-eyebrow">{{ section.settings.eyebrow_number }} {{ section.settings.eyebrow_text }}</span>
+        {% endif %}
+
+        <h2 class="rb-title">{{ section.settings.title }}</h2>
+
+        <p class="rb-desc">{{ section.settings.description }}</p>
+
+        <ul class="rb-checklist">
+          {% if section.settings.show_checklist_1 %}
+            <li>{{ section.settings.checklist_item_1 }}</li>
+          {% endif %}
+          {% if section.settings.show_checklist_2 %}
+            <li>{{ section.settings.checklist_item_2 }}</li>
+          {% endif %}
+          {% if section.settings.show_checklist_3 %}
+            <li>{{ section.settings.checklist_item_3 }}</li>
+          {% endif %}
+        </ul>
+
+        {% if section.settings.show_testimonial %}
+          <div class="rb-review">
+            <div class="rb-review-stars">
+              {% assign stars = section.settings.testimonial_stars %}
+              {% for i in (1..stars) %}★{% endfor %}
+            </div>
+            <div class="rb-review-text">{{ section.settings.testimonial_quote }}</div>
+            <div class="rb-review-author">{{ section.settings.testimonial_author }}</div>
+          </div>
+        {% endif %}
+
+      </div>
+
+      <!-- Afbeelding kolom -->
+      <div class="rb-image-col">
+        <div class="rb-image">
+          {% if section.settings.image != blank %}
+            {{ section.settings.image | image_url: width: 1400 | image_tag:
+              alt: section.settings.title,
+              loading: 'lazy'
+            }}
+          {% else %}
+            <div class="rb-placeholder">Voeg afbeelding toe</div>
+          {% endif %}
+        </div>
+
+        {% if section.settings.show_badge %}
+          <div class="rb-badge">
+            <div class="rb-badge-icon">{{ section.settings.badge_icon }}</div>
+            <div class="rb-badge-text">
+              {{ section.settings.badge_line_1 }}<br>{{ section.settings.badge_line_2 }}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP Reden Blok",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Eyebrow label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_eyebrow",
+      "label": "Toon eyebrow",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_number",
+      "label": "Eyebrow nummer/label",
+      "default": "Reden 01"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Eyebrow extra tekst",
+      "default": "—"
+    },
+    {
+      "type": "header",
+      "content": "Inhoud"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Koptekst (h2)",
+      "default": "Geen water. Geen verdamping. Gewoon geur."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Omschrijving",
+      "default": "Zoals ik al zei, de meeste diffusers werken met water. Ze verdunnen de geur, pompen damp de lucht in en noemen dat aromatherapie. Het resultaat? Een wolk witte mist die neerploft op je vloer. Na tien minuten ruik je er niks meer van."
+    },
+    {
+      "type": "header",
+      "content": "Checklijst"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_checklist_1",
+      "label": "Toon punt 1",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "checklist_item_1",
+      "label": "Checklijst punt 1",
+      "default": "100% pure geurolie (zonder waterverdunning)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_checklist_2",
+      "label": "Toon punt 2",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "checklist_item_2",
+      "label": "Checklijst punt 2",
+      "default": "Geurmoleculen blijven urenlang zweven"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_checklist_3",
+      "label": "Toon punt 3",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "checklist_item_3",
+      "label": "Checklijst punt 3",
+      "default": "Veilig voor houten meubels (geen vocht)"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial / review"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_testimonial",
+      "label": "Toon testimonial blok",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "testimonial_stars",
+      "label": "Aantal sterren",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "textarea",
+      "id": "testimonial_quote",
+      "label": "Citaat tekst",
+      "default": "\"Eindelijk iets waardoor je huis goed ruikt. Geurstokjes kon ik alleen ruiken als ik er vlak boven hing. Scentech vult echt mijn hele woonkamer.\""
+    },
+    {
+      "type": "text",
+      "id": "testimonial_author",
+      "label": "Citaat auteur",
+      "default": "Nadia, geverifieerde koper"
+    },
+    {
+      "type": "header",
+      "content": "Afbeelding"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Sectie afbeelding"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Positie afbeelding",
+      "options": [
+        { "value": "left",  "label": "Links" },
+        { "value": "right", "label": "Rechts" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Weergave afbeelding",
+      "info": "Bijsnijden: vult het vlak (4:5 verhouding). Volledig: toont de hele afbeelding op zijn eigen formaat.",
+      "options": [
+        { "value": "cover",   "label": "Bijsnijden (4:5 vlak)" },
+        { "value": "contain", "label": "Volledig tonen" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "image_focal_point",
+      "label": "Focuspunt (bij bijsnijden)",
+      "info": "Welk deel van de afbeelding blijft zichtbaar als hij wordt bijgesneden.",
+      "options": [
+        { "value": "center center", "label": "Midden" },
+        { "value": "top center",    "label": "Boven" },
+        { "value": "bottom center", "label": "Onder" },
+        { "value": "center left",   "label": "Links" },
+        { "value": "center right",  "label": "Rechts" },
+        { "value": "top left",      "label": "Boven links" },
+        { "value": "top right",     "label": "Boven rechts" },
+        { "value": "bottom left",   "label": "Onder links" },
+        { "value": "bottom right",  "label": "Onder rechts" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "header",
+      "content": "Floating badge op afbeelding"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Toon floating badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_icon",
+      "label": "Badge icoon (emoji)",
+      "default": "✨"
+    },
+    {
+      "type": "text",
+      "id": "badge_line_1",
+      "label": "Badge tekst regel 1",
+      "default": "Zelfde technologie"
+    },
+    {
+      "type": "text",
+      "id": "badge_line_2",
+      "label": "Badge tekst regel 2",
+      "default": "als een 5-sterren hotel"
+    },
+    {
+      "type": "header",
+      "content": "Achtergrond"
+    },
+    {
+      "type": "select",
+      "id": "bg_color",
+      "label": "Achtergrondkleur",
+      "options": [
+        { "value": "cream", "label": "Crème (#F1F1F1)" },
+        { "value": "white", "label": "Wit (#FFFFFF)" }
+      ],
+      "default": "cream"
+    },
+    {
+      "type": "header",
+      "content": "Kleuren"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Tekstkleur",
+      "default": "#231F20"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accentkleur (sterren)",
+      "default": "#FFB74A"
+    },
+    {
+      "type": "color",
+      "id": "color_checklist_icon_bg",
+      "label": "Checklijst icoon achtergrond",
+      "default": "#160000"
+    },
+    {
+      "type": "color",
+      "id": "color_testimonial_border",
+      "label": "Testimonial randkleur",
+      "default": "#160000"
+    },
+    {
+      "type": "header",
+      "content": "Lettertypes"
+    },
+    {
+      "type": "select",
+      "id": "font_heading",
+      "label": "Lettertype koptekst",
+      "options": [
+        { "value": "Bai Jamjuree",     "label": "Bai Jamjuree" },
+        { "value": "Playfair Display", "label": "Playfair Display" },
+        { "value": "Inter",            "label": "Inter" }
+      ],
+      "default": "Bai Jamjuree"
+    },
+    {
+      "type": "select",
+      "id": "font_body",
+      "label": "Lettertype bodytekst",
+      "options": [
+        { "value": "Bai Jamjuree",     "label": "Bai Jamjuree" },
+        { "value": "Playfair Display", "label": "Playfair Display" },
+        { "value": "Inter",            "label": "Inter" }
+      ],
+      "default": "Bai Jamjuree"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Reden Blok"
+    }
+  ]
+}
+{% endschema %}

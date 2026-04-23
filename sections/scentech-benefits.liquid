@@ -1,0 +1,819 @@
+{% comment %}
+  Benefits Features Section
+  Displays product benefits with dynamic features and checkmarks
+{% endcomment %}
+
+<section class="section-benefits color-{{ section.settings.color_scheme }}" id="benefits-{{ section.id }}" style="
+    --padding-top: {{ section.settings.padding_top }}px;
+    --padding-bottom: {{ section.settings.padding_bottom }}px;
+    --mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
+    --mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    --gradient-start: {{ section.settings.gradient_start }};
+    --gradient-end: {{ section.settings.gradient_end }};
+    --gradient-start2: {{ section.settings.gradient_start2 }};
+    --gradient-end2: {{ section.settings.gradient_end2 }};
+    --gradient-color2: {{ section.settings.gradient_color2 }};
+    --gradient-start3: {{ section.settings.gradient_start3 }};
+    --gradient-end3: {{ section.settings.gradient_end3 }};
+    --gradient-color3: {{ section.settings.gradient_color3 }};
+    --text-color: {{ section.settings.text_color }};
+    --icongradientstart: {{ section.settings.icon_gradient_start }};
+    --icongradientend: {{ section.settings.icon_gradient_end }};
+    --title-size: {{ section.settings.title_size }}px;
+    --title-size-mobile: {{ section.settings.title_size_mobile }}px;
+    --text-size: {{ section.settings.text_size }}px;
+    --text-size-mobile: {{ section.settings.text_size_mobile }}px;
+    --features-text-size: {{ section.settings.features_text_size }}px;
+    --features-text-mobile: {{ section.settings.features_text_mobile }}px;
+    --highlight-color: {{ section.settings.highlight_color }};
+    --glass-blur: {{ section.settings.glass_blur }}px;
+    --feature-height: {{ section.settings.feature_height }}px;
+    --feature-height-mobile: {{ section.settings.feature_height_mobile }}px;
+    --logo-bg: {{ section.settings.logo_bg }};
+    --logo-size: {{ section.settings.logo_size }}px;
+    --logo-size-mobile: {{ section.settings.logo_size_mobile }}px;
+">
+  <div class="page-width">
+    <div class="benefits-grid">
+      <div class="benefits-content">
+        <h1 class="content-title">
+          {{ section.settings.title }}
+        </h1>
+        
+        <div class="content-description">
+          {% if section.settings.description != blank %}
+            {{ section.settings.description | newline_to_br }}
+          {% endif %}
+          {% if section.settings.description_2 != blank %}
+            <p>{{ section.settings.description_2 }}</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="benefits-features">
+        <div class="logo-headerwrap">
+          <div style="opacity: 0;" class="logo-header">
+            <span class="header-icon">{{ section.settings.header_icon }}</span>
+            <span class="header-text">{{ section.settings.header_text }}</span>
+          </div>
+          <div class="logo-header">
+            {% if section.settings.logo != blank %}
+              <img src="{{ section.settings.logo | img_url: 'master' }}" alt="{{ section.settings.logo.alt | default: shop.name }}">
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="features-container">
+          <div class="features-list">
+            {% for block in section.blocks %}
+              {% if block.type == 'feature' %}
+                <div class="feature-item" {{ block.shopify_attributes }}>
+                  {{ block.settings.feature_text }}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          <div class="features-confirmation">
+            {% for block in section.blocks %}
+              {% if block.type == 'feature' %}
+                <div class="check-item" {{ block.shopify_attributes }}>
+                  <div class="check-circle">
+                    <span class="check-mark">
+                      {% if block.settings.custom_checkmark != blank %}
+                        {{ block.settings.custom_checkmark }}
+                      {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 100 100" style="enable-background:new 0 0 512 512" xml:space="preserve"><g><path d="M96.975 24.985 36.627 85.332c-.702.7-1.839.7-2.542 0L3.025 54.27c-.7-.703-.7-1.84 0-2.542l7.775-7.775c.703-.7 1.84-.7 2.542 0L35.358 65.97l51.3-51.3c.703-.7 1.84-.7 2.542 0l7.775 7.774c.7.703.7 1.84 0 2.542z" opacity="1" data-original="#000000"></path></g></svg>
+                      {% endif %}
+                    </span>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .check-mark svg {
+    width: 12px!important;
+    height: 12px!important;
+  }
+
+  .check-mark svg path {
+    fill: #928d6f ;
+  }
+
+  .check-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .section-benefits {
+    background: linear-gradient(180deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    padding: var(--padding-top) 20px var(--padding-bottom);
+    color: var(--text-color, #fff);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    /* Impact theme compatibility */
+    --section-blocks-gap: 2rem;
+    --section-blocks-gap-mobile: 1.5rem;
+  }
+
+  .logo-headerwrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .page-width {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    width: 100%;
+    padding-left: var(--page-width-margin, 2rem);
+    padding-right: var(--page-width-margin, 2rem);
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  /* Left Column */
+  .benefits-content {
+    max-width: 560px;
+  }
+
+  .content-title {
+    font-size: var(--title-size);
+    line-height: 1.2;
+    font-weight: 600;
+    margin: 0 0 24px;
+    color: var(--text-color, #fff);
+    text-align: left;
+    font-family: var(--heading-font-family, sans-serif);
+  }
+
+  .logo-header img {
+    width: 100%;
+    max-width: 125px;
+  }
+
+  .highlight {
+    color: var(--highlight-color);
+  }
+
+  .content-description {
+    font-size: var(--text-size);
+    line-height: 1.6;
+    opacity: 0.9;
+    margin-bottom: 32px;
+    font-family: var(--body-font-family);
+  }
+
+  .content-description p {
+    margin: 0 0 16px;
+  }
+
+  .content-description p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Right Column */
+  .benefits-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    width: 100%;
+  }
+
+  /* Logo Header */
+  .logo-header {
+    background: var(--logo-bg);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border-radius: 12px;
+    width: 100%;
+    margin-left: auto;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0;    
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .header-icon {
+    font-size: var(--logo-size);
+    color: var(--text-color, #fff);
+  }
+
+  .header-text {
+    font-size: var(--logo-size);
+    color: var(--text-color, #fff);
+  }
+
+  /* Features Container */
+  .features-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  /* Glass Panel */
+  .features-list {
+    background: linear-gradient(180deg, var(--gradient-start2) 0%, var(--gradient-end2) 100%);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #ffffff17;
+    color: var(--gradient-color2)!important;
+  }
+
+  .feature-item {
+    padding: 18px 24px;
+    height: var(--feature-height);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: var(--features-text-size);
+    line-height: 1.4;
+    color: var(--gradient-color2)!important;
+  }
+
+  .feature-item.emphasized {
+    font-weight: 500;
+  }
+
+  .feature-item:last-child {
+    border-bottom: none;
+  }
+
+  /* Checkmarks Panel */
+  .features-confirmation {
+    background: linear-gradient(180deg, var(--gradient-start3) 0%, var(--gradient-end3) 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;  
+    color: var(--gradient-color3)!important;
+  }
+
+  .check-item {
+    height: var(--feature-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .check-item:last-child {
+    border-bottom: none;
+  }
+
+  .check-circle {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(180deg, var(--icongradientstart) 0%, var(--icongradientend) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .check-mark {
+    color: #d54d51;
+    font-size: 25px;
+  }
+
+  @media screen and (max-width: 990px) {
+    .page-width {
+      padding-left: var(--page-width-margin, 1.5rem);
+      padding-right: var(--page-width-margin, 1.5rem);
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    .benefits-grid {
+      grid-template-columns: 1fr;
+      gap: 0px;
+    }
+
+    .benefits-content {
+      max-width: 100%;
+      text-align: center;
+    }
+
+    .content-title {
+      text-align: center;
+    }
+
+    .benefits-features {
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .logo-header {
+      margin: 0 0 0 auto;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .section-benefits     .page-width {
+        padding-left: var(--page-width-margin, 0.5rem);
+        padding-right: var(--page-width-margin, 0.5rem);
+    }
+    .check-mark svg {
+      width: 10px!important;
+      height: 10px!important;
+    }
+    
+    .logo-headerwrap {
+      display: none!important;
+    }
+
+    .section-benefits {
+  padding: var(--mobile-padding-top) 0 var(--mobile-padding-bottom);
+  min-height: auto;
+}
+
+    .content-title {
+      font-size: var(--title-size-mobile);
+      margin-bottom: 15px!important;
+    }
+
+    .content-description {
+      font-size: var(--text-size-mobile);
+      max-width: 300px;
+      margin: auto;
+      padding-bottom: 20px;
+    }
+
+    .benefits-features {
+      max-width: 100%;
+    }
+
+    .logo-header {
+      width: 80px;
+      padding: 12px 8px;
+    }
+
+    .features-confirmation {
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+
+    .header-icon,
+    .header-text {
+      font-size: var(--logo-size-mobile);
+    }
+
+    .features-container {
+      grid-template-columns: 1fr 1fr;   
+      gap: 5px;
+    }
+
+    .feature-item {
+      height: var(--feature-height-mobile);
+      padding: 14px 20px;
+      font-size: var(--features-text-mobile);
+    }
+
+    .check-item {
+      height: var(--feature-height-mobile);
+    }
+
+    .check-circle {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  @media screen and (max-width: 479px) {
+    .benefits-features {
+      padding: 0;
+    }
+    
+    .logo-header {
+      margin-right: 0;
+    }
+
+    .features-container {
+      gap: 5px;
+    }
+
+    .feature-item {
+      padding: 12px 16px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Scentech Features",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        {
+          "value": "background-1",
+          "label": "Background 1"
+        },
+        {
+          "value": "background-2",
+          "label": "Background 2"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        },
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        }
+      ],
+      "default": "background-1"
+    },
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "html",
+      "id": "title",
+      "label": "Title",
+      "default": "Scentech is de <br><span class=\"highlight\">perfecte keuze.</span>"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Onze Smart Aroma Diffuser laat elke ruimte heerlijk uiken.</p>"
+    },
+    {
+      "type": "text",
+      "id": "description_2",
+      "label": "Additional Description"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "header_icon",
+      "label": "Header Icon",
+      "default": "◆"
+    },
+    {
+      "type": "text",
+      "id": "header_text",
+      "label": "Header Text"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "gradient_start",
+      "label": "Background Gradient Start",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "gradient_end",
+      "label": "Background Gradient End",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "gradient_start2",
+      "label": "Features Panel Gradient Start",
+      "default": "#f7f7f7"
+    },
+    {
+      "type": "color",
+      "id": "gradient_end2",
+      "label": "Features Panel Gradient End",
+      "default": "#f7f7f7"
+    },
+    {
+      "type": "color",
+      "id": "gradient_color2",
+      "label": "Features Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "gradient_start3",
+      "label": "Checkmarks Panel Gradient Start",
+      "default": "#694FA4"
+    },
+    {
+      "type": "color",
+      "id": "gradient_end3",
+      "label": "Checkmarks Panel Gradient End",
+      "default": "#BD67DD"
+    },
+    {
+      "type": "color",
+      "id": "gradient_color3",
+      "label": "Checkmarks Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Main Text Color",
+      "default": "#262626"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Highlight Color",
+      "default": "#B866D9"
+    },
+    {
+      "type": "color",
+      "id": "icon_gradient_start",
+      "label": "Icon Background Gradient Start",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "icon_gradient_end",
+      "label": "Icon Background Gradient End",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "logo_bg",
+      "label": "Logo Background",
+      "default": "#694FA3"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title Size (Desktop)",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Title Size (Mobile)",
+      "min": 18,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text Size (Desktop)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "label": "Text Size (Mobile)",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "features_text_size",
+      "label": "Features Text Size (Desktop)",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "features_text_mobile",
+      "label": "Features Text Size (Mobile)",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "logo_size",
+      "label": "Logo Text Size (Desktop)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "logo_size_mobile",
+      "label": "Logo Text Size (Mobile)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Spacing & Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Section Padding Top (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Section Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Section Padding Top (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Section Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "feature_height",
+      "label": "Feature Item Height (Desktop)",
+      "min": 40,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 57
+    },
+    {
+      "type": "range",
+      "id": "feature_height_mobile",
+      "label": "Feature Item Height (Mobile)",
+      "min": 35,
+      "max": 70,
+      "step": 1,
+      "unit": "px",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "glass_blur",
+      "label": "Glass Blur Effect",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature_text",
+          "label": "Feature Text",
+          "default": "Feature description"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_checkmark",
+          "label": "Custom Checkmark (HTML/SVG)",
+          "info": "Leave blank to use default checkmark"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scentech Features",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "100m2 bereik"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Instelbare intensiteit"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Bediening met app"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Geen lelijke kabels"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Geen verdunning"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Geen onderhoud"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Fluister stil"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Veilig voor dieren en kinderen"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Werkt wanneer jij dat wilt"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
