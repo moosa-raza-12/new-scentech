@@ -192,6 +192,41 @@
     "new_kv_bundle_section_KpDCVe": {
       "type": "new-kv-bundle-section",
       "blocks": {
+        "interrupter_LiQwiq": {
+          "type": "interrupter",
+          "settings": {
+            "enabled": true,
+            "show_on_desktop": true,
+            "position_desktop": 4,
+            "show_on_mobile": true,
+            "position_mobile": 4,
+            "badge_text": "New",
+            "heading": "Spring Bundle",
+            "description": "<p>Smell spring at home, this bundle contains our 3 Limited Edition Spring scents.</p>",
+            "show_cta": true,
+            "cta_label": "+ Add 3 Scents",
+            "cta_link": "shopify://products/wild-blossom",
+            "cta_new_tab": false,
+            "image_position": "left",
+            "desktop_layout": "stacked",
+            "mobile_layout": "side",
+            "image_width_percent": 38,
+            "image_height_mobile": 180,
+            "image_height_desktop": 180,
+            "image_fit": "cover",
+            "background_color": "#f1efe8",
+            "border_color": "#d9d4c5",
+            "title_color": "#160000",
+            "title_size": 28,
+            "text_color": "#160000",
+            "text_size": 16,
+            "badge_bg": "#ffffff",
+            "badge_text_color": "#160000",
+            "cta_bg": "#495222",
+            "cta_text_color": "#ffffff",
+            "cta_border_color": "#495222"
+          }
+        },
         "collection_zWaJM3": {
           "type": "collection",
           "settings": {
@@ -270,6 +305,7 @@
         }
       },
       "block_order": [
+        "interrupter_LiQwiq",
         "collection_zWaJM3",
         "collection_wb4k4R",
         "collection_jz8H33",
