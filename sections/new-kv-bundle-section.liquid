@@ -4,78 +4,7 @@
   </div>
   
   <div class="kv-bundle-section">
-      {% assign gift1_product = nil %}
-      {% assign gift2_product = nil %}
-      {% assign gift3_product = nil %}
-      {% assign gift4_product = nil %}
-      {% if section.settings.gift_1_product != blank %}
-        {% assign gift1_product = all_products[section.settings.gift_1_product] %}
-      {% endif %}
-      {% if section.settings.gift_2_product != blank %}
-        {% assign gift2_product = all_products[section.settings.gift_2_product] %}
-      {% endif %}
-      {% if section.settings.gift_3_product != blank %}
-        {% assign gift3_product = all_products[section.settings.gift_3_product] %}
-      {% endif %}
-      {% if section.settings.gift_4_product != blank %}
-        {% assign gift4_product = all_products[section.settings.gift_4_product] %}
-      {% endif %}
-      {% assign gift_1_image_url = '' %}
-      {% if gift1_product and gift1_product.featured_image %}
-        {% assign gift_1_image_url = gift1_product.featured_image | image_url: width: 80 %}
-      {% endif %}
-      {% assign gift_1_text = '' %}
-      {% if section.settings.gift_1_custom_text != blank %}
-        {% assign gift_1_text = section.settings.gift_1_custom_text %}
-      {% elsif gift1_product %}
-        {% assign gift_1_text = 'FREE<br>' | append: gift1_product.title %}
-      {% endif %}
-      {% assign gift_1_inventory_date = '' %}
-      {% if gift1_product and gift1_product.metafields.custom.inventory_stock_date %}
-        {% assign gift_1_inventory_date = gift1_product.metafields.custom.inventory_stock_date %}
-      {% endif %}
-      {% assign gift_2_image_url = '' %}
-      {% if gift2_product and gift2_product.featured_image %}
-        {% assign gift_2_image_url = gift2_product.featured_image | image_url: width: 80 %}
-      {% endif %}
-      {% assign gift_2_text = '' %}
-      {% if section.settings.gift_2_custom_text != blank %}
-        {% assign gift_2_text = section.settings.gift_2_custom_text %}
-      {% elsif gift2_product %}
-        {% assign gift_2_text = 'FREE<br>' | append: gift2_product.title %}
-      {% endif %}
-      {% assign gift_2_inventory_date = '' %}
-      {% if gift2_product and gift2_product.metafields.custom.inventory_stock_date %}
-        {% assign gift_2_inventory_date = gift2_product.metafields.custom.inventory_stock_date %}
-      {% endif %}
-      {% assign gift_3_image_url = '' %}
-      {% if gift3_product and gift3_product.featured_image %}
-        {% assign gift_3_image_url = gift3_product.featured_image | image_url: width: 80 %}
-      {% endif %}
-      {% assign gift_3_text = '' %}
-      {% if section.settings.gift_3_custom_text != blank %}
-        {% assign gift_3_text = section.settings.gift_3_custom_text %}
-      {% elsif gift3_product %}
-        {% assign gift_3_text = 'FREE<br>' | append: gift3_product.title %}
-      {% endif %}
-      {% assign gift_3_inventory_date = '' %}
-      {% if gift3_product and gift3_product.metafields.custom.inventory_stock_date %}
-        {% assign gift_3_inventory_date = gift3_product.metafields.custom.inventory_stock_date %}
-      {% endif %}
-      {% assign gift_4_image_url = '' %}
-      {% if gift4_product and gift4_product.featured_image %}
-        {% assign gift_4_image_url = gift4_product.featured_image | image_url: width: 80 %}
-      {% endif %}
-      {% assign gift_4_text = '' %}
-      {% if section.settings.gift_4_custom_text != blank %}
-        {% assign gift_4_text = section.settings.gift_4_custom_text %}
-      {% elsif gift4_product %}
-        {% assign gift_4_text = 'FREE<br>' | append: gift4_product.title %}
-      {% endif %}
-      {% assign gift_4_inventory_date = '' %}
-      {% if gift4_product and gift4_product.metafields.custom.inventory_stock_date %}
-        {% assign gift_4_inventory_date = gift4_product.metafields.custom.inventory_stock_date %}
-      {% endif %}
+      
       {%- comment -%} Progress Banner {%- endcomment -%}
       <div class="kv-bundle-hero-section" style="background-image: url({{ section.settings.hero_background_image | image_url: width: 1920 }}); background-size: cover; background-position: center;">
         <div class="kv-bundle-hero-container">
@@ -96,103 +25,44 @@
                             <div class="kv-progress-milestone" data-milestone="1" data-count="{{ section.settings.milestone_1_count }}" style="left: 0%;">
                                 <div class="kv-milestone-marker"></div>
                                 <div class="kv-milestone-label">{{ milestone_1_label_text }}</div>
-                                {% if section.settings.gift_1_product != blank %}
-                                <div class="kv-milestone-gift"
-                                  data-product-id="{{ gift1_product.id }}"
-                                  data-product-title="{{ gift1_product.title | escape }}"
-                                  data-product-description="{{ gift1_product.metafields.custom.scent_popup_description | default: gift1_product.description | strip_html | strip | escape }}"
-                                  data-product-details="{{ gift1_product.metafields.custom.scent_details | escape }}"
-                                  data-product-image="{% if gift1_product.metafields.custom.scent_image %}{{ gift1_product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif gift1_product.featured_image %}{{ gift1_product.featured_image | image_url: width: 1200 }}{% endif %}"
-                                  data-product-variant="{{ gift1_product.metafields.custom.quantity_value | default: gift1_product.selected_or_first_available_variant.title | escape }}"
-                                  data-product-badge="{{ gift1_product.metafields.custom.collection_card_badge }}">
-                                    {% if gift1_product.metafields.custom.progress_gift_image %}
-                                    <img src="{{ gift1_product.metafields.custom.progress_gift_image | image_url: width: 80 }}" alt="{{ gift1_product.title }}" class="kv-milestone-gift-image">
-                                    {% elsif gift1_product.featured_image %}
-                                    <img src="{{ gift1_product.featured_image | image_url: width: 80 }}" alt="{{ gift1_product.title }}" class="kv-milestone-gift-image">
-                                    {% endif %}
-                                    <div class="kv-milestone-gift-text">
-                                        {% if section.settings.gift_1_custom_text != blank %}
-                                            {{ section.settings.gift_1_custom_text }}
-                                        {% else %}
-                                            FREE<br>{{ gift1_product.title }}
-                                        {% endif %}
-                                    </div>
-                                </div>
+                                {% if section.settings.milestone_1_price != blank %}
+                                <div class="kv-milestone-price-display">{{ section.settings.milestone_1_price }}</div>
                                 {% endif %}
                             </div>
                             {% endif %}
                             {% if section.settings.milestone_2_count > 0 %}
                             {% assign milestone_2_label_text = section.settings.milestone_2_label | default: '{count} geuren' | replace: '{count}', section.settings.milestone_2_count %}
-                            <div class="kv-progress-milestone open-comparison-popup" data-milestone="2" data-count="{{ section.settings.milestone_2_count }}" style="left: 33.33%;">
+                            <div class="kv-progress-milestone" data-milestone="2" data-count="{{ section.settings.milestone_2_count }}" style="left: 33.33%;">
                                 <div class="kv-milestone-marker"></div>
                                 <div class="kv-milestone-label">{{ milestone_2_label_text }}</div>
-                                {% if section.settings.gift_2_product != blank %}
-                                <div class="kv-milestone-gift">
-                                    {% if gift2_product.metafields.custom.progress_gift_image %}
-                                    <img src="{{ gift2_product.metafields.custom.progress_gift_image | image_url: width: 80 }}" alt="{{ gift2_product.title }}" class="kv-milestone-gift-image">
-                                    {% elsif gift2_product.featured_image %}
-                                    <img src="{{ gift2_product.featured_image | image_url: width: 80 }}" alt="{{ gift2_product.title }}" class="kv-milestone-gift-image">
-                                    {% endif %}
-                                    <div class="kv-milestone-gift-text">
-                                        {% if section.settings.gift_2_custom_text != blank %}
-                                            {{ section.settings.gift_2_custom_text }}
-                                        {% else %}
-                                            FREE<br>{{ gift2_product.title }}
-                                        {% endif %}
-                                    </div>
-                                </div>
+                                {% if section.settings.milestone_2_price != blank %}
+                                <div class="kv-milestone-price-display">{{ section.settings.milestone_2_price }}</div>
                                 {% endif %}
                             </div>
                             {% endif %}
                             {% if section.settings.milestone_3_count > 0 %}
                             {% assign milestone_3_label_text = section.settings.milestone_3_label | default: '{count} geuren' | replace: '{count}', section.settings.milestone_3_count %}
-                            <div class="kv-progress-milestone open-comparison-popup" data-milestone="3" data-count="{{ section.settings.milestone_3_count }}" style="left: 66.66%;">
+                            <div class="kv-progress-milestone" data-milestone="3" data-count="{{ section.settings.milestone_3_count }}" style="left: 66.66%;">
                                 <div class="kv-milestone-marker"></div>
                                 <div class="kv-milestone-label">{{ milestone_3_label_text }}</div>
-                                {% if section.settings.gift_3_product != blank %}
-                                <div class="kv-milestone-gift">
-                                    {% if gift3_product.metafields.custom.progress_gift_image %}
-                                    <img src="{{ gift3_product.metafields.custom.progress_gift_image | image_url: width: 80 }}" alt="{{ gift3_product.title }}" class="kv-milestone-gift-image">
-                                    {% elsif gift3_product.featured_image %}
-                                    <img src="{{ gift3_product.featured_image | image_url: width: 80 }}" alt="{{ gift3_product.title }}" class="kv-milestone-gift-image">
-                                    {% endif %}
-                                    <div class="kv-milestone-gift-text">
-                                        {% if section.settings.gift_3_custom_text != blank %}
-                                            {{ section.settings.gift_3_custom_text }}
-                                        {% else %}
-                                            FREE<br>{{ gift3_product.title }}
-                                        {% endif %}
-                                    </div>
-                                </div>
+                                {% if section.settings.milestone_3_price != blank %}
+                                <div class="kv-milestone-price-display">{{ section.settings.milestone_3_price }}</div>
                                 {% endif %}
                             </div>
                             {% endif %}
                             {% if section.settings.milestone_4_count > 0 %}
                             {% assign milestone_4_label_text = section.settings.milestone_4_label | default: '{count} geuren' | replace: '{count}', section.settings.milestone_4_count %}
-                            <div class="kv-progress-milestone open-comparison-popup" data-milestone="4" data-count="{{ section.settings.milestone_4_count }}" style="left: 100%;">
+                            <div class="kv-progress-milestone" data-milestone="4" data-count="{{ section.settings.milestone_4_count }}" style="left: 100%;">
                                 <div class="kv-milestone-marker"></div>
                                 <div class="kv-milestone-label">{{ milestone_4_label_text }}</div>
-                                {% if section.settings.gift_4_product != blank %}
-                                <div class="kv-milestone-gift">
-                                    {% if gift4_product.metafields.custom.progress_gift_image %}
-                                    <img src="{{ gift4_product.metafields.custom.progress_gift_image | image_url: width: 80 }}" alt="{{ gift4_product.title }}" class="kv-milestone-gift-image">
-                                    {% elsif gift4_product.featured_image %}
-                                    <img src="{{ gift4_product.featured_image | image_url: width: 80 }}" alt="{{ gift4_product.title }}" class="kv-milestone-gift-image">
-                                    {% endif %}
-                                    <div class="kv-milestone-gift-text">
-                                        {% if section.settings.gift_4_custom_text != blank %}
-                                            {{ section.settings.gift_4_custom_text }}
-                                        {% else %}
-                                            FREE<br>{{ gift4_product.title }}
-                                        {% endif %}
-                                    </div>
-                                </div>
+                                {% if section.settings.milestone_4_price != blank %}
+                                <div class="kv-milestone-price-display">{{ section.settings.milestone_4_price }}</div>
                                 {% endif %}
                             </div>
                             {% endif %}
                         </div>
                     </div>
-                    <div class="kv-progress-footer" id="kv-progress-footer-normal">
+                    <div class="kv-progress-footer" id="kv-progress-footer-normal" style="display: none;">
                         <div class="kv-progress-footer-message" id="kv-progress-footer-message">
                           <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M2.53125 12.5625C1.97266 12.5625 1.54297 12.416 1.24219 12.123C0.941406 11.8301 0.791016 11.4062 0.791016 10.8516V7.40625H0.761719C0.511719 7.32422 0.322266 7.17383 0.193359 6.95508C0.0644531 6.73633 0 6.46094 0 6.12891V4.68164C0 4.25586 0.117188 3.91992 0.351562 3.67383C0.585938 3.42383 0.908203 3.29883 1.31836 3.29883H2.2207C2.06055 3.14258 1.93555 2.95703 1.8457 2.74219C1.75586 2.52344 1.71094 2.28906 1.71094 2.03906C1.71094 1.64453 1.80664 1.29492 1.99805 0.990234C2.19336 0.681641 2.45117 0.439453 2.77148 0.263672C3.0918 0.0878906 3.45117 0 3.84961 0C4.29883 0 4.69922 0.123047 5.05078 0.369141C5.40234 0.615234 5.64844 0.966797 5.78906 1.42383C5.93359 0.966797 6.18164 0.615234 6.5332 0.369141C6.88867 0.123047 7.28906 0 7.73438 0C8.12891 0 8.48633 0.0878906 8.80664 0.263672C9.13086 0.439453 9.38867 0.681641 9.58008 0.990234C9.77148 1.29492 9.86719 1.64453 9.86719 2.03906C9.86719 2.28906 9.82227 2.52344 9.73242 2.74219C9.64648 2.95703 9.52539 3.14258 9.36914 3.29883H10.2715C10.6895 3.29883 11.0117 3.42383 11.2383 3.67383C11.4688 3.91992 11.584 4.25586 11.584 4.68164V6.12891C11.584 6.46094 11.5195 6.73633 11.3906 6.95508C11.2617 7.17383 11.0703 7.32422 10.8164 7.40625H10.793V10.8516C10.793 11.4062 10.6426 11.8301 10.3418 12.123C10.041 12.416 9.61328 12.5625 9.05859 12.5625H2.53125ZM5.15039 11.3906V7.5H2.07422V10.6992C2.07422 10.918 2.13477 11.0879 2.25586 11.209C2.37695 11.3301 2.54883 11.3906 2.77148 11.3906H5.15039ZM6.43359 11.3906H8.8125C9.03516 11.3906 9.20703 11.3301 9.32812 11.209C9.44922 11.0879 9.50977 10.918 9.50977 10.6992V7.5H6.43359V11.3906ZM5.15039 6.35156V4.45312H1.66992C1.5332 4.45312 1.43359 4.48438 1.37109 4.54688C1.3125 4.60938 1.2832 4.70898 1.2832 4.8457V5.95898C1.2832 6.0957 1.3125 6.19531 1.37109 6.25781C1.43359 6.32031 1.5332 6.35156 1.66992 6.35156H5.15039ZM6.43359 6.35156H9.91992C10.0527 6.35156 10.1484 6.32422 10.207 6.26953C10.2695 6.21094 10.3008 6.11328 10.3008 5.97656V4.8457C10.3008 4.70898 10.2695 4.60938 10.207 4.54688C10.1484 4.48438 10.0527 4.45312 9.91992 4.45312H6.43359V6.35156ZM5.18555 3.29883V2.54297C5.18555 2.14062 5.06836 1.81641 4.83398 1.57031C4.59961 1.32422 4.31641 1.20117 3.98438 1.20117C3.67188 1.20117 3.41992 1.28906 3.22852 1.46484C3.03711 1.64062 2.94141 1.88281 2.94141 2.19141C2.94141 2.50391 3.0625 2.76758 3.30469 2.98242C3.54688 3.19336 3.88672 3.29883 4.32422 3.29883H5.18555ZM6.39844 3.29883H7.25977C7.69727 3.29883 8.03711 3.19336 8.2793 2.98242C8.52148 2.76758 8.64258 2.50391 8.64258 2.19141C8.64258 1.88281 8.54688 1.64062 8.35547 1.46484C8.16797 1.28906 7.91602 1.20117 7.59961 1.20117C7.27148 1.20117 6.98828 1.32422 6.75 1.57031C6.51562 1.81641 6.39844 2.14062 6.39844 2.54297V3.29883Z" fill="#162518"/>
@@ -283,7 +153,22 @@
                           </div>
                           <div class="kv-bundle-interrupter-content">
                             {% if intr.settings.heading != blank %}
-                              <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+                              <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}  <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                              type="button"
+                              aria-label="View details"
+                              data-product-id="{{ product.id }}"
+                              data-product-title="{{ product.title | escape }}"
+                              data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
+                              data-product-details="{{ product.metafields.custom.scent_details | escape }}"
+                              data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+                              data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
+                              data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button> </div>
                             {% endif %}
                             {% if intr.settings.description != blank %}
                               <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -322,7 +207,22 @@
                           </div>
                           <div class="kv-bundle-interrupter-content">
                             {% if intr.settings.heading != blank %}
-                              <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+                              <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}  <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                              type="button"
+                              aria-label="View details"
+                              data-product-id="{{ product.id }}"
+                              data-product-title="{{ product.title | escape }}"
+                              data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
+                              data-product-details="{{ product.metafields.custom.scent_details | escape }}"
+                              data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+                              data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
+                              data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button></div>
                             {% endif %}
                             {% if intr.settings.description != blank %}
                               <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -612,11 +512,85 @@
                                 {% if intr.settings.description != blank %}
                                   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
                                 {% endif %}
-                                {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+                                {% comment %} {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
                                   <a class="kv-bundle-interrupter-cta" href="{{ intr.settings.cta_link }}"{% if intr.settings.cta_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
                                     {{ intr.settings.cta_label }}
                                   </a>
-                                {% endif %}
+                                {% endif %} {% endcomment %}
+                                {% if product.variants.size > 1 %}
+                                    <div class="kv-bundle-product-variants">
+                                        {% for variant in product.variants limit: 5 %}
+                                        {% if variant.featured_image %}
+                                            <img 
+                                            src="{{ variant.featured_image | image_url: width: 100 }}" 
+                                            alt="{{ variant.title | escape }}"
+                                            class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
+                                            data-variant-id="{{ variant.id }}"
+                                            data-variant-price="{{ variant.price }}"
+                                            data-variant-compare-at-price="{{ variant.compare_at_price }}"
+                                            title="{{ variant.title }}"
+                                            loading="lazy"
+                                            width="50"
+                                            height="50">
+                                        {% elsif product.featured_image %}
+                                            <img 
+                                            src="{{ product.featured_image | image_url: width: 100 }}" 
+                                            alt="{{ variant.title | escape }}"
+                                            class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
+                                            data-variant-id="{{ variant.id }}"
+                                            data-variant-price="{{ variant.price }}"
+                                            data-variant-compare-at-price="{{ variant.compare_at_price }}"
+                                            title="{{ variant.title }}"
+                                            loading="lazy"
+                                            width="50"
+                                            height="50">
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+            
+                                    {%- comment -%} Product Controls (Quantity + Add to Cart) {%- endcomment -%}
+                                    <div class="kv-bundle-product-controls">
+                                    <div class="kv-bundle-quantity-selector">
+                                        <button class="kv-bundle-qty-btn kv-bundle-qty-decrease" type="button" aria-label="Decrease quantity">
+                                            <svg width="4" height="2" viewBox="0 0 4 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M0 0H3.77051V1.49805H0V0Z" fill="white"/>
+                                            </svg>
+                                        </button>
+                                        <input 
+                                        type="number" 
+                                        class="kv-bundle-qty-input" 
+                                        value="1" 
+                                        min="1" 
+                                        readonly
+                                        aria-label="Quantity">
+                                        <button class="kv-bundle-qty-btn kv-bundle-qty-increase" type="button" aria-label="Increase quantity">
+                                            <svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M0 2.34229H2.33594V0H3.68799V2.34229H6.03027V3.69434H3.68799V6.03662H2.33594V3.69434H0V2.34229Z" fill="white"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+            
+                                    {% if product.available %}
+                                        <button 
+                                        class="kv-bundle-add-to-cart" 
+                                        type="button"
+                                        data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                                        data-variant-price="{{ product.selected_or_first_available_variant.price }}"
+                                        data-variant-compare-at-price="{{ product.selected_or_first_available_variant.compare_at_price }}"
+                                        data-product-id="{{ product.id }}">
+                                        <span>{{ section.settings.text_add_button | default: '+ Add' }}</span>
+                                        </button>
+                                    {% else %}
+                                        <button class="kv-bundle-add-to-cart" type="button" disabled>
+                                        <span>{{ section.settings.text_sold_out | default: 'Sold Out' }}</span>
+                                        </button>
+                                    {% endif %}
+                                    </div>
+                              </div>
+          
+                              {% assign kv_card_index = kv_card_index | plus: 1 %}
+                              
                               </div>
                             </div>
                             {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
@@ -646,7 +620,7 @@
                               </div>
                               <div class="kv-bundle-interrupter-content">
                                 {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}  </div>
                                 {% endif %}
                                 {% if intr.settings.description != blank %}
                                   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -970,7 +944,22 @@
                               </div>
                               <div class="kv-bundle-interrupter-content">
                                 {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                                  type="button"
+                                  aria-label="View details"
+                                  data-product-id="{{ product.id }}"
+                                  data-product-title="{{ product.title | escape }}"
+                                  data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
+                                  data-product-details="{{ product.metafields.custom.scent_details | escape }}"
+                                  data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+                                  data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
+                                  data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
+                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button></div>
                                 {% endif %}
                                 {% if intr.settings.description != blank %}
                                   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1019,7 +1008,22 @@
                               </div>
                               <div class="kv-bundle-interrupter-content">
                                 {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                                  type="button"
+                                  aria-label="View details"
+                                  data-product-id="{{ product.id }}"
+                                  data-product-title="{{ product.title | escape }}"
+                                  data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
+                                  data-product-details="{{ product.metafields.custom.scent_details | escape }}"
+                                  data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+                                  data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
+                                  data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
+                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button></div>
                                 {% endif %}
                                 {% if intr.settings.description != blank %}
                                   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1058,7 +1062,22 @@
                               </div>
                               <div class="kv-bundle-interrupter-content">
                                 {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                                  type="button"
+                                  aria-label="View details"
+                                  data-product-id="{{ product.id }}"
+                                  data-product-title="{{ product.title | escape }}"
+                                  data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
+                                  data-product-details="{{ product.metafields.custom.scent_details | escape }}"
+                                  data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+                                  data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
+                                  data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
+                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button></div>
                                 {% endif %}
                                 {% if intr.settings.description != blank %}
                                   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1244,7 +1263,22 @@
                               </div>
                               <div class="kv-bundle-interrupter-content">
                                 {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                                  type="button"
+                                  aria-label="View details"
+                                  data-product-id="{{ product.id }}"
+                                  data-product-title="{{ product.title | escape }}"
+                                  data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
+                                  data-product-details="{{ product.metafields.custom.scent_details | escape }}"
+                                  data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+                                  data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
+                                  data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
+                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button></div>
                                 {% endif %}
                                 {% if intr.settings.description != blank %}
                                   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1283,7 +1317,22 @@
                               </div>
                               <div class="kv-bundle-interrupter-content">
                                 {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                                  type="button"
+                                  aria-label="View details"
+                                  data-product-id="{{ product.id }}"
+                                  data-product-title="{{ product.title | escape }}"
+                                  data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
+                                  data-product-details="{{ product.metafields.custom.scent_details | escape }}"
+                                  data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+                                  data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
+                                  data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
+                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button></div>
                                 {% endif %}
                                 {% if intr.settings.description != blank %}
                                   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1466,7 +1515,22 @@
                               </div>
                               <div class="kv-bundle-interrupter-content">
                                 {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                                  type="button"
+                                  aria-label="View details"
+                                  data-product-id="{{ product.id }}"
+                                  data-product-title="{{ product.title | escape }}"
+                                  data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
+                                  data-product-details="{{ product.metafields.custom.scent_details | escape }}"
+                                  data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+                                  data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
+                                  data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
+                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button></div>
                                 {% endif %}
                                 {% if intr.settings.description != blank %}
                                   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1505,7 +1569,22 @@
                               </div>
                               <div class="kv-bundle-interrupter-content">
                                 {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                                  type="button"
+                                  aria-label="View details"
+                                  data-product-id="{{ product.id }}"
+                                  data-product-title="{{ product.title | escape }}"
+                                  data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
+                                  data-product-details="{{ product.metafields.custom.scent_details | escape }}"
+                                  data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+                                  data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
+                                  data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
+                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button></div>
                                 {% endif %}
                                 {% if intr.settings.description != blank %}
                                   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1778,40 +1857,7 @@
       completeText: '{{ section.settings.progress_complete_text | default: "🎉 Congratulations! All rewards unlocked!" }}'
     };
   
-    const milestoneGifts = [
-      {
-        count: {{ section.settings.milestone_1_count | default: 0 }},
-        text: {{ gift_1_text | json }},
-        image: {{ gift_1_image_url | json }},
-        title: {{ gift1_product.title | default: '' | json }},
-        price: {{ gift1_product.price | default: 0 | json }},
-        inventoryDate: '{{ gift_1_inventory_date }}'
-      },
-      {
-        count: {{ section.settings.milestone_2_count | default: 0 }},
-        text: {{ gift_2_text | json }},
-        image: {{ gift_2_image_url | json }},
-        title: {{ gift2_product.title | default: '' | json }},
-        price: {{ gift2_product.price | default: 0 | json }},
-        inventoryDate: '{{ gift_2_inventory_date }}'
-      },
-      {
-        count: {{ section.settings.milestone_3_count | default: 0 }},
-        text: {{ gift_3_text | json }},
-        image: {{ gift_3_image_url | json }},
-        title: {{ gift3_product.title | default: '' | json }},
-        price: {{ gift3_product.price | default: 0 | json }},
-        inventoryDate: '{{ gift_3_inventory_date }}'
-      },
-      {
-        count: {{ section.settings.milestone_4_count | default: 0 }},
-        text: {{ gift_4_text | json }},
-        image: {{ gift_4_image_url | json }},
-        title: {{ gift4_product.title | default: '' | json }},
-        price: {{ gift4_product.price | default: 0 | json }},
-        inventoryDate: '{{ gift_4_inventory_date }}'
-      }
-    ].filter(gift => gift.count > 0 && gift.image && gift.text);
+    const milestoneGifts = [];
   
     document.addEventListener('DOMContentLoaded', function() {
       // Hide preloader after page load
@@ -3408,15 +3454,11 @@
         "info": "Label text shown above milestone 1. Use {count} as placeholder for milestone count"
       },
       {
-        "type": "product",
-        "id": "gift_1_product",
-        "label": "Gift 1 Product"
-      },
-      {
-        "type": "textarea",
-        "id": "gift_1_custom_text",
-        "label": "Gift 1 Custom Text",
-        "info": "Optional: Override default 'FREE + Product Title' with custom text"
+        "type": "text",
+        "id": "milestone_1_price",
+        "label": "Milestone 1 Price",
+        "default": "€27,95",
+        "info": "Price per scent shown below the milestone marker (e.g. €27,95)"
       },
       {
         "type": "inline_richtext",
@@ -3444,15 +3486,11 @@
         "info": "Label text shown above milestone 2. Use {count} as placeholder for milestone count"
       },
       {
-        "type": "product",
-        "id": "gift_2_product",
-        "label": "Gift 2 Product"
-      },
-      {
-        "type": "textarea",
-        "id": "gift_2_custom_text",
-        "label": "Gift 2 Custom Text",
-        "info": "Optional: Override default 'FREE + Product Title' with custom text"
+        "type": "text",
+        "id": "milestone_2_price",
+        "label": "Milestone 2 Price",
+        "default": "€25,95",
+        "info": "Price per scent shown below the milestone marker (e.g. €25,95)"
       },
       {
         "type": "inline_richtext",
@@ -3480,15 +3518,11 @@
         "info": "Label text shown above milestone 3. Use {count} as placeholder for milestone count"
       },
       {
-        "type": "product",
-        "id": "gift_3_product",
-        "label": "Gift 3 Product"
-      },
-      {
-        "type": "textarea",
-        "id": "gift_3_custom_text",
-        "label": "Gift 3 Custom Text",
-        "info": "Optional: Override default 'FREE + Product Title' with custom text"
+        "type": "text",
+        "id": "milestone_3_price",
+        "label": "Milestone 3 Price",
+        "default": "€23,95",
+        "info": "Price per scent shown below the milestone marker (e.g. €23,95)"
       },
       {
         "type": "inline_richtext",
@@ -3516,15 +3550,11 @@
         "info": "Label text shown above milestone 4. Use {count} as placeholder for milestone count"
       },
       {
-        "type": "product",
-        "id": "gift_4_product",
-        "label": "Gift 4 Product"
-      },
-      {
-        "type": "textarea",
-        "id": "gift_4_custom_text",
-        "label": "Gift 4 Custom Text",
-        "info": "Optional: Override default 'FREE + Product Title' with custom text"
+        "type": "text",
+        "id": "milestone_4_price",
+        "label": "Milestone 4 Price",
+        "default": "€19,95",
+        "info": "Price per scent shown below the milestone marker (e.g. €19,95)"
       },
       {
         "type": "inline_richtext",
@@ -4082,89 +4112,22 @@
       transform: translateX(-50%);
   }
   
-  .kv-milestone-gift {
+  .kv-milestone-price-display {
       position: absolute;
-      top: -8px;
+      top: calc(100% + 6px);
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
-      min-width: 100px;
-      cursor: pointer;
-  }
-  
-  .kv-milestone-gift-image {
-      width: 28px;
-      height: 28px;
-      object-fit: contain;
-      margin: 3px auto;
-      border-radius: 4px;
-      border: 1px solid #CEC6BF;
-      position: relative;
-      display: block;
-  }
-  
-  .kv-milestone-gift-text {
+      white-space: nowrap;
       color: #162518;
-      text-align: center;
       font-size: 12px;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
   }
-  
-  .kv-milestone-price {
-      position: absolute;
-      top: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      min-width: 100px;
-  }
-  
-  .kv-milestone-price-image {
-      width: 28px;
-      height: 28px;
-      object-fit: contain;
-      margin: 3px auto;
-      border-radius: 4px;
-      position: relative;
-      display: block;
-  }
-  
-  .kv-milestone-price-image {
-      opacity: 0;
-      visibility: hidden;
-  }
-  
-  .kv-milestone-price-text {
+
+  .kv-progress-milestone.unlocked .kv-milestone-price-display {
       color: #162518;
-      color: #162518;
-      text-align: center;
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: normal;
-  }
-  
-  .kv-progress-milestone .kv-milestone-gift-image {
-      border: none;
-      padding: 1px;
-      animation: kv-gradient-rotate 3s linear infinite;
-  }
-  
-  @keyframes kv-gradient-rotate {
-      0% {
-          background: 
-          #CEC6BF;
-      }
-      100% {
-          background: 
-          #162518;
-      }
-  }
-  
-  .kv-progress-milestone.unlocked .kv-milestone-gift-text {
-    color: #162518;
   }
   
   .kv-progress-gifts {
@@ -4172,12 +4135,14 @@
   }
   
   .kv-progress-footer {
-      background: rgba(22, 0, 0, 0.08);
+      background: rgba(117, 5, 5, 0.08);
       border-radius: 0;
       padding: 10px 12px;
       text-align: center;
       margin: 8px -16px -12px;
+      display: none !important;
   }
+
   
   .kv-progress-footer-message {
       display: flex;
@@ -4331,7 +4296,18 @@
       flex: 0 0 var(--kv-interrupter-image-width, 38%);
       max-width: var(--kv-interrupter-image-width, 38%);
   }
-
+@media (max-width: 767.98px) {
+.kv-bundle-interrupter-media {
+    width: 140px;
+    height: 140px;
+      }
+.kv-bundle-interrupter-text p{
+        font-size: 12px;
+}
+.kv-bundle-interrupter-title {
+    font-size: 16px;
+}
+      }
   .kv-bundle-interrupter-media img {
       width: 100%;
       height: 100%;
@@ -4378,11 +4354,15 @@
  margin-top: 4px;
     margin-bottom: 4px;
   }
+    @media (min-width: 768px) {
+        .kv-bundle-interrupter-title {
+            font-size: var(--kv-interrupter-title-size, 16px);
+        }
+    }
 
   .kv-bundle-interrupter-title {
       color: var(--kv-interrupter-title-color, #160000);
       font-family: 'N27';
-      font-size: var(--kv-interrupter-title-size, 16px);
       font-weight: 400;
       line-height: 1.1;
   }
@@ -5540,11 +5520,6 @@ background: white;
       cursor: pointer;
   }
   
-  .kv-progress-milestone:has(.kv-milestone-gift) .kv-milestone-marker {
-      z-index: -1;
-  }
-  
-  
   
   body:has(.kv-mini-cart.active) .kv-bundle-tab-content {
       pointer-events: none;
@@ -5649,9 +5624,7 @@ background: white;
       height: var(--kv-interrupter-image-height-mobile, 180px);
     }
 
-    .kv-bundle-interrupter-title {
-     font-size: var(--kv-interrupter-title-size, 16px);
-    }
+    
   
   .kv-bundle-hero-title {
       font-size: 32px;
