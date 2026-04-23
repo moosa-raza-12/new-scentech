@@ -220,7 +220,7 @@
             "desktop_layout": "stacked",
             "mobile_layout": "side",
             "image_width_percent": 38,
-            "image_height_mobile": 180,
+            "image_height_mobile": 140,
             "image_height_desktop": 180,
             "image_fit": "cover",
             "background_color": "#ececec",
