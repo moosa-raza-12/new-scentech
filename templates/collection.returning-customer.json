@@ -192,6 +192,14 @@
     "new_kv_bundle_section_KpDCVe": {
       "type": "new-kv-bundle-section",
       "blocks": {
+        "collection_zCi4r3": {
+          "type": "collection",
+          "settings": {
+            "collection": "warm-indulgent-scents",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
         "collection_KAtDWC": {
           "type": "collection",
           "settings": {
@@ -262,6 +270,7 @@
         }
       },
       "block_order": [
+        "collection_zCi4r3",
         "collection_KAtDWC",
         "collection_jz8H33",
         "collection_zWaJM3",
