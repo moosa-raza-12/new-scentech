@@ -194,6 +194,7 @@
       "blocks": {
         "interrupter_LiQwiq": {
           "type": "interrupter",
+          "disabled": true,
           "settings": {
             "enabled": true,
             "show_on_desktop": true,
