@@ -192,6 +192,41 @@
     "new_kv_bundle_section_KpDCVe": {
       "type": "new-kv-bundle-section",
       "blocks": {
+        "interrupter_i7q7xP": {
+          "type": "interrupter",
+          "settings": {
+            "enabled": true,
+            "show_on_desktop": true,
+            "position_desktop": 4,
+            "show_on_mobile": true,
+            "position_mobile": 2,
+            "badge_text": "New",
+            "heading": "Smart Aroma Diffuser 2",
+            "description": "<p>This new arrival delivers hotel-level fragrance with powerful cold-air diffusion, wrapped in a refined taupe design.</p>",
+            "show_cta": true,
+            "cta_label": "Compare Diffusers",
+            "cta_link": "",
+            "cta_new_tab": false,
+            "image_position": "left",
+            "desktop_layout": "side",
+            "mobile_layout": "stacked",
+            "image_width_percent": 38,
+            "image_height_mobile": 180,
+            "image_height_desktop": 180,
+            "image_fit": "cover",
+            "background_color": "#f1efe8",
+            "border_color": "#d9d4c5",
+            "title_color": "#160000",
+            "title_size": 28,
+            "text_color": "#160000",
+            "text_size": 16,
+            "badge_bg": "#ffffff",
+            "badge_text_color": "#160000",
+            "cta_bg": "#ded9c5",
+            "cta_text_color": "#6a3b1e",
+            "cta_border_color": "#ded9c5"
+          }
+        },
         "collection_zWaJM3": {
           "type": "collection",
           "settings": {
@@ -203,13 +238,14 @@
         "collection_wb4k4R": {
           "type": "collection",
           "settings": {
-            "collection": "",
+            "collection": "calming-serene-scents",
             "products_limit": 12,
             "badge_text": ""
           }
         }
       },
       "block_order": [
+        "interrupter_i7q7xP",
         "collection_zWaJM3",
         "collection_wb4k4R"
       ],
