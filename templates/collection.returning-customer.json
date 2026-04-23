@@ -215,6 +215,8 @@
       ],
       "name": "new kv Collection Tabs",
       "settings": {
+        "hero_background_image": "shopify://shop_images/d097dad076b02775ed8da909844030247e7d8dc4.png",
+        "hero_background_image_mobile": "shopify://shop_images/d097dad076b02775ed8da909844030247e7d8dc4.png",
         "hero_title": "EARLY BLACK FRIDAY",
         "hero_description": "Buy 5 scents, receive a free diffuser!",
         "promo_banner_enabled": false,
