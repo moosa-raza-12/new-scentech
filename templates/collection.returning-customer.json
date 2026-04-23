@@ -133,6 +133,7 @@
         "collection_6adWza",
         "collection_Jr4c77"
       ],
+      "disabled": true,
       "name": "kv Collection Tabs",
       "settings": {
         "hero_background_image": "shopify://shop_images/2_63515f2d-489c-4e5b-b14b-a9dfb9fafb58.png",
@@ -187,11 +188,87 @@
         "gift_4_custom_text": "FREE <br> Pro Diffuser",
         "milestone_4_text": "Almost there! Add [count] more scents to unlock the Pro Diffuser!"
       }
+    },
+    "new_kv_bundle_section_KpDCVe": {
+      "type": "new-kv-bundle-section",
+      "blocks": {
+        "collection_zWaJM3": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
+        "collection_wb4k4R": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_zWaJM3",
+        "collection_wb4k4R"
+      ],
+      "name": "new kv Collection Tabs",
+      "settings": {
+        "hero_title": "EARLY BLACK FRIDAY",
+        "hero_description": "Buy 5 scents, receive a free diffuser!",
+        "promo_banner_enabled": false,
+        "promo_banner_bold_text": "Winter Sale:",
+        "promo_banner_text": "All scents priced at €27,95",
+        "progress_empty_text": "Learn more about our diffusers",
+        "progress_start_text": "Start adding scents to unlock rewards!",
+        "progress_complete_text": "🎉 Amazing! All gifts unlocked!",
+        "text_free": "FREE",
+        "text_free_gift": "Free Gift",
+        "text_add_scents": "Add Scents",
+        "text_continue": "Continue",
+        "text_add_to_cart": "Add to Cart",
+        "text_no_items": "No items selected",
+        "text_save": "SAVE",
+        "text_add_button": "+ Add",
+        "text_sold_out": "Sold Out",
+        "text_preorder_ships": "Pre-Order: Ships by",
+        "text_gift_preorder_prefix": "The",
+        "text_gift_preorder_suffix": "is on Pre-Order. Delivers on",
+        "text_expected_delivery": "Expected delivery:",
+        "text_preorder_collapsed": "There are pre-order items in the cart.",
+        "text_preorder_expanded": "There are pre-order items in the cart. Due to this your order will be sent out slightly later, when the scents have reached our warehouse.",
+        "text_preorder_affected_label": "The affected products in your cart are:",
+        "text_preorder_contact": "For any questions or concerns please reach out to our team.",
+        "text_instock_collapsed": "Your order ships out today.",
+        "text_instock_expanded": "Your order ships out today from the Netherlands. These items are in stock at our warehouse in Gorinchem and are shipped by our reliable delivery partners.",
+        "milestone_1_count": 3,
+        "milestone_1_label": "{count} geuren",
+        "gift_1_product": "",
+        "gift_1_custom_text": "",
+        "milestone_1_text": "Add [count] more scents for FREE diffuser",
+        "milestone_2_count": 5,
+        "milestone_2_label": "{count} geuren",
+        "gift_2_product": "",
+        "gift_2_custom_text": "",
+        "milestone_2_text": "Keep going! Add [count] more scents to unlock the next reward!",
+        "milestone_3_count": 7,
+        "milestone_3_label": "{count} geuren",
+        "gift_3_product": "",
+        "gift_3_custom_text": "",
+        "milestone_3_text": "Almost there! Add [count] more scents to unlock the next reward!",
+        "milestone_4_count": 9,
+        "milestone_4_label": "{count} geuren",
+        "gift_4_product": "",
+        "gift_4_custom_text": "",
+        "milestone_4_text": "Almost there! Add [count] more scents to unlock the Pro Diffuser!"
+      }
     }
   },
   "order": [
     "banner",
     "main",
-    "kv_bundle_section_Tm6Nbx"
+    "kv_bundle_section_Tm6Nbx",
+    "new_kv_bundle_section_KpDCVe"
   ]
 }
