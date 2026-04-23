@@ -245,7 +245,7 @@
         "text_instock_collapsed": "Your order ships out today.",
         "text_instock_expanded": "Your order ships out today from the Netherlands. These items are in stock at our warehouse in Gorinchem and are shipped by our reliable delivery partners.",
         "milestone_1_count": 3,
-        "milestone_1_label": "{count}scent",
+        "milestone_1_label": "{count} scents",
         "gift_1_product": "",
         "gift_1_custom_text": "",
         "milestone_1_text": "Add [count] more scents for FREE diffuser",
