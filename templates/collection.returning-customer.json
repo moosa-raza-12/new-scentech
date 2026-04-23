@@ -217,7 +217,7 @@
             "cta_new_tab": false,
             "image": "shopify://shop_images/d3f7110df2ea05ce12ba94d0b80d01cc55c55d17.png",
             "image_position": "left",
-            "desktop_layout": "side",
+            "desktop_layout": "stacked",
             "mobile_layout": "side",
             "image_width_percent": 38,
             "image_height_mobile": 180,
