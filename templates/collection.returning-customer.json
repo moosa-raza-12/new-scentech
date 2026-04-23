@@ -224,6 +224,14 @@
             "badge_text": ""
           }
         },
+        "collection_KAtDWC": {
+          "type": "collection",
+          "settings": {
+            "collection": "fresh-energizing-scents",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
         "interrupter_i7q7xP": {
           "type": "interrupter",
           "settings": {
@@ -259,14 +267,6 @@
             "cta_text_color": "#ffffff",
             "cta_border_color": "#051a5d"
           }
-        },
-        "collection_KAtDWC": {
-          "type": "collection",
-          "settings": {
-            "collection": "fresh-energizing-scents",
-            "products_limit": 12,
-            "badge_text": ""
-          }
         }
       },
       "block_order": [
@@ -274,8 +274,8 @@
         "collection_wb4k4R",
         "collection_jz8H33",
         "collection_zCi4r3",
-        "interrupter_i7q7xP",
-        "collection_KAtDWC"
+        "collection_KAtDWC",
+        "interrupter_i7q7xP"
       ],
       "name": "new kv Collection Tabs",
       "settings": {
