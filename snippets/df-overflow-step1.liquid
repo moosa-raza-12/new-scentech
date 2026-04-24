@@ -64,8 +64,8 @@
           {% assign is_diffuser = true %}
         {% endif %}
       {% endif %}
-  
-      <div class="cds-cards {% if block.settings.selector_highlight %}active{% endif %}" {{ block.shopify_attributes }}>
+    {% comment %} {% if block.settings.selector_highlight %}active{% endif %} {% endcomment %}
+      <div class="cds-cards" {{ block.shopify_attributes }}>
         <div class="cds-card-innerss">
   
           {% if img_url %}
@@ -82,9 +82,9 @@
           <div class="cds-price">
             {% if old_price_display != blank %}
               <span class="old">{{ old_price_display }}</span>
-              {% if discount_percent %}
+              {% comment %} {% if discount_percent %}
                 <span class="discount-badge">{{ discount_percent }}% off</span>
-              {% endif %}
+              {% endif %} {% endcomment %}
             {% endif %}
             <span class="new">{{ new_price_display }}</span>
           </div>
@@ -92,20 +92,76 @@
         </div>
   
         {% comment %} Highlight only for diffuser products with text set {% endcomment %}
-        {% if is_diffuser and block.settings.selector_highlight_text != blank %}
+        {% comment %} {% if is_diffuser and block.settings.selector_highlight_text != blank %} {% endcomment %}
           <div class="cds-highlight">
             {{ block.settings.selector_highlight_text }}
           </div>
-        {% endif %}
+        {% comment %} {% endif %} {% endcomment %}
   
       </div>
     {% endfor %}
   </div>
-  
+
 
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const cardSelector = '.cds-cards';
+    const activeClass = 'active';
+    const highlightSelector = '.cds-highlight';
+
+    function hideAllHighlights() {
+      document.querySelectorAll(highlightSelector).forEach(hl => {
+        hl.style.display = 'none';
+      });
+    }
+
+    function resetActiveCards() {
+      document.querySelectorAll(cardSelector).forEach(card => {
+        card.classList.remove(activeClass);
+      });
+    }
+
+    function showHighlightForCard(card) {
+      const highlight = card.querySelector(highlightSelector);
+      if (highlight) {
+        highlight.style.display = ''; // revert to CSS default (e.g., block or flex)
+      }
+    }
+
+    // Initially hide all highlights (if they are not already hidden by CSS)
+    hideAllHighlights();
+
+    // Delegate click event to handle dynamically added cards
+    document.body.addEventListener('click', function(e) {
+      // Find the closest .cds-cards element (allows clicking on inner elements)
+      const card = e.target.closest(cardSelector);
+      if (!card) return;
+
+      // If this card is already active, do nothing (or optionally unselect – decide)
+      if (card.classList.contains(activeClass)) {
+        return; // already active, ignore
+      }
+
+      // Remove active class from all cards and hide all highlights
+      resetActiveCards();
+      hideAllHighlights();
+
+      // Activate the clicked card
+      card.classList.add(activeClass);
+      showHighlightForCard(card);
+    });
+  });
+</script>
 
 <style>
+    .cds-highlight {
+  display: none;
+}
+
+.cds-cards.active .cds-highlight {
+  display: block; /* or flex, depending on your layout */
+}
     .compare-icon-wrapper{
         display: inline-flex;
         gap: 4px;

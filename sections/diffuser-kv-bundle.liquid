@@ -1,5 +1,58 @@
 {% render 'new-kv-bundle-css' %}
 <style>
+       @media (max-width: 639px) {
+        .scent-badge{
+         
+    padding: 6px 12px` !important;
+    border-radius: 10px !important;
+    font-size: 10px !important;
+    white-space: nowrap !important;
+        }
+        .step-circle{
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 12px !important;
+        }
+        .scent-title{
+            font-size: 16px !important;
+        }
+        .scent-subtext{
+            font-size: 12px !important;
+            margin: 0;
+            margin-top: 12px !important;
+        }
+        .kv-bundle-product-badge{
+            display: none !important;
+        }
+    .kv-bundle-products-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .kv-bundle-product-image{
+        width: 20%;
+        height: auto;
+        margin: 0;
+    }
+    .kv-bundle-product-card{
+        display: flex;
+        padding: 6px;
+        gap: 10px;
+    }
+    .kv-bundle-product-description{
+        margin: 0;
+    }
+    .kv-bundle-product-title-wrapper{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        /* gap: 12px; */
+    }
+    .kv-bundle-add-to-cart{
+        min-width: 83px;
+    }
+}
+
     @media (max-width: 768px) {
         .scent-header-content{
     gap: 8px;
@@ -542,6 +595,7 @@
                           {% endif %}
   
                           {%- comment -%} Product Title {%- endcomment -%}
+                          <div class="kv-bundle-product-title-wrapper"> 
                           <div class="kv-bundle-product-title">
                           {{ product.title }}
                           <button class="kv-bundle-product-info-icon kv-scent-info-btn"
@@ -569,41 +623,37 @@
                               {{ card_description | strip_html | truncate: 80 }}
                           </div>
                           {% endif %}
-  
-                          {%- comment -%} Variant Selector (if product has multiple variants) {%- endcomment -%}
-                          {% if product.variants.size > 1 %}
-                          <div class="kv-bundle-product-variants">
-                              {% for variant in product.variants limit: 5 %}
-                              {% if variant.featured_image %}
-                                  <img 
-                                  src="{{ variant.featured_image | image_url: width: 100 }}" 
-                                  alt="{{ variant.title | escape }}"
-                                  class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
-                                  data-variant-id="{{ variant.id }}"
-                                  data-variant-price="{{ variant.price }}"
-                                  data-variant-compare-at-price="{{ variant.compare_at_price }}"
-                                  title="{{ variant.title }}"
-                                  loading="lazy"
-                                  width="50"
-                                  height="50">
-                              {% elsif product.featured_image %}
-                                  <img 
-                                  src="{{ product.featured_image | image_url: width: 100 }}" 
-                                  alt="{{ variant.title | escape }}"
-                                  class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
-                                  data-variant-id="{{ variant.id }}"
-                                  data-variant-price="{{ variant.price }}"
-                                  data-variant-compare-at-price="{{ variant.compare_at_price }}"
-                                  title="{{ variant.title }}"
-                                  loading="lazy"
-                                  width="50"
-                                  height="50">
-                              {% endif %}
-                              {% endfor %}
                           </div>
-                          {% endif %}
-  
-                          {%- comment -%} Product Controls (Quantity + Add to Cart) {%- endcomment -%}
+                          {% if product.variants.size > 1 %}
+                            <div class="kv-bundle-product-variants">
+                                {% for variant in product.variants limit: 5 %}
+                                {% if variant.featured_image %}
+                                    <img 
+                                    src="{{ variant.featured_image | image_url: width: 100 }}" 
+                                    alt="{{ variant.title | escape }}"
+                                    class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
+                                    data-variant-id="{{ variant.id }}"
+                                    data-variant-price="{{ variant.price }}"
+                                    data-variant-compare-at-price="{{ variant.compare_at_price }}"
+                                    title="{{ variant.title }}"
+                                    loading="lazy"
+                                    width="50"
+                                    height="50">
+                                {% elsif product.featured_image %}
+                                    <img 
+                                    src="{{ product.featured_image | image_url: width: 100 }}" 
+                                    alt="{{ variant.title | escape }}"
+                                    class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
+                                    data-variant-id="{{ variant.id }}"
+                                    data-variant-price="{{ variant.price }}"
+                                    data-variant-compare-at-price="{{ variant.compare_at_price }}"
+                                    title="{{ variant.title }}"
+                                    loading="lazy"
+                                    width="50"
+                                    height="50">
+                                {% endif %}
+                                {% endfor %}
+                            
                           <div class="kv-bundle-product-controls">
                           <div class="kv-bundle-quantity-selector">
                               <button class="kv-bundle-qty-btn kv-bundle-qty-decrease" type="button" aria-label="Decrease quantity">
@@ -641,6 +691,13 @@
                               </button>
                           {% endif %}
                           </div>
+                          </div>
+                          {%- comment -%} Variant Selector (if product has multiple variants) {%- endcomment -%}
+                          </div>
+                          {% endif %}
+  
+                          {%- comment -%} Product Controls (Quantity + Add to Cart) {%- endcomment -%}
+                          
                     </div>
 
                     {% assign kv_card_index = kv_card_index | plus: 1 %}
@@ -891,34 +948,37 @@
                         {% endif %}
 
                         {%- comment -%} Product Title {%- endcomment -%}
+                     {% if condition %}
+                        
+                     {% endif %}   <div class="kv-bundle-product-title-wrapper">
                         <div class="kv-bundle-product-title">
-                        {{ product.title }}
-                        <button class="kv-bundle-product-info-icon kv-scent-info-btn"
-                          type="button"
-                          aria-label="View details"
-                          data-product-id="{{ product.id }}"
-                          data-product-title="{{ product.title | escape }}"
-                          data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
-                          data-product-details="{{ product.metafields.custom.scent_details | escape }}"
-                          data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
-                          data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
-                          data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
-                        </div>
-
+                            {{ product.title }}
+                            <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                              type="button"
+                              aria-label="View details"
+                              data-product-id="{{ product.id }}"
+                              data-product-title="{{ product.title | escape }}"
+                              data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
+                              data-product-details="{{ product.metafields.custom.scent_details | escape }}"
+                              data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+                              data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
+                              data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            </div>
                         {%- comment -%} Product Description {%- endcomment -%}
                         {% assign card_description = product.metafields.custom.collection_card_description | default: product.description %}
+                        
                         {% if card_description != blank %}
                         <div class="kv-bundle-product-description">
                             {{ card_description | strip_html | truncate: 80 }}
                         </div>
                         {% endif %}
-
+                        </div>
                         {%- comment -%} Variant Selector (if product has multiple variants) {%- endcomment -%}
                         {% if product.variants.size > 1 %}
                         <div class="kv-bundle-product-variants">
@@ -1469,6 +1529,7 @@
                           {% endif %}
   
                           {%- comment -%} Product Title {%- endcomment -%}
+                          <div class="kv-bundle-product-title-wrapper">
                           <div class="kv-bundle-product-title">
                           {{ product.title }}
                           <button class="kv-bundle-product-info-icon kv-scent-info-btn"
@@ -1496,7 +1557,7 @@
                               {{ card_description | strip_html | truncate: 80 }}
                           </div>
                           {% endif %}
-  
+                          </div>
                           {%- comment -%} Variant Selector (if product has multiple variants) {%- endcomment -%}
                           {% if product.variants.size > 1 %}
                           <div class="kv-bundle-product-variants">
@@ -1750,6 +1811,7 @@
                         {% endif %}
 
                         {%- comment -%} Product Title {%- endcomment -%}
+                        <div class="kv-bundle-product-title-wrapper">
                         <div class="kv-bundle-product-title">
                         {{ product.title }}
                         <button class="kv-bundle-product-info-icon kv-scent-info-btn"
@@ -1777,7 +1839,7 @@
                             {{ card_description | strip_html | truncate: 80 }}
                         </div>
                         {% endif %}
-
+                        </div>
                         {%- comment -%} Variant Selector (if product has multiple variants) {%- endcomment -%}
                         {% if product.variants.size > 1 %}
                         <div class="kv-bundle-product-variants">
