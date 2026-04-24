@@ -35,6 +35,7 @@
   <!-- Diffuser Blocks -->
   <div class="cds-list">
     {% for block in section.blocks %}
+    {% if block.type == "diffuser" %} 
       {% comment %} Get selected product (if any) {% endcomment %}
       {% assign product_obj = block.settings.selector_product %}
   
@@ -99,6 +100,7 @@
         {% comment %} {% endif %} {% endcomment %}
   
       </div>
+    {%endif%}
     {% endfor %}
   </div>
 
