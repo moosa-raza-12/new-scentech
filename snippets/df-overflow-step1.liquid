@@ -194,6 +194,8 @@
 
 .cds-left {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 10px;
 }
 
@@ -208,10 +210,23 @@
   justify-content: center;
   font-weight: 600;
 }
-
+@media (max-width: 639px) {
+    .cds-step {
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 12px !important;
+    }
+}
 .cds-title {
   margin: 0;
   font-size: 24px;
+}
+@media (max-width: 639px) {
+    .cds-title {
+        color: #160000;
+text-align: center;
+font-size: 16px !important;
+    }
 }
 
 .cds-subtext {
