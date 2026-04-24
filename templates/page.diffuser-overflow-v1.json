@@ -26,6 +26,17 @@
     "diffuser_kv_bundle_LqGpYW": {
       "type": "diffuser-kv-bundle",
       "blocks": {
+        "diffuser_JKTBEi": {
+          "type": "diffuser",
+          "settings": {
+            "selector_title": "Diffuser Name",
+            "selector_description": "Describe the diffuser here.",
+            "selector_old_price": "€149,95",
+            "selector_new_price": "€74,98",
+            "selector_highlight": false,
+            "selector_highlight_text": "Spring Sale: Pay only €74,98 after adding 2 scents!"
+          }
+        },
         "diffuser_TfKVLj": {
           "type": "diffuser",
           "settings": {
@@ -56,6 +67,7 @@
         }
       },
       "block_order": [
+        "diffuser_JKTBEi",
         "diffuser_TfKVLj",
         "collection_9xA4KV",
         "collection_Q6zXnA"
