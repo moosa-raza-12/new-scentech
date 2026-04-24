@@ -51,6 +51,7 @@
         },
         "collection_9xA4KV": {
           "type": "collection",
+          "disabled": true,
           "settings": {
             "collection": "fragrances",
             "products_limit": 12,
