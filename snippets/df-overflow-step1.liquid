@@ -35,39 +35,73 @@
   <!-- Diffuser Blocks -->
   <div class="cds-list">
     {% for block in section.blocks %}
-      <div class="cds-card {% if block.settings.selector_highlight %}active{% endif %}" {{ block.shopify_attributes }}>
-
-        <div class="cds-card-inner">
-
-          {% if block.settings.selector_image %}
+      {% comment %} Get selected product (if any) {% endcomment %}
+      {% assign product_obj = block.settings.selector_product %}
+  
+      {% comment %} ----- IMAGE FALLBACK ----- {% endcomment %}
+      {% assign img_url = block.settings.selector_image %}
+      {% if img_url == blank and product_obj != blank and product_obj.featured_image != blank %}
+        {% assign img_url = product_obj.featured_image %}
+      {% endif %}
+  
+      {% comment %} ----- PRICE & DISCOUNT ----- {% endcomment %}
+      {% assign new_price_display = block.settings.selector_new_price %}
+      {% assign old_price_display = block.settings.selector_old_price %}
+      {% assign discount_percent = nil %}
+  
+      {% if product_obj != blank and product_obj.price > 0 %}
+        {% assign new_price_display = product_obj.price | money %}
+        {% if product_obj.compare_at_price > product_obj.price %}
+          {% assign old_price_display = product_obj.compare_at_price | money %}
+          {% assign discount_percent = product_obj.compare_at_price | minus: product_obj.price | times: 100 | divided_by: product_obj.compare_at_price %}
+        {% endif %}
+      {% endif %}
+  
+      {% comment %} ----- DIFFUSER DETECTION (for cds-highlight) ----- {% endcomment %}
+      {% assign is_diffuser = false %}
+      {% if product_obj != blank %}
+        {% if product_obj.type == "Diffuser" or product_obj.tags contains "diffuser" %}
+          {% assign is_diffuser = true %}
+        {% endif %}
+      {% endif %}
+  
+      <div class="cds-cards {% if block.settings.selector_highlight %}active{% endif %}" {{ block.shopify_attributes }}>
+        <div class="cds-card-innerss">
+  
+          {% if img_url %}
             <div class="cds-image">
-              <img src="{{ block.settings.selector_image | image_url: width: 200 }}" alt="">
+              <img src="{{ img_url | image_url: width: 200 }}" alt="">
             </div>
           {% endif %}
-
+  
           <div class="cds-content">
             <h3 class="cds-name">{{ block.settings.selector_title }}</h3>
             <p class="cds-desc">{{ block.settings.selector_description }}</p>
           </div>
-
+  
           <div class="cds-price">
-            {% if block.settings.selector_old_price != blank %}
-              <span class="old">{{ block.settings.selector_old_price }}</span>
+            {% if old_price_display != blank %}
+              <span class="old">{{ old_price_display }}</span>
+              {% if discount_percent %}
+                <span class="discount-badge">{{ discount_percent }}% off</span>
+              {% endif %}
             {% endif %}
-            <span class="new">{{ block.settings.selector_new_price }}</span>
+            <span class="new">{{ new_price_display }}</span>
           </div>
-
+  
         </div>
-
-        {% if block.settings.selector_highlight and block.settings.selector_highlight_text != blank %}
+  
+        {% comment %} Highlight only for diffuser products with text set {% endcomment %}
+        {% if is_diffuser and block.settings.selector_highlight_text != blank %}
           <div class="cds-highlight">
             {{ block.settings.selector_highlight_text }}
           </div>
         {% endif %}
-
+  
       </div>
     {% endfor %}
   </div>
+  
 
 </div>
 
@@ -151,7 +185,7 @@ text-decoration-line: underline;
   gap: 14px;
 }
 
-.cds-card {
+.cds-cards {
   border: 1px solid #ddd;
   border-radius: 12px;
   overflow: hidden;
@@ -161,7 +195,7 @@ text-decoration-line: underline;
   border: 2px solid #2e2e2e;
 }
 
-.cds-card-inner {
+.cds-card-innerss {
   display: flex;
   gap: 16px;
   padding: 14px;
