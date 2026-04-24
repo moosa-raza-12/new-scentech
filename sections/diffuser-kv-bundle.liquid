@@ -1,5 +1,57 @@
 {% render 'new-kv-bundle-css' %}
-
+<style>
+                .scent-selector {
+                  padding: 20px;
+                  background: {{ section.settings.bg_color }};
+                  border-radius: 12px;
+                  font-family: inherit;
+                }
+                
+                .scent-header {
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  gap: 16px;
+                }
+                
+                .step-circle {
+                  width: 40px;
+                  height: 40px;
+                  background: {{ section.settings.circle_bg }};
+                  color: {{ section.settings.circle_text }};
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-weight: 600;
+                }
+                
+                .scent-title-wrapper {
+                  flex: 1;
+                }
+                
+                .scent-title {
+                  margin: 0;
+                  font-size: {{ section.settings.heading_size }}px;
+                  color: {{ section.settings.heading_color }};
+                }
+                
+                .scent-subtext {
+                  margin: 4px 0 0;
+                  font-size: {{ section.settings.subtext_size }}px;
+                  color: {{ section.settings.subtext_color }};
+                }
+                
+                .scent-badge {
+                  background: {{ section.settings.badge_bg }};
+                  color: {{ section.settings.badge_text_color }};
+                  padding: 8px 14px;
+                  border-radius: 10px;
+                  font-size: 14px;
+                  white-space: nowrap;
+                }
+                </style>
+ 
 <div class="kv-page-preloader" id="kv-page-preloader">
     <div class="kv-preloader-spinner"></div>
   </div>
@@ -9,11 +61,29 @@
       {%- comment -%} Progress Banner {%- endcomment -%}
       <div class="kv-bundle-hero-section" style="background-image: url({{ section.settings.hero_background_image | image_url: width: 1920 }}); background-size: cover; background-position: center;">
         <div class="kv-bundle-hero-container">
+            {% comment %} {% if template == 'page.diffuser-overflow-v1' or template.name == 'diffuser-overflow-v1' %} {% endcomment %}
+
+                <section class="scent-selector">
+                  <div class="scent-header">
+                    <div class="step-circle">
+                      {{ section.settings.step_number }}
+                    </div>
+                
+                    <div class="scent-title-wrapper">
+                      <h2 class="scent-title">{{ section.settings.heading }}</h2>
+                      <p class="scent-subtext">{{ section.settings.subtext }}</p>
+                    </div>
+                
+                    <div class="scent-badge">
+                      {{ section.settings.badge_text }}
+                    </div>
+                  </div>
+                </section>
           <div class="kv-bundle-hero-inner">
-            <div class="kv-bundle-hero-content">
+            {% comment %} <div class="kv-bundle-hero-content">
               <h2 class="kv-bundle-hero-title">{{ section.settings.hero_title }}</h2>
               <p class="kv-bundle-hero-description">{{ section.settings.hero_description }}</p>
-            </div>
+            </div> {% endcomment %}
             <div class="kv-progress-banner">
                 <div class="kv-progress-banner-inner">
                     <div class="kv-progress-bar-container">
@@ -2076,18 +2146,6 @@
         "id": "hero_background_image_mobile",
         "label": "Hero Background Image Mobile",
         "info": "Recommended size: 768x1024"
-      },
-      {
-        "type": "text",
-        "id": "hero_title",
-        "label": "Hero Title",
-        "default": "EARLY BLACK FRIDAY"
-      },
-      {
-        "type": "textarea",
-        "id": "hero_description",
-        "label": "Hero Description",
-        "default": "Buy 5 scents, receive a free diffuser!"
       },
       {
         "type": "header",
