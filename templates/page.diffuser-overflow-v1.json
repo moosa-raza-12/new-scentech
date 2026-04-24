@@ -26,6 +26,18 @@
     "diffuser_kv_bundle_LqGpYW": {
       "type": "diffuser-kv-bundle",
       "blocks": {
+        "diffuser_TfKVLj": {
+          "type": "diffuser",
+          "settings": {
+            "selector_image": "shopify://shop_images/Images_Info_0e95c5fb-3eb6-456d-8fc6-b8a227c0183c.png",
+            "selector_title": "Diffuser Lite",
+            "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
+            "selector_old_price": "€149,95",
+            "selector_new_price": "€74,98",
+            "selector_highlight": false,
+            "selector_highlight_text": "Spring Sale: Pay only €74,98 after adding 2 scents!"
+          }
+        },
         "collection_9xA4KV": {
           "type": "collection",
           "settings": {
@@ -44,14 +56,32 @@
         }
       },
       "block_order": [
+        "diffuser_TfKVLj",
         "collection_9xA4KV",
         "collection_Q6zXnA"
       ],
       "name": "Diffuser KV Bundle",
       "settings": {
-        "hero_title": "EARLY BLACK FRIDAY",
-        "hero_description": "Buy 5 scents, receive a free diffuser!",
+        "selector_step": "1",
+        "selector_heading": "Select a diffuser",
+        "selector_subtext": "Choose the diffuser that fits your needs best.",
+        "selector_compare_text": "Compare diffusers",
+        "selector_compare_link": "",
+        "selector_banner_text": "Spring Sale: Get 50% off the diffuser when you add 2 scents",
         "promo_banner_enabled": false,
+        "step_number": "2",
+        "heading": "Add scents",
+        "subtext": "Pick the scents you like. Add more to unlock a better price.",
+        "badge_text": "Choose at least 2 scents",
+        "bg_color": "#f7f7f7",
+        "heading_color": "#222222",
+        "subtext_color": "#666666",
+        "circle_bg": "#1f3d2b",
+        "circle_text": "#ffffff",
+        "badge_bg": "#e5e5e5",
+        "badge_text_color": "#333333",
+        "heading_size": 24,
+        "subtext_size": 14,
         "promo_banner_bold_text": "Winter Sale:",
         "promo_banner_text": "All scents priced at €27,95",
         "progress_empty_text": "Learn more about our diffusers",
