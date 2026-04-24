@@ -1,5 +1,20 @@
 {% render 'new-kv-bundle-css' %}
 <style>
+    @media (max-width: 768px) {
+        .scent-header-content{
+    gap: 8px;
+    
+    }
+        
+    }
+    .scent-header-content{
+        display: flex;
+    gap: 10px;
+    align-items: center;
+    }
+    .kv-progress-banner{
+        max-width: none !important;
+    }
                 .scent-selector {
                   padding: 20px;
                   background: {{ section.settings.bg_color }};
@@ -34,6 +49,7 @@
                   margin: 0;
                   font-size: {{ section.settings.heading_size }}px;
                   color: {{ section.settings.heading_color }};
+                font-weight: 400;
                 }
                 
                 .scent-subtext {
@@ -50,6 +66,8 @@
                   font-size: 14px;
                   white-space: nowrap;
                 }
+
+           
                 </style>
  
 <div class="kv-page-preloader" id="kv-page-preloader">
@@ -57,7 +75,10 @@
   </div>
   
   <div class="kv-bundle-section">
-      
+    
+    {% render 'df-overflow-step1' %}
+    
+  
       {%- comment -%} Progress Banner {%- endcomment -%}
       <div class="kv-bundle-hero-section" style="background-image: url({{ section.settings.hero_background_image | image_url: width: 1920 }}); background-size: cover; background-position: center;">
         <div class="kv-bundle-hero-container">
@@ -65,19 +86,21 @@
 
                 <section class="scent-selector">
                   <div class="scent-header">
+                    <div class="scent-header-content">
                     <div class="step-circle">
                       {{ section.settings.step_number }}
                     </div>
                 
-                    <div class="scent-title-wrapper">
-                      <h2 class="scent-title">{{ section.settings.heading }}</h2>
-                      <p class="scent-subtext">{{ section.settings.subtext }}</p>
-                    </div>
+                    <h2 class="scent-title">{{ section.settings.heading }}</h2></div>
                 
                     <div class="scent-badge">
                       {{ section.settings.badge_text }}
                     </div>
                   </div>
+                  <div class="scent-title-wrapper">
+                      
+                      <p class="scent-subtext">{{ section.settings.subtext }}</p>
+                    </div>
                 </section>
           <div class="kv-bundle-hero-inner">
             {% comment %} <div class="kv-bundle-hero-content">
@@ -2135,6 +2158,41 @@
     "tag": "section",
     "class": "section-kv-bundle-collection",
     "settings": [
+        {
+      "type": "text",
+      "id": "selector_step",
+      "label": "Step Number",
+      "default": "1"
+    },
+    {
+      "type": "text",
+      "id": "selector_heading",
+      "label": "Heading",
+      "default": "Select a diffuser"
+    },
+    {
+      "type": "text",
+      "id": "selector_subtext",
+      "label": "Subtext",
+      "default": "Choose the diffuser that fits your needs best."
+    },
+    {
+      "type": "text",
+      "id": "selector_compare_text",
+      "label": "Compare Link Text",
+      "default": "Compare diffusers"
+    },
+    {
+      "type": "url",
+      "id": "selector_compare_link",
+      "label": "Compare Link URL"
+    },
+    {
+      "type": "text",
+      "id": "selector_banner_text",
+      "label": "Banner Text",
+      "default": "Spring Sale: Get 50% off the diffuser when you add 2 scents"
+    },
       {
         "type": "image_picker",
         "id": "hero_background_image",
@@ -2557,6 +2615,53 @@
       }
     ],
     "blocks": [
+        {
+      "type": "diffuser",
+      "name": "Diffuser",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "selector_image",
+          "label": "Diffuser Image"
+        },
+        {
+          "type": "text",
+          "id": "selector_title",
+          "label": "Title",
+          "default": "Diffuser Name"
+        },
+        {
+          "type": "textarea",
+          "id": "selector_description",
+          "label": "Description",
+          "default": "Describe the diffuser here."
+        },
+        {
+          "type": "text",
+          "id": "selector_old_price",
+          "label": "Old Price",
+          "default": "€149,95"
+        },
+        {
+          "type": "text",
+          "id": "selector_new_price",
+          "label": "New Price",
+          "default": "€74,98"
+        },
+        {
+          "type": "checkbox",
+          "id": "selector_highlight",
+          "label": "Highlight this diffuser",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "selector_highlight_text",
+          "label": "Highlight Text",
+          "default": "Spring Sale: Pay only €74,98 after adding 2 scents!"
+        }
+      ]
+    },
       {
         "type": "collection",
         "name": "Collection",
