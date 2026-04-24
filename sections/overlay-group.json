@@ -1,1 +1,339 @@
-{"type":"custom.overlay","name":"Overlay group","sections":{"newsletter-popup":{"type":"newsletter-popup","disabled":true,"custom_css":[".h5 {font-size: 25px; text-align: left;}",".text-xs {text-align: left; font-weight: bold;}"],"settings":{"apparition_delay":15,"show_only_on_index":false,"show_only_for_visitors":true,"show_only_once":true,"image":"shopify:\/\/shop_images\/wrapped-present.jpg","title":"Win a one-year free subscription to Scentech.","button_text":"I want to win!","subtext":"In 5 minutes you will hear if you won. By signing up for the contest you agree to receive marketing communications."}},"privacy-banner":{"type":"privacy-banner","disabled":true,"settings":{"privacy_bar_title":"Cookie policy","privacy_bar_content":"<p>We use cookies and similar technologies to provide the best experience on our website. Refer to our Privacy Policy for more information.<\/p>"}},"cart-drawer":{"type":"cart-drawer","blocks":{"extra_product_dDfewf":{"type":"extra_product","settings":{"product":"pure-blossom","show_info_icon":true}},"extra_product_WAXhmg":{"type":"extra_product","settings":{"product":"classic-charm","show_info_icon":true}},"extra_product_K4aTwz":{"type":"extra_product","settings":{"product":"wild-blossom","show_info_icon":true}},"extra_product_UPd4J3":{"type":"extra_product","settings":{"product":"tea-whisper","show_info_icon":true}},"extra_product_UzdC9h":{"type":"extra_product","settings":{"product":"endless-path","show_info_icon":true}},"extra_product_8Tz673":{"type":"extra_product","settings":{"product":"garden-mist","show_info_icon":true}},"extra_product_m9mB6H":{"type":"extra_product","settings":{"product":"pure-nirvana","show_info_icon":true}},"extra_product_XVt8bk":{"type":"extra_product","settings":{"product":"winter-breeze-copy","show_info_icon":true}},"extra_product_8fpB4K":{"type":"extra_product","settings":{"product":"energize","show_info_icon":true}},"extra_product_GWcwB4":{"type":"extra_product","settings":{"product":"love-affair","show_info_icon":true}}},"block_order":["extra_product_dDfewf","extra_product_WAXhmg","extra_product_K4aTwz","extra_product_UPd4J3","extra_product_UzdC9h","extra_product_8Tz673","extra_product_m9mB6H","extra_product_XVt8bk","extra_product_8fpB4K","extra_product_GWcwB4"],"settings":{"kv_shipping_threshold":"50","kv_shipping_unreached_text":"Spend <strong>{amount}<\/strong> more to get <strong>FREE SHIPPING<\/strong>!","kv_shipping_reached_text":"Nice work! <strong>FREE SHIPPING<\/strong> unlocked","kv_shipping_reached_gifts_text":"Nice work! <strong>FREE SHIPPING<\/strong> and <strong>{x}X GIFTS<\/strong> unlocked","empty_header_text":"Cart","empty_title":"<p>Your cart is empty,<br\/>let's set the mood.<\/p>","empty_description":"Explore Scentech fragrances and smart diffusers designed to transform your space whether you want calm, focus, or energy.","empty_card_1_bg_color":"#f9f6f3","empty_card_1_image":"shopify:\/\/shop_images\/Images_Info_2d5f7459-9133-4eae-a659-6f8aa2631817.png","empty_card_1_title":"Fragrances","empty_card_1_description":"Crafted with the best ingredients for clean, long-lasting mood-setting scent.","empty_card_1_button_text":"Explore","empty_card_1_button_url":"shopify:\/\/collections\/fall-sale","empty_card_2_bg_color":"#edf7ee","empty_card_2_image":"shopify:\/\/shop_images\/Image.png","empty_card_2_title":"Diffusers","empty_card_2_description":"Commercial-grade scenting for home—even coverage up to 50 m².","empty_card_2_button_text":"Explore","empty_card_2_button_url":"shopify:\/\/collections\/diffusers-bundles","empty_bottom_button_text":"Explore Deals","empty_bottom_button_url":"shopify:\/\/collections\/fall-sale","kv_inventory_text":"","text_expected_delivery":"Expected delivery:","text_preorder_collapsed":"There are pre-order items in the cart.","text_preorder_expanded":"There are pre-order items in the cart. Due to this your order will be sent out slightly later, when the scents have reached our warehouse.","text_preorder_affected_label":"The affected products in your cart are:","text_preorder_contact":"For any questions or concerns please reach out to our team.","text_instock_collapsed":"Your order ships out today from the Netherlands.","text_instock_expanded":"Your order ships out today from the Netherlands. These items are in stock at our warehouse in Gorinchem and are shipped by our reliable delivery partners.","show_cart_note":false,"show_shipping_text":false,"show_view_cart_button":false,"show_checkout_button":true,"show_protection":true,"protection_product":"peace-of-mind-protection","protection_title":"Insured Shipping + 3-Year Warranty","protection_description":"Insured express delivery, plus an extended 3-year warranty on your diffuser(s).","protection_price":"9.95","low_cart_product":"shipping-insurance","low_cart_threshold":"120","low_cart_product_title":"Insured Shipping + 60-Day Returns","low_cart_product_description":"Insured express delivery, plus an extended 60-day return window.","low_cart_product_price":"2.95","secure_checkout_text":"Secure Checkout","without_protection_text":"Checkout","extra_slider_title":"Add Something Extra","extra_add_button_text":"+ Add","extra_sold_out_text":"Sold out","worth_text":"worth","free_gift_badge_text":"FREE GIFT","free_gifts_category_text":"Free Gifts"}},"search-drawer":{"type":"search-drawer","settings":{"full_width":false,"show_article_category":true,"search_menu":"","search_menu_show_title":true}},"product-comparison-popup":{"type":"product-comparison-popup","blocks":{"column_xGU9Fq":{"type":"column","settings":{"product_image":"shopify:\/\/shop_images\/gift-image-1.0-doffuser.png","product_name":"Smart Aroma Diffuser Lite","product_for_details":"smart-aroma-diffuser","row_1_text":"€94,95 or FREE with 5 scents","row_1_info":"","row_2_text":"40m²","row_2_info":"The size of a small flat or large living room","row_3_text":"Whisper Quiet (±59.5dB)","row_3_info":"","row_4_text":"Cable + Batteries (included)","row_4_info":"","row_5_text":"App control with fixed routines","row_5_info":"","row_6_text":"No lighting","row_6_info":"","row_7_text":"","row_7_info":"","row_8_text":"","row_8_info":"","row_9_text":"","row_9_info":"","row_10_text":"","row_10_info":"","button_text":"Learn More","info_details_heading":"Diffuser Details","info_cta_text":"Select Scents","info_cta_free_label":"FREE","info_popup_notice":"This diffuser is free when selecting 5 scents."}},"column_TzAE3F":{"type":"column","settings":{"product_image":"shopify:\/\/shop_images\/Smart_aroma_diffuser_2_perspective_render_1.0.png","product_name":"Smart Aroma Diffuser 2","product_for_details":"smart-aroma-diffuser-2","row_1_text":"€149,95 or FREE with 7 scents","row_1_info":"","row_2_text":"65m²","row_2_info":"","row_3_text":"Completely Silent (±39.5dB)","row_3_info":"","row_4_text":"Cable","row_4_info":"","row_5_text":"App control + button wheel on the device","row_5_info":"","row_6_text":"Warm ambiance light","row_6_info":"","row_7_text":"","row_7_info":"","row_8_text":"","row_8_info":"","row_9_text":"","row_9_info":"","row_10_text":"","row_10_info":"","button_text":"Learn More","info_details_heading":"Diffuser Details","info_cta_text":"Select Scents","info_cta_free_label":"FREE","info_popup_notice":"This diffuser is free when selecting 7 scents."}},"column_DqCmWA":{"type":"column","settings":{"product_image":"shopify:\/\/shop_images\/Smart_Aroma_Diffuser_perspective_Render_1.3.png","product_name":"Smart Aroma Diffuser Pro","product_for_details":"smart-aroma-diffuser-pro","row_1_text":"€219,95 or FREE with 9 scents","row_1_info":"","row_2_text":"100m²","row_2_info":"","row_3_text":"Completely Silent (±39.5dB)","row_3_info":"","row_4_text":"Rechargeble Battery","row_4_info":"4 days of use after 100 minute charge","row_5_text":"App control + physical buttons on the device","row_5_info":"","row_6_text":"Ambient light in the device","row_6_info":"","row_7_text":"","row_7_info":"","row_8_text":"","row_8_info":"","row_9_text":"","row_9_info":"","row_10_text":"","row_10_info":"","button_text":"Learn More","info_details_heading":"Diffuser Details","info_cta_text":"Select Scents","info_cta_free_label":"FREE","info_popup_notice":"This diffuser is free when selecting 9 scents."}}},"block_order":["column_xGU9Fq","column_TzAE3F","column_DqCmWA"],"settings":{"custom_trigger_class":"open-comparison-popup","product_row_label":"Product","row_1_label":"Price","row_2_label":"Coverage","row_2_icon":"shopify:\/\/shop_images\/image_2_b1fd2213-4e4f-4230-a46d-d3893ffcf819.png","row_3_label":"Noise Level","row_3_icon":"shopify:\/\/shop_images\/image_2_a06de365-ac40-4b47-8166-baa06f3c2c82.png","row_4_label":"Power","row_4_icon":"shopify:\/\/shop_images\/power_icon_1.png","row_5_label":"Control","row_5_icon":"shopify:\/\/shop_images\/image_3.png","row_6_label":"Lighting","row_6_icon":"shopify:\/\/shop_images\/image_4.png","row_7_label":"","row_8_label":"","row_9_label":"","row_10_label":"","text_color":"#160000","border_color":"#cacdd0","info_icon_color":"#a89585","tooltip_bg":"#160000","tooltip_text_color":"#ffffff","close_bg":"#160000","close_color":"#ffffff","button_bg":"#dbd9c8","button_text_color":"#162518","button_border_color":"#dbd9c8","scrollbar_track_color":"#eae5df","scrollbar_thumb_color":"#160000"}}},"order":["newsletter-popup","privacy-banner","cart-drawer","search-drawer","product-comparison-popup"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "custom.overlay",
+  "name": "Overlay group",
+  "sections": {
+    "newsletter-popup": {
+      "type": "newsletter-popup",
+      "disabled": true,
+      "custom_css": [
+        ".h5 {font-size: 25px; text-align: left;}",
+        ".text-xs {text-align: left; font-weight: bold;}"
+      ],
+      "settings": {
+        "apparition_delay": 15,
+        "show_only_on_index": false,
+        "show_only_for_visitors": true,
+        "show_only_once": true,
+        "image": "shopify://shop_images/wrapped-present.jpg",
+        "title": "Win a one-year free subscription to Scentech.",
+        "button_text": "I want to win!",
+        "subtext": "In 5 minutes you will hear if you won. By signing up for the contest you agree to receive marketing communications."
+      }
+    },
+    "privacy-banner": {
+      "type": "privacy-banner",
+      "disabled": true,
+      "settings": {
+        "privacy_bar_title": "Cookie policy",
+        "privacy_bar_content": "<p>We use cookies and similar technologies to provide the best experience on our website. Refer to our Privacy Policy for more information.</p>"
+      }
+    },
+    "cart-drawer": {
+      "type": "cart-drawer",
+      "blocks": {
+        "extra_product_dDfewf": {
+          "type": "extra_product",
+          "settings": {
+            "product": "pure-blossom",
+            "show_info_icon": true
+          }
+        },
+        "extra_product_WAXhmg": {
+          "type": "extra_product",
+          "settings": {
+            "product": "classic-charm",
+            "show_info_icon": true
+          }
+        },
+        "extra_product_K4aTwz": {
+          "type": "extra_product",
+          "settings": {
+            "product": "wild-blossom",
+            "show_info_icon": true
+          }
+        },
+        "extra_product_UPd4J3": {
+          "type": "extra_product",
+          "settings": {
+            "product": "tea-whisper",
+            "show_info_icon": true
+          }
+        },
+        "extra_product_UzdC9h": {
+          "type": "extra_product",
+          "settings": {
+            "product": "endless-path",
+            "show_info_icon": true
+          }
+        },
+        "extra_product_8Tz673": {
+          "type": "extra_product",
+          "settings": {
+            "product": "garden-mist",
+            "show_info_icon": true
+          }
+        },
+        "extra_product_m9mB6H": {
+          "type": "extra_product",
+          "settings": {
+            "product": "pure-nirvana",
+            "show_info_icon": true
+          }
+        },
+        "extra_product_XVt8bk": {
+          "type": "extra_product",
+          "settings": {
+            "product": "winter-breeze-copy",
+            "show_info_icon": true
+          }
+        },
+        "extra_product_8fpB4K": {
+          "type": "extra_product",
+          "settings": {
+            "product": "energize",
+            "show_info_icon": true
+          }
+        },
+        "extra_product_GWcwB4": {
+          "type": "extra_product",
+          "settings": {
+            "product": "love-affair",
+            "show_info_icon": true
+          }
+        }
+      },
+      "block_order": [
+        "extra_product_dDfewf",
+        "extra_product_WAXhmg",
+        "extra_product_K4aTwz",
+        "extra_product_UPd4J3",
+        "extra_product_UzdC9h",
+        "extra_product_8Tz673",
+        "extra_product_m9mB6H",
+        "extra_product_XVt8bk",
+        "extra_product_8fpB4K",
+        "extra_product_GWcwB4"
+      ],
+      "disabled": true,
+      "settings": {
+        "kv_shipping_threshold": "50",
+        "kv_shipping_unreached_text": "Spend <strong>{amount}</strong> more to get <strong>FREE SHIPPING</strong>!",
+        "kv_shipping_reached_text": "Nice work! <strong>FREE SHIPPING</strong> unlocked",
+        "kv_shipping_reached_gifts_text": "Nice work! <strong>FREE SHIPPING</strong> and <strong>{x}X GIFTS</strong> unlocked",
+        "empty_header_text": "Cart",
+        "empty_title": "<p>Your cart is empty,<br/>let's set the mood.</p>",
+        "empty_description": "Explore Scentech fragrances and smart diffusers designed to transform your space whether you want calm, focus, or energy.",
+        "empty_card_1_bg_color": "#f9f6f3",
+        "empty_card_1_image": "shopify://shop_images/Images_Info_2d5f7459-9133-4eae-a659-6f8aa2631817.png",
+        "empty_card_1_title": "Fragrances",
+        "empty_card_1_description": "Crafted with the best ingredients for clean, long-lasting mood-setting scent.",
+        "empty_card_1_button_text": "Explore",
+        "empty_card_1_button_url": "shopify://collections/fall-sale",
+        "empty_card_2_bg_color": "#edf7ee",
+        "empty_card_2_image": "shopify://shop_images/Image.png",
+        "empty_card_2_title": "Diffusers",
+        "empty_card_2_description": "Commercial-grade scenting for home—even coverage up to 50 m².",
+        "empty_card_2_button_text": "Explore",
+        "empty_card_2_button_url": "shopify://collections/diffusers-bundles",
+        "empty_bottom_button_text": "Explore Deals",
+        "empty_bottom_button_url": "shopify://collections/fall-sale",
+        "kv_inventory_text": "",
+        "text_expected_delivery": "Expected delivery:",
+        "text_preorder_collapsed": "There are pre-order items in the cart.",
+        "text_preorder_expanded": "There are pre-order items in the cart. Due to this your order will be sent out slightly later, when the scents have reached our warehouse.",
+        "text_preorder_affected_label": "The affected products in your cart are:",
+        "text_preorder_contact": "For any questions or concerns please reach out to our team.",
+        "text_instock_collapsed": "Your order ships out today from the Netherlands.",
+        "text_instock_expanded": "Your order ships out today from the Netherlands. These items are in stock at our warehouse in Gorinchem and are shipped by our reliable delivery partners.",
+        "show_cart_note": false,
+        "show_shipping_text": false,
+        "show_view_cart_button": false,
+        "show_checkout_button": true,
+        "show_protection": true,
+        "protection_product": "peace-of-mind-protection",
+        "protection_title": "Insured Shipping + 3-Year Warranty",
+        "protection_description": "Insured express delivery, plus an extended 3-year warranty on your diffuser(s).",
+        "protection_price": "9.95",
+        "low_cart_product": "shipping-insurance",
+        "low_cart_threshold": "120",
+        "low_cart_product_title": "Insured Shipping + 60-Day Returns",
+        "low_cart_product_description": "Insured express delivery, plus an extended 60-day return window.",
+        "low_cart_product_price": "2.95",
+        "secure_checkout_text": "Secure Checkout",
+        "without_protection_text": "Checkout",
+        "extra_slider_title": "Add Something Extra",
+        "extra_add_button_text": "+ Add",
+        "extra_sold_out_text": "Sold out",
+        "worth_text": "worth",
+        "free_gift_badge_text": "FREE GIFT",
+        "free_gifts_category_text": "Free Gifts"
+      }
+    },
+    "search-drawer": {
+      "type": "search-drawer",
+      "disabled": true,
+      "settings": {
+        "full_width": false,
+        "show_article_category": true,
+        "search_menu": "",
+        "search_menu_show_title": true
+      }
+    },
+    "product-comparison-popup": {
+      "type": "product-comparison-popup",
+      "blocks": {
+        "column_xGU9Fq": {
+          "type": "column",
+          "settings": {
+            "product_image": "shopify://shop_images/gift-image-1.0-doffuser.png",
+            "product_name": "Smart Aroma Diffuser Lite",
+            "product_for_details": "smart-aroma-diffuser",
+            "row_1_text": "€94,95 or FREE with 5 scents",
+            "row_1_info": "",
+            "row_2_text": "40m²",
+            "row_2_info": "The size of a small flat or large living room",
+            "row_3_text": "Whisper Quiet (±59.5dB)",
+            "row_3_info": "",
+            "row_4_text": "Cable + Batteries (included)",
+            "row_4_info": "",
+            "row_5_text": "App control with fixed routines",
+            "row_5_info": "",
+            "row_6_text": "No lighting",
+            "row_6_info": "",
+            "row_7_text": "",
+            "row_7_info": "",
+            "row_8_text": "",
+            "row_8_info": "",
+            "row_9_text": "",
+            "row_9_info": "",
+            "row_10_text": "",
+            "row_10_info": "",
+            "button_text": "Learn More",
+            "info_details_heading": "Diffuser Details",
+            "info_cta_text": "Select Scents",
+            "info_cta_free_label": "FREE",
+            "info_popup_notice": "This diffuser is free when selecting 5 scents."
+          }
+        },
+        "column_TzAE3F": {
+          "type": "column",
+          "settings": {
+            "product_image": "shopify://shop_images/Smart_aroma_diffuser_2_perspective_render_1.0.png",
+            "product_name": "Smart Aroma Diffuser 2",
+            "product_for_details": "smart-aroma-diffuser-2",
+            "row_1_text": "€149,95 or FREE with 7 scents",
+            "row_1_info": "",
+            "row_2_text": "65m²",
+            "row_2_info": "",
+            "row_3_text": "Completely Silent (±39.5dB)",
+            "row_3_info": "",
+            "row_4_text": "Cable",
+            "row_4_info": "",
+            "row_5_text": "App control + button wheel on the device",
+            "row_5_info": "",
+            "row_6_text": "Warm ambiance light",
+            "row_6_info": "",
+            "row_7_text": "",
+            "row_7_info": "",
+            "row_8_text": "",
+            "row_8_info": "",
+            "row_9_text": "",
+            "row_9_info": "",
+            "row_10_text": "",
+            "row_10_info": "",
+            "button_text": "Learn More",
+            "info_details_heading": "Diffuser Details",
+            "info_cta_text": "Select Scents",
+            "info_cta_free_label": "FREE",
+            "info_popup_notice": "This diffuser is free when selecting 7 scents."
+          }
+        },
+        "column_DqCmWA": {
+          "type": "column",
+          "settings": {
+            "product_image": "shopify://shop_images/Smart_Aroma_Diffuser_perspective_Render_1.3.png",
+            "product_name": "Smart Aroma Diffuser Pro",
+            "product_for_details": "smart-aroma-diffuser-pro",
+            "row_1_text": "€219,95 or FREE with 9 scents",
+            "row_1_info": "",
+            "row_2_text": "100m²",
+            "row_2_info": "",
+            "row_3_text": "Completely Silent (±39.5dB)",
+            "row_3_info": "",
+            "row_4_text": "Rechargeble Battery",
+            "row_4_info": "4 days of use after 100 minute charge",
+            "row_5_text": "App control + physical buttons on the device",
+            "row_5_info": "",
+            "row_6_text": "Ambient light in the device",
+            "row_6_info": "",
+            "row_7_text": "",
+            "row_7_info": "",
+            "row_8_text": "",
+            "row_8_info": "",
+            "row_9_text": "",
+            "row_9_info": "",
+            "row_10_text": "",
+            "row_10_info": "",
+            "button_text": "Learn More",
+            "info_details_heading": "Diffuser Details",
+            "info_cta_text": "Select Scents",
+            "info_cta_free_label": "FREE",
+            "info_popup_notice": "This diffuser is free when selecting 9 scents."
+          }
+        }
+      },
+      "block_order": [
+        "column_xGU9Fq",
+        "column_TzAE3F",
+        "column_DqCmWA"
+      ],
+      "settings": {
+        "custom_trigger_class": "open-comparison-popup",
+        "product_row_label": "Product",
+        "row_1_label": "Price",
+        "row_2_label": "Coverage",
+        "row_2_icon": "shopify://shop_images/image_2_b1fd2213-4e4f-4230-a46d-d3893ffcf819.png",
+        "row_3_label": "Noise Level",
+        "row_3_icon": "shopify://shop_images/image_2_a06de365-ac40-4b47-8166-baa06f3c2c82.png",
+        "row_4_label": "Power",
+        "row_4_icon": "shopify://shop_images/power_icon_1.png",
+        "row_5_label": "Control",
+        "row_5_icon": "shopify://shop_images/image_3.png",
+        "row_6_label": "Lighting",
+        "row_6_icon": "shopify://shop_images/image_4.png",
+        "row_7_label": "",
+        "row_8_label": "",
+        "row_9_label": "",
+        "row_10_label": "",
+        "text_color": "#160000",
+        "border_color": "#cacdd0",
+        "info_icon_color": "#a89585",
+        "tooltip_bg": "#160000",
+        "tooltip_text_color": "#ffffff",
+        "close_bg": "#160000",
+        "close_color": "#ffffff",
+        "button_bg": "#dbd9c8",
+        "button_text_color": "#162518",
+        "button_border_color": "#dbd9c8",
+        "scrollbar_track_color": "#eae5df",
+        "scrollbar_thumb_color": "#160000"
+      }
+    }
+  },
+  "order": [
+    "newsletter-popup",
+    "privacy-banner",
+    "cart-drawer",
+    "search-drawer",
+    "product-comparison-popup"
+  ]
+}
