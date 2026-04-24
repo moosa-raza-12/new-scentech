@@ -29,7 +29,7 @@
         "diffuser_JKTBEi": {
           "type": "diffuser",
           "settings": {
-            "selector_product": "",
+            "selector_product": "calming-lavender",
             "selector_title": "Diffuser Name",
             "selector_description": "Describe the diffuser here.",
             "selector_old_price": "149,95€",
