@@ -23,10 +23,10 @@
         "text_color": ""
       }
     },
-    "new_kv_bundle_section_Vftwqf": {
-      "type": "new-kv-bundle-section",
+    "diffuser_kv_bundle_LqGpYW": {
+      "type": "diffuser-kv-bundle",
       "blocks": {
-        "collection_4UfLeL": {
+        "collection_9xA4KV": {
           "type": "collection",
           "settings": {
             "collection": "",
@@ -34,7 +34,7 @@
             "badge_text": ""
           }
         },
-        "collection_xJChMh": {
+        "collection_Q6zXnA": {
           "type": "collection",
           "settings": {
             "collection": "",
@@ -44,10 +44,10 @@
         }
       },
       "block_order": [
-        "collection_4UfLeL",
-        "collection_xJChMh"
+        "collection_9xA4KV",
+        "collection_Q6zXnA"
       ],
-      "name": "new kv Collection Tabs",
+      "name": "Diffuser KV Bundle",
       "settings": {
         "hero_title": "EARLY BLACK FRIDAY",
         "hero_description": "Buy 5 scents, receive a free diffuser!",
@@ -97,6 +97,6 @@
   },
   "order": [
     "announcement-bar",
-    "new_kv_bundle_section_Vftwqf"
+    "diffuser_kv_bundle_LqGpYW"
   ]
 }
