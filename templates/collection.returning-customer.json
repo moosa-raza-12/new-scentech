@@ -200,7 +200,7 @@
             "position_desktop": 4,
             "show_on_mobile": true,
             "position_mobile": 4,
-            "badge_text": "New",
+            "badge_text": "",
             "heading": "Spring Bundle",
             "description": "<p>Smell spring at home, this bundle contains our 3 Limited Edition Spring scents.</p>",
             "show_cta": true,
