@@ -1,25 +1,30 @@
-<div     class="custom-diffuser-selector">
+<div class="custom-diffuser-selector">
 
   <!-- Header -->
   <div class="cds-header">
     <div class="cds-header-content">
-    <div class="cds-left">
-      <div class="cds-step">{{ section.settings.selector_step }}</div>
-      <div>
-        <h2 class="cds-title">{{ section.settings.selector_heading }}</h2>
+      <div class="cds-left">
+        <div class="cds-step">{{ section.settings.selector_step }}</div>
+        <div>
+          <h2 class="cds-title">{{ section.settings.selector_heading }}</h2>
+        </div>
+
       </div>
-      
-    </div>
-    <div class="compare-icon-wrapper">
-<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-  <path d="M7 14C6.03356 14 5.12752 13.8166 4.28188 13.4497C3.43624 13.0872 2.69128 12.5861 2.04698 11.9463C1.40716 11.3065 0.90604 10.5638 0.543624 9.71812C0.181208 8.87248 0 7.96644 0 7C0 6.03356 0.181208 5.12752 0.543624 4.28188C0.90604 3.43624 1.40716 2.69351 2.04698 2.05369C2.69128 1.4094 3.43624 0.90604 4.28188 0.543624C5.12752 0.181208 6.03356 0 7 0C7.96644 0 8.87248 0.181208 9.71812 0.543624C10.5638 0.90604 11.3065 1.4094 11.9463 2.05369C12.5861 2.69351 13.0872 3.43624 13.4497 4.28188C13.8166 5.12752 14 6.03356 14 7C14 7.96644 13.8166 8.87248 13.4497 9.71812C13.0872 10.5638 12.5861 11.3065 11.9463 11.9463C11.3065 12.5861 10.5638 13.0872 9.71812 13.4497C8.87248 13.8166 7.96644 14 7 14ZM7 12.4631C7.75615 12.4631 8.46309 12.3221 9.12081 12.0403C9.783 11.7584 10.3624 11.3669 10.8591 10.8658C11.3602 10.3602 11.7517 9.77852 12.0336 9.12081C12.3199 8.45861 12.4631 7.75168 12.4631 7C12.4631 6.24385 12.3199 5.53691 12.0336 4.87919C11.7517 4.217 11.3602 3.63535 10.8591 3.13423C10.3624 2.63311 9.783 2.24161 9.12081 1.95973C8.46309 1.67785 7.75615 1.53691 7 1.53691C6.24385 1.53691 5.53468 1.67785 4.87248 1.95973C4.21477 2.24161 3.63535 2.63311 3.13423 3.13423C2.63311 3.63535 2.24161 4.217 1.95973 4.87919C1.67785 5.53691 1.53691 6.24385 1.53691 7C1.53691 7.75168 1.67785 8.45861 1.95973 9.12081C2.24161 9.77852 2.63311 10.3602 3.13423 10.8658C3.63535 11.3669 4.21477 11.7584 4.87248 12.0403C5.53468 12.3221 6.24385 12.4631 7 12.4631ZM6.84564 8.30201C6.37136 8.30201 6.13423 8.09843 6.13423 7.69128C6.13423 7.68233 6.13423 7.67338 6.13423 7.66443C6.13423 7.65101 6.13423 7.63758 6.13423 7.62416C6.13423 7.33781 6.21029 7.10067 6.36242 6.91275C6.51454 6.72483 6.70917 6.55034 6.94631 6.38926C7.22371 6.19239 7.43177 6.02908 7.57047 5.89933C7.71365 5.76958 7.78523 5.60403 7.78523 5.40268C7.78523 5.19687 7.70693 5.02685 7.55034 4.89262C7.39821 4.75391 7.19687 4.68456 6.94631 4.68456C6.8255 4.68456 6.71141 4.7047 6.60403 4.74497C6.49664 4.78523 6.39821 4.8434 6.30872 4.91946C6.21924 4.99553 6.13647 5.09172 6.0604 5.20805L5.96644 5.32886C5.89933 5.42282 5.81879 5.49441 5.72483 5.54362C5.63087 5.59284 5.51902 5.61745 5.38926 5.61745C5.23714 5.61745 5.10291 5.566 4.98658 5.46309C4.87472 5.36018 4.81879 5.22148 4.81879 5.04698C4.81879 4.98434 4.82327 4.92394 4.83221 4.86577C4.84564 4.80761 4.86353 4.7472 4.88591 4.68456C4.99776 4.36689 5.24385 4.0962 5.62416 3.87248C6.00447 3.64877 6.48098 3.53691 7.05369 3.53691C7.46532 3.53691 7.83893 3.6085 8.1745 3.75168C8.51454 3.89485 8.78747 4.10067 8.99329 4.36913C9.19911 4.63311 9.30201 4.95078 9.30201 5.32215C9.30201 5.70693 9.20582 6.01342 9.01342 6.24161C8.8255 6.46532 8.56376 6.68456 8.22819 6.89933C8.0179 7.03803 7.85235 7.17002 7.73154 7.2953C7.61074 7.42058 7.54362 7.56376 7.5302 7.72483C7.5302 7.73378 7.52796 7.7472 7.52349 7.7651C7.52349 7.77852 7.52349 7.79195 7.52349 7.80537C7.50559 7.94407 7.43624 8.06264 7.31544 8.16107C7.19463 8.25503 7.03803 8.30201 6.84564 8.30201ZM6.83221 10.396C6.60403 10.396 6.40716 10.3244 6.24161 10.1812C6.08054 10.038 6 9.85459 6 9.63087C6 9.40716 6.08054 9.22371 6.24161 9.08054C6.40268 8.93736 6.59955 8.86577 6.83221 8.86577C7.06488 8.86577 7.26174 8.93736 7.42282 9.08054C7.58389 9.22371 7.66443 9.40716 7.66443 9.63087C7.66443 9.85459 7.58389 10.038 7.42282 10.1812C7.26174 10.3244 7.06488 10.396 6.83221 10.396Z" fill="#162518"/>
-</svg>
-    {% if section.settings.selector_compare_text != blank %}
-      <a href="{{ section.settings.selector_compare_link }}" class="cds-compare">
-        {{ section.settings.selector_compare_text }}
-      </a>
-    {% endif %}
-    </div>
+      <div class="compare-icon-wrapper">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none">
+          <path d="M7 14C6.03356 14 5.12752 13.8166 4.28188 13.4497C3.43624 13.0872 2.69128 12.5861 2.04698 11.9463C1.40716 11.3065 0.90604 10.5638 0.543624 9.71812C0.181208 8.87248 0 7.96644 0 7C0 6.03356 0.181208 5.12752 0.543624 4.28188C0.90604 3.43624 1.40716 2.69351 2.04698 2.05369C2.69128 1.4094 3.43624 0.90604 4.28188 0.543624C5.12752 0.181208 6.03356 0 7 0C7.96644 0 8.87248 0.181208 9.71812 0.543624C10.5638 0.90604 11.3065 1.4094 11.9463 2.05369C12.5861 2.69351 13.0872 3.43624 13.4497 4.28188C13.8166 5.12752 14 6.03356 14 7C14 7.96644 13.8166 8.87248 13.4497 9.71812C13.0872 10.5638 12.5861 11.3065 11.9463 11.9463C11.3065 12.5861 10.5638 13.0872 9.71812 13.4497C8.87248 13.8166 7.96644 14 7 14ZM7 12.4631C7.75615 12.4631 8.46309 12.3221 9.12081 12.0403C9.783 11.7584 10.3624 11.3669 10.8591 10.8658C11.3602 10.3602 11.7517 9.77852 12.0336 9.12081C12.3199 8.45861 12.4631 7.75168 12.4631 7C12.4631 6.24385 12.3199 5.53691 12.0336 4.87919C11.7517 4.217 11.3602 3.63535 10.8591 3.13423C10.3624 2.63311 9.783 2.24161 9.12081 1.95973C8.46309 1.67785 7.75615 1.53691 7 1.53691C6.24385 1.53691 5.53468 1.67785 4.87248 1.95973C4.21477 2.24161 3.63535 2.63311 3.13423 3.13423C2.63311 3.63535 2.24161 4.217 1.95973 4.87919C1.67785 5.53691 1.53691 6.24385 1.53691 7C1.53691 7.75168 1.67785 8.45861 1.95973 9.12081C2.24161 9.77852 2.63311 10.3602 3.13423 10.8658C3.63535 11.3669 4.21477 11.7584 4.87248 12.0403C5.53468 12.3221 6.24385 12.4631 7 12.4631ZM6.84564 8.30201C6.37136 8.30201 6.13423 8.09843 6.13423 7.69128C6.13423 7.68233 6.13423 7.67338 6.13423 7.66443C6.13423 7.65101 6.13423 7.63758 6.13423 7.62416C6.13423 7.33781 6.21029 7.10067 6.36242 6.91275C6.51454 6.72483 6.70917 6.55034 6.94631 6.38926C7.22371 6.19239 7.43177 6.02908 7.57047 5.89933C7.71365 5.76958 7.78523 5.60403 7.78523 5.40268C7.78523 5.19687 7.70693 5.02685 7.55034 4.89262C7.39821 4.75391 7.19687 4.68456 6.94631 4.68456C6.8255 4.68456 6.71141 4.7047 6.60403 4.74497C6.49664 4.78523 6.39821 4.8434 6.30872 4.91946C6.21924 4.99553 6.13647 5.09172 6.0604 5.20805L5.96644 5.32886C5.89933 5.42282 5.81879 5.49441 5.72483 5.54362C5.63087 5.59284 5.51902 5.61745 5.38926 5.61745C5.23714 5.61745 5.10291 5.566 4.98658 5.46309C4.87472 5.36018 4.81879 5.22148 4.81879 5.04698C4.81879 4.98434 4.82327 4.92394 4.83221 4.86577C4.84564 4.80761 4.86353 4.7472 4.88591 4.68456C4.99776 4.36689 5.24385 4.0962 5.62416 3.87248C6.00447 3.64877 6.48098 3.53691 7.05369 3.53691C7.46532 3.53691 7.83893 3.6085 8.1745 3.75168C8.51454 3.89485 8.78747 4.10067 8.99329 4.36913C9.19911 4.63311 9.30201 4.95078 9.30201 5.32215C9.30201 5.70693 9.20582 6.01342 9.01342 6.24161C8.8255 6.46532 8.56376 6.68456 8.22819 6.89933C8.0179 7.03803 7.85235 7.17002 7.73154 7.2953C7.61074 7.42058 7.54362 7.56376 7.5302 7.72483C7.5302 7.73378 7.52796 7.7472 7.52349 7.7651C7.52349 7.77852 7.52349 7.79195 7.52349 7.80537C7.50559 7.94407 7.43624 8.06264 7.31544 8.16107C7.19463 8.25503 7.03803 8.30201 6.84564 8.30201ZM6.83221 10.396C6.60403 10.396 6.40716 10.3244 6.24161 10.1812C6.08054 10.038 6 9.85459 6 9.63087C6 9.40716 6.08054 9.22371 6.24161 9.08054C6.40268 8.93736 6.59955 8.86577 6.83221 8.86577C7.06488 8.86577 7.26174 8.93736 7.42282 9.08054C7.58389 9.22371 7.66443 9.40716 7.66443 9.63087C7.66443 9.85459 7.58389 10.038 7.42282 10.1812C7.26174 10.3244 7.06488 10.396 6.83221 10.396Z" fill="#162518" />
+        </svg>
+        {% if section.settings.selector_compare_text != blank %}
+          <a href="{{ section.settings.selector_compare_link }}" class="cds-compare">
+            {{ section.settings.selector_compare_text }}
+          </a>
+        {% endif %}
+      </div>
 
     </div>
     <p class="cds-subtext">{{ section.settings.selector_subtext }}</p>
@@ -35,72 +40,73 @@
   <!-- Diffuser Blocks -->
   <div class="cds-list">
     {% for block in section.blocks %}
-    {% if block.type == "diffuser" %} 
-      {% comment %} Get selected product (if any) {% endcomment %}
-      {% assign product_obj = block.settings.selector_product %}
-  
-      {% comment %} ----- IMAGE FALLBACK ----- {% endcomment %}
-      {% assign img_url = block.settings.selector_image %}
-      {% if img_url == blank and product_obj != blank and product_obj.featured_image != blank %}
-        {% assign img_url = product_obj.featured_image %}
-      {% endif %}
-  
-      {% comment %} ----- PRICE & DISCOUNT ----- {% endcomment %}
-      {% assign new_price_display = block.settings.selector_new_price %}
-      {% assign old_price_display = block.settings.selector_old_price %}
-      {% assign discount_percent = nil %}
-  
-      {% if product_obj != blank and product_obj.price > 0 %}
-        {% assign new_price_display = product_obj.price | money %}
-        {% if product_obj.compare_at_price > product_obj.price %}
-          {% assign old_price_display = product_obj.compare_at_price | money %}
-          {% assign discount_percent = product_obj.compare_at_price | minus: product_obj.price | times: 100 | divided_by: product_obj.compare_at_price %}
+      {% if block.type == "diffuser" %}
+        {% comment %} Get selected product (if any) {% endcomment %}
+        {% assign product_obj = block.settings.selector_product %}
+
+        {% comment %} ----- IMAGE FALLBACK ----- {% endcomment %}
+        {% assign img_url = block.settings.selector_image %}
+        {% if img_url == blank and product_obj != blank and product_obj.featured_image != blank %}
+          {% assign img_url = product_obj.featured_image %}
         {% endif %}
-      {% endif %}
-  
-      {% comment %} ----- DIFFUSER DETECTION (for cds-highlight) ----- {% endcomment %}
-      {% assign is_diffuser = false %}
-      {% if product_obj != blank %}
-        {% if product_obj.type == "Diffuser" or product_obj.tags contains "diffuser" %}
-          {% assign is_diffuser = true %}
-        {% endif %}
-      {% endif %}
-    {% comment %} {% if block.settings.selector_highlight %}active{% endif %} {% endcomment %}
-      <div class="cds-cards" {{ block.shopify_attributes }}>
-        <div class="cds-card-innerss">
-  
-          {% if img_url %}
-            <div class="cds-image">
-              <img src="{{ img_url | image_url: width: 200 }}" alt="">
-            </div>
+
+        {% comment %} ----- PRICE & DISCOUNT ----- {% endcomment %}
+        {% assign new_price_display = block.settings.selector_new_price %}
+        {% assign old_price_display = block.settings.selector_old_price %}
+        {% assign discount_percent = nil %}
+
+        {% if product_obj != blank and product_obj.price > 0 %}
+          {% assign new_price_display = product_obj.price | money %}
+          {% if product_obj.compare_at_price > product_obj.price %}
+            {% assign old_price_display = product_obj.compare_at_price | money %}
+            {% assign discount_percent = product_obj.compare_at_price | minus: product_obj.price | times: 100 | divided_by: product_obj.compare_at_price %}
           {% endif %}
-  
-          <div class="cds-content">
-            <h3 class="cds-name">{{ block.settings.selector_title }}</h3>
-            <p class="cds-desc">{{ block.settings.selector_description }}</p>
-          </div>
-  
-          <div class="cds-price">
-            {% if old_price_display != blank %}
-              <span class="old">{{ old_price_display }}</span>
-              {% comment %} {% if discount_percent %}
-                <span class="discount-badge">{{ discount_percent }}% off</span>
-              {% endif %} {% endcomment %}
+        {% endif %}
+
+        {% comment %} ----- DIFFUSER DETECTION (for cds-highlight) ----- {% endcomment %}
+        {% assign is_diffuser = false %}
+        {% if product_obj != blank %}
+          {% if product_obj.type == "Diffuser" or product_obj.tags contains "diffuser" %}
+            {% assign is_diffuser = true %}
+
+          {% endif %}
+        {% endif %}
+        {% comment %} {% if block.settings.selector_highlight %}active{% endif %} {% endcomment %}
+        <div class="cds-cards" {{ block.shopify_attributes }}>
+          <div class="cds-card-innerss">
+
+            {% if img_url %}
+              <div class="cds-image">
+                <img src="{{ img_url | image_url: width: 200 }}" alt="">
+              </div>
             {% endif %}
-            <span class="new">{{ new_price_display }}</span>
+
+            <div class="cds-content">
+              <h3 class="cds-name">{{ block.settings.selector_title }}</h3>
+              <p class="cds-desc">{{ block.settings.selector_description }}</p>
+            </div>
+
+            <div class="cds-price">
+              {% if old_price_display != blank %}
+                <span class="old">{{ old_price_display }}</span>
+                {% comment %} {% if discount_percent %}
+                                                    <span class="discount-badge">{{ discount_percent }}% off</span>
+                                              {% endif %} {% endcomment %}
+              {% endif %}
+              <span class="new">{{ new_price_display }}</span>
+            </div>
+
           </div>
-  
-        </div>
-  
-        {% comment %} Highlight only for diffuser products with text set {% endcomment %}
-        {% comment %} {% if is_diffuser and block.settings.selector_highlight_text != blank %} {% endcomment %}
+
+          {% comment %} Highlight only for diffuser products with text set {% endcomment %}
+          {% comment %} {% if is_diffuser and block.settings.selector_highlight_text != blank %} {% endcomment %}
           <div class="cds-highlight">
             {{ block.settings.selector_highlight_text }}
           </div>
         {% comment %} {% endif %} {% endcomment %}
-  
-      </div>
-    {%endif%}
+
+        </div>
+      {% endif %}
     {% endfor %}
   </div>
 
@@ -111,44 +117,44 @@
     const cardSelector = '.cds-cards';
     const activeClass = 'active';
     const highlightSelector = '.cds-highlight';
-
+  
     function hideAllHighlights() {
       document.querySelectorAll(highlightSelector).forEach(hl => {
         hl.style.display = 'none';
       });
     }
-
+  
     function resetActiveCards() {
       document.querySelectorAll(cardSelector).forEach(card => {
         card.classList.remove(activeClass);
       });
     }
-
+  
     function showHighlightForCard(card) {
       const highlight = card.querySelector(highlightSelector);
       if (highlight) {
         highlight.style.display = ''; // revert to CSS default (e.g., block or flex)
       }
     }
-
+  
     // Initially hide all highlights (if they are not already hidden by CSS)
     hideAllHighlights();
-
+  
     // Delegate click event to handle dynamically added cards
     document.body.addEventListener('click', function(e) {
       // Find the closest .cds-cards element (allows clicking on inner elements)
       const card = e.target.closest(cardSelector);
       if (!card) return;
-
+  
       // If this card is already active, do nothing (or optionally unselect – decide)
       if (card.classList.contains(activeClass)) {
         return; // already active, ignore
       }
-
+  
       // Remove active class from all cards and hide all highlights
       resetActiveCards();
       hideAllHighlights();
-
+  
       // Activate the clicked card
       card.classList.add(activeClass);
       showHighlightForCard(card);
@@ -157,184 +163,187 @@
 </script>
 
 <style>
-    .cds-highlight {
-  display: none;
-}
+  .cds-highlight {
+    display: none;
+  }
 
-.cds-cards.active .cds-highlight {
-  display: block; /* or flex, depending on your layout */
-}
-    .compare-icon-wrapper{
-        display: inline-flex;
-        gap: 4px;
-        align-items: center;
-        cursor: pointer;
-    }
-.custom-diffuser-selector {
+  .cds-cards.active .cds-highlight {
+    display: block;
+    /* or flex, depending on your layout */
+  }
+  .compare-icon-wrapper {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    cursor: pointer;
+  }
+  .custom-diffuser-selector {
     width: 100%;
     max-width: 1000px;
-    padding: 0 20px;
+    padding: 20px 20px 0;
     margin: auto;
-    padding-top: 20px;
-}
-/* .cds-header-content{
-    display: flex;
-    justify-content: space-between; 
-} */
+  }
 
-/* Header */
-.cds-header {
-  margin-bottom: 16px;
-}
-.cds-header-content{
+
+  /*
+
+   .cds-header-content{ 
+   display: flex; 
+   justify-content: space-between; 
+   } 
+*/
+
+  /* Header */.cds-header {
+    margin-bottom: 16px;
+  }
+  .cds-header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+  }
 
-.cds-left {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
+  .cds-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
 
-.cds-step {
-  width: 40px;
-  height: 40px;
-  background: #1f3d2b;
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-}
-@media (max-width: 639px) {
+  .cds-step {
+    width: 40px;
+    height: 40px;
+    background: #1f3d2b;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+  }
+  @media (max-width: 639px) {
     .cds-step {
-        width: 24px !important;
-        height: 24px !important;
-        font-size: 12px !important;
+      width: 24px !important;
+      height: 24px !important;
+      font-size: 12px !important;
     }
-}
-.cds-title {
-  margin: 0;
-  font-size: 24px;
-}
-@media (max-width: 639px) {
+  }
+  .cds-title {
+    margin: 0;
+    font-size: 24px;
+  }
+  @media (max-width: 639px) {
     .cds-title {
-        color: #160000;
-text-align: center;
-font-size: 16px !important;
+      color: #160000;
+      text-align: center;
+      font-size: 16px !important;
     }
-}
+  }
 
-.cds-subtext {
-margin-top: 10px;
-  color: #160000;
-}
+  .cds-subtext {
+    margin-top: 10px;
+    color: #160000;
+  }
 
-.cds-compare {
+  .cds-compare {
     color: #162518;
-font-size: 12px;
-font-weight: 600;
-text-decoration-line: underline;
-}
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration-line: underline;
+  }
 
-/* Banner */
-.cds-banner {
+  /* Banner */
+  .cds-banner {
     border-radius: 6px;
     background: #938E70;
-  color: #fff;
-  padding: 14px;
-  margin-bottom: 16px;
-  text-align: center;
-}
-@media screen and (max-width: 639px) {
-    .cds-banner{
-        padding: 10px 16px;
-        font-size: 12px;
+    color: #fff;
+    padding: 14px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  @media screen and (max-width: 639px) {
+    .cds-banner {
+      padding: 10px 16px;
+      font-size: 12px;
     }
-}
-/* Cards */
-.cds-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
+  }
+  /* Cards */
+  .cds-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
 
-.cds-cards {
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  overflow: hidden;
-}
+  .cds-cards {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+  }
 
-.cds-card.active {
-  border: 2px solid #2e2e2e;
-}
+  .cds-card.active {
+    border: 2px solid #2e2e2e;
+  }
 
-.cds-card-innerss {
-  display: flex;
-  gap: 16px;
-  padding: 14px;
-  align-items: center;
-}
+  .cds-card-innerss {
+    display: flex;
+    gap: 16px;
+    padding: 14px;
+    align-items: center;
+  }
 
-.cds-image img {
-  width: 70px;
-  height: auto;
-  border-radius: 8px;
-}
+  .cds-image img {
+    width: 70px;
+    height: auto;
+    border-radius: 8px;
+  }
 
-.cds-content {
-  flex: 1;
-}
+  .cds-content {
+    flex: 1;
+  }
 
-.cds-name {
-  margin: 0;
-  color: #160000;
-  font-size: 18px;
-  font-weight: 400;
-}
-@media (max-width: 639px) {
+  .cds-name {
+    margin: 0;
+    color: #160000;
+    font-size: 18px;
+    font-weight: 400;
+  }
+  @media (max-width: 639px) {
     .cds-name {
-        font-size: 16px !important;
+      font-size: 16px !important;
     }
-}
+  }
 
-.cds-desc {
-  margin: 4px 0 0;
-  color: #555;
-  font-size: 14px;
-}
-@media (max-width: 639px) {
+  .cds-desc {
+    margin: 4px 0 0;
+    color: #555;
+    font-size: 14px;
+  }
+  @media (max-width: 639px) {
     .cds-desc {
-        font-size: 12px !important;
+      font-size: 12px !important;
     }
-}
-.cds-price {
-  text-align: right;
-  white-space: nowrap;
-}
+  }
+  .cds-price {
+    text-align: right;
+    white-space: nowrap;
+  }
 
-.cds-price .old {
-  display: block;
-  text-decoration: line-through;
-  color: #999;
-  font-size: 14px;
-}
+  .cds-price .old {
+    display: block;
+    text-decoration: line-through;
+    color: #999;
+    font-size: 14px;
+  }
 
-.cds-price .new {
-  font-weight: 600;
-  font-size: 16px;
-}
+  .cds-price .new {
+    font-weight: 600;
+    font-size: 16px;
+  }
 
-/* Highlight footer */
-.cds-highlight {
-  background: #e9e6dc;
-  padding: 10px;
-  text-align: center;
-  font-size: 14px;
-}
+  /* Highlight footer */
+  .cds-highlight {
+    background: #e9e6dc;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+  }
 </style>
-
