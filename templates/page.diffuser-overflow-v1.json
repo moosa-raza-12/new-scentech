@@ -26,17 +26,6 @@
     "diffuser_kv_bundle_LqGpYW": {
       "type": "diffuser-kv-bundle",
       "blocks": {
-        "diffuser_n47YqG": {
-          "type": "diffuser",
-          "settings": {
-            "selector_product": "smart-aroma-diffuser-pro",
-            "selector_title": "Diffuser Pro",
-            "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
-            "selector_old_price": "€149,95",
-            "selector_new_price": "€74,98",
-            "selector_highlight_text": "Spring Sale: Pay only €74,98 after adding 2 scents!"
-          }
-        },
         "diffuser_JKTBEi": {
           "type": "diffuser",
           "settings": {
@@ -54,6 +43,17 @@
             "selector_product": "bestseller-bundle",
             "selector_image": "shopify://shop_images/Images_Info_0e95c5fb-3eb6-456d-8fc6-b8a227c0183c.png",
             "selector_title": "Diffuser Lite",
+            "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
+            "selector_old_price": "€149,95",
+            "selector_new_price": "€74,98",
+            "selector_highlight_text": "Spring Sale: Pay only €74,98 after adding 2 scents!"
+          }
+        },
+        "diffuser_n47YqG": {
+          "type": "diffuser",
+          "settings": {
+            "selector_product": "smart-aroma-diffuser-pro",
+            "selector_title": "Diffuser Pro",
             "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
             "selector_old_price": "€149,95",
             "selector_new_price": "€74,98",
@@ -78,9 +78,9 @@
         }
       },
       "block_order": [
-        "diffuser_n47YqG",
         "diffuser_JKTBEi",
         "diffuser_TfKVLj",
+        "diffuser_n47YqG",
         "collection_9xA4KV",
         "collection_Q6zXnA"
       ],
