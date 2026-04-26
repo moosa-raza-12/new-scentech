@@ -40,7 +40,7 @@
         "diffuser_TfKVLj": {
           "type": "diffuser",
           "settings": {
-            "selector_product": "bestseller-bundle",
+            "selector_product": "smart-aroma-diffuser-2",
             "selector_image": "shopify://shop_images/Images_Info_0e95c5fb-3eb6-456d-8fc6-b8a227c0183c.png",
             "selector_title": "Diffuser Lite",
             "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
