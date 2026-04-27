@@ -162,32 +162,39 @@
       }
   
       function handleHeroSticky() {
+        const scentSelector=document.querySelector('.scent-selector')
+        const progresFooter=document.querySelector('.kv-progress-footer2')
         if (!heroSection) return;
         const triggerPoint = heroSection.offsetHeight || 0;
         if ((window.pageYOffset || document.documentElement.scrollTop) > triggerPoint) {
           heroSection.classList.add('sticky');
+          scentSelector.style.display = 'none';
+          progresFooter.style.display = 'block';
+         console.log("Sticky Enabeled")
         } else {
           heroSection.classList.remove('sticky');
+          scentSelector.style.display = 'block';
+          progresFooter.style.display = 'none';
         }
         updateStickyHeroHeight();
       }
   
       handleHeroSticky();
       window.addEventListener('scroll', handleHeroSticky, { passive: true });
-
+  
       function updateProgressFooterScrollVisibility() {
         const progressFooter = document.getElementById('kv-progress-footer-empty');
         if (!progressFooter) return;
-
+  
         const stickyTarget = document.querySelector('.kv-bundle-items-sticky');
         const triggerPoint = stickyTarget
           ? stickyTarget.getBoundingClientRect().top + window.scrollY
           : 600;
         const hasPassedTrigger = window.scrollY >= triggerPoint;
-
+  
         progressFooter.style.display = hasPassedTrigger ? 'block' : 'none';
       }
-
+  
       updateProgressFooterScrollVisibility();
       window.addEventListener('scroll', updateProgressFooterScrollVisibility, { passive: true });
       window.addEventListener('resize', updateProgressFooterScrollVisibility);
@@ -853,11 +860,13 @@
       const savings = Math.max(0, compareAtWithGifts - runningTotal);
       const totalFormatted = formatMoney(runningTotal * 100);
       const savingsFormatted = formatMoney(savings * 100);
+      const badgeText=document.querySelector('.kv-progress-footer-message-empty')  
   
       // Update continue button state and text (enable only when at least 2 items are selected)
       if (totalSelectedCount < 2) {
         continueBtn.disabled = true;
         continueBtn.textContent = totalSelectedCount === 1 ? 'Add 1 more item' : textLabels.addScents;
+        
         // Hide mini trigger until minimum item count is reached
         if (miniTrigger) {
           miniTrigger.style.display = 'none';
