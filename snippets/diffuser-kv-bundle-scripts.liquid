@@ -1,4 +1,4 @@
-  <script>
+<script>
     function getAmsterdamToday() {
       const now = new Date();
       const ams = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' }));
@@ -8,7 +8,7 @@
       ams.setHours(0, 0, 0, 0);
       return ams;
     }
-
+  
     function getShippingDate() {
       const today = getAmsterdamToday();
       const day = today.getDay();
@@ -16,16 +16,16 @@
       if (day === 6) today.setDate(today.getDate() + 2);
       return today;
     }
-
+  
     // Selected products tracker
     let selectedProducts = [];
     
     // Get Shopify money format from theme settings
     const moneyFormat = '{{ shop.money_format }}' || '${{amount}}';
-
+  
     const kvCountryCode = '{{ localization.country.iso_code }}';
     const kvCountryName = '{{ localization.country.name }}';
-
+  
     const kvDeliveryDays = {
       nl: {{ settings.delivery_days_nl | default: 1 }},
       be: {{ settings.delivery_days_be | default: 1 }},
@@ -35,17 +35,17 @@
       rowMin: {{ settings.delivery_days_row_min | default: 6 }},
       rowMax: {{ settings.delivery_days_row_max | default: 10 }}
     };
-
+  
     function getInstockCollapsedMessage() {
       return 'Your order ships out today from the Netherlands.';
     }
-
+  
     function getInstockDeliveryDateRange() {
       const euCountries = ['AT','BG','HR','CY','CZ','DK','EE','FI','FR','GR','HU','IE','IT','LV','LT','LU','MT','PL','PT','RO','SK','SI','ES','SE'];
       const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
       const shipDate = getShippingDate();
       let minDays, maxDays;
-
+  
       switch (kvCountryCode) {
         case 'NL': minDays = kvDeliveryDays.nl; maxDays = kvDeliveryDays.nl; break;
         case 'BE': minDays = kvDeliveryDays.be; maxDays = kvDeliveryDays.be; break;
@@ -59,12 +59,12 @@
             maxDays = kvDeliveryDays.rowMax;
           }
       }
-
+  
       const startDate = new Date(shipDate);
       startDate.setDate(startDate.getDate() + minDays);
       const endDate = new Date(shipDate);
       endDate.setDate(endDate.getDate() + maxDays);
-
+  
       if (minDays === maxDays) {
         return `${startDate.getDate()} ${monthNames[startDate.getMonth()]}`;
       } else if (startDate.getMonth() === endDate.getMonth()) {
@@ -174,6 +174,23 @@
   
       handleHeroSticky();
       window.addEventListener('scroll', handleHeroSticky, { passive: true });
+
+      function updateProgressFooterScrollVisibility() {
+        const progressFooter = document.getElementById('kv-progress-footer-empty');
+        if (!progressFooter) return;
+
+        const stickyTarget = document.querySelector('.kv-bundle-items-sticky');
+        const triggerPoint = stickyTarget
+          ? stickyTarget.getBoundingClientRect().top + window.scrollY
+          : 600;
+        const hasPassedTrigger = window.scrollY >= triggerPoint;
+
+        progressFooter.style.display = hasPassedTrigger ? 'block' : 'none';
+      }
+
+      updateProgressFooterScrollVisibility();
+      window.addEventListener('scroll', updateProgressFooterScrollVisibility, { passive: true });
+      window.addEventListener('resize', updateProgressFooterScrollVisibility);
   
       // Update sticky height on resize
       if (window.ResizeObserver) {
@@ -202,7 +219,7 @@
           document.querySelector(`[data-content="${tabId}"]`).classList.add('active');
         });
       });
-
+  
       // Activate the first collection tab on page load
       const firstCollectionTab = document.querySelector('.kv-bundle-tab:not([data-tab="all"])');
       if (firstCollectionTab) {
@@ -298,13 +315,13 @@
           updateProductQuantity(productId, newValue);
         }
       });
-
+  
       // Interrupter card add-to-cart
       document.addEventListener('click', function(e) {
         const intrAddToCartBtn = e.target.classList.contains('kv-interrupter-add-to-cart') ? e.target : e.target.closest('.kv-interrupter-add-to-cart');
         if (intrAddToCartBtn) {
           const quantity = parseInt(intrAddToCartBtn.getAttribute('data-quantity')) || 1;
-
+  
           const productId = intrAddToCartBtn.getAttribute('data-product-id');
           const productHandle = intrAddToCartBtn.getAttribute('data-product-handle');
           const variantId = intrAddToCartBtn.getAttribute('data-variant-id');
@@ -314,7 +331,7 @@
           const productImage = intrAddToCartBtn.getAttribute('data-product-image');
           const inventoryDate = intrAddToCartBtn.getAttribute('data-inventory-date');
           const inventoryQuantity = parseInt(intrAddToCartBtn.getAttribute('data-inventory-quantity')) || 0;
-
+  
           const productData = {
             productId: productId,
             productHandle: productHandle,
@@ -327,27 +344,27 @@
             inventoryDate: inventoryDate || '',
             inventoryQuantity: inventoryQuantity
           };
-
+  
           const existingIndex = selectedProducts.findIndex(p => p.productId === productId);
           if (existingIndex === -1) {
             selectedProducts.push(productData);
           } else {
             selectedProducts[existingIndex].quantity = quantity;
           }
-
+  
           updateThumbnailCarousel();
-
+  
           // Visual feedback: loading → success → restore
           const originalLabel = intrAddToCartBtn.textContent.trim();
           intrAddToCartBtn.disabled = true;
           intrAddToCartBtn.classList.add('loading');
           intrAddToCartBtn.textContent = '';
-
+  
           setTimeout(function() {
             intrAddToCartBtn.classList.remove('loading');
             intrAddToCartBtn.textContent = '✓ Added!';
             intrAddToCartBtn.classList.add('kv-interrupter-added');
-
+  
             setTimeout(function() {
               intrAddToCartBtn.textContent = originalLabel;
               intrAddToCartBtn.classList.remove('kv-interrupter-added');
@@ -799,18 +816,60 @@
       const existingProducts = carousel.querySelectorAll('.kv-bundle-thumbnail-wrapper:not(.kv-skeleton-placeholder)');
       existingProducts.forEach(el => el.remove());
   
-      // Update continue button state and text
-      if (selectedProducts.length === 0) {
+      const totalSelectedCount = selectedProducts.reduce((sum, product) => {
+        return sum + (product.quantity || 0);
+      }, 0);
+  
+      // Build CTA pricing summary for 2+ selected items
+      let runningTotal = 0;
+      let runningCompareAtTotal = 0;
+      selectedProducts.forEach(product => {
+        const itemPrice = (product.price || 0) / 100;
+        runningTotal += itemPrice * (product.quantity || 0);
+  
+        if (product.compareAtPrice && product.compareAtPrice > product.price) {
+          const compareAtPrice = (product.compareAtPrice || 0) / 100;
+          runningCompareAtTotal += compareAtPrice * (product.quantity || 0);
+        }
+      });
+  
+      let runningGiftTotal = 0;
+      milestoneGifts
+        .filter(gift => totalSelectedCount >= gift.count)
+        .filter(gift => {
+          if (gift.count === milestones.milestone1) return true;
+          if (gift.count === milestones.milestone2 && milestones.milestone3 > 0 && totalSelectedCount >= milestones.milestone3) return false;
+          if (gift.count === milestones.milestone3 && milestones.milestone4 > 0 && totalSelectedCount >= milestones.milestone4) return false;
+          return true;
+        })
+        .forEach(gift => {
+          if (gift.price && gift.price > 0) {
+            runningGiftTotal += gift.price / 100;
+          }
+        });
+  
+      const baseCompareAt = (runningCompareAtTotal > runningTotal) ? runningCompareAtTotal : runningTotal;
+      const compareAtWithGifts = baseCompareAt + runningGiftTotal;
+      const savings = Math.max(0, compareAtWithGifts - runningTotal);
+      const totalFormatted = formatMoney(runningTotal * 100);
+      const savingsFormatted = formatMoney(savings * 100);
+  
+      // Update continue button state and text (enable only when at least 2 items are selected)
+      if (totalSelectedCount < 2) {
         continueBtn.disabled = true;
-        continueBtn.textContent = textLabels.addScents;
-        // Hide mini trigger when no products selected
+        continueBtn.textContent = totalSelectedCount === 1 ? 'Add 1 more item' : textLabels.addScents;
+        // Hide mini trigger until minimum item count is reached
         if (miniTrigger) {
           miniTrigger.style.display = 'none';
         }
       } else {
         continueBtn.disabled = false;
-        continueBtn.textContent = textLabels.continue;
-        // Show mini trigger when products are selected
+        if (savings > 0) {
+          continueBtn.textContent = `${textLabels.addToCart} (${textLabels.save} ${savingsFormatted}) ${totalFormatted}`;
+        } else {
+          continueBtn.textContent = `${textLabels.addToCart} ${totalFormatted}`;
+        }
+        // Show mini trigger when minimum item count is reached
         if (miniTrigger) {
           miniTrigger.style.display = 'flex';
         }
@@ -818,10 +877,6 @@
       
       // Show all skeletons first
       skeletons.forEach(skeleton => skeleton.classList.remove('hidden'));
-  
-      const totalSelectedCount = selectedProducts.reduce((sum, product) => {
-        return sum + (product.quantity || 0);
-      }, 0);
   
       const displayItems = [];
   
@@ -1290,7 +1345,7 @@
       } else {
         checkoutBtn.innerHTML = `${textLabels.addToCart} â€¢ <span class="kv-normal-price" data-price-multiplier="${totalCount}">${totalFormatted}</span>`;
       }
-
+  
       // Pre-order / in-stock delivery notice in footer
       const preorderNotice = document.getElementById('kv-minicart-preorder-notice');
       const preorderDatesEl = document.getElementById('kv-preorder-dates');
@@ -1307,7 +1362,7 @@
         const monthNames = ["January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December"];
         const affectedItems = [];
-
+  
         selectedProducts.forEach(product => {
           const qty = typeof product.inventoryQuantity !== 'undefined' ? product.inventoryQuantity : 1;
           if (qty > 0) {
@@ -1328,7 +1383,7 @@
             } catch (e) {}
           }
         });
-
+  
         unlockedMiniCartGifts.forEach(gift => {
           if (gift.inventoryDate && typeof gift.inventoryDate === 'string' && gift.inventoryDate.trim() !== '') {
             try {
@@ -1343,11 +1398,11 @@
             } catch (e) {}
           }
         });
-
+  
         // Reset toggle states
         preorderNotice.querySelectorAll('.kv-preorder-notice-collapsed').forEach(el => el.style.display = '');
         preorderNotice.querySelectorAll('.kv-preorder-notice-expanded').forEach(el => el.style.display = 'none');
-
+  
         function formatPreorderDateRange(stockDate) {
           const euCountries = ['AT','BG','HR','CY','CZ','DK','EE','FI','FR','GR','HU','IE','IT','LV','LT','LU','MT','PL','PT','RO','SK','SI','ES','SE'];
           let minDays, maxDays;
@@ -1376,30 +1431,30 @@
             return `${startDate.getDate()} ${monthNames[startDate.getMonth()]} - ${endDate.getDate()} ${monthNames[endDate.getMonth()]}`;
           }
         }
-
+  
         if (hasDateOutOfStock && latestPreorderDate) {
           console.log('DEBUG preorder:', { latestPreorderDate, kvCountryCode, kvDeliveryDays });
           preorderDatesEl.textContent = formatPreorderDateRange(latestPreorderDate);
-
+  
           if (affectedProductsEl) {
             const itemsList = affectedItems.map(item => `${item.quantity}x ${item.title}`).join('<br>');
             affectedProductsEl.innerHTML = '<br>' + itemsList;
           }
-
+  
           deliveryRow.style.display = '';
           infoPreorder.style.display = '';
           infoInstock.style.display = 'none';
           preorderNotice.style.display = '';
         } else if (hasDateWithStock && !hasDateOutOfStock) {
           preorderDatesEl.textContent = getInstockDeliveryDateRange();
-
+  
           const instockCollapsed = infoInstock.querySelector('.kv-preorder-notice-collapsed');
           if (instockCollapsed) {
             const toggleLink = instockCollapsed.querySelector('.kv-preorder-toggle');
             const toggleHtml = toggleLink ? ' ' + toggleLink.outerHTML : '';
             instockCollapsed.innerHTML = getInstockCollapsedMessage() + toggleHtml;
           }
-
+  
           deliveryRow.style.display = '';
           infoPreorder.style.display = 'none';
           infoInstock.style.display = '';
@@ -1501,7 +1556,7 @@
         updateMiniCart();
       }
     });
-
+  
     // Read more / Read less toggle for pre-order notice
     document.addEventListener('click', function(e) {
       const toggle = e.target.closest('.kv-preorder-toggle');
@@ -1525,4 +1580,4 @@
         expanded.style.display = 'none';
       }
     });
-  </script>
+</script>
