@@ -1,4 +1,4 @@
-  <script>
+<script>
     function getAmsterdamToday() {
       const now = new Date();
       const ams = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' }));
@@ -475,6 +475,23 @@
         .then(response => response.json())
         .then(data => {
           checkoutBtn.innerHTML = 'âœ“ Added to Cart!';
+
+          fetch('/cart/update.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              attributes: {
+                'scent': 'true'
+              }
+            })
+          })
+          .then(response => response.json())
+          .then(cart => {
+            console.log('Scent property added successfully:', cart.attributes);
+          })
+          .catch(error => console.error('Error:', error));
   
           const cartPromises = [
             fetch('/cart.js').then(resp => {
@@ -1525,4 +1542,4 @@
         expanded.style.display = 'none';
       }
     });
-  </script>
+</script>
