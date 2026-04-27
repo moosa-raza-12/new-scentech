@@ -123,7 +123,6 @@
         "extra_product_8fpB4K",
         "extra_product_GWcwB4"
       ],
-      "disabled": true,
       "settings": {
         "kv_shipping_threshold": "50",
         "kv_shipping_unreached_text": "Spend <strong>{amount}</strong> more to get <strong>FREE SHIPPING</strong>!",
@@ -180,7 +179,6 @@
     },
     "search-drawer": {
       "type": "search-drawer",
-      "disabled": true,
       "settings": {
         "full_width": false,
         "show_article_category": true,
