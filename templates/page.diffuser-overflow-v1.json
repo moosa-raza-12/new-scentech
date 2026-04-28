@@ -35,7 +35,7 @@
             "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
             "selector_old_price": "€149,95",
             "selector_new_price": "€74,98",
-            "selector_highlight_text": "Spring Sale: Pay only €74,98 after adding 2 scents!"
+            "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
           }
         },
         "diffuser_JKTBEi": {
@@ -47,7 +47,7 @@
             "selector_description": "More consistent and noticeable scenting, designed for daily use. A strong balance between performance and control.",
             "selector_old_price": "149,95€",
             "selector_new_price": "€74,98",
-            "selector_highlight_text": "Spring Sale: Pay only €74,98 after adding 2 scents!"
+            "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
           }
         },
         "diffuser_n47YqG": {
@@ -58,7 +58,7 @@
             "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
             "selector_old_price": "€149,95",
             "selector_new_price": "€74,98",
-            "selector_highlight_text": "Spring Sale: Pay only €74,98 after adding 2 scents!"
+            "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
           }
         },
         "collection_9xA4KV": {
@@ -110,6 +110,7 @@
         "promo_banner_bold_text": "Winter Sale:",
         "promo_banner_text": "All scents priced at €27,95",
         "progress_empty_text": "Learn more about our diffusers",
+        "info_popup_image": "shopify://shop_images/Screenshot_2026-03-16_at_15.19.48.png",
         "progress_start_text": "Start adding scents to unlock rewards!",
         "progress_complete_text": "🎉 Amazing! All gifts unlocked!",
         "text_free": "FREE",
