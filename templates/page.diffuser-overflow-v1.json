@@ -91,7 +91,7 @@
         "selector_heading": "Select a diffuser",
         "selector_subtext": "Choose the diffuser that fits your needs best.",
         "selector_compare_text": "Compare diffusers",
-        "selector_compare_link": "",
+        "selector_compare_link": "#open-comparison-popup",
         "selector_banner_text": "<p><strong>Spring Sale:</strong> Get 50% off the diffuser when you add 2 scents</p>",
         "promo_banner_enabled": false,
         "step_number": "2",
