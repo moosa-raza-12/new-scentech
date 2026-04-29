@@ -238,6 +238,61 @@
         if (firstTabContent) firstTabContent.classList.add('active');
       }
   
+      // Handle diffuser selector cards (cds-cards) as selected bundle products
+      document.addEventListener('kv:selector-product-selected', function(e) {
+        const data = e.detail || {};
+        if (!data.productId || !data.variantId) return;
+  
+        const nonSelectorItemCount = selectedProducts
+          .filter(product => product.selectionSource !== 'cds-selector')
+          .reduce((sum, product) => sum + (product.quantity || 0), 0);
+  
+        // Selector product is eligible only after 2 other bundle items are selected
+        if (nonSelectorItemCount < 2) {
+          return;
+        }
+  
+        const selectorProduct = {
+          productId: data.productId,
+          productHandle: data.productHandle || '',
+          variantId: data.variantId,
+          quantity: 1,
+          image: data.image || '',
+          title: data.title || '',
+          price: parseInt(data.variantPrice, 10) || 0,
+          compareAtPrice: parseInt(data.variantCompareAtPrice, 10) || 0,
+          inventoryDate: '',
+          inventoryQuantity: 0,
+          selectionSource: 'cds-selector'
+        };
+  
+        // Keep only one active diffuser selector card product at a time
+        selectedProducts = selectedProducts.filter(product => product.selectionSource !== 'cds-selector');
+        selectedProducts.push(selectorProduct);
+  
+        // If this product also exists in product grids, mirror its selected state there
+        syncProductState(selectorProduct.productId, 'add');
+        syncProductQuantity(selectorProduct.productId, 1);
+  
+        updateThumbnailCarousel();
+        if (document.getElementById('kv-minicart').classList.contains('active')) {
+          updateMiniCart();
+        }
+        // In the kv:selector-product-selected handler
+  if (nonSelectorItemCount < 2) {
+  // Show a message that they need more items first
+  const discMsg = document.querySelector(`.disc-active-msg`);
+  if (discMsg) {
+    discMsg.style.display = 'block';
+    discMsg.textContent = `Add ${2 - nonSelectorItemCount} more items first!`;
+    setTimeout(() => {
+      discMsg.style.display = 'none';
+    }, 3000);
+  }
+  return;
+  } 
+      });
+  
       // Handle Add button click - show quantity controls
       document.addEventListener('click', function(e) {
         if (e.target.classList.contains('kv-bundle-add-to-cart') || e.target.closest('.kv-bundle-add-to-cart')) {
@@ -818,6 +873,20 @@
       const continueBtn = document.getElementById('kv-open-minicart');
       const miniTrigger = document.querySelector('.kv-bundle-items-mini-trigger');
       const skeletons = Array.from(carousel.querySelectorAll('.kv-skeleton-placeholder'));
+  
+      const nonSelectorItemCount = selectedProducts
+        .filter(product => product.selectionSource !== 'cds-selector')
+        .reduce((sum, product) => sum + (product.quantity || 0), 0);
+  
+      // Enforce selector eligibility continuously as quantities change
+      if (nonSelectorItemCount < 2) {
+        const removedSelectorProducts = selectedProducts.filter(product => product.selectionSource === 'cds-selector');
+        removedSelectorProducts.forEach(product => {
+          syncProductState(product.productId, 'remove');
+          syncProductQuantity(product.productId, 1);
+        });
+        selectedProducts = selectedProducts.filter(product => product.selectionSource !== 'cds-selector');
+      }
       
       // Remove existing product thumbnails (keep skeleton placeholders)
       const existingProducts = carousel.querySelectorAll('.kv-bundle-thumbnail-wrapper:not(.kv-skeleton-placeholder)');

@@ -41,70 +41,106 @@
   <div class="cds-list">
     {% for block in section.blocks %}
       {% if block.type == "diffuser" %}
-        {% comment %} Get selected product (if any) {% endcomment %}
         {% assign product_obj = block.settings.selector_product %}
+        {% assign new_price_display = nil %}
+        {% assign old_price_display = nil %}
 
-        {% comment %} ----- IMAGE FALLBACK ----- {% endcomment %}
+        {% comment %} Get image {% endcomment %}
         {% assign img_url = block.settings.selector_image %}
         {% if img_url == blank and product_obj != blank and product_obj.featured_image != blank %}
           {% assign img_url = product_obj.featured_image %}
         {% endif %}
 
-        {% comment %} ----- PRICE & DISCOUNT ----- {% endcomment %}
-        {% assign new_price_display = block.settings.selector_new_price %}
-        {% assign old_price_display = block.settings.selector_old_price %}
-        {% assign discount_percent = nil %}
-
-        {% if product_obj != blank and product_obj.price > 0 %}
-          {% assign new_price_display = product_obj.price | money %}
-          {% if product_obj.compare_at_price > product_obj.price %}
-            {% assign old_price_display = product_obj.compare_at_price | money %}
-            {% assign discount_percent = product_obj.compare_at_price | minus: product_obj.price | times: 100 | divided_by: product_obj.compare_at_price %}
-          {% endif %}
-        {% endif %}
-
-        {% comment %} ----- DIFFUSER DETECTION (for cds-highlight) ----- {% endcomment %}
-        {% assign is_diffuser = false %}
         {% if product_obj != blank %}
-          {% if product_obj.type == "Diffuser" or product_obj.tags contains "diffuser" %}
-            {% assign is_diffuser = true %}
+          {% comment %} Get the actual product price (original price) {% endcomment %}
+          {% assign original_price_cents = product_obj.price %}
 
-          {% endif %}
+          {% comment %} Calculate 50% discount {% endcomment %}
+          {% assign discounted_price_cents = original_price_cents | times: 50 | divided_by: 100 %}
+
+          {% comment %} Format prices {% endcomment %}
+          {% assign old_price_display = original_price_cents | money %}
+          {% assign new_price_display = discounted_price_cents | money %}
+
+          {% else %}
+          {% comment %} Fallback to manual prices if no product selected {% endcomment %}
+          {% assign new_price_display = block.settings.selector_new_price %}
+          {% assign old_price_display = block.settings.selector_old_price %}
         {% endif %}
-        {% comment %} {% if block.settings.selector_highlight %}active{% endif %} {% endcomment %}
-        <div class="cds-cards" {{ block.shopify_attributes }}>
-          <div class="cds-card-innerss">
 
+        {% assign selected_variant = product_obj.selected_or_first_available_variant %}
+        {% assign card_product_id = '' %}
+        {% assign card_product_handle = '' %}
+        {% assign card_variant_id = '' %}
+        {% assign card_variant_price = 0 %}
+        {% assign card_variant_compare_at_price = 0 %}
+        {% assign card_title = block.settings.selector_title %}
+        {% assign card_image = '' %}
+
+        {% if product_obj != blank %}
+          {% assign card_product_id = product_obj.id %}
+          {% assign card_product_handle = product_obj.handle %}
+          {% assign card_title = product_obj.title %}
+          {% if selected_variant != blank %}
+            {% assign card_variant_id = selected_variant.id %}
+            {% assign card_variant_price = selected_variant.price %}
+            {% assign card_variant_compare_at_price = selected_variant.compare_at_price | default: 0 %}
+          {% endif %}
+          {% if product_obj.featured_image != blank %}
+            {% assign card_image = product_obj.featured_image | image_url: width: 600 %}
+          {% elsif img_url != blank %}
+            {% assign card_image = img_url | image_url: width: 600 %}
+          {% endif %}
+        {% elsif img_url != blank %}
+          {% assign card_image = img_url | image_url: width: 600 %}
+        {% endif %}
+
+        <div
+          class="cds-cards"
+          data-product-id="{{ card_product_id }}"
+          data-product-handle="{{ card_product_handle }}"
+          data-variant-id="{{ card_variant_id }}"
+          data-variant-price="{{ card_variant_price }}"
+          data-variant-compare-at-price="{{ card_variant_compare_at_price }}"
+          data-product-title="{{ card_title | escape }}"
+          data-product-image="{{ card_image | escape }}"
+          {{ block.shopify_attributes }}>
+          <div class="cds-card-innerss">
             {% if img_url %}
               <div class="cds-image">
-                <img src="{{ img_url | image_url: width: 200 }}" alt="">
+                {{ img_url | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}
               </div>
             {% endif %}
 
             <div class="cds-content">
-              <h3 class="cds-name">{{ block.settings.selector_title }}</h3>
+              <div class="cds-header-content">
+                <h3 class="cds-name">
+                  {% if product_obj != blank %}
+                    {{ product_obj.title }}
+                  {% else %}
+                    {{ block.settings.selector_title }}
+                  {% endif %}
+                </h3>
+
+                <div class="cds-price">
+                  <span class="old">{{ old_price_display }}</span>
+                  {% comment %} {% if product_obj != blank %}
+                                                                              <span class="discount-badge">50% off</span>
+                                                                      {% endif %} {% endcomment %}
+                  <span class="new">{{ new_price_display }}</span>
+                </div>
+              </div>
               <p class="cds-desc">{{ block.settings.selector_description }}</p>
             </div>
-
-            <div class="cds-price">
-              {% if old_price_display != blank %}
-                <span class="old">{{ old_price_display }}</span>
-                {% comment %} {% if discount_percent %}
-                                                                      <span class="discount-badge">{{ discount_percent }}% off</span>
-                                                              {% endif %} {% endcomment %}
-              {% endif %}
-              <span class="new">{{ new_price_display }}</span>
-            </div>
-
           </div>
 
-          {% comment %} Highlight only for diffuser products with text set {% endcomment %}
-          {% comment %} {% if is_diffuser and block.settings.selector_highlight_text != blank %} {% endcomment %}
           <div class="cds-highlight">
-            {{ block.settings.selector_highlight_text }}
+            {% comment %} {{ block.settings.selector_highlight_text }} {% endcomment %}
+            <b>Spring Sale:</b>
+            Pay only
+            <b>{{ new_price_display }}</b>
+            after adding 2 scents!
           </div>
-        {% comment %} {% endif %} {% endcomment %}
-
         </div>
       {% endif %}
     {% endfor %}
@@ -158,6 +194,20 @@
       // Activate the clicked card
       card.classList.add(activeClass);
       showHighlightForCard(card);
+  
+      const selectedProduct = {
+        productId: card.getAttribute('data-product-id'),
+        productHandle: card.getAttribute('data-product-handle'),
+        variantId: card.getAttribute('data-variant-id'),
+        variantPrice: parseInt(card.getAttribute('data-variant-price') || '0', 10),
+        variantCompareAtPrice: parseInt(card.getAttribute('data-variant-compare-at-price') || '0', 10),
+        title: card.getAttribute('data-product-title') || '',
+        image: card.getAttribute('data-product-image') || ''
+      };
+  
+      document.dispatchEvent(new CustomEvent('kv:selector-product-selected', {
+        detail: selectedProduct
+      }));
     });
   });
 </script>
@@ -169,6 +219,7 @@
 
   .cds-cards.active .cds-highlight {
     display: block;
+
     /* or flex, depending on your layout */
   }
   .compare-icon-wrapper {
@@ -208,7 +259,11 @@
     align-items: center;
     gap: 10px;
   }
-
+  @media (max-width: 749px) {
+    .cds-left {
+      gap: 8px;
+    }
+  }
   .cds-step {
     width: 40px;
     height: 40px;
@@ -228,20 +283,34 @@
     }
   }
   .cds-title {
+    color: #160000;
+    font-weight: 400;
     margin: 0;
     font-size: 24px;
   }
   @media (max-width: 639px) {
     .cds-title {
-      color: #160000;
       text-align: center;
       font-size: 16px !important;
+    }
+    .compare-icon-wrapper {
+      gap: 6px;
+    }
+    .cds-subtext {
+      margin-top: 12px;
+      font-size: 12px;
+    }
+    .cds-header {
+      margin-bottom: 20px;
     }
   }
 
   .cds-subtext {
     margin-top: 10px;
     color: #160000;
+
+    font-weight: 400;
+    letter-spacing: 0;
   }
 
   .cds-compare {
@@ -264,6 +333,7 @@
     .cds-banner {
       padding: 10px 16px;
       font-size: 12px;
+      margin-bottom: 20px;
     }
   }
   /* Cards */
@@ -279,14 +349,18 @@
     overflow: hidden;
   }
 
+  .cds-cards.active {
+    border: 1px solid #160000;
+  }
+
   .cds-card.active {
     border: 2px solid #2e2e2e;
   }
 
   .cds-card-innerss {
     display: flex;
-    gap: 16px;
-    padding: 14px;
+    gap: 20px;
+    padding: 6px;
     align-items: center;
   }
 
@@ -310,40 +384,61 @@
     .cds-name {
       font-size: 16px !important;
     }
+    .cds-image img {
+      heigth: 80px;
+      width: 80px;
+    }
   }
 
   .cds-desc {
-    margin: 4px 0 0;
+    margin: 12px 0 0;
     color: #555;
     font-size: 14px;
+    font-weight: 400;
   }
   @media (max-width: 639px) {
     .cds-desc {
       font-size: 12px !important;
     }
+    .cds-header-content {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .cds-desc {
+      font-size: 12px;
+    }
   }
   .cds-price {
     text-align: right;
-    white-space: nowrap;
+    display: flex;
+    gap: 5px;
   }
 
   .cds-price .old {
     display: block;
     text-decoration: line-through;
     color: #999;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .cds-price .new {
     font-weight: 600;
     font-size: 16px;
   }
-
+  @media (max-width: 749px) {
+    .cds-price .new {
+      font-size: 12px;
+    }
+    .cds-price .old {
+      font-size: 12px;
+    }
+  }
   /* Highlight footer */
   .cds-highlight {
-    background: #e9e6dc;
-    padding: 10px;
+    background: rgba(0, 0, 0, 0.10);
+    padding: 10px 12px;
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
   }
 </style>
