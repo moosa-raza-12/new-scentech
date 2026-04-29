@@ -1,0 +1,159 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+ {
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "enable_sticky": false,
+          "autoplay": false,
+          "cycle_speed": 6,
+          "text_size": "text-xs",
+          "navigation_mode": "arrows",
+          "scrolling_speed": 20,
+          "background": "",
+          "background_gradient": "",
+          "text_color": ""
+        }
+      },
+      "diffuser_kv_bundle_LqGpYW": {
+        "type": "diffuser-kv-bundle",
+        "blocks": {
+          "diffuser_TfKVLj": {
+            "type": "diffuser",
+            "settings": {
+              "selector_product": "smart-aroma-diffuser-2",
+              "selector_image": "shopify://shop_images/Images_Info_0e95c5fb-3eb6-456d-8fc6-b8a227c0183c.png",
+              "selector_title": "Diffuser Lite",
+              "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
+              "selector_old_price": "€149,95",
+              "selector_new_price": "€74,98",
+              "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
+            }
+          },
+          "diffuser_JKTBEi": {
+            "type": "diffuser",
+            "settings": {
+              "selector_product": "calming-lavender",
+              "selector_image": "shopify://shop_images/Images_Info_d009aa1b-9c64-4ff8-a9ec-bfda5fea114e.png",
+              "selector_title": "Diffuser 2",
+              "selector_description": "More consistent and noticeable scenting, designed for daily use. A strong balance between performance and control.",
+              "selector_old_price": "149,95€",
+              "selector_new_price": "€74,98",
+              "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
+            }
+          },
+          "diffuser_n47YqG": {
+            "type": "diffuser",
+            "settings": {
+              "selector_product": "smart-aroma-diffuser-pro",
+              "selector_title": "Diffuser Pro",
+              "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
+              "selector_old_price": "€149,95",
+              "selector_new_price": "€74,98",
+              "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
+            }
+          },
+          "collection_9xA4KV": {
+            "type": "collection",
+            "settings": {
+              "collection": "fragrances",
+              "products_limit": 12,
+              "badge_text": ""
+            }
+          },
+          "collection_Q6zXnA": {
+            "type": "collection",
+            "settings": {
+              "collection": "warm-indulgent-scents",
+              "products_limit": 12,
+              "badge_text": ""
+            }
+          }
+        },
+        "block_order": [
+          "diffuser_TfKVLj",
+          "diffuser_JKTBEi",
+          "diffuser_n47YqG",
+          "collection_9xA4KV",
+          "collection_Q6zXnA"
+        ],
+        "name": "Diffuser KV Bundle",
+        "settings": {
+          "selector_step": "1",
+          "selector_heading": "Select a diffuser",
+          "selector_subtext": "Choose the diffuser that fits your needs best.",
+          "selector_compare_text": "Compare diffusers",
+          "selector_compare_link": "#open-comparison-popup",
+          "selector_banner_text": "<p><strong>Spring Sale:</strong> Get 50% off the diffuser when you add 2 scents</p>",
+          "promo_banner_enabled": false,
+          "step_number": "2",
+          "heading": "Add scents",
+          "subtext": "Pick the scents you like. Add more to unlock a better price.",
+          "badge_text": "Choose at least 2 scents",
+          "bg_color": "#f8f7f4",
+          "heading_color": "#160000",
+          "subtext_color": "#160000",
+          "circle_bg": "#162518",
+          "circle_text": "#ffffff",
+          "badge_bg": "#e5e5e5",
+          "badge_text_color": "#333333",
+          "heading_size": 24,
+          "subtext_size": 14,
+          "promo_banner_bold_text": "Winter Sale:",
+          "promo_banner_text": "All scents priced at €27,95",
+          "progress_empty_text": "Learn more about our diffusers",
+          "info_popup_image": "shopify://shop_images/Screenshot_2026-03-16_at_15.19.48.png",
+          "progress_start_text": "Start adding scents to unlock rewards!",
+          "progress_complete_text": "🎉 Amazing! All gifts unlocked!",
+          "text_free": "FREE",
+          "text_free_gift": "Free Gift",
+          "text_add_scents": "Add Scents",
+          "text_continue": "Continue",
+          "text_add_to_cart": "Add to Cart",
+          "text_no_items": "No items selected",
+          "text_save": "SAVE",
+          "text_add_button": "+ Add",
+          "text_sold_out": "Sold Out",
+          "text_preorder_ships": "Pre-Order: Ships by",
+          "text_gift_preorder_prefix": "The",
+          "text_gift_preorder_suffix": "is on Pre-Order. Delivers on",
+          "text_expected_delivery": "Expected delivery:",
+          "text_preorder_collapsed": "There are pre-order items in the cart.",
+          "text_preorder_expanded": "There are pre-order items in the cart. Due to this your order will be sent out slightly later, when the scents have reached our warehouse.",
+          "text_preorder_affected_label": "The affected products in your cart are:",
+          "text_preorder_contact": "For any questions or concerns please reach out to our team.",
+          "text_instock_collapsed": "Your order ships out today.",
+          "text_instock_expanded": "Your order ships out today from the Netherlands. These items are in stock at our warehouse in Gorinchem and are shipped by our reliable delivery partners.",
+          "milestone_1_count": 1,
+          "milestone_1_label": "{count} geuren",
+          "milestone_1_price": "€27,95",
+          "milestone_1_text": "Add [count] more scents for FREE diffuser",
+          "milestone_2_count": 5,
+          "milestone_2_label": "{count} geuren",
+          "milestone_2_price": "€25,95",
+          "milestone_2_text": "Keep going! Add [count] more scents to unlock the next reward!",
+          "milestone_3_count": 7,
+          "milestone_3_label": "{count} geuren",
+          "milestone_3_price": "€23,95",
+          "milestone_3_text": "Almost there! Add [count] more scents to unlock the next reward!",
+          "milestone_4_count": 9,
+          "milestone_4_label": "{count} geuren",
+          "milestone_4_price": "€19,95",
+          "milestone_4_text": "Almost there! Add [count] more scents to unlock the Pro Diffuser!"
+        }
+      }
+    },
+    "order": [
+      "announcement-bar",
+      "diffuser_kv_bundle_LqGpYW"
+    ]
+  }
+  

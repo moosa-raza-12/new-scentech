@@ -1,137 +1,135 @@
 <style>
   .kv-progress-footer2{
-    /* border-radius: 12px 12px 0 0; */
-    background: rgba(0, 0, 0, 0.10);
-      padding: 10px 12px;
-      text-align: center;
-      margin: 8px -16px -12px;
-     }
-    @media (max-width: 639px) {
-      .scent-badge{
-      
-       padding: 6px 12px` !important;
-     border-radius: 10px !important;
-     font-size: 10px !important;
-     white-space: nowrap !important;
-     }
-     .step-circle{
-     width: 24px !important;
-     height: 24px !important;
-     font-size: 12px !important;
-     }
-     .scent-title{
-      font-size: 16px !important;
-     }
-     .scent-subtext{
-      font-size: 12px !important;
-      margin: 0;
-      margin-top: 12px !important;
-     }
-     .kv-bundle-product-badge{
-      display: none !important;
-     }
-     .kv-bundle-products-grid {
-     grid-template-columns: repeat(1, 1fr);
-     }
-     .kv-bundle-product-image{
-     width: 20%;
-     height: auto;
-     margin: 0;
-     }
-     .kv-bundle-product-card{
-     display: flex;
-     padding: 6px;
-     gap: 10px;
-     }
-     .kv-bundle-product-description{
-     margin: 0;
-     }
-     .kv-bundle-product-title-wrapper{
-     display: flex;
-     align-items: center;
-     flex-direction: column;
-     align-items: start;
-     justify-content: center;
-     /* gap: 12px; */
-     }
-     .kv-bundle-add-to-cart{
-     min-width: 83px;
-     }
-     }
-      .scent-header-content{
-     display: flex;
-     gap: 10px;
-      align-items: center;
-     } 
-     @media (max-width: 768px) {
-      .scent-header-content{
-     gap: 8px;
-     }   
-     }
-     
-     .kv-progress-banner{
-     max-width: none !important;
-     }
-     .scent-selector {
-     padding-bottom: 20px;
-     background: {{ section.settings.bg_color }};
-     border-radius: 12px;
-     font-family: inherit;
-     }
-     
-     .scent-header {
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     gap: 16px;
-     }
-     
-     .step-circle {
-     width: 40px;
-     height: 40px;
-     background: {{ section.settings.circle_bg }};
-     color: {{ section.settings.circle_text }};
-     border-radius: 50%;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     font-weight: 600;
-     }
-     
-     .scent-title-wrapper {
-     flex: 1;
-     }
-     
-     .scent-title {
-     margin: 0;
-     font-size: {{ section.settings.heading_size }}px;
-     color: {{ section.settings.heading_color }};
-     font-weight: 400;
-     }
-     
-     .scent-subtext {
-     margin: 4px 0 0;
-     font-size: {{ section.settings.subtext_size }}px;
-     color: {{ section.settings.subtext_color }};
-     }
-     .kv-bundle-thumbnail-carousel{
-       display:none;
-     }
-     .scent-badge {
-     background: {{ section.settings.badge_bg }};
-     color: {{ section.settings.badge_text_color }};
-     padding: 6px 12px;
-     border-radius: 10px;
-     font-size: 14px;
-     white-space: nowrap;
-     }
-     /* CSS */
-  .disc-active-msg {
-    display: none;
-  }
-  
-  .kv-bundle-product-card.has-quantity .disc-active-msg {
-    display: block;
-  }
-     
-     </style>
+      /* border-radius: 12px 12px 0 0; */
+      background: rgba(0, 0, 0, 0.10);
+        padding: 10px 12px;
+        text-align: center;
+        margin: 8px -16px -12px;
+       }
+      @media (max-width: 639px) {
+        .scent-badge{
+        
+         padding: 6px 12px` !important;
+       border-radius: 10px !important;
+       font-size: 10px !important;
+       white-space: nowrap !important;
+       }
+       .step-circle{
+       width: 24px !important;
+       height: 24px !important;
+       font-size: 12px !important;
+       }
+       .scent-title{
+        font-size: 16px !important;
+       }
+       .scent-subtext{
+        font-size: 12px !important;
+        margin: 0;
+        margin-top: 12px !important;
+       }
+       .kv-bundle-product-badge{
+        display: none !important;
+       }
+       .kv-bundle-products-grid {
+       grid-template-columns: repeat(1, 1fr);
+       }
+       .kv-bundle-product-image{
+       width: 20%;
+       height: auto;
+       margin: 0;
+       }
+       .kv-bundle-product-card{
+       display: flex;
+       padding: 6px;
+       gap: 10px;
+       }
+       .kv-bundle-product-description{
+       margin: 0;
+       }
+       .kv-bundle-product-title-wrapper{
+       display: flex;
+       align-items: center;
+       flex-direction: column;
+       align-items: start;
+       justify-content: center;
+       /* gap: 12px; */
+       }
+       .kv-bundle-add-to-cart{
+       min-width: 83px;
+       }
+       }
+        .scent-header-content{
+       display: flex;
+       gap: 10px;
+        align-items: center;
+       } 
+       @media (max-width: 768px) {
+        .scent-header-content{
+       gap: 8px;
+       }   
+       }
+       
+       .kv-progress-banner{
+       max-width: none !important;
+       }
+       .scent-selector {
+       padding-bottom: 20px;
+       background: {{ section.settings.bg_color }};
+       border-radius: 12px;
+       font-family: inherit;
+       }
+       
+       .scent-header {
+       display: flex;
+       align-items: center;
+       justify-content: space-between;
+       gap: 16px;
+       }
+       
+       .step-circle {
+       width: 40px;
+       height: 40px;
+       background: {{ section.settings.circle_bg }};
+       color: {{ section.settings.circle_text }};
+       border-radius: 50%;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       font-weight: 600;
+       }
+       
+       .scent-title-wrapper {
+       flex: 1;
+       }
+       
+       .scent-title {
+       margin: 0;
+       font-size: {{ section.settings.heading_size }}px;
+       color: {{ section.settings.heading_color }};
+       font-weight: 400;
+       }
+       
+       .scent-subtext {
+       margin: 4px 0 0;
+       font-size: {{ section.settings.subtext_size }}px;
+       color: {{ section.settings.subtext_color }};
+       }
+       
+       .scent-badge {
+       background: {{ section.settings.badge_bg }};
+       color: {{ section.settings.badge_text_color }};
+       padding: 6px 12px;
+       border-radius: 10px;
+       font-size: 14px;
+       white-space: nowrap;
+       }
+       /* CSS */
+    .disc-active-msg {
+      display: none;
+    }
+    
+    .kv-bundle-product-card.has-quantity .disc-active-msg {
+      display: block;
+    }
+       
+       </style>
