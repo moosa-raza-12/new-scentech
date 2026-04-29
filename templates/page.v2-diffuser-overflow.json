@@ -29,7 +29,7 @@
         "collection_P9aJaF": {
           "type": "collection",
           "settings": {
-            "collection": "",
+            "collection": "all",
             "products_limit": 12,
             "badge_text": ""
           }
