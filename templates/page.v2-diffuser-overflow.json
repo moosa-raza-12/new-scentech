@@ -26,12 +26,12 @@
     "v2_diffuser_kv_bundle_fA7kKV": {
       "type": "v2-diffuser-kv-bundle",
       "blocks": {
-        "diffuser_YtKKHF": {
+        "diffuser_TFAztV": {
           "type": "diffuser",
           "settings": {
-            "selector_product": "smart-aroma-diffuser-pro",
+            "selector_product": "smart-aroma-diffuser",
             "selector_title": "Diffuser Name",
-            "selector_description": "High-performance scenting with maximum coverage and intensity. Built for a stronger, more immersive experience.",
+            "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
             "selector_old_price": "€149,95",
             "selector_new_price": "€74,98",
             "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
@@ -48,12 +48,12 @@
             "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
           }
         },
-        "diffuser_TFAztV": {
+        "diffuser_YtKKHF": {
           "type": "diffuser",
           "settings": {
-            "selector_product": "smart-aroma-diffuser",
+            "selector_product": "smart-aroma-diffuser-pro",
             "selector_title": "Diffuser Name",
-            "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
+            "selector_description": "High-performance scenting with maximum coverage and intensity. Built for a stronger, more immersive experience.",
             "selector_old_price": "€149,95",
             "selector_new_price": "€74,98",
             "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
@@ -69,9 +69,9 @@
         }
       },
       "block_order": [
-        "diffuser_YtKKHF",
-        "diffuser_BGpK3B",
         "diffuser_TFAztV",
+        "diffuser_BGpK3B",
+        "diffuser_YtKKHF",
         "collection_P9aJaF"
       ],
       "name": "V2 Diffuser Bundle section",
