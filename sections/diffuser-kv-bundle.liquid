@@ -1,18 +1,18 @@
 {% render 'new-kv-bundle-css' %}
 {% render 'diffuser-kv-bundle-css' %}
-                                   
+  
 <div class="kv-page-preloader" id="kv-page-preloader">
   <div class="kv-preloader-spinner"></div>
 </div>
 <div class="kv-bundle-section">
-                                      
+                              
  {% render 'df-overflow-step1' %}
 
   {%- comment -%} Progress Banner {%- endcomment -%}
   <div class="kv-bundle-hero-section" style="background-image: url({{ section.settings.hero_background_image | image_url: width: 1920 }}); background-size: cover; background-position: center;">
     <div class="kv-bundle-hero-container">
         {% comment %} {% if template == 'page.diffuser-overflow-v1' or template.name == 'diffuser-overflow-v1' %} {% endcomment %}
-                                  
+ 
  <section class="scent-selector">
    <div class="scent-header">
      <div class="scent-header-content">
@@ -102,7 +102,7 @@
       </div>
       
   </div>
-                                  
+ 
   {%- comment -%} Promotional Banner {%- endcomment -%}
   {% if section.settings.promo_banner_enabled %}
   <div class="kv-promo-banner" {% if section.settings.promo_banner_image %}style="background-image: url({{ section.settings.promo_banner_image | image_url: width: 1920 }});"{% endif %}>
@@ -134,7 +134,7 @@
    {% endif %}
           {% endfor %}
           </div>
-                                    
+   
         {%- comment -%} All Products Tab (hidden) {%- endcomment -%}
         <div class="kv-bundle-tab-content" data-content="all" style="display:none !important;">
         <div class="kv-bundle-products-grid">
@@ -142,12 +142,12 @@
  {% assign kv_card_index = 0 %}
  {% assign kv_rendered_interrupters_desktop = '' %}
  {% assign kv_rendered_interrupters_mobile = '' %}
-                                  
+ 
  {%- comment -%} Interrupter blocks (before first product) {%- endcomment -%}
  {% for intr in section.blocks %}
    {% if intr.type == 'interrupter' and intr.settings.enabled %}
      {% assign intr_token = '|' | append: intr.id | append: '|' %}
-                                  
+ 
      {% if intr.settings.show_on_desktop and intr.settings.position_desktop == kv_card_index %}
        {% unless kv_rendered_interrupters_desktop contains intr_token %}
          <div
@@ -214,7 +214,7 @@
          {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
        {% endunless %}
      {% endif %}
-                                  
+ 
      {% if intr.settings.show_on_mobile and intr.settings.position_mobile == kv_card_index %}
        {% unless kv_rendered_interrupters_mobile contains intr_token %}
          <div
@@ -295,7 +295,7 @@
      {% for intr in section.blocks %}
        {% if intr.type == 'interrupter' and intr.settings.enabled %}
          {% assign intr_token = '|' | append: intr.id | append: '|' %}
-                                  
+ 
          {% if intr.settings.show_on_desktop and intr.settings.position_desktop == kv_card_index %}
            {% unless kv_rendered_interrupters_desktop contains intr_token %}
              <div
@@ -362,7 +362,7 @@
              {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
            {% endunless %}
          {% endif %}
-                                  
+ 
          {% if intr.settings.show_on_mobile and intr.settings.position_mobile == kv_card_index %}
            {% unless kv_rendered_interrupters_mobile contains intr_token %}
              <div
@@ -431,9 +431,9 @@
          {% endif %}
        {% endif %}
      {% endfor %}
-                                  
+ 
      {% assign total_products = total_products | plus: 1 %}
-                                  
+ 
      
      {%- comment -%} Product Card {%- endcomment -%}
      <div class="kv-bundle-product-card" 
@@ -448,7 +448,7 @@
            {%- elsif product.metafields.custom.collection_card_badge != blank -%}
            <div class="kv-bundle-product-badge">{{ product.metafields.custom.collection_card_badge }}</div>
            {%- endif -%}
-                                    
+   
            {%- comment -%} Product Image {%- endcomment -%}
            {% assign card_image = product.metafields.custom.collection_card_image | default: product.featured_image %}
            {% if card_image %}
@@ -464,7 +464,7 @@
                <span style="color: #999;">No image</span>
            </div>
            {% endif %}
-                                    
+   
            {%- comment -%} Product Title {%- endcomment -%}
            <div class="kv-bundle-product-title-wrapper"> 
            <div class="kv-bundle-product-title">
@@ -486,7 +486,7 @@
                </svg>
            </button>
            </div>
-                                    
+   
            {%- comment -%} Product Description {%- endcomment -%}
            {% assign card_description = product.metafields.custom.collection_card_description | default: product.description %}
            {% if card_description != blank %}
@@ -545,7 +545,7 @@
                    </svg>
                </button>
            </div>
-                                    
+   
            {% if product.available %}
                <button 
                class="kv-bundle-add-to-cart" 
@@ -566,11 +566,11 @@
            {%- comment -%} Variant Selector (if product has multiple variants) {%- endcomment -%}
            </div>
            {% endif %}
-                                    
+   
            {%- comment -%} Product Controls (Quantity + Add to Cart) {%- endcomment -%}
            
      </div>
-                                  
+ 
      {% assign kv_card_index = kv_card_index | plus: 1 %}
      
      {% endif %}
@@ -588,7 +588,7 @@
      {% for intr in section.blocks %}
        {% if intr.type == 'interrupter' and intr.settings.enabled %}
          {% assign intr_token = '|' | append: intr.id | append: '|' %}
-                                  
+ 
          {% if intr.settings.show_on_desktop and intr.settings.position_desktop == kv_card_index %}
            {% unless kv_rendered_interrupters_desktop contains intr_token %}
              <div
@@ -716,7 +716,7 @@
              {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
            {% endunless %}
          {% endif %}
-                                  
+ 
          {% if intr.settings.show_on_mobile and intr.settings.position_mobile == kv_card_index %}
            {% unless kv_rendered_interrupters_mobile contains intr_token %}
              <div
@@ -785,7 +785,7 @@
          {% endif %}
        {% endif %}
      {% endfor %}
-                                  
+ 
      {% assign total_products = total_products | plus: 1 %}
      
      {%- comment -%} Product Card {%- endcomment -%}
@@ -801,7 +801,7 @@
          {%- elsif product.metafields.custom.collection_card_badge != blank -%}
          <div class="kv-bundle-product-badge">{{ product.metafields.custom.collection_card_badge }}</div>
          {%- endif -%}
-                                  
+ 
          {%- comment -%} Product Image {%- endcomment -%}
          {% assign card_image = product.metafields.custom.collection_card_image | default: product.featured_image %}
          {% if card_image %}
@@ -817,7 +817,7 @@
              <span style="color: #999;">No image</span>
          </div>
          {% endif %}
-                                  
+ 
          {%- comment -%} Product Title {%- endcomment -%}
       {% if condition %}
          
@@ -882,7 +882,7 @@
              {% endfor %}
          </div>
          {% endif %}
-                                  
+ 
          {%- comment -%} Product Controls (Quantity + Add to Cart) {%- endcomment -%}
          <div class="kv-bundle-product-controls">
          <div class="kv-bundle-quantity-selector">
@@ -904,7 +904,7 @@
                  </svg>
              </button>
          </div>
-                                  
+ 
          {% if product.available %}
              <button 
              class="kv-bundle-add-to-cart" 
@@ -922,19 +922,19 @@
          {% endif %}
          </div>
      </div>
-                                  
+ 
      {% assign kv_card_index = kv_card_index | plus: 1 %}
      
      {% endunless %}
      {% endfor %}
  {% endif %}
  {% endfor %}
-                                  
+ 
  {%- comment -%} Interrupter blocks (end of grid fallback) {%- endcomment -%}
  {% for intr in section.blocks %}
    {% if intr.type == 'interrupter' and intr.settings.enabled %}
      {% assign intr_token = '|' | append: intr.id | append: '|' %}
-                                  
+ 
      {% if intr.settings.show_on_desktop %}
        {% unless kv_rendered_interrupters_desktop contains intr_token %}
          <div
@@ -1001,7 +1001,7 @@
          {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
        {% endunless %}
      {% endif %}
-                                  
+ 
      {% if intr.settings.show_on_mobile %}
        {% unless kv_rendered_interrupters_mobile contains intr_token %}
          <div
@@ -1072,7 +1072,7 @@
  {% endfor %}
         </div>
         </div>
-                                  
+ 
         {%- comment -%} Individual Collection Tabs {%- endcomment -%}
         {% for block in section.blocks %}
         {% if block.settings.collection != blank %}
@@ -1083,12 +1083,12 @@
      {% assign kv_card_index = 0 %}
      {% assign kv_rendered_interrupters_desktop = '' %}
      {% assign kv_rendered_interrupters_mobile = '' %}
-                                  
+ 
      {%- comment -%} Interrupter blocks (before first product) {%- endcomment -%}
      {% for intr in section.blocks %}
        {% if intr.type == 'interrupter' and intr.settings.enabled %}
          {% assign intr_token = '|' | append: intr.id | append: '|' %}
-                                  
+ 
          {% if intr.settings.show_on_desktop and intr.settings.position_desktop == kv_card_index %}
            {% unless kv_rendered_interrupters_desktop contains intr_token %}
              <div
@@ -1155,7 +1155,7 @@
              {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
            {% endunless %}
          {% endif %}
-                                  
+ 
          {% if intr.settings.show_on_mobile and intr.settings.position_mobile == kv_card_index %}
            {% unless kv_rendered_interrupters_mobile contains intr_token %}
              <div
@@ -1232,7 +1232,7 @@
      {% for intr in section.blocks %}
        {% if intr.type == 'interrupter' and intr.settings.enabled %}
          {% assign intr_token = '|' | append: intr.id | append: '|' %}
-                                  
+ 
          {% if intr.settings.show_on_desktop and intr.settings.position_desktop == kv_card_index %}
            {% unless kv_rendered_interrupters_desktop contains intr_token %}
              <div
@@ -1299,7 +1299,7 @@
              {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
            {% endunless %}
          {% endif %}
-                                  
+ 
          {% if intr.settings.show_on_mobile and intr.settings.position_mobile == kv_card_index %}
            {% unless kv_rendered_interrupters_mobile contains intr_token %}
              <div
@@ -1382,7 +1382,7 @@
            {%- elsif product.metafields.custom.collection_card_badge != blank -%}
            <div class="kv-bundle-product-badge">{{ product.metafields.custom.collection_card_badge }}</div>
            {%- endif -%}
-                                    
+   
            {%- comment -%} Product Image {%- endcomment -%}
            {% assign card_image = product.metafields.custom.collection_card_image | default: product.featured_image %}
            {% if card_image %}
@@ -1398,7 +1398,7 @@
                <span style="color: #999;">No image</span>
            </div>
            {% endif %}
-                                    
+   
            {%- comment -%} Product Title {%- endcomment -%}
            <div class="kv-bundle-product-title-wrapper">
            <div class="kv-bundle-product-title">
@@ -1420,7 +1420,7 @@
                </svg>
            </button>
            </div>
-                                    
+   
            {%- comment -%} Product Description {%- endcomment -%}
            {% assign card_description = product.metafields.custom.collection_card_description | default: product.description %}
            {% if card_description != blank %}
@@ -1461,7 +1461,7 @@
                {% endfor %}
            </div>
            {% endif %}
-                                    
+   
            {%- comment -%} Product Controls (Quantity + Add to Cart) {%- endcomment -%}
            <div class="kv-bundle-product-controls">
            <div class="kv-bundle-quantity-selector">
@@ -1483,7 +1483,7 @@
                    </svg>
                </button>
            </div>
-                                    
+   
            {% if product.available %}
                <button 
                class="kv-bundle-add-to-cart" 
@@ -1501,7 +1501,7 @@
            {% endif %}
          </div>
      </div>
-                                  
+ 
      {% assign kv_card_index = kv_card_index | plus: 1 %}
      
      {% endif %}
@@ -1514,7 +1514,7 @@
      {% for intr in section.blocks %}
        {% if intr.type == 'interrupter' and intr.settings.enabled %}
          {% assign intr_token = '|' | append: intr.id | append: '|' %}
-                                  
+ 
          {% if intr.settings.show_on_desktop and intr.settings.position_desktop == kv_card_index %}
            {% unless kv_rendered_interrupters_desktop contains intr_token %}
              <div
@@ -1581,7 +1581,7 @@
              {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
            {% endunless %}
          {% endif %}
-                                  
+ 
          {% if intr.settings.show_on_mobile and intr.settings.position_mobile == kv_card_index %}
            {% unless kv_rendered_interrupters_mobile contains intr_token %}
              <div
@@ -1664,7 +1664,7 @@
          {%- elsif product.metafields.custom.collection_card_badge != blank -%}
          <div class="kv-bundle-product-badge">{{ product.metafields.custom.collection_card_badge }}</div>
          {%- endif -%}
-                                  
+ 
          {%- comment -%} Product Image {%- endcomment -%}
          {% assign card_image = product.metafields.custom.collection_card_image | default: product.featured_image %}
          {% if card_image %}
@@ -1680,7 +1680,7 @@
              <span style="color: #999;">No image</span>
          </div>
          {% endif %}
-                                  
+ 
          {%- comment -%} Product Title {%- endcomment -%}
          <div class="kv-bundle-product-title-wrapper">
          <div class="kv-bundle-product-title">
@@ -1702,7 +1702,7 @@
              </svg>
          </button>
          </div>
-                                  
+ 
          {%- comment -%} Product Description {%- endcomment -%}
          {% assign card_description = product.metafields.custom.collection_card_description | default: product.description %}
          {% if card_description != blank %}
@@ -1743,7 +1743,7 @@
              {% endfor %}
          </div>
          {% endif %}
-                                  
+ 
          {%- comment -%} Product Controls (Quantity + Add to Cart) {%- endcomment -%}
          <div class="kv-bundle-product-controls">
          <div class="kv-bundle-quantity-selector">
@@ -1765,7 +1765,7 @@
                  </svg>
              </button>
          </div>
-                                  
+ 
          {% if product.available %}
              <button 
              class="kv-bundle-add-to-cart" 
@@ -1783,17 +1783,17 @@
          {% endif %}
          </div>
      </div>
-                                  
+ 
      {% assign kv_card_index = kv_card_index | plus: 1 %}
      
      {% endunless %}
      {% endfor %}
-                                  
+ 
      {%- comment -%} Interrupter blocks (end of grid fallback) {%- endcomment -%}
      {% for intr in section.blocks %}
        {% if intr.type == 'interrupter' and intr.settings.enabled %}
          {% assign intr_token = '|' | append: intr.id | append: '|' %}
-                                  
+ 
          {% if intr.settings.show_on_desktop %}
            {% unless kv_rendered_interrupters_desktop contains intr_token %}
              <div
@@ -1860,7 +1860,7 @@
              {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
            {% endunless %}
          {% endif %}
-                                  
+ 
          {% if intr.settings.show_on_mobile %}
            {% unless kv_rendered_interrupters_mobile contains intr_token %}
              <div
@@ -1933,9 +1933,19 @@
  </div>
         {% endif %}
         {% endfor %}
-                                  
+ 
          {%- comment -%} Thumbnail Carousel - Dynamic (shows selected products) {%- endcomment -%}
            <div class="kv-bundle-items-sticky">
+         
+          <div class="cds-highlights" style="display: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 16C6.89673 16 5.86144 15.7909 4.89412 15.3726C3.9268 14.9595 3.07712 14.3869 2.3451 13.6549C1.61307 12.9176 1.03791 12.068 0.619608 11.1059C0.206536 10.1386 0 9.10327 0 8C0 6.89673 0.206536 5.86144 0.619608 4.89412C1.03791 3.9268 1.61307 3.07712 2.3451 2.3451C3.07712 1.61307 3.9268 1.04052 4.89412 0.627451C5.86144 0.20915 6.89673 0 8 0C9.10327 0 10.1386 0.20915 11.1059 0.627451C12.0732 1.04052 12.9229 1.61307 13.6549 2.3451C14.3869 3.07712 14.9595 3.9268 15.3726 4.89412C15.7909 5.86144 16 6.89673 16 8C16 9.10327 15.7909 10.1386 15.3726 11.1059C14.9595 12.068 14.3869 12.9176 13.6549 13.6549C12.9229 14.3869 12.0732 14.9595 11.1059 15.3726C10.1386 15.7909 9.10327 16 8 16ZM7.12157 11.8275C7.25752 11.8275 7.38039 11.7961 7.4902 11.7333C7.6 11.6706 7.69673 11.5765 7.78039 11.451L11.4667 5.63922C11.5137 5.56078 11.5582 5.47712 11.6 5.38824C11.6418 5.29935 11.6627 5.21046 11.6627 5.12157C11.6627 4.93856 11.5948 4.79477 11.4588 4.6902C11.3229 4.58039 11.1712 4.52549 11.0039 4.52549C10.7739 4.52549 10.5856 4.64575 10.4392 4.88627L7.0902 10.2667L5.49804 8.21177C5.39869 8.08105 5.30196 7.99216 5.20784 7.9451C5.11895 7.89804 5.01699 7.87451 4.90196 7.87451C4.72418 7.87451 4.57516 7.93987 4.4549 8.07059C4.33464 8.19608 4.27451 8.34771 4.27451 8.52549C4.27451 8.61438 4.2902 8.70327 4.32157 8.79216C4.35817 8.87582 4.40523 8.95686 4.46275 9.03529L6.43137 11.451C6.53595 11.5869 6.64314 11.6837 6.75294 11.7412C6.86275 11.7987 6.98562 11.8275 7.12157 11.8275Z" fill="#17561F"/>
+            </svg> <p>
+           50% discount applied to your diffuser (
+            <span class="price-value" id="selected-price-display">blank</span> savings)
+            </p>
+          </div>
+        
    <div class="kv-bundle-items-sticky-inner">
            <div class="kv-bundle-thumbnail-carousel" id="kv-selected-products">
     {%- comment -%} Skeleton placeholders - shown when no products selected {%- endcomment -%}
@@ -1968,11 +1978,11 @@
     </div>
     </div>
            </div>
-           <div class="disc-active-msg">
+           {% comment %} <div class="disc-active-msg">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M8 16C6.89673 16 5.86144 15.7909 4.89412 15.3726C3.9268 14.9595 3.07712 14.3869 2.3451 13.6549C1.61307 12.9176 1.03791 12.068 0.619608 11.1059C0.206536 10.1386 0 9.10327 0 8C0 6.89673 0.206536 5.86144 0.619608 4.89412C1.03791 3.9268 1.61307 3.07712 2.3451 2.3451C3.07712 1.61307 3.9268 1.04052 4.89412 0.627451C5.86144 0.20915 6.89673 0 8 0C9.10327 0 10.1386 0.20915 11.1059 0.627451C12.0732 1.04052 12.9229 1.61307 13.6549 2.3451C14.3869 3.07712 14.9595 3.9268 15.3726 4.89412C15.7909 5.86144 16 6.89673 16 8C16 9.10327 15.7909 10.1386 15.3726 11.1059C14.9595 12.068 14.3869 12.9176 13.6549 13.6549C12.9229 14.3869 12.0732 14.9595 11.1059 15.3726C10.1386 15.7909 9.10327 16 8 16ZM7.12157 11.8275C7.25752 11.8275 7.38039 11.7961 7.4902 11.7333C7.6 11.6706 7.69673 11.5765 7.78039 11.451L11.4667 5.63922C11.5137 5.56078 11.5582 5.47712 11.6 5.38824C11.6418 5.29935 11.6627 5.21046 11.6627 5.12157C11.6627 4.93856 11.5948 4.79477 11.4588 4.6902C11.3229 4.58039 11.1712 4.52549 11.0039 4.52549C10.7739 4.52549 10.5856 4.64575 10.4392 4.88627L7.0902 10.2667L5.49804 8.21177C5.39869 8.08105 5.30196 7.99216 5.20784 7.9451C5.11895 7.89804 5.01699 7.87451 4.90196 7.87451C4.72418 7.87451 4.57516 7.93987 4.4549 8.07059C4.33464 8.19608 4.27451 8.34771 4.27451 8.52549C4.27451 8.61438 4.2902 8.70327 4.32157 8.79216C4.35817 8.87582 4.40523 8.95686 4.46275 9.03529L6.43137 11.451C6.53595 11.5869 6.64314 11.6837 6.75294 11.7412C6.86275 11.7987 6.98562 11.8275 7.12157 11.8275Z" fill="#17561F"/>
           </svg> <p>50% discount applied to your diffuser (€74,98 savings)</p>
-</div>           {%- comment -%} Continue Button {%- endcomment -%}
+</div>           {%- comment -%} Continue Button {%- endcomment -%} {% endcomment %}
            <div class="kv-bundle-continue">
            <button class="kv-bundle-continue-btn" id="kv-open-minicart" disabled>
     Add at least 2 Scents
@@ -1988,11 +1998,11 @@
    </div>
    
            </div> 
-                                  
+ 
           
       {% endif %}
       </div>
-                                    
+   
       {%- comment -%} Mini Cart Popup {%- endcomment -%}
       <div class="kv-mini-cart-overlay" id="kv-minicart-overlay"></div>
       <div class="kv-mini-cart" id="kv-minicart">
@@ -2033,20 +2043,20 @@
       </div>
       </div>
   </div>
-                                    </div>
-                                    
-                                    {%- comment -%} Scent Details Modal {%- endcomment -%}
-                                    <div class="kv-scent-modal-overlay" id="kv-scent-modal-overlay"></div>
-                                    <div class="kv-scent-modal" id="kv-scent-modal" aria-hidden="true">
-                                      <button class="kv-scent-modal-close" type="button" aria-label="Close">
+   </div>
+   
+   {%- comment -%} Scent Details Modal {%- endcomment -%}
+   <div class="kv-scent-modal-overlay" id="kv-scent-modal-overlay"></div>
+   <div class="kv-scent-modal" id="kv-scent-modal" aria-hidden="true">
+     <button class="kv-scent-modal-close" type="button" aria-label="Close">
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M10.8426 0.196845C10.9333 0.105994 11.0342 0.0479495 11.1452 0.0227129C11.2612 -0.00757098 11.3772 -0.00757098 11.4932 0.0227129C11.6091 0.0479495 11.7125 0.105994 11.8033 0.196845C11.889 0.28265 11.947 0.383596 11.9773 0.499685C12.0076 0.615773 12.0076 0.731861 11.9773 0.84795C11.947 0.964038 11.889 1.06498 11.8033 1.15079L1.15949 11.8032C1.07376 11.889 0.972892 11.947 0.856897 11.9773C0.740902 12.0076 0.624907 12.0076 0.508912 11.9773C0.392916 11.947 0.289529 11.889 0.198751 11.8032C0.107972 11.7174 0.0474526 11.6164 0.017193 11.5003C-0.00802338 11.3842 -0.00550175 11.2681 0.0247579 11.1521C0.0550175 11.036 0.113015 10.935 0.198751 10.8492L10.8426 0.196845ZM11.8033 10.8492C11.889 10.935 11.9445 11.036 11.9697 11.1521C12 11.2681 12 11.3842 11.9697 11.5003C11.9445 11.6164 11.889 11.7174 11.8033 11.8032C11.7176 11.894 11.6142 11.9521 11.4932 11.9773C11.3772 12.0076 11.2612 12.0076 11.1452 11.9773C11.0292 11.947 10.9283 11.889 10.8426 11.8032L0.198751 1.15079C0.113015 1.06498 0.0550175 0.964038 0.0247579 0.84795C-0.000458479 0.731861 -0.000458479 0.615773 0.0247579 0.499685C0.0550175 0.383596 0.113015 0.28265 0.198751 0.196845C0.284486 0.105994 0.385352 0.0479495 0.501347 0.0227129C0.617342 -0.00757098 0.733337 -0.00757098 0.849332 0.0227129C0.970371 0.0479495 1.07376 0.105994 1.15949 0.196845L11.8033 10.8492Z" fill="white"/>
   </svg>
-                                      </button>
-                                      <div class="kv-scent-modal-image">
+     </button>
+     <div class="kv-scent-modal-image">
   <img src="" alt="" id="kv-scent-modal-img">
-                                      </div>
-                                      <div class="kv-scent-modal-content">
+     </div>
+     <div class="kv-scent-modal-content">
   <div class="kv-scent-modal-content-header">
     <div class="kv-scent-modal-tags">
       <span class="kv-scent-modal-tag" id="kv-scent-modal-variant"></span>
@@ -2060,22 +2070,22 @@
     <div class="kv-scent-modal-details-content" id="kv-scent-modal-details"></div>
     <button class="kv-scent-modal-add" type="button" id="kv-scent-modal-add">+ Add</button>
   </div> 
-                                      </div>
-                                    </div>
-                                    
-                                  {%- comment -%} Info Popup Modal - disabled {%- endcomment -%}
-                                  {% comment %}
-                                  <div class="kv-info-modal-overlay" id="kv-info-modal-overlay"></div>
-                                  <div class="kv-info-modal" id="kv-info-modal" aria-hidden="true">
-                                    <button class="kv-info-modal-close" type="button" aria-label="Close">
-                                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+     </div>
+   </div>
+   
+ {%- comment -%} Info Popup Modal - disabled {%- endcomment -%}
+ {% comment %}
+ <div class="kv-info-modal-overlay" id="kv-info-modal-overlay"></div>
+ <div class="kv-info-modal" id="kv-info-modal" aria-hidden="true">
+   <button class="kv-info-modal-close" type="button" aria-label="Close">
+     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M10.8426 0.196845C10.9333 0.105994 11.0342 0.0479495 11.1452 0.0227129C11.2612 -0.00757098 11.3772 -0.00757098 11.4932 0.0227129C11.6091 0.0479495 11.7125 0.105994 11.8033 0.196845C11.889 0.28265 11.947 0.383596 11.9773 0.499685C12.0076 0.615773 12.0076 0.731861 11.9773 0.84795C11.947 0.964038 11.889 1.06498 11.8033 1.15079L1.15949 11.8032C1.07376 11.889 0.972892 11.947 0.856897 11.9773C0.740902 12.0076 0.624907 12.0076 0.508912 11.9773C0.392916 11.947 0.289529 11.889 0.198751 11.8032C0.107972 11.7174 0.0474526 11.6164 0.017193 11.5003C-0.00802338 11.3842 -0.00550175 11.2681 0.0247579 11.1521C0.0550175 11.036 0.113015 10.935 0.198751 10.8492L10.8426 0.196845ZM11.8033 10.8492C11.889 10.935 11.9445 11.036 11.9697 11.1521C12 11.2681 12 11.3842 11.9697 11.5003C11.9445 11.6164 11.889 11.7174 11.8033 11.8032C11.7176 11.894 11.6142 11.9521 11.4932 11.9773C11.3772 12.0076 11.2612 12.0076 11.1452 11.9773C11.0292 11.947 10.9283 11.889 10.8426 11.8032L0.198751 1.15079C0.113015 1.06498 0.0550175 0.964038 0.0247579 0.84795C-0.00550175 0.731861 -0.00550175 0.615773 0.0247579 0.499685C0.0550175 0.383596 0.113015 0.28265 0.198751 0.196845C0.284488 0.105994 0.387874 0.0479495 0.508912 0.0227129C0.624907 -0.00757098 0.740902 -0.00757098 0.856897 0.0227129C0.972892 0.0479495 1.07376 0.105994 1.15949 0.196845L11.8033 10.8492Z" fill="black"/>
-                                      </svg>
-                                    </button>
-                                    <div class="kv-info-modal-image">
-                                      {% if section.settings.info_popup_image %}
+     </svg>
+   </button>
+   <div class="kv-info-modal-image">
+     {% if section.settings.info_popup_image %}
   <img src="{{ section.settings.info_popup_image | image_url: width: 800 }}" alt="Information">
-                                      {% else %}
+     {% else %}
   <div class="kv-info-modal-placeholder">
     <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="120" height="120" rx="12" fill="#F1EFE8"/>
@@ -2083,53 +2093,81 @@
     </svg>
     <p>Upload an image in theme settings</p>
   </div>
-                                      {% endif %}
-                                    </div>
-                                  </div>
-                                  {% endcomment %}
-                                  {% render 'diffuser-kv-bundle-scripts' %}
-                                    
-                                    {% schema %}
-                                    {
-                                      "name": "kv Collection Tabs",
-                                      "tag": "section",
-                                      "class": "section-kv-bundle-collection",
-                                      "settings": [
+     {% endif %}
+   </div>
+ </div>
+ {% endcomment %}
+ {% render 'diffuser-kv-bundle-scripts' %}
+ // Add this script in your main section
+ 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const priceDisplay = document.getElementById('selected-price-display');
+    const infoDisplay = document.getElementById('product-info-display');
+    const messageDiv= document.querySelector('.cds-highlights')
+    
+    // Listen for selections from the snippet
+    document.addEventListener('kv:selector-product-selected', function(event) {
+      const product = event.detail;
+      
+      // Price is already calculated in the snippet as 50% off
+      // You can either recalculate or trust the snippet's calculation
+      if (priceDisplay && product.variantPrice) {
+        const discountedPrice = (product.variantPrice * 0.5) / 100;
+        priceDisplay.innerHTML = `$${discountedPrice.toFixed(2)}`;
+        messageDiv.style.display='block';
+      }
+      
+      if (infoDisplay) {
+        infoDisplay.innerHTML = `
+          <p>Product: ${product.title}</p>
+          <p>Variant ID: ${product.variantId}</p>
+        `;
+      }
+    });
+  });
+</script>  
+   {% schema %}
+   {
+     "name": "kv Collection Tabs",
+     "tag": "section",
+     "class": "section-kv-bundle-collection",
+     "settings": [
     {
   "type": "text",
   "id": "selector_step",
   "label": "Step Number",
   "default": "1"
-                                      },
-                                      {
+     },
+     {
   "type": "text",
   "id": "selector_heading",
   "label": "Heading",
   "default": "Select a diffuser"
-                                      },
-                                      {
+     },
+     {
   "type": "text",
   "id": "selector_subtext",
   "label": "Subtext",
   "default": "Choose the diffuser that fits your needs best."
-                                      },
-                                      {
+     },
+     {
   "type": "text",
   "id": "selector_compare_text",
   "label": "Compare Link Text",
   "default": "Compare diffusers"
-                                      },
-                                      {
+     },
+     {
   "type": "url",
   "id": "selector_compare_link",
   "label": "Compare Link URL"
-                                      },
-                                      {
+     },
+     {
   "type": "richtext",
   "id": "selector_banner_text",
   "label": "Banner Text",
   "default": "<p>Spring Sale: Get 50% off the diffuser when you add 2 scents</p>"
-                                      },
+     },
   {
     "type": "image_picker",
     "id": "hero_background_image",
@@ -2158,77 +2196,77 @@
     "label": "Banner Background Image",
     "info": "Recommended size: 1080x80. If not set, a solid dark green background is used."
   },
-                                      {
+     {
   "type": "text",
   "id": "step_number",
   "label": "Step Number",
   "default": "2"
-                                      },
-                                      {
+     },
+     {
   "type": "text",
   "id": "heading",
   "label": "Heading",
   "default": "Add scents"
-                                      },
-                                      {
+     },
+     {
   "type": "text",
   "id": "subtext",
   "label": "Subtext",
   "default": "Pick the scents you like. Add more to unlock a better price."
-                                      },
-                                      {
+     },
+     {
   "type": "text",
   "id": "badge_text",
   "label": "Badge Text",
   "default": "Choose at least 2 scents"
-                                      },
-                                  
-                                      {
+     },
+ 
+     {
   "type": "color",
   "id": "bg_color",
   "label": "Background Color",
   "default": "#f7f7f7"
-                                      },
-                                      {
+     },
+     {
   "type": "color",
   "id": "heading_color",
   "label": "Heading Color",
   "default": "#222222"
-                                      },
-                                      {
+     },
+     {
   "type": "color",
   "id": "subtext_color",
   "label": "Subtext Color",
   "default": "#666666"
-                                      },
-                                  
-                                      {
+     },
+ 
+     {
   "type": "color",
   "id": "circle_bg",
   "label": "Circle Background",
   "default": "#1f3d2b"
-                                      },
-                                      {
+     },
+     {
   "type": "color",
   "id": "circle_text",
   "label": "Circle Text Color",
   "default": "#ffffff"
-                                      },
-                                  
-                                      {
+     },
+ 
+     {
   "type": "color",
   "id": "badge_bg",
   "label": "Badge Background",
   "default": "#e5e5e5"
-                                      },
-                                      {
+     },
+     {
   "type": "color",
   "id": "badge_text_color",
   "label": "Badge Text Color",
   "default": "#333333"
-                                      },
-                                  
-                                      {
+     },
+ 
+     {
   "type": "range",
   "id": "heading_size",
   "label": "Heading Font Size",
@@ -2236,8 +2274,8 @@
   "max": 40,
   "step": 1,
   "default": 24
-                                      },
-                                      {
+     },
+     {
   "type": "range",
   "id": "subtext_size",
   "label": "Subtext Font Size",
@@ -2245,8 +2283,8 @@
   "max": 24,
   "step": 1,
   "default": 14
-                                      }
-                                   ,
+     }
+  ,
   {
     "type": "text",
     "id": "promo_banner_bold_text",
@@ -2550,17 +2588,17 @@
     "default": "Almost there! Add [count] more scents to unlock the Pro Diffuser!",
     "info": "Use [count] as placeholder for remaining product count"
   }
-                                      ],
-                                      "blocks": [
+     ],
+     "blocks": [
     {
   "type": "diffuser",
   "name": "Diffuser",
   "settings": [
     {
-                                    "type": "product",
-                                    "id": "selector_product",
-                                    "label": "Select product (optional)"
-                                  },
+   "type": "product",
+   "id": "selector_product",
+   "label": "Select product (optional)"
+ },
     {
       "type": "image_picker",
       "id": "selector_image",
@@ -2597,7 +2635,7 @@
       "default": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
     }
   ]
-                                      },
+     },
   {
     "type": "collection",
     "name": "Collection",
@@ -2877,8 +2915,8 @@
       }
     ]
   }
-                                      ],
-                                      "presets": [
+     ],
+     "presets": [
   {
     "name": "Diffuser KV Bundle",
     "blocks": [
@@ -2887,6 +2925,6 @@
       }
     ]
   }
-                                      ]
+     ]
 }
  {% endschema %}

@@ -1,0 +1,1691 @@
+<script>
+    function getAmsterdamToday() {
+      const now = new Date();
+      const ams = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' }));
+      if (ams.getHours() > 22 || (ams.getHours() === 22 && ams.getMinutes() >= 59)) {
+        ams.setDate(ams.getDate() + 1);
+      }
+      ams.setHours(0, 0, 0, 0);
+      return ams;
+    }
+  
+    function getShippingDate() {
+      const today = getAmsterdamToday();
+      const day = today.getDay();
+      if (day === 0) today.setDate(today.getDate() + 1);
+      if (day === 6) today.setDate(today.getDate() + 2);
+      return today;
+    }
+  
+    // Selected products tracker
+    let selectedProducts = [];
+    
+    // Get Shopify money format from theme settings
+    const moneyFormat = '{{ shop.money_format }}' || '${{amount}}';
+  
+    const kvCountryCode = '{{ localization.country.iso_code }}';
+    const kvCountryName = '{{ localization.country.name }}';
+  
+    const kvDeliveryDays = {
+      nl: {{ settings.delivery_days_nl | default: 1 }},
+      be: {{ settings.delivery_days_be | default: 1 }},
+      de: {{ settings.delivery_days_de | default: 2 }},
+      euMin: {{ settings.delivery_days_eu_min | default: 3 }},
+      euMax: {{ settings.delivery_days_eu_max | default: 4 }},
+      rowMin: {{ settings.delivery_days_row_min | default: 6 }},
+      rowMax: {{ settings.delivery_days_row_max | default: 10 }}
+    };
+  
+    function getInstockCollapsedMessage() {
+      return 'Your order ships out today from the Netherlands.';
+    }
+  
+    function getInstockDeliveryDateRange() {
+      const euCountries = ['AT','BG','HR','CY','CZ','DK','EE','FI','FR','GR','HU','IE','IT','LV','LT','LU','MT','PL','PT','RO','SK','SI','ES','SE'];
+      const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+      const shipDate = getShippingDate();
+      let minDays, maxDays;
+  
+      switch (kvCountryCode) {
+        case 'NL': minDays = kvDeliveryDays.nl; maxDays = kvDeliveryDays.nl; break;
+        case 'BE': minDays = kvDeliveryDays.be; maxDays = kvDeliveryDays.be; break;
+        case 'DE': minDays = kvDeliveryDays.de; maxDays = kvDeliveryDays.de; break;
+        default:
+          if (euCountries.includes(kvCountryCode)) {
+            minDays = kvDeliveryDays.euMin;
+            maxDays = kvDeliveryDays.euMax;
+          } else {
+            minDays = kvDeliveryDays.rowMin;
+            maxDays = kvDeliveryDays.rowMax;
+          }
+      }
+  
+      const startDate = new Date(shipDate);
+      startDate.setDate(startDate.getDate() + minDays);
+      const endDate = new Date(shipDate);
+      endDate.setDate(endDate.getDate() + maxDays);
+  
+      if (minDays === maxDays) {
+        return `${startDate.getDate()} ${monthNames[startDate.getMonth()]}`;
+      } else if (startDate.getMonth() === endDate.getMonth()) {
+        return `${startDate.getDate()} - ${endDate.getDate()} ${monthNames[endDate.getMonth()]}`;
+      } else {
+        return `${startDate.getDate()} ${monthNames[startDate.getMonth()]} - ${endDate.getDate()} ${monthNames[endDate.getMonth()]}`;
+      }
+    }
+  
+    // Progress bar milestones (product counts)
+    const textLabels = {
+      free: '{{ section.settings.text_free | default: "FREE" }}',
+      freeGift: '{{ section.settings.text_free_gift | default: "Free Gift" }}',
+      addScents: '{{ section.settings.text_add_scents | default: "Add Scents" }}',
+      continue: '{{ section.settings.text_continue | default: "Continue" }}',
+      addToCart: '{{ section.settings.text_add_to_cart | default: "Add to Cart" }}',
+      noItems: '{{ section.settings.text_no_items | default: "No items selected" }}',
+      save: '{{ section.settings.text_save | default: "SAVE" }}',
+      preOrderShips: '{{ section.settings.text_preorder_ships | default: "Pre-Order: Ships by" }}',
+      giftPreOrderPrefix: '{{ section.settings.text_gift_preorder_prefix | default: "The" }}',
+      giftPreOrderSuffix: '{{ section.settings.text_gift_preorder_suffix | default: "is on Pre-Order. Delivers on" }}'
+    };
+  
+    const milestones = {
+      milestone1: {{ section.settings.milestone_1_count | default: 0 }},
+      milestone2: {{ section.settings.milestone_2_count | default: 0 }},
+      milestone3: {{ section.settings.milestone_3_count | default: 0 }},
+      milestone4: {{ section.settings.milestone_4_count | default: 0 }},
+      milestone1Text: '{{ section.settings.milestone_1_text | default: "Add [count] more scents for a FREE gift!" }}',
+      milestone2Text: '{{ section.settings.milestone_2_text | default: "Add [count] more scents for a FREE gift!" }}',
+      milestone3Text: '{{ section.settings.milestone_3_text | default: "Add [count] more scents for a FREE gift!" }}',
+      milestone4Text: '{{ section.settings.milestone_4_text | default: "Add [count] more scents for a FREE gift!" }}',
+      startText: '{{ section.settings.progress_start_text | default: "Start building your bundle!" }}',
+      completeText: '{{ section.settings.progress_complete_text | default: "ðŸŽ‰ Congratulations! All rewards unlocked!" }}'
+    };
+  
+    const milestoneGifts = [];
+  
+    document.addEventListener('DOMContentLoaded', function() {
+      // Hide preloader after page load
+      const preloader = document.getElementById('kv-page-preloader');
+      if (preloader) {
+        setTimeout(() => {
+          preloader.classList.add('hidden');
+          setTimeout(() => {
+            preloader.style.display = 'none';
+          }, 500);
+        }, 300);
+      }
+  
+      // Update total count - count of all products across all tabs
+      const totalCountElement = document.getElementById('kv-total-count');
+      if (totalCountElement) {
+        const allProductsGrid = document.querySelector('[data-content="all"] .kv-bundle-products-grid');
+        const productCount = allProductsGrid ? allProductsGrid.querySelectorAll('.kv-bundle-product-card').length : 0;
+        totalCountElement.textContent = productCount;
+      }
+  
+      // Toggle sticky class when hero section scrolls out of view
+      const heroSection = document.querySelector('.kv-bundle-hero-section');
+      const bundleCollection = document.querySelector('.kv-bundle-collection');
+      const announcementBar = document.querySelector('body .announcement-bar');
+      const headerSection = document.querySelector('body .shopify-section--header');
+  
+      function updateHeroOffset() {
+        if (!heroSection) return;
+        let offset = 0;
+        if (announcementBar) offset += announcementBar.offsetHeight || 0;
+        if (headerSection) offset += headerSection.offsetHeight || 0;
+        heroSection.style.setProperty('--kv-hero-offset', `${offset}px`);
+        document.documentElement.style.setProperty('--kv-hero-offset', `${offset}px`);
+      }
+  
+      updateHeroOffset();
+  
+      if (window.ResizeObserver) {
+        const resizeObserver = new ResizeObserver(() => {
+          updateHeroOffset();
+        });
+        if (announcementBar) resizeObserver.observe(announcementBar);
+        if (headerSection) resizeObserver.observe(headerSection);
+      } else {
+        window.addEventListener('resize', updateHeroOffset);
+        window.addEventListener('load', updateHeroOffset);
+      }
+  
+      function updateStickyHeroHeight() {
+        if (!heroSection) return;
+        if (heroSection.classList.contains('sticky')) {
+          const stickyHeight = heroSection.offsetHeight;
+          document.documentElement.style.setProperty('--kv-sticky-hero-height', `${stickyHeight}px`);
+        } else {
+          document.documentElement.style.setProperty('--kv-sticky-hero-height', '0px');
+        }
+      }
+  
+      function handleHeroSticky() {
+        const scentSelector=document.querySelector('.scent-selector')
+        // const progresFooter=document.querySelector('.kv-progress-footer2')
+        if (!heroSection) return;
+        const triggerPoint = heroSection.offsetHeight || 0;
+        if ((window.pageYOffset || document.documentElement.scrollTop) > triggerPoint) {
+          heroSection.classList.add('sticky');
+          scentSelector.style.display = 'none';
+        //   progresFooter.style.display = 'block';
+         console.log("Sticky Enabeled")
+        } else {
+          heroSection.classList.remove('sticky');
+          scentSelector.style.display = 'block';
+          
+        }
+        updateStickyHeroHeight();
+      }
+  
+      handleHeroSticky();
+      window.addEventListener('scroll', handleHeroSticky, { passive: true });
+  
+      function updateProgressFooterScrollVisibility() {
+        const progressFooter = document.getElementById('kv-progress-footer-empty');
+        if (!progressFooter) return;
+  
+        const stickyTarget = document.querySelector('.kv-bundle-items-sticky');
+        const triggerPoint = stickyTarget
+          ? stickyTarget.getBoundingClientRect().top + window.scrollY
+          : 600;
+        const hasPassedTrigger = window.scrollY >= triggerPoint;
+  
+        progressFooter.style.display = hasPassedTrigger ? 'block' : 'none';
+      }
+  
+      updateProgressFooterScrollVisibility();
+      window.addEventListener('scroll', updateProgressFooterScrollVisibility, { passive: true });
+      window.addEventListener('resize', updateProgressFooterScrollVisibility);
+  
+      // Update sticky height on resize
+      if (window.ResizeObserver) {
+        const heroResizeObserver = new ResizeObserver(() => {
+          updateStickyHeroHeight();
+        });
+        heroResizeObserver.observe(heroSection);
+      } else {
+        window.addEventListener('resize', updateStickyHeroHeight);
+      }
+  
+      // Tab switching
+      const tabs = document.querySelectorAll('.kv-bundle-tab');
+      const tabContents = document.querySelectorAll('.kv-bundle-tab-content');
+  
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          const tabId = this.getAttribute('data-tab');
+          
+          // Remove active class from all tabs and contents
+          tabs.forEach(t => t.classList.remove('active'));
+          tabContents.forEach(tc => tc.classList.remove('active'));
+          
+          // Add active class to clicked tab and corresponding content
+          this.classList.add('active');
+          document.querySelector(`[data-content="${tabId}"]`).classList.add('active');
+        });
+      });
+  
+      // Activate the first collection tab on page load
+      const firstCollectionTab = document.querySelector('.kv-bundle-tab:not([data-tab="all"])');
+      if (firstCollectionTab) {
+        const firstTabId = firstCollectionTab.getAttribute('data-tab');
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(tc => tc.classList.remove('active'));
+        firstCollectionTab.classList.add('active');
+        const firstTabContent = document.querySelector(`[data-content="${firstTabId}"]`);
+        if (firstTabContent) firstTabContent.classList.add('active');
+      }
+      
+      function displayDiscountMessage(product) {
+  // Only proceed if this is a diffuser product
+  // You can check by product type, tags, handle, or title
+  
+  // Example: Check if product title contains "diffuser"
+  if (!product.title || !product.title.toLowerCase().includes('diffuser')) {
+    return;
+  }
+  
+  // Alternative: Check by product handle
+  // if (!product.productHandle || !product.productHandle.toLowerCase().includes('diffuser')) {
+  //   return;
+  // }
+  
+  // Alternative: If you have a custom flag for diffusers
+  // if (!product.isDiffuser) {
+  //   return;
+  // }
+  
+  const discountMsgDiv = document.querySelector('.disc-active-msg');
+  const dicountText=document.querySelector('.disc-text')
+  if (!discountMsgDiv) return;
+  
+  // Calculate 50% discount
+  const originalPriceCents = product.price;
+  const discountedPriceCents = originalPriceCents / 2;
+  const savingsCents = originalPriceCents - discountedPriceCents;
+  
+  // Format prices
+  const formattedOriginalPrice = formatMoney(originalPriceCents);
+  const formattedDiscountedPrice = formatMoney(discountedPriceCents);
+  const formattedSavings = formatMoney(savingsCents);
+  
+  // Update and show the message
+  dicountText.innerText = `
+    <div class="discount-banner" style="background: #f0f7f0; border: 2px solid #4caf50; border-radius: 8px; padding: 12px 16px; margin: 10px 0;">
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <span style="background: #4caf50; color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold;">50% OFF</span>
+        <span style="color: #333;">
+          Your diffuser: 
+          <span style="text-decoration: line-through; color: #999;">${formattedOriginalPrice}</span>
+          → 
+          <span style="color: #4caf50; font-weight: bold;">${formattedDiscountedPrice}</span>
+          <span style="margin-left: 12px; color: #ff6b6b;">Save ${formattedSavings}! 🎉</span>
+        </span>
+      </div>
+    </div>
+  `;
+  
+  discountMsgDiv.style.display = 'block';
+  
+  // Optional: Auto-hide after 8 seconds
+  setTimeout(() => {
+    discountMsgDiv.style.opacity = '0';
+    discountMsgDiv.style.transform = 'translateY(-10px)';
+    setTimeout(() => {
+      if (discountMsgDiv.style.opacity === '0') {
+        discountMsgDiv.style.display = 'none';
+        discountMsgDiv.style.opacity = '';
+        discountMsgDiv.style.transform = '';
+      }
+    }, 300);
+  }, 8000);
+  
+  discountMsgDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+      // Handle diffuser selector cards (cds-cards) as selected bundle products
+      document.addEventListener('kv:selector-product-selected', function(e) {
+        const data = e.detail || {};
+        if (!data.productId || !data.variantId) return;
+  
+        const selectorProduct = {
+          productId: data.productId,
+          productHandle: data.productHandle || '',
+          variantId: data.variantId,
+          quantity: 1,
+          image: data.image || '',
+          title: data.title || '',
+          price: parseInt(data.variantPrice, 10) || 0,
+          compareAtPrice: parseInt(data.variantCompareAtPrice, 10) || 0,
+          inventoryDate: '',
+          inventoryQuantity: 0,
+          selectionSource: 'cds-selector'
+        };
+  
+        // Keep only one active diffuser selector card product at a time
+        selectedProducts = selectedProducts.filter(product => product.selectionSource !== 'cds-selector');
+        selectedProducts.push(selectorProduct);
+  
+        // If this product also exists in product grids, mirror its selected state there
+        syncProductState(selectorProduct.productId, 'add');
+        syncProductQuantity(selectorProduct.productId, 1);
+  
+        updateThumbnailCarousel();
+        if (document.getElementById('kv-minicart').classList.contains('active')) {
+          updateMiniCart();
+        }
+      });
+  
+      // Handle Add button click - show quantity controls
+      document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('kv-bundle-add-to-cart') || e.target.closest('.kv-bundle-add-to-cart')) {
+          const button = e.target.classList.contains('kv-bundle-add-to-cart') ? e.target : e.target.closest('.kv-bundle-add-to-cart');
+          const card = button.closest('.kv-bundle-product-card');
+          const productId = card.getAttribute('data-product-id');
+          const productHandle = card.getAttribute('data-product-handle');
+          const variantId = button.getAttribute('data-variant-id');
+          const variantPrice = button.getAttribute('data-variant-price');
+          const variantCompareAtPrice = button.getAttribute('data-variant-compare-at-price');
+          const inventoryDate = card.getAttribute('data-inventory-date');
+          const inventoryQuantity = parseInt(card.getAttribute('data-inventory-quantity')) || 0;
+          const productImage = card.querySelector('.kv-bundle-product-image');
+          const productTitle = card.querySelector('.kv-bundle-product-title').textContent.trim();
+          
+          // Show quantity controls on ALL instances of this product
+          syncProductState(productId, 'add');
+          
+          // Add to selected products with price from data attribute
+          const productData = {
+            productId: productId,
+            productHandle: productHandle,
+            variantId: variantId,
+            quantity: 1,
+            image: productImage.src,
+            title: productTitle,
+            price: parseInt(variantPrice) || 0,
+            compareAtPrice: parseInt(variantCompareAtPrice) || 0,
+            inventoryDate: inventoryDate || '',
+            inventoryQuantity: inventoryQuantity
+          };
+          
+          // Check if product already exists
+          const existingIndex = selectedProducts.findIndex(p => p.productId === productId);
+          if (existingIndex === -1) {
+            selectedProducts.push(productData);
+          } else {
+            selectedProducts[existingIndex] = productData;
+          }
+          
+          updateThumbnailCarousel();
+        }
+      });
+  
+      // Quantity controls
+      document.addEventListener('click', function(e) {
+        // Check if clicked element or its parent is the decrease button
+        const decreaseBtn = e.target.classList.contains('kv-bundle-qty-decrease') ? e.target : e.target.closest('.kv-bundle-qty-decrease');
+        if (decreaseBtn) {
+          const input = decreaseBtn.nextElementSibling;
+          const card = decreaseBtn.closest('.kv-bundle-product-card');
+          if (!card) return;
+          
+          const productId = card.getAttribute('data-product-id');
+          const currentValue = parseInt(input.value);
+          
+          if (currentValue > 1) {
+            const newValue = currentValue - 1;
+            // Update all instances of this product
+            syncProductQuantity(productId, newValue);
+            updateProductQuantity(productId, newValue);
+          } else {
+            // Remove product if quantity is 0
+            syncProductState(productId, 'remove');
+            removeSelectedProduct(productId);
+          }
+          return;
+        }
+  
+        // Check if clicked element or its parent is the increase button
+        const increaseBtn = e.target.classList.contains('kv-bundle-qty-increase') ? e.target : e.target.closest('.kv-bundle-qty-increase');
+        if (increaseBtn) {
+          const input = increaseBtn.previousElementSibling;
+          const card = increaseBtn.closest('.kv-bundle-product-card');
+          if (!card) return;
+          
+          const productId = card.getAttribute('data-product-id');
+          const currentValue = parseInt(input.value);
+          const newValue = currentValue + 1;
+          // Update all instances of this product
+          syncProductQuantity(productId, newValue);
+          updateProductQuantity(productId, newValue);
+        }
+      });
+  
+      // Interrupter card add-to-cart
+      document.addEventListener('click', function(e) {
+        const intrAddToCartBtn = e.target.classList.contains('kv-interrupter-add-to-cart') ? e.target : e.target.closest('.kv-interrupter-add-to-cart');
+        if (intrAddToCartBtn) {
+          const quantity = parseInt(intrAddToCartBtn.getAttribute('data-quantity')) || 1;
+  
+          const productId = intrAddToCartBtn.getAttribute('data-product-id');
+          const productHandle = intrAddToCartBtn.getAttribute('data-product-handle');
+          const variantId = intrAddToCartBtn.getAttribute('data-variant-id');
+          const variantPrice = intrAddToCartBtn.getAttribute('data-variant-price');
+          const variantCompareAtPrice = intrAddToCartBtn.getAttribute('data-variant-compare-at-price');
+          const productTitle = intrAddToCartBtn.getAttribute('data-product-title');
+          const productImage = intrAddToCartBtn.getAttribute('data-product-image');
+          const inventoryDate = intrAddToCartBtn.getAttribute('data-inventory-date');
+          const inventoryQuantity = parseInt(intrAddToCartBtn.getAttribute('data-inventory-quantity')) || 0;
+  
+          const productData = {
+            productId: productId,
+            productHandle: productHandle,
+            variantId: variantId,
+            quantity: quantity,
+            image: productImage,
+            title: productTitle,
+            price: parseInt(variantPrice) || 0,
+            compareAtPrice: parseInt(variantCompareAtPrice) || 0,
+            inventoryDate: inventoryDate || '',
+            inventoryQuantity: inventoryQuantity
+          };
+  
+          const existingIndex = selectedProducts.findIndex(p => p.productId === productId);
+          if (existingIndex === -1) {
+            selectedProducts.push(productData);
+          } else {
+            selectedProducts[existingIndex].quantity = quantity;
+          }
+  
+          updateThumbnailCarousel();
+  
+          // Visual feedback: loading → success → restore
+          const originalLabel = intrAddToCartBtn.textContent.trim();
+          intrAddToCartBtn.disabled = true;
+          intrAddToCartBtn.classList.add('loading');
+          intrAddToCartBtn.textContent = '';
+  
+          setTimeout(function() {
+            intrAddToCartBtn.classList.remove('loading');
+            intrAddToCartBtn.textContent = '✓ Added!';
+            intrAddToCartBtn.classList.add('kv-interrupter-added');
+  
+            setTimeout(function() {
+              intrAddToCartBtn.textContent = originalLabel;
+              intrAddToCartBtn.classList.remove('kv-interrupter-added');
+              intrAddToCartBtn.disabled = false;
+            }, 1500);
+          }, 400);
+        }
+      });
+  
+      // Variant selection
+      document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('kv-bundle-variant-image')) {
+          const card = e.target.closest('.kv-bundle-product-card');
+          const productId = card.getAttribute('data-product-id');
+          const variantId = e.target.getAttribute('data-variant-id');
+          const variantPrice = e.target.getAttribute('data-variant-price');
+          const variantCompareAtPrice = e.target.getAttribute('data-variant-compare-at-price');
+          const variantImageSrc = e.target.src;
+          
+          // Update ALL instances of this product across all tabs
+          const allCards = document.querySelectorAll(`[data-product-id="${productId}"]`);
+          allCards.forEach(productCard => {
+            if (!productCard.classList.contains('kv-bundle-product-card')) return;
+            
+            const variantImages = productCard.querySelectorAll('.kv-bundle-variant-image');
+            const mainImage = productCard.querySelector('.kv-bundle-product-image');
+            const addToCartBtn = productCard.querySelector('.kv-bundle-add-to-cart');
+            
+            // Update active state on variant images
+            variantImages.forEach(img => {
+              if (img.getAttribute('data-variant-id') === variantId) {
+                img.classList.add('active');
+              } else {
+                img.classList.remove('active');
+              }
+            });
+            
+            // Update main image
+            if (mainImage) {
+              mainImage.src = variantImageSrc.replace('width=100', 'width=600');
+            }
+            
+            // Update variant ID, price and compare-at price in add to cart button
+            if (addToCartBtn && variantId) {
+              addToCartBtn.setAttribute('data-variant-id', variantId);
+              addToCartBtn.setAttribute('data-variant-price', variantPrice);
+              addToCartBtn.setAttribute('data-variant-compare-at-price', variantCompareAtPrice);
+            }
+          });
+  
+          // Update variant in selected products
+          const product = selectedProducts.find(p => p.productId === productId);
+          if (product) {
+            product.variantId = variantId;
+            product.image = variantImageSrc.replace('width=100', 'width=160');
+            product.price = parseInt(variantPrice) || product.price;
+            product.compareAtPrice = parseInt(variantCompareAtPrice) || 0;
+            updateThumbnailCarousel();
+            if (document.getElementById('kv-minicart').classList.contains('active')) {
+              updateMiniCart();
+            }
+          }
+        }
+      });
+  
+      // Mini cart controls
+      const openMiniCartBtn = document.getElementById('kv-open-minicart');
+      const closeMiniCartBtn = document.getElementById('kv-close-minicart');
+      const miniCartOverlay = document.getElementById('kv-minicart-overlay');
+      const miniCart = document.getElementById('kv-minicart');
+      const checkoutBtn = document.getElementById('kv-checkout-btn');
+  
+      function openMiniCart() {
+        if (selectedProducts.length === 0) {
+          return;
+        }
+        // Don't open if scent modal is open
+        if (document.getElementById('kv-scent-modal').classList.contains('active')) {
+          return;
+        }
+        miniCartOverlay.classList.add('active');
+        miniCart.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        updateMiniCart();
+      }
+  
+      function closeMiniCart() {
+        miniCartOverlay.classList.remove('active');
+        miniCart.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+  
+      openMiniCartBtn.addEventListener('click', openMiniCart);
+      closeMiniCartBtn.addEventListener('click', closeMiniCart);
+      miniCartOverlay.addEventListener('click', closeMiniCart);
+  
+      // Mini trigger to open mini cart
+      const miniTrigger = document.querySelector('.kv-bundle-items-mini-trigger');
+      if (miniTrigger) {
+        miniTrigger.addEventListener('click', openMiniCart);
+      }
+  
+      // Checkout button - add all items to cart
+      checkoutBtn.addEventListener('click', function() {
+        if (selectedProducts.length === 0) return;
+  
+        const originalButtonHTML = checkoutBtn.innerHTML;
+        checkoutBtn.disabled = true;
+        checkoutBtn.innerHTML = 'Adding to cart...';
+  
+        // Prepare items for cart
+        const items = selectedProducts.map(product => ({
+          id: product.variantId,
+          quantity: product.quantity
+        }));
+  
+        // Add all items to cart 
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ items: items })
+        })
+        .then(response => response.json())
+        .then(data => {
+          checkoutBtn.innerHTML = 'âœ“ Added to Cart!';
+  
+          const cartPromises = [
+            fetch('/cart.js').then(resp => {
+              if (!resp.ok) throw new Error('Failed to fetch cart data');
+              return resp.json();
+            }),
+            fetch(`${window.location.pathname}?section_id=cart-drawer`).then(resp => {
+              if (!resp.ok) throw new Error('Failed to fetch cart drawer section');
+              return resp.text();
+            })
+          ];
+  
+          Promise.all(cartPromises)
+            .then(([cartData, sectionsHtml]) => {
+              const tempDiv = document.createElement('div');
+              tempDiv.innerHTML = sectionsHtml;
+              const cartDrawerContent = tempDiv.querySelector('#cart-drawer');
+              const cartDrawer = document.querySelector('cart-drawer');
+  
+              if (cartDrawer && cartDrawerContent) {
+                cartDrawer.innerHTML = cartDrawerContent.innerHTML;
+              }
+  
+              const cartCountElements = document.querySelectorAll('cart-count');
+              cartCountElements.forEach(counter => {
+                counter.itemCount = cartData.item_count;
+              });
+  
+              if (cartDrawer && typeof cartDrawer.show === 'function') {
+                cartDrawer.show();
+              } else {
+                document.dispatchEvent(new CustomEvent('drawer:show', {
+                  bubbles: true,
+                  detail: { drawer: cartDrawer }
+                }));
+              }
+  
+              document.dispatchEvent(new CustomEvent('cart:change', {
+                bubbles: true,
+                detail: {
+                  baseEvent: 'variant:add',
+                  cart: cartData,
+                  sections: { 'cart-drawer': sectionsHtml }
+                }
+              }));
+  
+              document.dispatchEvent(new CustomEvent('variant:add', {
+                bubbles: true,
+                detail: { cart: cartData }
+              }));
+  
+              document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+  
+              // Close mini cart and reset selections
+              closeMiniCart();
+              selectedProducts.forEach(product => {
+                syncProductState(product.productId, 'remove');
+              });
+              selectedProducts = [];
+              updateThumbnailCarousel();
+  
+              checkoutBtn.disabled = false;
+              setTimeout(() => {
+                checkoutBtn.innerHTML = originalButtonHTML;
+              }, 1500);
+            })
+            .catch(error => {
+              console.error('Error updating cart drawer:', error);
+              checkoutBtn.disabled = false;
+              checkoutBtn.innerHTML = originalButtonHTML;
+              window.location.href = '/cart';
+            });
+        })
+        .catch(error => {
+          checkoutBtn.disabled = false;
+          checkoutBtn.innerHTML = originalButtonHTML;
+          alert('Error adding to cart. Please try again.');
+          console.error('Error:', error);
+        });
+      });
+  
+      // Initialize progress bar on page load
+      updateProgressBar();
+  
+      // Scent info modal functionality
+      const scentModal = document.getElementById('kv-scent-modal');
+      const scentModalOverlay = document.getElementById('kv-scent-modal-overlay');
+      const scentModalClose = scentModal.querySelector('.kv-scent-modal-close');
+      const scentModalImg = document.getElementById('kv-scent-modal-img');
+      const scentModalTitle = document.getElementById('kv-scent-modal-title');
+      const scentModalDescription = document.getElementById('kv-scent-modal-description');
+      const scentModalDetails = document.getElementById('kv-scent-modal-details');
+      const scentModalVariant = document.getElementById('kv-scent-modal-variant');
+      const scentModalBadge = document.getElementById('kv-scent-modal-badge');
+      const scentModalAdd = document.getElementById('kv-scent-modal-add');
+      let currentModalProductId = null;
+  
+      function openScentModal(productData) {
+        // Don't open if minicart is open
+        if (document.getElementById('kv-minicart').classList.contains('active')) {
+          return;
+        }
+        
+        currentModalProductId = productData.productId;
+        
+        // Set content
+        scentModalTitle.textContent = productData.title;
+        scentModalDescription.textContent = productData.description || 'Porduct Description will come here';
+        scentModalVariant.textContent = productData.variant;
+        
+        // Set badge
+        if (productData.badge) {
+          scentModalBadge.textContent = productData.badge;
+          scentModalBadge.style.display = '';
+        } else {
+          scentModalBadge.style.display = 'none';
+        }
+        
+        // Set image
+        if (productData.image) {
+          scentModalImg.src = productData.image;
+          scentModalImg.alt = productData.title;
+          scentModal.querySelector('.kv-scent-modal-image').style.display = 'block';
+        } else {
+          scentModal.querySelector('.kv-scent-modal-image').style.display = 'none';
+        }
+        
+        // Set details
+        if (productData.details) {
+          scentModalDetails.innerHTML = productData.details.replace(/\n/g, '<br>');
+        } else {
+          scentModalDetails.innerHTML = 'This is dummy text fill data in product metafields';
+        }
+        
+        // Show modal and overlay
+        scentModalOverlay.classList.add('active');
+        scentModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+  
+      function closeScentModal() {
+        scentModalOverlay.classList.remove('active');
+        scentModal.classList.remove('active');
+        document.body.style.overflow = '';
+        currentModalProductId = null;
+      }
+  
+      // Handle info icon clicks and product image clicks
+      document.addEventListener('click', function(e) {
+        const infoBtn = e.target.closest('.kv-scent-info-btn');
+        const productImage = e.target.closest('.kv-bundle-product-image');
+        
+        if (infoBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const productData = {
+            productId: infoBtn.getAttribute('data-product-id'),
+            title: infoBtn.getAttribute('data-product-title'),
+            description: infoBtn.getAttribute('data-product-description'),
+            details: infoBtn.getAttribute('data-product-details'),
+            image: infoBtn.getAttribute('data-product-image'),
+            variant: infoBtn.getAttribute('data-product-variant'),
+            badge: infoBtn.getAttribute('data-product-badge')
+          };
+          
+          openScentModal(productData);
+        } else if (productImage) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Find parent product card to get data attributes
+          const productCard = productImage.closest('.kv-bundle-product-card');
+          if (productCard) {
+            const infoButton = productCard.querySelector('.kv-scent-info-btn');
+            if (infoButton) {
+              const productData = {
+                productId: infoButton.getAttribute('data-product-id'),
+                title: infoButton.getAttribute('data-product-title'),
+                description: infoButton.getAttribute('data-product-description'),
+                details: infoButton.getAttribute('data-product-details'),
+                image: infoButton.getAttribute('data-product-image'),
+                variant: infoButton.getAttribute('data-product-variant'),
+                badge: infoButton.getAttribute('data-product-badge')
+              };
+              
+              openScentModal(productData);
+            }
+          }
+        }
+      });
+  
+      // Close modal handlers
+      scentModalClose.addEventListener('click', closeScentModal);
+      scentModalOverlay.addEventListener('click', closeScentModal);
+  
+      // Modal Add button - find and click the product's Add button
+      scentModalAdd.addEventListener('click', function() {
+        if (currentModalProductId) {
+          const productCard = document.querySelector(`[data-product-id="${currentModalProductId}"]`);
+          if (productCard) {
+            const addBtn = productCard.querySelector('.kv-bundle-add-to-cart');
+            if (addBtn && !addBtn.disabled) {
+              addBtn.click();
+              closeScentModal();
+            }
+          }
+        }
+      });
+  
+      // Close on Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && scentModal.classList.contains('active')) {
+          closeScentModal();
+        }
+      });
+  
+      // Info popup modal - disabled (scent modal kept as-is)
+  
+      // Open modals when clicking on milestone gifts
+      document.addEventListener('click', function(e) {
+        const milestoneGift = e.target.closest('.kv-milestone-gift');
+        if (milestoneGift) {
+          const milestone = milestoneGift.closest('.kv-progress-milestone');
+          if (milestone) {
+            const milestoneNumber = milestone.getAttribute('data-milestone');
+            e.preventDefault();
+            
+            // Open scent modal for milestone 1 (first milestone gift)
+            if (milestoneNumber === '1') {
+              const productData = {
+                productId: milestoneGift.getAttribute('data-product-id'),
+                title: milestoneGift.getAttribute('data-product-title'),
+                description: milestoneGift.getAttribute('data-product-description'),
+                details: milestoneGift.getAttribute('data-product-details'),
+                image: milestoneGift.getAttribute('data-product-image'),
+                variant: milestoneGift.getAttribute('data-product-variant'),
+                badge: milestoneGift.getAttribute('data-product-badge')
+              };
+              openScentModal(productData);
+            }
+            // Info modal disabled for milestones 2, 3, 4
+          }
+        }
+      });
+    });
+  
+    // Sync product state across all tabs
+    function syncProductState(productId, action) {
+      const allCards = document.querySelectorAll(`[data-product-id="${productId}"]`);
+      
+      allCards.forEach(card => {
+        if (!card.classList.contains('kv-bundle-product-card')) return;
+        
+        const quantitySelector = card.querySelector('.kv-bundle-quantity-selector');
+        const qtyInput = card.querySelector('.kv-bundle-qty-input');
+        
+        if (action === 'add') {
+          card.classList.add('has-quantity');
+          if (quantitySelector) quantitySelector.classList.add('active');
+          if (qtyInput) qtyInput.value = 1;
+        } else if (action === 'remove') {
+          card.classList.remove('has-quantity');
+          if (quantitySelector) quantitySelector.classList.remove('active');
+          if (qtyInput) qtyInput.value = 1;
+        }
+      });
+    }
+  
+    // Sync product quantity across all tabs
+    function syncProductQuantity(productId, quantity) {
+      const allCards = document.querySelectorAll(`[data-product-id="${productId}"]`);
+      
+      allCards.forEach(card => {
+        if (!card.classList.contains('kv-bundle-product-card')) return;
+        
+        const qtyInput = card.querySelector('.kv-bundle-qty-input');
+        if (qtyInput) {
+          qtyInput.value = quantity;
+        }
+      });
+    }
+  
+    // Update product quantity in selected products
+    function updateProductQuantity(productId, quantity) {
+      const product = selectedProducts.find(p => p.productId === productId);
+      if (product) {
+        product.quantity = quantity;
+        updateThumbnailCarousel();
+        if (document.getElementById('kv-minicart').classList.contains('active')) {
+          updateMiniCart();
+        }
+      }
+    }
+  
+    // Remove product from selected products
+    function removeSelectedProduct(productId) {
+      selectedProducts = selectedProducts.filter(p => p.productId !== productId);
+      updateThumbnailCarousel();
+      if (document.getElementById('kv-minicart').classList.contains('active')) {
+        updateMiniCart();
+        
+        // Close mini cart if no products left
+        if (selectedProducts.length === 0) {
+          setTimeout(() => {
+            document.getElementById('kv-minicart-overlay').classList.remove('active');
+            document.getElementById('kv-minicart').classList.remove('active');
+            document.body.style.overflow = '';
+          }, 300);
+        }
+      }
+    }
+  
+    // Update thumbnail carousel with selected products
+    function updateThumbnailCarousel() {
+      const carousel = document.getElementById('kv-selected-products');
+      const continueBtn = document.getElementById('kv-open-minicart');
+      const miniTrigger = document.querySelector('.kv-bundle-items-mini-trigger');
+      const skeletons = Array.from(carousel.querySelectorAll('.kv-skeleton-placeholder'));
+  
+      // Remove existing product thumbnails (keep skeleton placeholders)
+      const existingProducts = carousel.querySelectorAll('.kv-bundle-thumbnail-wrapper:not(.kv-skeleton-placeholder)');
+      existingProducts.forEach(el => el.remove());
+  
+      const totalSelectedCount = selectedProducts.reduce((sum, product) => {
+        return sum + (product.quantity || 0);
+      }, 0);
+  
+      // Build CTA pricing summary for 2+ selected items
+      let runningTotal = 0;
+      let runningCompareAtTotal = 0;
+      selectedProducts.forEach(product => {
+        const itemPrice = (product.price || 0) / 100;
+        runningTotal += itemPrice * (product.quantity || 0);
+  
+        if (product.compareAtPrice && product.compareAtPrice > product.price) {
+          const compareAtPrice = (product.compareAtPrice || 0) / 100;
+          runningCompareAtTotal += compareAtPrice * (product.quantity || 0);
+        }
+      });
+  
+      let runningGiftTotal = 0;
+      milestoneGifts
+        .filter(gift => totalSelectedCount >= gift.count)
+        .filter(gift => {
+          if (gift.count === milestones.milestone1) return true;
+          if (gift.count === milestones.milestone2 && milestones.milestone3 > 0 && totalSelectedCount >= milestones.milestone3) return false;
+          if (gift.count === milestones.milestone3 && milestones.milestone4 > 0 && totalSelectedCount >= milestones.milestone4) return false;
+          return true;
+        })
+        .forEach(gift => {
+          if (gift.price && gift.price > 0) {
+            runningGiftTotal += gift.price / 100;
+          }
+        });
+  
+      const baseCompareAt = (runningCompareAtTotal > runningTotal) ? runningCompareAtTotal : runningTotal;
+      const compareAtWithGifts = baseCompareAt + runningGiftTotal;
+      const savings = Math.max(0, compareAtWithGifts - runningTotal);
+      const totalFormatted = formatMoney(runningTotal * 100);
+      const savingsFormatted = formatMoney(savings * 100);
+      const badgeText=document.querySelector('.kv-progress-footer-message-empty')  
+  
+      // Update continue button state and text
+      if (totalSelectedCount < 1) {
+        continueBtn.disabled = true;
+        continueBtn.textContent = textLabels.addScents;
+        
+        // Hide mini trigger until at least one item is selected
+        if (miniTrigger) {
+          miniTrigger.style.display = 'none';
+        }
+      } else {
+        continueBtn.disabled = false;
+        if (savings > 0) {
+          continueBtn.textContent = `${textLabels.addToCart} (${textLabels.save} ${savingsFormatted}) ${totalFormatted}`;
+        } else {
+          continueBtn.textContent = `${textLabels.addToCart} ${totalFormatted}`;
+        }
+        // Show mini trigger when at least one item is selected
+        if (miniTrigger) {
+          miniTrigger.style.display = 'flex';
+        }
+      }
+      
+      // Show all skeletons first
+      skeletons.forEach(skeleton => skeleton.classList.remove('hidden'));
+  
+      const displayItems = [];
+  
+      // Build product thumbnail nodes
+      selectedProducts.forEach(product => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'kv-bundle-thumbnail-wrapper';
+        wrapper.setAttribute('data-product-id', product.productId);
+        
+        const img = document.createElement('img');
+        img.src = product.image.replace('width=600', 'width=160');
+        img.alt = product.title;
+        img.className = 'kv-bundle-thumbnail';
+        
+        const removeBtn = document.createElement('div');
+        removeBtn.className = 'kv-bundle-thumbnail-remove';
+        removeBtn.innerHTML = '&times;';
+        removeBtn.setAttribute('data-product-id', product.productId);
+        removeBtn.setAttribute('title', 'Remove');
+        
+        wrapper.appendChild(img);
+        wrapper.appendChild(removeBtn);
+        
+        if (product.quantity > 1) {
+          const qtyBadge = document.createElement('div');
+          qtyBadge.className = 'kv-bundle-thumbnail-qty';
+          qtyBadge.textContent = product.quantity;
+          wrapper.appendChild(qtyBadge);
+        }
+        
+        displayItems.push(wrapper);
+      });
+  
+      const unlockedGifts = milestoneGifts
+        .filter(gift => totalSelectedCount >= gift.count)
+        .filter(gift => {
+          if (gift.count === milestones.milestone1) {
+            return true;
+          }
+          if (gift.count === milestones.milestone2 && milestones.milestone3 > 0 && totalSelectedCount >= milestones.milestone3) {
+            return false;
+          }
+          if (gift.count === milestones.milestone3 && milestones.milestone4 > 0 && totalSelectedCount >= milestones.milestone4) {
+            return false;
+          }
+          return true;
+        })
+        .sort((a, b) => a.count - b.count);
+  
+      unlockedGifts.forEach(gift => {
+        const giftWrapper = document.createElement('div');
+        giftWrapper.className = 'kv-bundle-thumbnail-wrapper kv-bundle-thumbnail-gift';
+        giftWrapper.setAttribute('data-gift-count', gift.count);
+  
+        const giftInner = document.createElement('div');
+        giftInner.className = 'kv-bundle-thumbnail-gift-inner';
+  
+        if (gift.image) {
+          const giftImageWrapper = document.createElement('div');
+          giftImageWrapper.className = 'kv-bundle-thumbnail-gift-image';
+  
+          const giftImage = document.createElement('img');
+          giftImage.src = gift.image;
+          giftImage.alt = gift.title || 'Gift';
+          giftImage.loading = 'lazy';
+  
+          giftImageWrapper.appendChild(giftImage);
+          giftInner.appendChild(giftImageWrapper);
+        }
+  
+        if (gift.text) {
+          const giftText = document.createElement('div');
+          giftText.className = 'kv-bundle-thumbnail-gift-text';
+          giftText.innerHTML = gift.text;
+          giftInner.appendChild(giftText);
+        }
+  
+        giftWrapper.appendChild(giftInner);
+  
+        // Insert gift after the threshold position
+        // For example, if gift.count is 5, insert after the 5th product (at index 5)
+        // Count how many actual products (not gifts) we have so far
+        let productCount = 0;
+        let insertIndex = 0;
+        for (let i = 0; i < displayItems.length; i++) {
+          if (!displayItems[i].classList.contains('kv-bundle-thumbnail-gift')) {
+            productCount++;
+          }
+          if (productCount >= gift.count) {
+            insertIndex = i + 1;
+            break;
+          }
+        }
+        
+        // If we haven't reached the threshold yet, append at the end
+        if (productCount < gift.count) {
+          insertIndex = displayItems.length;
+        }
+        
+        displayItems.splice(insertIndex, 0, giftWrapper);
+      });
+  
+      // Render items into carousel, keeping skeleton order
+      let lastInserted = null;
+      displayItems.forEach((item, index) => {
+        if (skeletons[index]) {
+          carousel.insertBefore(item, skeletons[index]);
+          skeletons[index].classList.add('hidden');
+        } else if (skeletons.length) {
+          carousel.insertBefore(item, skeletons[skeletons.length - 1]);
+        } else {
+          carousel.appendChild(item);
+        }
+        lastInserted = item;
+      });
+  
+      // Auto-scroll carousel to last inserted element
+      if (lastInserted && typeof lastInserted.scrollIntoView === 'function') {
+        lastInserted.scrollIntoView({ behavior: 'smooth', inline: 'end', block: 'nearest' });
+      }
+      
+      // Update progress bar
+      updateProgressBar();
+    }
+  
+    // Update progress bar based on product count
+    function updateProgressBar() {
+      const progressFill = document.getElementById('kv-progress-fill');
+      const progressFooterMessage = document.getElementById('kv-progress-footer-message');
+      const progressMilestones = document.querySelectorAll('.kv-progress-milestone');
+      const progressFooterNormal = document.getElementById('kv-progress-footer-normal');
+      const progressFooterEmpty = document.getElementById('kv-progress-footer-empty');
+      
+      if (!progressFill) return;
+      
+      // Calculate current product count (total quantity across all products)
+      let currentCount = 0;
+      selectedProducts.forEach(product => {
+        currentCount += product.quantity;
+      });
+      
+      // Toggle footer visibility based on product selection
+      if (selectedProducts.length === 0) {
+        // No products selected - show empty footer
+        if (progressFooterNormal) progressFooterNormal.style.display = 'none';
+        if (progressFooterEmpty) progressFooterEmpty.style.display = 'block';
+      } else {
+        // Products are selected - show normal footer
+        if (progressFooterNormal) progressFooterNormal.style.display = 'block';
+        if (progressFooterEmpty) progressFooterEmpty.style.display = 'none';
+      }
+      
+      // Calculate progress percentage based on milestone segments
+      let progressPercent = 0;
+      
+      // Define milestone positions (matching the visual layout)
+      if (currentCount === 0) {
+        progressPercent = 0;
+      } else if (milestones.milestone4 > 0 && currentCount >= milestones.milestone4) {
+        progressPercent = 100;
+      } else if (milestones.milestone3 > 0 && currentCount >= milestones.milestone3) {
+        // Between milestone 3 and 4
+        const denom = (milestones.milestone4 - milestones.milestone3) || 1;
+        const segmentProgress = (currentCount - milestones.milestone3) / denom;
+        progressPercent = 66.66 + (segmentProgress * 33.34);
+      } else if (milestones.milestone2 > 0 && currentCount >= milestones.milestone2) {
+        // Between milestone 2 and 3
+        const denom = (milestones.milestone3 - milestones.milestone2) || 1;
+        const segmentProgress = (currentCount - milestones.milestone2) / denom;
+        progressPercent = 33.33 + (segmentProgress * 33.33);
+      } else {
+        // Between 0 and milestone 2
+        const denom = milestones.milestone2 || 1;
+        const segmentProgress = currentCount / denom;
+        progressPercent = segmentProgress * 33.33;
+      }
+      
+      // Update progress bar fill
+      progressFill.style.width = progressPercent + '%';
+      
+      // Update message based on progress
+      let messageText = '';
+      if (currentCount === 0) {
+        messageText = milestones.startText;
+      } else if (milestones.milestone4 > 0 && currentCount >= milestones.milestone4) {
+        messageText = milestones.completeText;
+      } else if (currentCount < milestones.milestone1) {
+        const remaining = milestones.milestone1 - currentCount;
+        messageText = milestones.milestone1Text.replace('[count]', remaining);
+      } else if (currentCount < milestones.milestone2 && milestones.milestone2 > 0) {
+        const remaining = milestones.milestone2 - currentCount;
+        messageText = milestones.milestone2Text.replace('[count]', remaining);
+      } else if (currentCount < milestones.milestone3 && milestones.milestone3 > 0) {
+        const remaining = milestones.milestone3 - currentCount;
+        messageText = milestones.milestone3Text.replace('[count]', remaining);
+      } else if (currentCount < milestones.milestone4 && milestones.milestone4 > 0) {
+        const remaining = milestones.milestone4 - currentCount;
+        messageText = milestones.milestone4Text.replace('[count]', remaining);
+      }
+      
+      // Update footer message
+      if (progressFooterMessage) {
+        const span = progressFooterMessage.querySelector('span');
+        if (span) {
+          span.innerHTML = messageText;
+        }
+        
+        // Make footer message clickable when count >= 3
+        if (currentCount >= 3) {
+          progressFooterMessage.classList.add('clickable');
+        } else {
+          progressFooterMessage.classList.remove('clickable');
+        }
+      }
+      
+      // Update milestone states
+      progressMilestones.forEach(milestone => {
+        const milestoneCount = parseInt(milestone.getAttribute('data-count'));
+        if (currentCount >= milestoneCount) {
+          milestone.classList.add('unlocked');
+        } else {
+          milestone.classList.remove('unlocked');
+        }
+      });
+    }
+  
+    // Handle thumbnail remove button clicks
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('kv-bundle-thumbnail-remove')) {
+        const productId = e.target.getAttribute('data-product-id');
+        
+        // Reset ALL instances of this product card across all tabs
+        syncProductState(productId, 'remove');
+        
+        // Remove from selected products
+        removeSelectedProduct(productId);
+      }
+    });
+  
+    // Update mini cart with selected products
+    function updateMiniCart() {
+      const miniCartItems = document.getElementById('kv-minicart-items');
+      const miniCartTotal = document.getElementById('kv-minicart-total');
+      const checkoutBtn = document.getElementById('kv-checkout-btn');
+  
+      if (selectedProducts.length === 0) {
+        miniCartItems.innerHTML = '<div class="kv-mini-cart-empty">' + textLabels.noItems + '</div>';
+        miniCartTotal.textContent = formatMoney(0);
+        checkoutBtn.innerHTML = textLabels.addToCart;
+        const miniCartFooter = document.querySelector('.kv-mini-cart-footer');
+        if (miniCartFooter) miniCartFooter.setAttribute('data-product-id', '');
+        return;
+      }
+  
+      miniCartItems.innerHTML = '';
+      let total = 0;
+      let compareAtTotal = 0;
+      const totalCount = selectedProducts.reduce((sum, product) => {
+        return sum + (product.quantity || 0);
+      }, 0);
+  
+      const unlockedMiniCartGifts = milestoneGifts
+        .filter(gift => totalCount >= gift.count)
+        .filter(gift => {
+          if (gift.count === milestones.milestone1) {
+            return true;
+          }
+          if (gift.count === milestones.milestone2 && milestones.milestone3 > 0 && totalCount >= milestones.milestone3) {
+            return false;
+          }
+          if (gift.count === milestones.milestone3 && milestones.milestone4 > 0 && totalCount >= milestones.milestone4) {
+            return false;
+          }
+          return true;
+        })
+        .sort((a, b) => a.count - b.count);
+  
+      // Add gift items first
+      unlockedMiniCartGifts.forEach(gift => {
+        const giftDiv = document.createElement('div');
+        giftDiv.className = 'kv-mini-cart-item kv-mini-cart-gift';
+        giftDiv.setAttribute('data-gift-count', gift.count);
+  
+        let giftMedia;
+        if (gift.image) {
+          giftMedia = document.createElement('img');
+          giftMedia.src = gift.image;
+          giftMedia.alt = gift.title || 'Free gift';
+          giftMedia.className = 'kv-mini-cart-item-image';
+        } else {
+          giftMedia = document.createElement('div');
+          giftMedia.className = 'kv-mini-cart-item-image kv-mini-cart-gift-placeholder';
+          giftMedia.textContent = 'ðŸŽ';
+        }
+  
+        const details = document.createElement('div');
+        details.className = 'kv-mini-cart-item-details';
+  
+        const giftLabel = document.createElement('div');
+        giftLabel.className = 'kv-mini-cart-gift-label';
+        giftLabel.textContent = textLabels.freeGift;
+        details.appendChild(giftLabel);
+  
+        const giftTitle = document.createElement('div');
+        giftTitle.className = 'kv-mini-cart-item-title';
+        giftTitle.textContent = gift.title || 'Free Gift';
+        details.appendChild(giftTitle);
+  
+        // Add price display: 0,00, strikethrough original price, and SAVE amount
+        if (gift.price && gift.price > 0) {
+          const priceDisplay = document.createElement('div');
+          priceDisplay.className = 'kv-mini-cart-gift-strikethrough';
+          
+          const freePrice = document.createElement('span');
+          freePrice.textContent = 'â‚¬0,00 ';
+          
+          const strikethrough = document.createElement('span');
+          strikethrough.style.textDecoration = 'line-through';
+          strikethrough.textContent = formatMoney(gift.price);
+          
+          const saveText = document.createElement('span');
+          saveText.style.color = '#000';
+          saveText.textContent = ' ' + textLabels.save + ' ' + formatMoney(gift.price);
+          
+          priceDisplay.appendChild(freePrice);
+          priceDisplay.appendChild(strikethrough);
+          priceDisplay.appendChild(saveText);
+          details.appendChild(priceDisplay);
+        }
+  
+        if (gift.text) {
+          const giftDesc = document.createElement('div');
+          giftDesc.className = 'kv-mini-cart-gift-text';
+          giftDesc.innerHTML = gift.text;
+          details.appendChild(giftDesc);
+        }
+  
+        const priceContainer = document.createElement('div');
+        priceContainer.className = 'kv-mini-cart-item-price kv-mini-cart-gift-price';
+        priceContainer.textContent = textLabels.free;
+        details.appendChild(priceContainer);
+  
+        giftDiv.appendChild(giftMedia);
+        giftDiv.appendChild(details);
+        miniCartItems.appendChild(giftDiv);
+        
+        // Add inventory date badge AFTER the gift div (as a sibling)
+        try {
+          if (gift.inventoryDate && typeof gift.inventoryDate === 'string' && gift.inventoryDate.trim() !== '') {
+            const today = getAmsterdamToday();
+            const invDate = new Date(gift.inventoryDate);
+            
+            // Check if date is valid and not in the past
+            if (!isNaN(invDate.getTime()) && invDate >= today) {
+              const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+              const formattedDate = monthNames[invDate.getMonth()] + ' ' + invDate.getDate();
+              
+              const inventoryBadge = document.createElement('div');
+              inventoryBadge.className = 'kv-mini-cart-inventory-badge kv-mini-cart-gift-inventory';
+              inventoryBadge.innerHTML = `
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5.99694 12C5.17287 12 4.39776 11.8449 3.6716 11.5347C2.94952 11.2245 2.31311 10.7939 1.76237 10.2429C1.21163 9.69184 0.779194 9.05306 0.465069 8.32653C0.155023 7.6 0 6.82449 0 6C0 5.17551 0.155023 4.4 0.465069 3.67347C0.779194 2.94694 1.21163 2.30816 1.76237 1.75714C2.31311 1.20612 2.94952 0.77551 3.6716 0.465306C4.39776 0.155102 5.17287 0 5.99694 0C6.82101 0 7.59612 0.155102 8.32228 0.465306C9.04844 0.77551 9.68689 1.20612 10.2376 1.75714C10.7884 2.30816 11.2188 2.94694 11.5288 3.67347C11.8429 4.4 12 5.17551 12 6C12 6.82449 11.8429 7.6 11.5288 8.32653C11.2188 9.05306 10.7884 9.69184 10.2376 10.2429C9.68689 10.7939 9.04844 11.2245 8.32228 11.5347C7.59612 11.8449 6.82101 12 5.99694 12ZM4.86486 9.33673H7.39827C7.46762 9.33673 7.52269 9.31633 7.56349 9.27551C7.60428 9.23061 7.62468 9.17551 7.62468 9.1102C7.62468 9.05306 7.60428 9.00204 7.56349 8.95714C7.52269 8.91224 7.46762 8.8898 7.39827 8.8898H6.3641V5.02041C6.3641 4.94694 6.3437 4.88776 6.30291 4.84286C6.26211 4.79388 6.20296 4.76939 6.12545 4.76939H4.9077C4.84243 4.76939 4.78939 4.79184 4.7486 4.83673C4.7078 4.88163 4.6874 4.93469 4.6874 4.99592C4.6874 5.05306 4.7078 5.10408 4.7486 5.14898C4.78939 5.19388 4.84243 5.21633 4.9077 5.21633H5.90515V8.8898H4.86486C4.79959 8.8898 4.74452 8.91224 4.69964 8.95714C4.65885 9.00204 4.63845 9.05306 4.63845 9.1102C4.63845 9.17551 4.65885 9.23061 4.69964 9.27551C4.74452 9.31633 4.79959 9.33673 4.86486 9.33673ZM5.9847 3.50816C6.12749 3.50816 6.24783 3.46122 6.34574 3.36735C6.44365 3.26939 6.49261 3.15102 6.49261 3.01224C6.49261 2.86939 6.44365 2.74898 6.34574 2.65102C6.24783 2.54898 6.12749 2.49796 5.9847 2.49796C5.846 2.49796 5.72565 2.54898 5.62366 2.65102C5.52575 2.74898 5.4768 2.86939 5.4768 3.01224C5.4768 3.15102 5.52575 3.26939 5.62366 3.36735C5.72565 3.46122 5.846 3.50816 5.9847 3.50816Z" fill="#162518"/>
+                </svg>
+                ${textLabels.giftPreOrderPrefix} ${gift.title} ${textLabels.giftPreOrderSuffix} ${formattedDate}`;
+              miniCartItems.appendChild(inventoryBadge);
+            }
+          }
+        } catch (error) {
+          // Silently fail if date parsing has issues
+          console.error('Error parsing gift inventory date:', error);
+        }
+      });
+  
+      // Add regular cart items after gifts
+      selectedProducts.forEach((product, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'kv-mini-cart-item';
+        itemDiv.setAttribute('data-product-id', product.productId);
+        
+        const itemPrice = (product.price / 100) || 0;
+        const itemSubtotal = itemPrice * product.quantity;
+        total += itemSubtotal;
+        
+        // Calculate compare-at price total
+        if (product.compareAtPrice && product.compareAtPrice > product.price) {
+          const compareAtPrice = (product.compareAtPrice / 100) || 0;
+          const compareAtSubtotal = compareAtPrice * product.quantity;
+          compareAtTotal += compareAtSubtotal;
+        }
+        
+        const priceDisplay = product.price ? formatMoney(product.price) : 'Loading...';
+        const subtotalDisplay = product.price && product.quantity > 1 ? `<div class="kv-mini-cart-item-subtotal">Subtotal: ${formatMoney(itemSubtotal * 100)}</div>` : '';
+        
+        // Format inventory date if it exists and is not in the past
+        let inventoryDateDisplay = '';
+        try {
+          if (product.inventoryDate && typeof product.inventoryDate === 'string' && product.inventoryDate.trim() !== '') {
+            const today = getAmsterdamToday();
+            const invDate = new Date(product.inventoryDate);
+            
+            // Check if date is valid and not in the past
+            if (!isNaN(invDate.getTime()) && invDate >= today) {
+              const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+              const formattedDate = monthNames[invDate.getMonth()] + ' ' + invDate.getDate();
+              inventoryDateDisplay = `
+                <div class="kv-mini-cart-inventory-badge">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.99694 12C5.17287 12 4.39776 11.8449 3.6716 11.5347C2.94952 11.2245 2.31311 10.7939 1.76237 10.2429C1.21163 9.69184 0.779194 9.05306 0.465069 8.32653C0.155023 7.6 0 6.82449 0 6C0 5.17551 0.155023 4.4 0.465069 3.67347C0.779194 2.94694 1.21163 2.30816 1.76237 1.75714C2.31311 1.20612 2.94952 0.77551 3.6716 0.465306C4.39776 0.155102 5.17287 0 5.99694 0C6.82101 0 7.59612 0.155102 8.32228 0.465306C9.04844 0.77551 9.68689 1.20612 10.2376 1.75714C10.7884 2.30816 11.2188 2.94694 11.5288 3.67347C11.8429 4.4 12 5.17551 12 6C12 6.82449 11.8429 7.6 11.5288 8.32653C11.2188 9.05306 10.7884 9.69184 10.2376 10.2429C9.68689 10.7939 9.04844 11.2245 8.32228 11.5347C7.59612 11.8449 6.82101 12 5.99694 12ZM4.86486 9.33673H7.39827C7.46762 9.33673 7.52269 9.31633 7.56349 9.27551C7.60428 9.23061 7.62468 9.17551 7.62468 9.1102C7.62468 9.05306 7.60428 9.00204 7.56349 8.95714C7.52269 8.91224 7.46762 8.8898 7.39827 8.8898H6.3641V5.02041C6.3641 4.94694 6.3437 4.88776 6.30291 4.84286C6.26211 4.79388 6.20296 4.76939 6.12545 4.76939H4.9077C4.84243 4.76939 4.78939 4.79184 4.7486 4.83673C4.7078 4.88163 4.6874 4.93469 4.6874 4.99592C4.6874 5.05306 4.7078 5.10408 4.7486 5.14898C4.78939 5.19388 4.84243 5.21633 4.9077 5.21633H5.90515V8.8898H4.86486C4.79959 8.8898 4.74452 8.91224 4.69964 8.95714C4.65885 9.00204 4.63845 9.05306 4.63845 9.1102C4.63845 9.17551 4.65885 9.23061 4.69964 9.27551C4.74452 9.31633 4.79959 9.33673 4.86486 9.33673ZM5.9847 3.50816C6.12749 3.50816 6.24783 3.46122 6.34574 3.36735C6.44365 3.26939 6.49261 3.15102 6.49261 3.01224C6.49261 2.86939 6.44365 2.74898 6.34574 2.65102C6.24783 2.54898 6.12749 2.49796 5.9847 2.49796C5.846 2.49796 5.72565 2.54898 5.62366 2.65102C5.52575 2.74898 5.4768 2.86939 5.4768 3.01224C5.4768 3.15102 5.52575 3.26939 5.62366 3.36735C5.72565 3.46122 5.846 3.50816 5.9847 3.50816Z" fill="#162518"/>
+                  </svg>
+                  ${textLabels.preOrderShips} ${formattedDate}
+                </div>`;
+            }
+          }
+        } catch (error) {
+          // Silently fail if date parsing has issues
+          console.error('Error parsing product inventory date:', error);
+        }
+        
+        itemDiv.innerHTML = `
+          <img src="${product.image.replace('width=600', 'width=160')}" alt="${product.title}" class="kv-mini-cart-item-image">
+          <div class="kv-mini-cart-item-details">
+            <div class="kv-mini-cart-item-title">${product.title}</div>
+            <div class="kv-mini-cart-item-price">${priceDisplay}</div>
+            ${subtotalDisplay}
+            ${inventoryDateDisplay}
+          </div>
+          <div class="kv-mini-cart-item-qty-controls">
+              <button class="kv-mini-cart-qty-btn kv-mini-cart-qty-decrease" data-index="${index}" type="button" aria-label="Decrease quantity">âˆ’</button>
+              <span class="kv-mini-cart-qty-value">${product.quantity}</span>
+              <button class="kv-mini-cart-qty-btn kv-mini-cart-qty-increase" data-index="${index}" type="button" aria-label="Increase quantity">+</button>
+            </div>
+        `;
+        
+        miniCartItems.appendChild(itemDiv);
+      });
+  
+      const totalFormatted = formatMoney(total * 100);
+      miniCartTotal.textContent = totalFormatted;
+      
+      // Calculate total gift value
+      let giftTotal = 0;
+      unlockedMiniCartGifts.forEach(gift => {
+        if (gift.price && gift.price > 0) {
+          giftTotal += (gift.price / 100);
+        }
+      });
+      
+      // Add gift prices to the normal price to show total value
+      const totalWithGifts = total + giftTotal;
+      
+      // Update mini-cart-footer with first product's ID
+      const miniCartFooter = document.querySelector('.kv-mini-cart-footer');
+      if (miniCartFooter && selectedProducts.length > 0) {
+        miniCartFooter.setAttribute('data-product-id', selectedProducts[0].productId || '');
+      }
+      
+      // Show compare-at price (normal price + gift value) if there are gifts or discount
+      if (giftTotal > 0 || (compareAtTotal > 0 && compareAtTotal > total)) {
+        // Use compareAtTotal if it's higher than normal price, otherwise use normal price
+        const baseCompareAt = (compareAtTotal > total) ? compareAtTotal : total;
+        const compareAtWithGifts = baseCompareAt + giftTotal;
+        const compareAtFormatted = formatMoney(compareAtWithGifts * 100);
+        checkoutBtn.innerHTML = `${textLabels.addToCart} â€¢ <span class="kv-compare-at-price">${compareAtFormatted}</span> <span class="kv-normal-price" data-price-multiplier="${totalCount}">${totalFormatted}</span>`;
+      } else {
+        checkoutBtn.innerHTML = `${textLabels.addToCart} â€¢ <span class="kv-normal-price" data-price-multiplier="${totalCount}">${totalFormatted}</span>`;
+      }
+  
+      // Pre-order / in-stock delivery notice in footer
+      const preorderNotice = document.getElementById('kv-minicart-preorder-notice');
+      const preorderDatesEl = document.getElementById('kv-preorder-dates');
+      const deliveryRow = document.getElementById('kv-preorder-delivery-row');
+      const affectedProductsEl = document.getElementById('kv-preorder-affected-products');
+      const infoPreorder = document.getElementById('kv-preorder-info-preorder');
+      const infoInstock = document.getElementById('kv-preorder-info-instock');
+      if (preorderNotice && preorderDatesEl) {
+        const today = getAmsterdamToday();
+        let latestPreorderDate = null;
+        let latestInstockDate = null;
+        let hasDateWithStock = false;
+        let hasDateOutOfStock = false;
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"];
+        const affectedItems = [];
+  
+        selectedProducts.forEach(product => {
+          const qty = typeof product.inventoryQuantity !== 'undefined' ? product.inventoryQuantity : 1;
+          if (qty > 0) {
+            hasDateWithStock = true;
+          }
+          if (product.inventoryDate && typeof product.inventoryDate === 'string' && product.inventoryDate.trim() !== '') {
+            try {
+              const invDate = new Date(product.inventoryDate);
+              if (!isNaN(invDate.getTime()) && invDate >= today) {
+                if (qty <= 0) {
+                  hasDateOutOfStock = true;
+                  if (!latestPreorderDate || invDate > latestPreorderDate) {
+                    latestPreorderDate = invDate;
+                  }
+                  affectedItems.push({ title: product.title, quantity: product.quantity || 1 });
+                }
+              }
+            } catch (e) {}
+          }
+        });
+  
+        unlockedMiniCartGifts.forEach(gift => {
+          if (gift.inventoryDate && typeof gift.inventoryDate === 'string' && gift.inventoryDate.trim() !== '') {
+            try {
+              const invDate = new Date(gift.inventoryDate);
+              if (!isNaN(invDate.getTime()) && invDate >= today) {
+                hasDateOutOfStock = true;
+                if (!latestPreorderDate || invDate > latestPreorderDate) {
+                  latestPreorderDate = invDate;
+                }
+                affectedItems.push({ title: gift.title, quantity: 1 });
+              }
+            } catch (e) {}
+          }
+        });
+  
+        // Reset toggle states
+        preorderNotice.querySelectorAll('.kv-preorder-notice-collapsed').forEach(el => el.style.display = '');
+        preorderNotice.querySelectorAll('.kv-preorder-notice-expanded').forEach(el => el.style.display = 'none');
+  
+        function formatPreorderDateRange(stockDate) {
+          const euCountries = ['AT','BG','HR','CY','CZ','DK','EE','FI','FR','GR','HU','IE','IT','LV','LT','LU','MT','PL','PT','RO','SK','SI','ES','SE'];
+          let minDays, maxDays;
+          switch (kvCountryCode) {
+            case 'NL': minDays = kvDeliveryDays.nl; maxDays = kvDeliveryDays.nl; break;
+            case 'BE': minDays = kvDeliveryDays.be; maxDays = kvDeliveryDays.be; break;
+            case 'DE': minDays = kvDeliveryDays.de; maxDays = kvDeliveryDays.de; break;
+            default:
+              if (euCountries.includes(kvCountryCode)) {
+                minDays = kvDeliveryDays.euMin;
+                maxDays = kvDeliveryDays.euMax;
+              } else {
+                minDays = kvDeliveryDays.rowMin;
+                maxDays = kvDeliveryDays.rowMax;
+              }
+          }
+          const startDate = new Date(stockDate);
+          startDate.setDate(startDate.getDate() + minDays);
+          const endDate = new Date(stockDate);
+          endDate.setDate(endDate.getDate() + maxDays);
+          if (minDays === maxDays) {
+            return `${startDate.getDate()} ${monthNames[startDate.getMonth()]}`;
+          } else if (startDate.getMonth() === endDate.getMonth()) {
+            return `${startDate.getDate()} - ${endDate.getDate()} ${monthNames[endDate.getMonth()]}`;
+          } else {
+            return `${startDate.getDate()} ${monthNames[startDate.getMonth()]} - ${endDate.getDate()} ${monthNames[endDate.getMonth()]}`;
+          }
+        }
+  
+        if (hasDateOutOfStock && latestPreorderDate) {
+          console.log('DEBUG preorder:', { latestPreorderDate, kvCountryCode, kvDeliveryDays });
+          preorderDatesEl.textContent = formatPreorderDateRange(latestPreorderDate);
+  
+          if (affectedProductsEl) {
+            const itemsList = affectedItems.map(item => `${item.quantity}x ${item.title}`).join('<br>');
+            affectedProductsEl.innerHTML = '<br>' + itemsList;
+          }
+  
+          deliveryRow.style.display = '';
+          infoPreorder.style.display = '';
+          infoInstock.style.display = 'none';
+          preorderNotice.style.display = '';
+        } else if (hasDateWithStock && !hasDateOutOfStock) {
+          preorderDatesEl.textContent = getInstockDeliveryDateRange();
+  
+          const instockCollapsed = infoInstock.querySelector('.kv-preorder-notice-collapsed');
+          if (instockCollapsed) {
+            const toggleLink = instockCollapsed.querySelector('.kv-preorder-toggle');
+            const toggleHtml = toggleLink ? ' ' + toggleLink.outerHTML : '';
+            instockCollapsed.innerHTML = getInstockCollapsedMessage() + toggleHtml;
+          }
+  
+          deliveryRow.style.display = '';
+          infoPreorder.style.display = 'none';
+          infoInstock.style.display = '';
+          preorderNotice.style.display = '';
+        } else {
+          preorderNotice.style.display = 'none';
+        }
+      }
+    }
+  
+    // Format money function - dynamic currency, no hardcoded symbols
+    function formatMoney(cents) {
+      if (typeof cents === 'undefined' || cents === null || isNaN(cents)) {
+        return '';
+      }
+      
+      // Convert cents to amount
+      const dollars = cents / 100;
+      const amount = dollars.toFixed(2);
+      const amountNoDecimals = Math.floor(dollars).toString();
+      const amountWithCommaSeparator = dollars.toFixed(2).replace('.', ',');
+      
+      // Use Shopify's formatMoney if available
+      if (typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
+        return Shopify.formatMoney(cents, moneyFormat);
+      }
+      
+      {% raw %}
+      // Fallback: manually format using the money format template
+      if (moneyFormat && moneyFormat.includes('{{')) {
+        let formatted = moneyFormat;
+        
+        // Replace placeholders in order (most specific first)
+        if (formatted.includes('{{amount_with_comma_separator}}')) {
+          formatted = formatted.split('{{amount_with_comma_separator}}').join(amountWithCommaSeparator);
+        }
+        if (formatted.includes('{{amount_no_decimals}}')) {
+          formatted = formatted.split('{{amount_no_decimals}}').join(amountNoDecimals);
+        }
+        if (formatted.includes('{{amount}}')) {
+          formatted = formatted.split('{{amount}}').join(amount);
+        }
+        
+        return formatted;
+      }
+      {% endraw %}
+      
+      // Final fallback: return amount with currency symbol
+      return `$${amount}`;
+    }
+  
+    // Handle quantity changes in mini cart
+    document.addEventListener('click', function(e) {
+      // Check if clicked element or its parent is the decrease button
+      const decreaseBtn = e.target.classList.contains('kv-mini-cart-qty-decrease') ? e.target : e.target.closest('.kv-mini-cart-qty-decrease');
+      if (decreaseBtn) {
+        const index = parseInt(decreaseBtn.getAttribute('data-index'));
+        const product = selectedProducts[index];
+        
+        if (!product) return;
+        
+        if (product.quantity > 1) {
+          product.quantity--;
+          // Update ALL instances of this product across all tabs
+          syncProductQuantity(product.productId, product.quantity);
+          updateThumbnailCarousel();
+          updateMiniCart();
+        } else {
+          // Remove product - sync across all tabs
+          syncProductState(product.productId, 'remove');
+          selectedProducts.splice(index, 1);
+          updateThumbnailCarousel();
+          updateMiniCart();
+          
+          // Close mini cart if no products left
+          if (selectedProducts.length === 0) {
+            setTimeout(() => {
+              document.getElementById('kv-minicart-overlay').classList.remove('active');
+              document.getElementById('kv-minicart').classList.remove('active');
+              document.body.style.overflow = '';
+            }, 300);
+          }
+        }
+        return;
+      }
+  
+      // Check if clicked element or its parent is the increase button
+      const increaseBtn = e.target.classList.contains('kv-mini-cart-qty-increase') ? e.target : e.target.closest('.kv-mini-cart-qty-increase');
+      if (increaseBtn) {
+        const index = parseInt(increaseBtn.getAttribute('data-index'));
+        const product = selectedProducts[index];
+        
+        if (!product) return;
+        
+        product.quantity++;
+        // Update ALL instances of this product across all tabs
+        syncProductQuantity(product.productId, product.quantity);
+        updateThumbnailCarousel();
+        updateMiniCart();
+      }
+    });
+  
+    // Read more / Read less toggle for pre-order notice
+    document.addEventListener('click', function(e) {
+      const toggle = e.target.closest('.kv-preorder-toggle');
+      if (!toggle) return;
+      e.preventDefault();
+      const infoBlock = toggle.closest('.kv-preorder-notice-info');
+      if (!infoBlock) return;
+      const collapsed = infoBlock.querySelector('.kv-preorder-notice-collapsed');
+      const expanded = infoBlock.querySelector('.kv-preorder-notice-expanded');
+      if (toggle.dataset.action === 'expand') {
+        collapsed.style.display = 'none';
+        expanded.style.display = '';
+        const notice = toggle.closest('.kv-mini-cart-preorder-notice');
+        if (notice) {
+          setTimeout(function() {
+            notice.scrollIntoView({ behavior: 'smooth', block: 'end' });
+          }, 50);
+        }
+      } else {
+        collapsed.style.display = '';
+        expanded.style.display = 'none';
+      }
+    });
+</script>
