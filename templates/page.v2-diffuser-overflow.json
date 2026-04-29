@@ -26,12 +26,23 @@
     "v2_diffuser_kv_bundle_fA7kKV": {
       "type": "v2-diffuser-kv-bundle",
       "blocks": {
+        "diffuser_YtKKHF": {
+          "type": "diffuser",
+          "settings": {
+            "selector_product": "smart-aroma-diffuser-pro",
+            "selector_title": "Diffuser Name",
+            "selector_description": "High-performance scenting with maximum coverage and intensity. Built for a stronger, more immersive experience.",
+            "selector_old_price": "€149,95",
+            "selector_new_price": "€74,98",
+            "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
+          }
+        },
         "diffuser_BGpK3B": {
           "type": "diffuser",
           "settings": {
             "selector_product": "smart-aroma-diffuser-2",
             "selector_title": "Diffuser Name",
-            "selector_description": "Describe the diffuser here.",
+            "selector_description": "More consistent and noticeable scenting, designed for daily use. A strong balance between performance and control.",
             "selector_old_price": "€149,95",
             "selector_new_price": "€74,98",
             "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
@@ -58,6 +69,7 @@
         }
       },
       "block_order": [
+        "diffuser_YtKKHF",
         "diffuser_BGpK3B",
         "diffuser_TFAztV",
         "collection_P9aJaF"
