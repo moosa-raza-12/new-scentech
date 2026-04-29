@@ -86,7 +86,7 @@
         "step_number": "2",
         "heading": "Add scents",
         "subtext": "Pick the scents you like. Add more to unlock a better price.",
-        "badge_text": "Choose at least 2 scents",
+        "badge_text": "",
         "bg_color": "#f7f7f7",
         "heading_color": "#222222",
         "subtext_color": "#666666",
