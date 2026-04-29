@@ -26,6 +26,17 @@
     "v2_diffuser_kv_bundle_fA7kKV": {
       "type": "v2-diffuser-kv-bundle",
       "blocks": {
+        "diffuser_BGpK3B": {
+          "type": "diffuser",
+          "settings": {
+            "selector_product": "smart-aroma-diffuser-2",
+            "selector_title": "Diffuser Name",
+            "selector_description": "Describe the diffuser here.",
+            "selector_old_price": "€149,95",
+            "selector_new_price": "€74,98",
+            "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
+          }
+        },
         "diffuser_TFAztV": {
           "type": "diffuser",
           "settings": {
@@ -47,6 +58,7 @@
         }
       },
       "block_order": [
+        "diffuser_BGpK3B",
         "diffuser_TFAztV",
         "collection_P9aJaF"
       ],
