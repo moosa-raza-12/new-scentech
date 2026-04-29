@@ -2115,7 +2115,7 @@
       if (priceDisplay && product.variantPrice) {
         const discountedPrice = (product.variantPrice * 0.5) / 100;
         priceDisplay.innerHTML = `$${discountedPrice.toFixed(2)}`;
-        messageDiv.style.display='block';
+        messageDiv.style.display='flex';
       }
       
       if (infoDisplay) {
