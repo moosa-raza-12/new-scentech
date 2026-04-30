@@ -26,6 +26,14 @@
     "v2_diffuser_kv_bundle_fA7kKV": {
       "type": "v2-diffuser-kv-bundle",
       "blocks": {
+        "collection_83jWBx": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
         "collection_Ckicqw": {
           "type": "collection",
           "settings": {
@@ -85,6 +93,7 @@
         }
       },
       "block_order": [
+        "collection_83jWBx",
         "collection_Ckicqw",
         "collection_RKkGgt",
         "diffuser_TFAztV",
