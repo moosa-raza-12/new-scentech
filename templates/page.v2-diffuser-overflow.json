@@ -26,6 +26,14 @@
     "v2_diffuser_kv_bundle_fA7kKV": {
       "type": "v2-diffuser-kv-bundle",
       "blocks": {
+        "collection_RKkGgt": {
+          "type": "collection",
+          "settings": {
+            "collection": "warm-indulgent-scents",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
         "diffuser_TFAztV": {
           "type": "diffuser",
           "settings": {
@@ -69,6 +77,7 @@
         }
       },
       "block_order": [
+        "collection_RKkGgt",
         "diffuser_TFAztV",
         "diffuser_BGpK3B",
         "diffuser_YtKKHF",
