@@ -34,10 +34,10 @@
             "badge_text": ""
           }
         },
-        "collection_Ckicqw": {
+        "collection_P9aJaF": {
           "type": "collection",
           "settings": {
-            "collection": "floral-romantic-scents",
+            "collection": "all",
             "products_limit": 12,
             "badge_text": ""
           }
@@ -46,6 +46,14 @@
           "type": "collection",
           "settings": {
             "collection": "warm-indulgent-scents",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
+        "collection_Ckicqw": {
+          "type": "collection",
+          "settings": {
+            "collection": "floral-romantic-scents",
             "products_limit": 12,
             "badge_text": ""
           }
@@ -82,24 +90,16 @@
             "selector_new_price": "€74,98",
             "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
           }
-        },
-        "collection_P9aJaF": {
-          "type": "collection",
-          "settings": {
-            "collection": "all",
-            "products_limit": 12,
-            "badge_text": ""
-          }
         }
       },
       "block_order": [
         "collection_83jWBx",
-        "collection_Ckicqw",
+        "collection_P9aJaF",
         "collection_RKkGgt",
+        "collection_Ckicqw",
         "diffuser_TFAztV",
         "diffuser_BGpK3B",
-        "diffuser_YtKKHF",
-        "collection_P9aJaF"
+        "diffuser_YtKKHF"
       ],
       "name": "V2 Diffuser Bundle section",
       "settings": {
