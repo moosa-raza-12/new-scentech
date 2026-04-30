@@ -553,7 +553,7 @@
         })
         .then(response => response.json())
         .then(data => {
-          checkoutBtn.innerHTML = 'âœ“ Added to Cart!';
+          checkoutBtn.innerHTML = 'Added to Cart!';
   
           const cartPromises = [
             fetch('/cart.js').then(resp => {
