@@ -1414,7 +1414,7 @@
             ${inventoryDateDisplay}
           </div>
           <div class="kv-mini-cart-item-qty-controls">
-              <button class="kv-mini-cart-qty-btn kv-mini-cart-qty-decrease" data-index="${index}" type="button" aria-label="Decrease quantity">âˆ’</button>
+              <button class="kv-mini-cart-qty-btn kv-mini-cart-qty-decrease" data-index="${index}" type="button" aria-label="Decrease quantity">-</button>
               <span class="kv-mini-cart-qty-value">${product.quantity}</span>
               <button class="kv-mini-cart-qty-btn kv-mini-cart-qty-increase" data-index="${index}" type="button" aria-label="Increase quantity">+</button>
             </div>
@@ -1449,9 +1449,9 @@
         const baseCompareAt = (compareAtTotal > total) ? compareAtTotal : total;
         const compareAtWithGifts = baseCompareAt + giftTotal;
         const compareAtFormatted = formatMoney(compareAtWithGifts * 100);
-        checkoutBtn.innerHTML = `${textLabels.addToCart} â€¢ <span class="kv-compare-at-price">${compareAtFormatted}</span> <span class="kv-normal-price" data-price-multiplier="${totalCount}">${totalFormatted}</span>`;
+        checkoutBtn.innerHTML = `${textLabels.addToCart}<span class="kv-compare-at-price">${compareAtFormatted}</span> <span class="kv-normal-price" data-price-multiplier="${totalCount}">${totalFormatted}</span>`;
       } else {
-        checkoutBtn.innerHTML = `${textLabels.addToCart} â€¢ <span class="kv-normal-price" data-price-multiplier="${totalCount}">${totalFormatted}</span>`;
+        checkoutBtn.innerHTML = `${textLabels.addToCart} <span class="kv-normal-price" data-price-multiplier="${totalCount}">${totalFormatted}</span>`;
       }
   
       // Pre-order / in-stock delivery notice in footer
