@@ -44,6 +44,7 @@
         {% assign product_obj = block.settings.selector_product %}
         {% assign new_price_display = nil %}
         {% assign old_price_display = nil %}
+        {% assign discount_percent = block.settings.selector_discount_percent | default: 0 %}
 
         {% comment %} Get image {% endcomment %}
         {% assign img_url = block.settings.selector_image %}
@@ -52,20 +53,16 @@
         {% endif %}
 
         {% if product_obj != blank %}
-          {% comment %} Get the actual product price (original price) {% endcomment %}
           {% assign original_price_cents = product_obj.price %}
 
-          {% comment %} Calculate 50% discount {% endcomment %}
-          {% assign discounted_price_cents = original_price_cents | times: 50 | divided_by: 100 %}
-
-          {% comment %} Format prices {% endcomment %}
-          {% assign old_price_display = original_price_cents | money %}
-          {% assign new_price_display = discounted_price_cents | money %}
-
+          {% if discount_percent > 0 %}
+            {% assign discount_multiplier = 100 | minus: discount_percent %}
+            {% assign discounted_price_cents = original_price_cents | times: discount_multiplier | divided_by: 100 %}
+            {% assign old_price_display = original_price_cents | money %}
+            {% assign new_price_display = discounted_price_cents | money %}
           {% else %}
-          {% comment %} Fallback to manual prices if no product selected {% endcomment %}
-          {% assign new_price_display = block.settings.selector_new_price %}
-          {% assign old_price_display = block.settings.selector_old_price %}
+            {% assign new_price_display = original_price_cents | money %}
+          {% endif %}
         {% endif %}
 
         {% assign selected_variant = product_obj.selected_or_first_available_variant %}
@@ -123,10 +120,9 @@
                 </h3>
 
                 <div class="cds-price">
-                  <span class="old">{{ old_price_display }}</span>
-                  {% comment %} {% if product_obj != blank %}
-                                                    <span class="discount-badge">50% off</span>
-                                        {% endif %} {% endcomment %}
+                  {% if old_price_display != nil and old_price_display != blank %}
+                    <span class="old">{{ old_price_display }}</span>
+                  {% endif %}
                   <span class="new">{{ new_price_display }}</span>
                 </div>
               </div>
@@ -134,13 +130,11 @@
             </div>
           </div>
 
-          <div class="cds-highlight">
-            {% comment %} {{ block.settings.selector_highlight_text }} {% endcomment %}
-            <b>Spring Sale:</b>
-            Pay only
-            <b>{{ new_price_display }}</b>
-            after adding 2 scents!
-          </div>
+          {% if discount_percent > 0 and new_price_display != blank %}
+            <div class="cds-highlight">
+              {{ block.settings.selector_highlight_text | replace: '[price]', new_price_display | replace: '[percent]', discount_percent }}
+            </div>
+          {% endif %}
         </div>
       {% endif %}
     {% endfor %}
@@ -361,6 +355,7 @@
     display: flex;
     gap: 20px;
     padding: 6px;
+    cursor: pointer;
     align-items: center;
   }
 

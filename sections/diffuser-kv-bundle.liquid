@@ -2617,22 +2617,21 @@
       "default": "Describe the diffuser here."
     },
     {
-      "type": "text",
-      "id": "selector_old_price",
-      "label": "Old Price",
-      "default": "€149,95"
-    },
-    {
-      "type": "text",
-      "id": "selector_new_price",
-      "label": "New Price",
-      "default": "€74,98"
+      "type": "range",
+      "id": "selector_discount_percent",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "label": "Discount Percentage",
+      "default": 50,
+      "info": "Percentage discount off the product price. 0 = no discount."
     },
     {
       "type": "richtext",
       "id": "selector_highlight_text",
       "label": "Highlight Text",
-      "default": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
+      "default": "<p><b>Spring Sale:</b> Pay only <b>[price]</b> after adding 2 scents!</p>",
+      "info": "Use [price] for discounted price and [percent] for discount %"
     }
   ]
      },

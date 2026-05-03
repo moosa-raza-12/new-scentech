@@ -553,6 +553,15 @@
         })
         .then(response => response.json())
         .then(data => {
+          fetch('/cart/update.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ attributes: { 'scent': 'true' } })
+          })
+          .then(response => response.json())
+          .then(cart => console.log('Scent property added successfully:', cart.attributes))
+          .catch(error => console.error('Error:', error));
+
           checkoutBtn.innerHTML = 'âœ“ Added to Cart!';
   
           const cartPromises = [
@@ -886,6 +895,33 @@
           syncProductQuantity(product.productId, 1);
         });
         selectedProducts = selectedProducts.filter(product => product.selectionSource !== 'cds-selector');
+      }
+
+      // Auto-select the first diffuser card when 2 scents are reached and none is selected yet
+      if (nonSelectorItemCount >= 2) {
+        const hasSelectorProduct = selectedProducts.some(p => p.selectionSource === 'cds-selector');
+        if (!hasSelectorProduct) {
+          const firstCard = document.querySelector('.cds-cards');
+          if (firstCard && firstCard.getAttribute('data-product-id')) {
+            // Visually activate the first card
+            document.querySelectorAll('.cds-cards').forEach(c => c.classList.remove('active'));
+            firstCard.classList.add('active');
+            const highlight = firstCard.querySelector('.cds-highlight');
+            if (highlight) highlight.style.display = '';
+
+            // Dispatch selection event so the diffuser gets added to selectedProducts
+            const autoSelected = {
+              productId: firstCard.getAttribute('data-product-id'),
+              productHandle: firstCard.getAttribute('data-product-handle'),
+              variantId: firstCard.getAttribute('data-variant-id'),
+              variantPrice: parseInt(firstCard.getAttribute('data-variant-price') || '0', 10),
+              variantCompareAtPrice: parseInt(firstCard.getAttribute('data-variant-compare-at-price') || '0', 10),
+              title: firstCard.getAttribute('data-product-title') || '',
+              image: firstCard.getAttribute('data-product-image') || ''
+            };
+            document.dispatchEvent(new CustomEvent('kv:selector-product-selected', { detail: autoSelected }));
+          }
+        }
       }
       
       // Remove existing product thumbnails (keep skeleton placeholders)
