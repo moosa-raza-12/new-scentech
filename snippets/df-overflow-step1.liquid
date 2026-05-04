@@ -75,6 +75,7 @@
     font-weight: 400;
     margin: 0;
     font-size: 20px;
+    font-family: N27;
   }
   @media (max-width: 639px) {
     .cds-title {
@@ -171,10 +172,11 @@
   .cds-name {
     margin: 0;
     color: #160000;
-font-size: 20px;
-font-weight: 600;
-letter-spacing: 0;
-line-height: 1;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1;
+    font-family: N27;
   }
   @media (max-width: 639px) {
     .cds-name {
@@ -187,11 +189,12 @@ line-height: 1;
   }
 
   .cds-desc {
-    margin: 12px 0 0;
+    margin: 5px 0 0;
     color: #160000;
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 0;
+    line-height: normal;
   }
   @media (max-width: 639px) {
     .cds-desc {
@@ -357,13 +360,13 @@ font-weight: 400;
 
             <div class="cds-content">
               <div class="cds-header-content">
-                <h3 class="cds-name">
+                <p class="cds-name">
                   {% if product_obj != blank %}
                   {{ block.settings.selector_title }}
                   {% else %}
                   {{ product_obj.title }} 
                   {% endif %}
-                </h3>
+                </p>
 
                 <div class="cds-price">
                   

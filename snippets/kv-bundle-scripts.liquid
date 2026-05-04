@@ -474,7 +474,7 @@
         })
         .then(response => response.json())
         .then(data => {
-          checkoutBtn.innerHTML = 'âœ“ Added to Cart!';
+          checkoutBtn.innerHTML = '✓ Added to Cart!';
 
           fetch('/cart/update.js', {
             method: 'POST',

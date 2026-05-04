@@ -88,11 +88,21 @@
       giftPreOrderSuffix: '{{ section.settings.text_gift_preorder_suffix | default: "is on Pre-Order. Delivers on" }}'
     };
   
+    function parseMilestonePrice(priceStr) {
+      if (!priceStr) return 0;
+      const cleaned = priceStr.replace(/[^\d,\.]/g, '').replace(',', '.');
+      return Math.round(parseFloat(cleaned) * 100) || 0;
+    }
+
     const milestones = {
       milestone1: {{ section.settings.milestone_1_count | default: 0 }},
       milestone2: {{ section.settings.milestone_2_count | default: 0 }},
       milestone3: {{ section.settings.milestone_3_count | default: 0 }},
       milestone4: {{ section.settings.milestone_4_count | default: 0 }},
+      milestone1Price: parseMilestonePrice('{{ section.settings.milestone_1_price }}'),
+      milestone2Price: parseMilestonePrice('{{ section.settings.milestone_2_price }}'),
+      milestone3Price: parseMilestonePrice('{{ section.settings.milestone_3_price }}'),
+      milestone4Price: parseMilestonePrice('{{ section.settings.milestone_4_price }}'),
       milestone1Text: '{{ section.settings.milestone_1_text | default: "Add [count] more scents for a FREE gift!" }}',
       milestone2Text: '{{ section.settings.milestone_2_text | default: "Add [count] more scents for a FREE gift!" }}',
       milestone3Text: '{{ section.settings.milestone_3_text | default: "Add [count] more scents for a FREE gift!" }}',
@@ -100,6 +110,17 @@
       startText: '{{ section.settings.progress_start_text | default: "Start building your bundle!" }}',
       completeText: '{{ section.settings.progress_complete_text | default: "ðŸŽ‰ Congratulations! All rewards unlocked!" }}'
     };
+
+    function getMilestonePricePerScent(scentCount) {
+      if (milestones.milestone4 > 0 && scentCount >= milestones.milestone4) {
+        return milestones.milestone4Price;
+      } else if (milestones.milestone3 > 0 && scentCount >= milestones.milestone3) {
+        return milestones.milestone3Price;
+      } else if (milestones.milestone2 > 0 && scentCount >= milestones.milestone2) {
+        return milestones.milestone2Price;
+      }
+      return milestones.milestone1Price;
+    }
   
     const milestoneGifts = [];
   
@@ -519,31 +540,28 @@
         document.body.style.overflow = '';
       }
   
-      openMiniCartBtn.addEventListener('click', openMiniCart);
       closeMiniCartBtn.addEventListener('click', closeMiniCart);
       miniCartOverlay.addEventListener('click', closeMiniCart);
-  
+
       // Mini trigger to open mini cart
       const miniTrigger = document.querySelector('.kv-bundle-items-mini-trigger');
       if (miniTrigger) {
-        miniTrigger.addEventListener('click', openMiniCart);
+        miniTrigger.addEventListener('click', function() { addBundleToCart(openMiniCartBtn); });
       }
-  
-      // Checkout button - add all items to cart
-      checkoutBtn.addEventListener('click', function() {
+
+      // Shared add-to-cart logic used by both the continue button and checkout button
+      function addBundleToCart(triggerBtn) {
         if (selectedProducts.length === 0) return;
-  
-        const originalButtonHTML = checkoutBtn.innerHTML;
-        checkoutBtn.disabled = true;
-        checkoutBtn.innerHTML = 'Adding to cart...';
-  
-        // Prepare items for cart
+
+        const originalButtonHTML = triggerBtn.innerHTML;
+        triggerBtn.disabled = true;
+        triggerBtn.innerHTML = 'Adding to cart...';
+
         const items = selectedProducts.map(product => ({
           id: product.variantId,
           quantity: product.quantity
         }));
-  
-        // Add all items to cart 
+
         fetch('/cart/add.js', {
           method: 'POST',
           headers: {
@@ -562,8 +580,8 @@
           .then(cart => console.log('Scent property added successfully:', cart.attributes))
           .catch(error => console.error('Error:', error));
 
-          checkoutBtn.innerHTML = 'âœ“ Added to Cart!';
-  
+          triggerBtn.innerHTML = '✓ Added to Cart!';
+
           const cartPromises = [
             fetch('/cart.js').then(resp => {
               if (!resp.ok) throw new Error('Failed to fetch cart data');
@@ -574,23 +592,23 @@
               return resp.text();
             })
           ];
-  
+
           Promise.all(cartPromises)
             .then(([cartData, sectionsHtml]) => {
               const tempDiv = document.createElement('div');
               tempDiv.innerHTML = sectionsHtml;
               const cartDrawerContent = tempDiv.querySelector('#cart-drawer');
               const cartDrawer = document.querySelector('cart-drawer');
-  
+
               if (cartDrawer && cartDrawerContent) {
                 cartDrawer.innerHTML = cartDrawerContent.innerHTML;
               }
-  
+
               const cartCountElements = document.querySelectorAll('cart-count');
               cartCountElements.forEach(counter => {
                 counter.itemCount = cartData.item_count;
               });
-  
+
               if (cartDrawer && typeof cartDrawer.show === 'function') {
                 cartDrawer.show();
               } else {
@@ -599,7 +617,7 @@
                   detail: { drawer: cartDrawer }
                 }));
               }
-  
+
               document.dispatchEvent(new CustomEvent('cart:change', {
                 bubbles: true,
                 detail: {
@@ -608,40 +626,49 @@
                   sections: { 'cart-drawer': sectionsHtml }
                 }
               }));
-  
+
               document.dispatchEvent(new CustomEvent('variant:add', {
                 bubbles: true,
                 detail: { cart: cartData }
               }));
-  
+
               document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
-  
-              // Close mini cart and reset selections
+
               closeMiniCart();
               selectedProducts.forEach(product => {
                 syncProductState(product.productId, 'remove');
               });
               selectedProducts = [];
               updateThumbnailCarousel();
-  
-              checkoutBtn.disabled = false;
+
+              triggerBtn.disabled = false;
               setTimeout(() => {
-                checkoutBtn.innerHTML = originalButtonHTML;
+                triggerBtn.innerHTML = originalButtonHTML;
               }, 1500);
             })
             .catch(error => {
               console.error('Error updating cart drawer:', error);
-              checkoutBtn.disabled = false;
-              checkoutBtn.innerHTML = originalButtonHTML;
+              triggerBtn.disabled = false;
+              triggerBtn.innerHTML = originalButtonHTML;
               window.location.href = '/cart';
             });
         })
         .catch(error => {
-          checkoutBtn.disabled = false;
-          checkoutBtn.innerHTML = originalButtonHTML;
+          triggerBtn.disabled = false;
+          triggerBtn.innerHTML = originalButtonHTML;
           alert('Error adding to cart. Please try again.');
           console.error('Error:', error);
         });
+      }
+
+      // Continue button directly adds to cart (no mini cart)
+      openMiniCartBtn.addEventListener('click', function() {
+        addBundleToCart(openMiniCartBtn);
+      });
+
+      // Checkout button in mini cart also adds to cart
+      checkoutBtn.addEventListener('click', function() {
+        addBundleToCart(checkoutBtn);
       });
   
       // Initialize progress bar on page load
@@ -932,19 +959,33 @@
         return sum + (product.quantity || 0);
       }, 0);
   
-      // Build CTA pricing summary for 2+ selected items
-      let runningTotal = 0;
+      // Build CTA pricing using milestone-based per-scent pricing
+      const scentCount = selectedProducts
+        .filter(product => product.selectionSource !== 'cds-selector')
+        .reduce((sum, product) => sum + (product.quantity || 0), 0);
+
+      const pricePerScent = getMilestonePricePerScent(scentCount);
+      let runningTotal = (scentCount * pricePerScent) / 100;
+
+      // Add diffuser at 50% price when 2+ scents are selected
+      const diffuserProduct = selectedProducts.find(p => p.selectionSource === 'cds-selector');
+      if (diffuserProduct && scentCount >= 2) {
+        const diffuserPrice = (diffuserProduct.price || 0) / 100;
+        runningTotal += diffuserPrice * 0.5;
+      }
+
+      // Calculate original total for compare-at / savings display
       let runningCompareAtTotal = 0;
       selectedProducts.forEach(product => {
-        const itemPrice = (product.price || 0) / 100;
-        runningTotal += itemPrice * (product.quantity || 0);
-  
-        if (product.compareAtPrice && product.compareAtPrice > product.price) {
-          const compareAtPrice = (product.compareAtPrice || 0) / 100;
-          runningCompareAtTotal += compareAtPrice * (product.quantity || 0);
+        if (product.selectionSource === 'cds-selector') {
+          runningCompareAtTotal += ((product.price || 0) / 100) * (product.quantity || 0);
+        } else if (product.compareAtPrice && product.compareAtPrice > product.price) {
+          runningCompareAtTotal += ((product.compareAtPrice || 0) / 100) * (product.quantity || 0);
+        } else {
+          runningCompareAtTotal += ((product.price || 0) / 100) * (product.quantity || 0);
         }
       });
-  
+
       let runningGiftTotal = 0;
       milestoneGifts
         .filter(gift => totalSelectedCount >= gift.count)
@@ -959,7 +1000,7 @@
             runningGiftTotal += gift.price / 100;
           }
         });
-  
+
       const baseCompareAt = (runningCompareAtTotal > runningTotal) ? runningCompareAtTotal : runningTotal;
       const compareAtWithGifts = baseCompareAt + runningGiftTotal;
       const savings = Math.max(0, compareAtWithGifts - runningTotal);
@@ -978,11 +1019,7 @@
         }
       } else {
         continueBtn.disabled = false;
-        if (savings > 0) {
-          continueBtn.textContent = `${textLabels.addToCart} (${textLabels.save} ${savingsFormatted}) ${totalFormatted}`;
-        } else {
-          continueBtn.textContent = `${textLabels.addToCart} ${totalFormatted}`;
-        }
+        continueBtn.textContent = `${textLabels.addToCart} ${totalFormatted}`;
         // Show mini trigger when minimum item count is reached
         if (miniTrigger) {
           miniTrigger.style.display = 'flex';
@@ -1365,24 +1402,41 @@
         }
       });
   
+      // Compute scent count for milestone tier pricing
+      const miniCartScentCount = selectedProducts
+        .filter(product => product.selectionSource !== 'cds-selector')
+        .reduce((sum, product) => sum + (product.quantity || 0), 0);
+      const miniCartPricePerScent = getMilestonePricePerScent(miniCartScentCount);
+
       // Add regular cart items after gifts
       selectedProducts.forEach((product, index) => {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'kv-mini-cart-item';
         itemDiv.setAttribute('data-product-id', product.productId);
-        
-        const itemPrice = (product.price / 100) || 0;
-        const itemSubtotal = itemPrice * product.quantity;
-        total += itemSubtotal;
-        
-        // Calculate compare-at price total
-        if (product.compareAtPrice && product.compareAtPrice > product.price) {
-          const compareAtPrice = (product.compareAtPrice / 100) || 0;
-          const compareAtSubtotal = compareAtPrice * product.quantity;
-          compareAtTotal += compareAtSubtotal;
+
+        let itemPrice, itemSubtotal, priceDisplay;
+
+        if (product.selectionSource === 'cds-selector') {
+          itemPrice = ((product.price || 0) / 100) * 0.5;
+          itemSubtotal = itemPrice * product.quantity;
+          total += itemSubtotal;
+          const originalPrice = (product.price || 0);
+          priceDisplay = product.price
+            ? `<span style="text-decoration:line-through;opacity:.5">${formatMoney(originalPrice)}</span> ${formatMoney(originalPrice * 0.5)}`
+            : 'Loading...';
+
+          compareAtTotal += ((product.price || 0) / 100) * (product.quantity || 0);
+        } else {
+          itemPrice = miniCartPricePerScent / 100;
+          itemSubtotal = itemPrice * product.quantity;
+          total += itemSubtotal;
+
+          if (product.price && product.price > miniCartPricePerScent) {
+            compareAtTotal += ((product.price || 0) / 100) * (product.quantity || 0);
+          }
+
+          priceDisplay = miniCartPricePerScent ? formatMoney(miniCartPricePerScent) : 'Loading...';
         }
-        
-        const priceDisplay = product.price ? formatMoney(product.price) : 'Loading...';
         const subtotalDisplay = product.price && product.quantity > 1 ? `<div class="kv-mini-cart-item-subtotal">Subtotal: ${formatMoney(itemSubtotal * 100)}</div>` : '';
         
         // Format inventory date if it exists and is not in the past
