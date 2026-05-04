@@ -113,16 +113,20 @@
               <div class="cds-header-content">
                 <h3 class="cds-name">
                   {% if product_obj != blank %}
-                    {{ product_obj.title }}
+                  {{ block.settings.selector_title }}
                   {% else %}
-                    {{ block.settings.selector_title }}
+                  {{ product_obj.title }} 
                   {% endif %}
                 </h3>
 
                 <div class="cds-price">
-                  {% if old_price_display != nil and old_price_display != blank %}
+                  
+                    {% if old_price_display != nil and old_price_display != blank %}
                     <span class="old">{{ old_price_display }}</span>
-                  {% endif %}
+                    {% else %}
+                    <span class="old">{{ new_price_display }}</span>
+                    {% endif %}
+                
                   <span class="new">{{ new_price_display }}</span>
                 </div>
               </div>
@@ -259,15 +263,16 @@
     }
   }
   .cds-step {
-    width: 40px;
-    height: 40px;
-    background: #1f3d2b;
+    width: 24px;
+    height: 24px;
+    background: #162518;
     color: #fff;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
+    font-size: 12px;
   }
   @media (max-width: 639px) {
     .cds-step {
@@ -280,7 +285,7 @@
     color: #160000;
     font-weight: 400;
     margin: 0;
-    font-size: 24px;
+    font-size: 16px;
   }
   @media (max-width: 639px) {
     .cds-title {
@@ -300,7 +305,7 @@
   }
 
   .cds-subtext {
-    margin-top: 10px;
+    margin-top: 12px;
     color: #160000;
 
     font-weight: 400;
@@ -320,8 +325,9 @@
     background: #938E70;
     color: #fff;
     padding: 14px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     text-align: center;
+    font-size: 12px;
   }
   @media screen and (max-width: 639px) {
     .cds-banner {
@@ -372,8 +378,9 @@
   .cds-name {
     margin: 0;
     color: #160000;
-    font-size: 18px;
-    font-weight: 400;
+font-size: 16px;
+font-weight: 400;
+letter-spacing: 0;
   }
   @media (max-width: 639px) {
     .cds-name {
@@ -387,9 +394,10 @@
 
   .cds-desc {
     margin: 12px 0 0;
-    color: #555;
-    font-size: 14px;
+    color: #160000;
+    font-size: 12px;
     font-weight: 400;
+    letter-spacing: 0;
   }
   @media (max-width: 639px) {
     .cds-desc {
@@ -413,13 +421,14 @@
   .cds-price .old {
     display: block;
     text-decoration: line-through;
-    color: #999;
-    font-size: 16px;
+    color: #938E70;
+    font-size: 12px;
   }
 
   .cds-price .new {
     font-weight: 600;
-    font-size: 16px;
+    font-size: 12px;
+    color: #160000;
   }
   @media (max-width: 749px) {
     .cds-price .new {

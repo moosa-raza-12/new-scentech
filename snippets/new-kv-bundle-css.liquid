@@ -231,7 +231,7 @@
     margin: 0 auto;
     border-radius: 99px;
     border: 2px solid #C5C1BB;
-    background: #D9D3CD;
+    background: #fff;
   }
 
   .kv-progress-milestone.unlocked .kv-milestone-marker {
@@ -262,7 +262,7 @@
     transform: translateX(-50%);
     text-align: center;
     white-space: nowrap;
-    color: #162518;
+    color: rgba(22, 37, 24, 0.60);
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
@@ -270,7 +270,7 @@
   }
 
   .kv-progress-milestone.unlocked .kv-milestone-price-display {
-    color: #162518;
+    color: rgba(22, 37, 24, 0.60);
   }
 
   .kv-progress-gifts {
@@ -359,7 +359,7 @@
   .kv-bundle-tabs {
     display: flex;
     gap: 8px;
-    margin: 0 0 44px;
+    margin: 0 0 20px;
     overflow-x: auto;
     scrollbar-width: thin;
   }
@@ -517,7 +517,7 @@
   }
   @media (min-width: 768px) {
     .kv-bundle-interrupter-title {
-      font-size: var(--kv-interrupter-title-size, 16px);
+      font-size:  16px;
     }
   }
 
@@ -526,6 +526,10 @@
     font-family: 'N27';
     font-weight: 400;
     line-height: 1.1;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 8px;
   }
 
   .kv-bundle-interrupter-text {
@@ -537,6 +541,7 @@
 
   .kv-bundle-interrupter-text p {
     margin: 0;
+    font-size: 14px;
   }
 
   .kv-bundle-interrupter-cta {
@@ -689,7 +694,7 @@
   }
 
   .kv-bundle-product-title {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -702,6 +707,7 @@
     justify-content: space-between;
     font-family: 'N27';
   }
+
 
   .kv-bundle-product-info-icon {
     width: 14px;
@@ -1076,6 +1082,12 @@
   .kv-bundle-quantity-selector.active {
     display: flex;
   }
+  @media (max-width: 749px) {
+    .kv-bundle-qty-btn {
+    width: 24px !important;
+    height: 24px !important;
+  }
+}
 
   .kv-bundle-qty-btn {
     width: 34px;
@@ -1806,7 +1818,7 @@
   }
 
   .kv-bundle-tabs {
-    margin: 0 0 32px;
+    margin: 0 0 20px;
   }
 
   .kv-bundle-products-grid {
@@ -1920,7 +1932,7 @@
   }
 
   .kv-bundle-qty-input {
-    width: 40px;
+    width: 18px;
     padding: 0;
   }
 

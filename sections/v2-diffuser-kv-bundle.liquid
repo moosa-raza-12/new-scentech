@@ -27,7 +27,7 @@ line-height: normal;
 opacity: 0.6;
     }
 </style>
-                              
+       
 <div class="kv-page-preloader" id="kv-page-preloader">
   <div class="kv-preloader-spinner"></div>
 </div>
@@ -197,9 +197,12 @@ opacity: 0.6;
                  height="900"
                >
              {% endif %}
-             {% if intr.settings.badge_text != blank %}
-               <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-             {% endif %}
+             {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+             {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+             <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+             {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+             <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+             {%- endif -%}
            </div>
            {% assign intr_atc_product = all_products[intr.settings.cta_product] %}
            <div class="kv-bundle-interrupter-content">
@@ -264,9 +267,12 @@ opacity: 0.6;
                  height="900"
                >
              {% endif %}
-             {% if intr.settings.badge_text != blank %}
-               <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-             {% endif %}
+             {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+             {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+             <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+             {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+             <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+             {%- endif -%}
            </div>
            {% assign intr_atc_product = all_products[intr.settings.cta_product] %}
            <div class="kv-bundle-interrupter-content">
@@ -345,9 +351,12 @@ opacity: 0.6;
                      height="900"
                    >
                  {% endif %}
-                 {% if intr.settings.badge_text != blank %}
-                   <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                 {% endif %}
+                 {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+                 {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+                 <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+                 {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+                 <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+                 {%- endif -%}
                </div>
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
@@ -412,9 +421,12 @@ opacity: 0.6;
                      height="900"
                    >
                  {% endif %}
-                 {% if intr.settings.badge_text != blank %}
-                   <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                 {% endif %}
+                 {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+                 {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+                 <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+                 {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+                 <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+                 {%- endif -%}
                </div>
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
@@ -638,9 +650,12 @@ opacity: 0.6;
                      height="900"
                    >
                  {% endif %}
-                 {% if intr.settings.badge_text != blank %}
-                   <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                 {% endif %}
+                 {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+                 {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+                 <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+                 {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+                 <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+                 {%- endif -%}
                </div>
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
@@ -671,72 +686,72 @@ opacity: 0.6;
                  {% endif %} {% endcomment %}
                  {% if product.variants.size > 1 %}
                      <div class="kv-bundle-product-variants">
-                         {% for variant in product.variants limit: 5 %}
-                         {% if variant.featured_image %}
-                             <img 
-                             src="{{ variant.featured_image | image_url: width: 100 }}" 
-                             alt="{{ variant.title | escape }}"
-                             class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
-                             data-variant-id="{{ variant.id }}"
-                             data-variant-price="{{ variant.price }}"
-                             data-variant-compare-at-price="{{ variant.compare_at_price }}"
-                             title="{{ variant.title }}"
-                             loading="lazy"
-                             width="50"
-                             height="50">
-                         {% elsif product.featured_image %}
-                             <img 
-                             src="{{ product.featured_image | image_url: width: 100 }}" 
-                             alt="{{ variant.title | escape }}"
-                             class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
-                             data-variant-id="{{ variant.id }}"
-                             data-variant-price="{{ variant.price }}"
-                             data-variant-compare-at-price="{{ variant.compare_at_price }}"
-                             title="{{ variant.title }}"
-                             loading="lazy"
-                             width="50"
-                             height="50">
-                         {% endif %}
-                         {% endfor %}
+  {% for variant in product.variants limit: 5 %}
+  {% if variant.featured_image %}
+      <img 
+      src="{{ variant.featured_image | image_url: width: 100 }}" 
+      alt="{{ variant.title | escape }}"
+      class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
+      data-variant-id="{{ variant.id }}"
+      data-variant-price="{{ variant.price }}"
+      data-variant-compare-at-price="{{ variant.compare_at_price }}"
+      title="{{ variant.title }}"
+      loading="lazy"
+      width="50"
+      height="50">
+  {% elsif product.featured_image %}
+      <img 
+      src="{{ product.featured_image | image_url: width: 100 }}" 
+      alt="{{ variant.title | escape }}"
+      class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
+      data-variant-id="{{ variant.id }}"
+      data-variant-price="{{ variant.price }}"
+      data-variant-compare-at-price="{{ variant.compare_at_price }}"
+      title="{{ variant.title }}"
+      loading="lazy"
+      width="50"
+      height="50">
+  {% endif %}
+  {% endfor %}
                      </div>
                      {% endif %}
         
                      {%- comment -%} Product Controls (Quantity + Add to Cart) {%- endcomment -%}
                      <div class="kv-bundle-product-controls">
                      <div class="kv-bundle-quantity-selector">
-                         <button class="kv-bundle-qty-btn kv-bundle-qty-decrease" type="button" aria-label="Decrease quantity">
-                             <svg width="4" height="2" viewBox="0 0 4 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                 <path d="M0 0H3.77051V1.49805H0V0Z" fill="white"/>
-                             </svg>
-                         </button>
-                         <input 
-                         type="number" 
-                         class="kv-bundle-qty-input" 
-                         value="1" 
-                         min="1" 
-                         readonly
-                         aria-label="Quantity">
-                         <button class="kv-bundle-qty-btn kv-bundle-qty-increase" type="button" aria-label="Increase quantity">
-                             <svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                 <path d="M0 2.34229H2.33594V0H3.68799V2.34229H6.03027V3.69434H3.68799V6.03662H2.33594V3.69434H0V2.34229Z" fill="white"/>
-                             </svg>
-                         </button>
+  <button class="kv-bundle-qty-btn kv-bundle-qty-decrease" type="button" aria-label="Decrease quantity">
+      <svg width="4" height="2" viewBox="0 0 4 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 0H3.77051V1.49805H0V0Z" fill="white"/>
+      </svg>
+  </button>
+  <input 
+  type="number" 
+  class="kv-bundle-qty-input" 
+  value="1" 
+  min="1" 
+  readonly
+  aria-label="Quantity">
+  <button class="kv-bundle-qty-btn kv-bundle-qty-increase" type="button" aria-label="Increase quantity">
+      <svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 2.34229H2.33594V0H3.68799V2.34229H6.03027V3.69434H3.68799V6.03662H2.33594V3.69434H0V2.34229Z" fill="white"/>
+      </svg>
+  </button>
                      </div>
         
                      {% if product.available %}
-                         <button 
-                         class="kv-bundle-add-to-cart" 
-                         type="button"
-                         data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-                         data-variant-price="{{ product.selected_or_first_available_variant.price }}"
-                         data-variant-compare-at-price="{{ product.selected_or_first_available_variant.compare_at_price }}"
-                         data-product-id="{{ product.id }}">
-                         <span>{{ section.settings.text_add_button | default: '+ Add' }}</span>
-                         </button>
+  <button 
+  class="kv-bundle-add-to-cart" 
+  type="button"
+  data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+  data-variant-price="{{ product.selected_or_first_available_variant.price }}"
+  data-variant-compare-at-price="{{ product.selected_or_first_available_variant.compare_at_price }}"
+  data-product-id="{{ product.id }}">
+  <span>{{ section.settings.text_add_button | default: '+ Add' }}</span>
+  </button>
                      {% else %}
-                         <button class="kv-bundle-add-to-cart" type="button" disabled>
-                         <span>{{ section.settings.text_sold_out | default: 'Sold Out' }}</span>
-                         </button>
+  <button class="kv-bundle-add-to-cart" type="button" disabled>
+  <span>{{ section.settings.text_sold_out | default: 'Sold Out' }}</span>
+  </button>
                      {% endif %}
                      </div>
                </div>
@@ -766,9 +781,12 @@ opacity: 0.6;
                      height="900"
                    >
                  {% endif %}
-                 {% if intr.settings.badge_text != blank %}
-                   <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                 {% endif %}
+                 {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+                 {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+                 <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+                 {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+                 <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+                 {%- endif -%}  
                </div>
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
@@ -984,9 +1002,12 @@ opacity: 0.6;
                  height="900"
                >
              {% endif %}
-             {% if intr.settings.badge_text != blank %}
-               <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-             {% endif %}
+             {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+             {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+             <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+             {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+             <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+             {%- endif -%}
            </div>
            <div class="kv-bundle-interrupter-content">
              {% if intr.settings.heading != blank %}
@@ -1051,9 +1072,12 @@ opacity: 0.6;
                  height="900"
                >
              {% endif %}
-             {% if intr.settings.badge_text != blank %}
-               <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-             {% endif %}
+             {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+             {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+             <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+             {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+             <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+             {%- endif -%}
            </div>
            <div class="kv-bundle-interrupter-content">
              {% if intr.settings.heading != blank %}
@@ -1138,9 +1162,12 @@ opacity: 0.6;
                      height="900"
                    >
                  {% endif %}
-                 {% if intr.settings.badge_text != blank %}
-                   <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                 {% endif %}
+                 {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+                 {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+                 <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+                 {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+                 <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+                 {%- endif -%}
                </div>
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
@@ -1205,9 +1232,12 @@ opacity: 0.6;
                      height="900"
                    >
                  {% endif %}
-                 {% if intr.settings.badge_text != blank %}
-                   <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                 {% endif %}
+                 {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+                 {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+                 <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+                 {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+                 <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+                 {%- endif -%}
                </div>
                {% assign intr_atc_product = all_products[intr.settings.cta_product] %}
                <div class="kv-bundle-interrupter-content">
@@ -1282,9 +1312,12 @@ opacity: 0.6;
                      height="900"
                    >
                  {% endif %}
-                 {% if intr.settings.badge_text != blank %}
-                   <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                 {% endif %}
+                 {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+                 {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+                 <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+                 {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+                 <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+                 {%- endif -%}
                </div>
                {% assign intr_atc_product = all_products[intr.settings.cta_product] %}
                <div class="kv-bundle-interrupter-content">
@@ -1349,9 +1382,12 @@ opacity: 0.6;
                      height="900"
                    >
                  {% endif %}
-                 {% if intr.settings.badge_text != blank %}
-                   <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                 {% endif %}
+                 {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+                 {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+                 <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+                 {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+                 <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+                 {%- endif -%}
                </div>
                {% assign intr_atc_product = all_products[intr.settings.cta_product] %}
                <div class="kv-bundle-interrupter-content">
@@ -1564,9 +1600,12 @@ opacity: 0.6;
                      height="900"
                    >
                  {% endif %}
-                 {% if intr.settings.badge_text != blank %}
-                   <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                 {% endif %}
+                 {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+                 {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+                 <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+                 {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+                 <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+                 {%- endif -%}
                </div>
                {% assign intr_atc_product = all_products[intr.settings.cta_product] %}
                <div class="kv-bundle-interrupter-content">
@@ -1631,9 +1670,12 @@ opacity: 0.6;
                      height="900"
                    >
                  {% endif %}
-                 {% if intr.settings.badge_text != blank %}
-                   <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                 {% endif %}
+                 {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+                 {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+                 <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+                 {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+                 <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+                 {%- endif -%}
                </div>
                {% assign intr_atc_product = all_products[intr.settings.cta_product] %}
                <div class="kv-bundle-interrupter-content">
@@ -1843,9 +1885,12 @@ opacity: 0.6;
                      height="900"
                    >
                  {% endif %}
-                 {% if intr.settings.badge_text != blank %}
-                   <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                 {% endif %}
+                 {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+                 {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+                 <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+                 {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+                 <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+                 {%- endif -%}
                </div>
                {% assign intr_atc_product = all_products[intr.settings.cta_product] %}
                <div class="kv-bundle-interrupter-content">
@@ -1910,9 +1955,12 @@ opacity: 0.6;
                      height="900"
                    >
                  {% endif %}
-                 {% if intr.settings.badge_text != blank %}
-                   <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                 {% endif %}
+                 {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+                 {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+                 <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+                 {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+                 <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+                 {%- endif -%}
                </div>
                {% assign intr_atc_product = all_products[intr.settings.cta_product] %}
                <div class="kv-bundle-interrupter-content">
@@ -1978,7 +2026,7 @@ opacity: 0.6;
           </div>
    <div class="kv-bundle-items-sticky-inner">
       
-           <div class="kv-bundle-thumbnail-carousel" id="kv-selected-products">
+           <div class="kv-bundle-thumbnail-carousel" id="kv-selected-products" style="display:none">
     {%- comment -%} Skeleton placeholders - shown when no products selected {%- endcomment -%}
     <div class="kv-bundle-thumbnail-wrapper kv-skeleton-placeholder">
     <div class="kv-bundle-thumbnail kv-skeleton">
@@ -2099,7 +2147,71 @@ opacity: 0.6;
   </div> 
      </div>
    </div>
-   
+
+   <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const cardSelector = '.cds-cards';
+    const activeClass = 'active';
+    const highlightSelector = '.cds-highlight';
+  
+    function hideAllHighlights() {
+      document.querySelectorAll(highlightSelector).forEach(hl => {
+        hl.style.display = 'none';
+      });
+    }
+  
+    function resetActiveCards() {
+      document.querySelectorAll(cardSelector).forEach(card => {
+        card.classList.remove(activeClass);
+      });
+    }
+  
+    function showHighlightForCard(card) {
+      const highlight = card.querySelector(highlightSelector);
+      if (highlight) {
+        highlight.style.display = ''; // revert to CSS default (e.g., block or flex)
+      }
+    }
+  
+    // Initially hide all highlights (if they are not already hidden by CSS)
+    hideAllHighlights();
+  
+    // Delegate click event to handle dynamically added cards
+    document.body.addEventListener('click', function(e) {
+      // Find the closest .cds-cards element (allows clicking on inner elements)
+      const card = e.target.closest(cardSelector);
+      if (!card) return;
+  
+      // If this card is already active, do nothing (or optionally unselect – decide)
+      if (card.classList.contains(activeClass)) {
+        return; // already active, ignore
+      }
+  
+      // Remove active class from all cards and hide all highlights
+      resetActiveCards();
+      hideAllHighlights();
+  
+      // Activate the clicked card
+      card.classList.add(activeClass);
+      showHighlightForCard(card);
+  
+      const selectedProduct = {
+        productId: card.getAttribute('data-product-id'),
+        productHandle: card.getAttribute('data-product-handle'),
+        variantId: card.getAttribute('data-variant-id'),
+        variantPrice: parseInt(card.getAttribute('data-variant-price') || '0', 10),
+        variantCompareAtPrice: parseInt(card.getAttribute('data-variant-compare-at-price') || '0', 10),
+        title: card.getAttribute('data-product-title') || '',
+        image: card.getAttribute('data-product-image') || ''
+      };
+  
+      document.dispatchEvent(new CustomEvent('kv:selector-product-selected', {
+        detail: selectedProduct
+      }));
+    });
+  });
+</script>
+
  {%- comment -%} Info Popup Modal - disabled {%- endcomment -%}
  {% comment %}
  <div class="kv-info-modal-overlay" id="kv-info-modal-overlay"></div>
@@ -2124,33 +2236,7 @@ opacity: 0.6;
    </div>
  </div>
  {% endcomment %}
- <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const priceDisplay = document.getElementById('selected-price-display');
-    const infoDisplay = document.getElementById('product-info-display');
-    const messageDiv= document.querySelector('.cds-highlights')
-    
-    // Listen for selections from the snippet
-    document.addEventListener('kv:selector-product-selected', function(event) {
-      const product = event.detail;
-      
-      // Price is already calculated in the snippet as 50% off
-      // You can either recalculate or trust the snippet's calculation
-      if (priceDisplay && product.variantPrice) {
-        const discountedPrice = (product.variantPrice * 0.5) / 100;
-        priceDisplay.innerHTML = `$${discountedPrice.toFixed(2)}`;
-        messageDiv.style.display='flex';
-      }
-      
-      if (infoDisplay) {
-        infoDisplay.innerHTML = `
-          <p>Product: ${product.title}</p>
-          <p>Variant ID: ${product.variantId}</p>
-        `;
-      }
-    });
-  });
-</script> 
+ 
  {% render 'v2-diffuser-kv-bundle-script' %}
    
    {% schema %}
@@ -2643,15 +2729,25 @@ opacity: 0.6;
       "default": "Describe the diffuser here."
     },
     {
+      "type": "range",
+      "id": "selector_discount_percent",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "label": "Discount Percentage",
+      "default": 50,
+      "info": "Set to 0 to show original price only. E.g. 50 = show 50% off."
+    },
+    {
       "type": "text",
       "id": "selector_old_price",
-      "label": "Old Price",
+      "label": "Old Price (fallback display only)",
       "default": "€149,95"
     },
     {
       "type": "text",
       "id": "selector_new_price",
-      "label": "New Price",
+      "label": "New Price (fallback display only)",
       "default": "€74,98"
     },
     {

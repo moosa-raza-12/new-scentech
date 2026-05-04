@@ -1,0 +1,1050 @@
+{
+  "article": [],
+  "blog": [],
+  "brand": [],
+  "collection": [
+    {
+      "key": "main_benefit_1",
+      "namespace": "custom",
+      "name": "Main Benefit 1",
+      "description": "Benefit/USP in max 3 words",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "main_benefit_2",
+      "namespace": "custom",
+      "name": "Main Benefit 2",
+      "description": "Benefit/USP in max 3 words",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "main_benefit_3",
+      "namespace": "custom",
+      "name": "Main Benefit 3",
+      "description": "Benefit/USP in max 3 words",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "lander_heading",
+      "namespace": "custom",
+      "name": "Lander Heading",
+      "description": "Make sure this heading speaks to the target persona (45 characters max).",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "hero_text",
+      "namespace": "custom",
+      "name": "Hero text",
+      "description": "This text is displayed under the Lander Header. Speak to the target audience. (50 - 140 characters)",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "mobile_collection_banner",
+      "namespace": "custom",
+      "name": "Mobile Collection Banner",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "pc_collection_banner",
+      "namespace": "custom",
+      "name": "PC Collection Banner",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "scent_quiz_link",
+      "namespace": "custom",
+      "name": "Scent Quiz Link",
+      "description": "This should be the link to the scent quiz that was made for the audience that visits this lander.",
+      "type": {
+        "name": "url",
+        "category": "URL"
+      }
+    },
+    {
+      "key": "problem_headline",
+      "namespace": "custom",
+      "name": "Problem Headline",
+      "description": "Twee regels",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "problem_body",
+      "namespace": "custom",
+      "name": "Problem Body",
+      "description": "Max 150 characters. Focus on riding the problem based on the angle",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "solution_1_headline",
+      "namespace": "custom",
+      "name": "Solution #1 Headline",
+      "description": "Max 30 characters. Describe solution in a headline. Focus the solution on this specific angle",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "solution_body_1",
+      "namespace": "custom",
+      "name": "Solution #1 Body",
+      "description": "Max 150 characters. Focus on riding the solution based on the angle",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "solution_2_headline",
+      "namespace": "custom",
+      "name": "Solution #2 Headline",
+      "description": "Max 30 characters. Describe solution in a headline. Focus the solution on this specific angle",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "solution_4_headline",
+      "namespace": "custom",
+      "name": "Solution #4 Headline",
+      "description": "Max 30 characters. Describe solution in a headline. Focus the solution on this specific angle",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "solution_3_healine",
+      "namespace": "custom",
+      "name": "Solution #3 Healine",
+      "description": "Max 30 characters. Describe solution in a headline. Focus the solution on this specific angle",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "solution_2_body",
+      "namespace": "custom",
+      "name": "Solution #2 Body",
+      "description": "Max 150 characters. Focus on riding the solution based on the angle",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "solution_3_body",
+      "namespace": "custom",
+      "name": "Solution #3 Body",
+      "description": "Max 150 characters. Focus on riding the solution based on the angle",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "solution_4_body",
+      "namespace": "custom",
+      "name": "Solution #4 Body",
+      "description": "Max 150 characters. Focus on riding the solution based on the angle",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "problem_image",
+      "namespace": "custom",
+      "name": "Problem Image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "solution_1_image",
+      "namespace": "custom",
+      "name": "Solution #1 Image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "solution_2_image",
+      "namespace": "custom",
+      "name": "Solution #2 Image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "solution_3_image",
+      "namespace": "custom",
+      "name": "Solution #3 Image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "solution_4_image",
+      "namespace": "custom",
+      "name": "Solution #4 Image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "general_problem_headline",
+      "namespace": "custom",
+      "name": "General Problem Headline",
+      "description": "This is the headline that is displayed above the problem/solution section.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "sale_offer",
+      "namespace": "custom",
+      "name": "Sale offer",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
+  "company": [],
+  "company_location": [],
+  "location": [],
+  "market": [],
+  "order": [],
+  "page": [
+    {
+      "key": "quiz_key_lantern",
+      "namespace": "custom",
+      "name": "Quiz Key Lantern",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "klarna_how_it_works",
+      "namespace": "custom",
+      "name": "Klarna: How it works",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
+  "product": [
+    {
+      "key": "color-pattern",
+      "namespace": "shopify",
+      "name": "Color",
+      "description": "Defines the primary color or pattern, such as blue or striped",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "key_notes",
+      "namespace": "custom",
+      "name": "Key Notes",
+      "description": "The key notes of the fragrance.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "mood",
+      "namespace": "custom",
+      "name": "Mood",
+      "description": "The mood that the fragrance signals to people. Things like cozy warmth, energized, etc. ",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "scent_profile",
+      "namespace": "custom",
+      "name": "Scent Profile",
+      "description": "Describes the fragrance's personality with relatable scent notes.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "fragrance_experience",
+      "namespace": "custom",
+      "name": "Fragrance Experience",
+      "description": "Evokes the mood and feeling created by the fragrance.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "scent_story",
+      "namespace": "custom",
+      "name": "Scent Story",
+      "description": "A brief, immersive narrative that brings the fragrance to life.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "custom_product",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Custom Product",
+      "description": "Use to indicate whether or not the unique product identifiers (UPIs) GTIN, MPN, and brand are available for your product.",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "queries",
+      "namespace": "shopify--discovery--product_search_boost",
+      "name": "Search product boosts",
+      "description": "List of search queries for which a product gets higher rank in search results",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "related_products",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Related products",
+      "description": "List of related products",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "related_products_display",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Related products settings",
+      "description": "Determines how related products are displayed along with algorithmic product recommendations",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "complementary_products",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Complementary products",
+      "description": "List of complementary products",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "badges",
+      "namespace": "custom",
+      "name": "Badges",
+      "description": "Here we can create custom badges like:\"New, Bestseller, Sale, etc.\" to show on the product cards.",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "rating",
+      "namespace": "reviews",
+      "name": "Product rating",
+      "description": "Average rating from customers",
+      "type": {
+        "name": "rating",
+        "category": "RATING"
+      }
+    },
+    {
+      "key": "rating_count",
+      "namespace": "reviews",
+      "name": "Product rating count",
+      "description": "Total number of ratings from customers",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "scent_family",
+      "namespace": "custom",
+      "name": "Scent Family",
+      "description": "This is the family the scent is a member of. Its a category and each scent only belongs to one.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "inspired_by",
+      "namespace": "custom",
+      "name": "Inspired by",
+      "description": "By which hotel, designer parfum, place or feeling is this fragrance inspired? ",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "scent_story_image",
+      "namespace": "custom",
+      "name": "Scent Story Image",
+      "description": "Visualize the scent story",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "scent",
+      "namespace": "shopify",
+      "name": "Scent",
+      "description": "Specifies the fragrance or aroma of a product, such as vanilla or citrus",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "important_product_detail",
+      "namespace": "custom",
+      "name": "Important Product Detail",
+      "description": "This should include bundle composition for a bundle, how many ml for ScentPods, etc. ",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "extra_product_card_info",
+      "namespace": "custom",
+      "name": "Extra Product Card Info",
+      "description": "Some extra information about the product to show on product cards across the website.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "main_product_benefit_1",
+      "namespace": "custom",
+      "name": "Main Product Benefit 1",
+      "description": "Main Product Benefit displayed next to a checkmark below the product description.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "main_product_benefit_2",
+      "namespace": "custom",
+      "name": "Main Product Benefit 2",
+      "description": "Main Product Benefit displayed next to a checkmark below the product description.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "main_product_benefit_3",
+      "namespace": "custom",
+      "name": "Main Product Benefit 3",
+      "description": "Main Product Benefit displayed next to a checkmark below the product description.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "payment_method_text_1",
+      "namespace": "custom",
+      "name": "Payment Method Text 1",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "payment_method_text_2",
+      "namespace": "custom",
+      "name": "Payment Method Text 2",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "payment_method_text_3",
+      "namespace": "custom",
+      "name": "Payment Method Text 3",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "free_shipping_text_and_number",
+      "namespace": "custom",
+      "name": "Free shipping text and number",
+      "description": "you can change the number for each market by going to the translate and adapt app and change wording",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "return_window",
+      "namespace": "custom",
+      "name": "Return window",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "warranty",
+      "namespace": "custom",
+      "name": "Warranty",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "product_name_for_variant_selector",
+      "namespace": "custom",
+      "name": "Product name for variant selector",
+      "description": "This metafield can be used to display product names in variant selectors",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "klarna_pay_with_installments",
+      "namespace": "custom",
+      "name": "Klarna pay with installments",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "klarna_how_it_works",
+      "namespace": "custom",
+      "name": "Klarna: How it works",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "main_product_benefit_4",
+      "namespace": "custom",
+      "name": "Main Product Benefit 4",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "main_product_benefit_5",
+      "namespace": "custom",
+      "name": "Main Product Benefit 5",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "simple_bundle_swatch_image",
+      "namespace": "custom",
+      "name": "Simple Bundle swatch image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "scent_duration_title",
+      "namespace": "custom",
+      "name": "scent duration title",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "scent_duration_body",
+      "namespace": "custom",
+      "name": "scent duration body",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "klarna_link_text",
+      "namespace": "custom",
+      "name": "Klarna link text",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "video_review_1",
+      "namespace": "custom",
+      "name": "Video review 1",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "video_review_2",
+      "namespace": "custom",
+      "name": "Video review 2",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "video_review_3",
+      "namespace": "custom",
+      "name": "Video review 3",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "scent_details",
+      "namespace": "custom",
+      "name": "scent_details",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "scent_image",
+      "namespace": "custom",
+      "name": "scent_image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "quantity_value",
+      "namespace": "custom",
+      "name": "quantity_value",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "collection_card_description",
+      "namespace": "custom",
+      "name": "collection_card_description",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "collection_card_image",
+      "namespace": "custom",
+      "name": "collection_card_image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "scent_popup_description",
+      "namespace": "custom",
+      "name": "scent_popup_description",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "scent_pop_up_image",
+      "namespace": "custom",
+      "name": "Scent pop-up image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "collection_card_badge",
+      "namespace": "custom",
+      "name": "collection_card_badge",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "inventory_stock_date",
+      "namespace": "custom",
+      "name": "inventory_stock_date",
+      "description": "",
+      "type": {
+        "name": "date",
+        "category": "DATE_TIME"
+      }
+    },
+    {
+      "key": "progress_gift_image",
+      "namespace": "custom",
+      "name": "Progress Gift Image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "minicart_product_category",
+      "namespace": "custom",
+      "name": "minicart-product-category",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "scent_count",
+      "namespace": "custom",
+      "name": "scent count",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "test_preorder",
+      "namespace": "custom",
+      "name": "test preorder",
+      "description": "",
+      "type": {
+        "name": "date",
+        "category": "DATE_TIME"
+      }
+    },
+    {
+      "key": "market_place_title",
+      "namespace": "custom",
+      "name": "Market Place Title",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "market_place_description",
+      "namespace": "custom",
+      "name": "Market Place Description",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "sell_on_marketplace",
+      "namespace": "custom",
+      "name": "Sell on Marketplace",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "campaigns",
+      "namespace": "intelligems",
+      "name": "ProductMetafields",
+      "description": "Metafields configuring product inclusion for offers",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    }
+  ],
+  "variant": [
+    {
+      "key": "custom_label_4",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Custom Label 4",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "custom_label_3",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Custom Label 3",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "custom_label_2",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Custom Label 2",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "custom_label_1",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Custom Label 1",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "custom_label_0",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Custom Label 0",
+      "description": "Label that you assign to a product to help organize bidding and reporting in Shopping campaigns.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "size_system",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Size System",
+      "description": "The country of the size system used by your product.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "size_type",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Size Type",
+      "description": "Your apparel product’s cut.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "mpn",
+      "namespace": "mm-google-shopping",
+      "name": "Google: MPN",
+      "description": "Your product’s Manufacturer Part Number (MPN).",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "gender",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Gender",
+      "description": "The gender for which your product is intended.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "condition",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Condition",
+      "description": "The condition of your product at time of sale.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "age_group",
+      "namespace": "mm-google-shopping",
+      "name": "Google: Age Group",
+      "description": "The demographic for which your product is intended.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "scent_family",
+      "namespace": "custom",
+      "name": "Scent Family",
+      "description": "This is the family the scent is a member of. Its a category and each scent only belongs to one.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "key_notes",
+      "namespace": "custom",
+      "name": "Key Notes",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "lantern_description",
+      "namespace": "custom",
+      "name": "Lantern Description",
+      "description": "Short description of the product for lantern quiz results",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "variationPrices",
+      "namespace": "intelligems",
+      "name": "PriceTestVariant",
+      "description": "Metafields configuring product variant prices per variation",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    }
+  ],
+  "shop": [
+    {
+      "key": "merchant_id",
+      "namespace": "mm_google_shopping_extension",
+      "name": "Google: Merchant ID",
+      "description": "Currently Linked Merchant Center ID",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "show_store_widget_app_embed_block",
+      "namespace": "mm_google_shopping_extension",
+      "name": "Google: Show Store Widget App Embed Block",
+      "description": "Indicates if the store widget app embed block should be shown.",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "globalSettings",
+      "namespace": "intelligems",
+      "name": "GlobalSettings",
+      "description": "Global settings for Intelligems features",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    }
+  ]
+}

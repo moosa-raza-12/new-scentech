@@ -101,32 +101,32 @@
                     <div class="kv-milestone-label">{{ milestone_1_label_text }}</div>
                     {% if section.settings.gift_1_product != blank %}
                       <div
-                        class="kv-milestone-gift"
-                        data-product-id="{{ gift1_product.id }}"
-                        data-product-title="{{ gift1_product.title | escape }}"
-                        data-product-description="{{ gift1_product.metafields.custom.scent_popup_description | default: gift1_product.description | strip_html | strip | escape }}"
-                        data-product-details="{{ gift1_product.metafields.custom.scent_details | escape }}"
-                        data-product-image="{% if gift1_product.metafields.custom.scent_image %}{{ gift1_product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif gift1_product.featured_image %}{{ gift1_product.featured_image | image_url: width: 1200 }}{% endif %}"
-                        data-product-variant="{{ gift1_product.metafields.custom.quantity_value | default: gift1_product.selected_or_first_available_variant.title | escape }}"
-                        data-product-badge="{{ gift1_product.metafields.custom.collection_card_badge }}">
-                        {% if gift1_product.metafields.custom.progress_gift_image %}
-                          <img
-                            src="{{ gift1_product.metafields.custom.progress_gift_image | image_url: width: 80 }}"
-                            alt="{{ gift1_product.title }}"
-                            class="kv-milestone-gift-image">
-                        {% elsif gift1_product.featured_image %}
-                          <img
-                            src="{{ gift1_product.featured_image | image_url: width: 80 }}"
-                            alt="{{ gift1_product.title }}"
-                            class="kv-milestone-gift-image">
-                        {% endif %}
-                        <div class="kv-milestone-gift-text">
-                          {% if section.settings.gift_1_custom_text != blank %}
-                            {{ section.settings.gift_1_custom_text }}
-                          {% else %}
-                            FREE<br>{{ gift1_product.title }}
-                          {% endif %}
-                        </div>
+ class="kv-milestone-gift"
+ data-product-id="{{ gift1_product.id }}"
+ data-product-title="{{ gift1_product.title | escape }}"
+ data-product-description="{{ gift1_product.metafields.custom.scent_popup_description | default: gift1_product.description | strip_html | strip | escape }}"
+ data-product-details="{{ gift1_product.metafields.custom.scent_details | escape }}"
+ data-product-image="{% if gift1_product.metafields.custom.scent_image %}{{ gift1_product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif gift1_product.featured_image %}{{ gift1_product.featured_image | image_url: width: 1200 }}{% endif %}"
+ data-product-variant="{{ gift1_product.metafields.custom.quantity_value | default: gift1_product.selected_or_first_available_variant.title | escape }}"
+ data-product-badge="{{ gift1_product.metafields.custom.collection_card_badge }}">
+ {% if gift1_product.metafields.custom.progress_gift_image %}
+   <img
+     src="{{ gift1_product.metafields.custom.progress_gift_image | image_url: width: 80 }}"
+     alt="{{ gift1_product.title }}"
+     class="kv-milestone-gift-image">
+ {% elsif gift1_product.featured_image %}
+   <img
+     src="{{ gift1_product.featured_image | image_url: width: 80 }}"
+     alt="{{ gift1_product.title }}"
+     class="kv-milestone-gift-image">
+ {% endif %}
+ <div class="kv-milestone-gift-text">
+   {% if section.settings.gift_1_custom_text != blank %}
+     {{ section.settings.gift_1_custom_text }}
+   {% else %}
+     FREE<br>{{ gift1_product.title }}
+   {% endif %}
+ </div>
                       </div>
                     {% endif %}
                   </div>
@@ -142,24 +142,24 @@
                     <div class="kv-milestone-label">{{ milestone_2_label_text }}</div>
                     {% if section.settings.gift_2_product != blank %}
                       <div class="kv-milestone-gift">
-                        {% if gift2_product.metafields.custom.progress_gift_image %}
-                          <img
-                            src="{{ gift2_product.metafields.custom.progress_gift_image | image_url: width: 80 }}"
-                            alt="{{ gift2_product.title }}"
-                            class="kv-milestone-gift-image">
-                        {% elsif gift2_product.featured_image %}
-                          <img
-                            src="{{ gift2_product.featured_image | image_url: width: 80 }}"
-                            alt="{{ gift2_product.title }}"
-                            class="kv-milestone-gift-image">
-                        {% endif %}
-                        <div class="kv-milestone-gift-text">
-                          {% if section.settings.gift_2_custom_text != blank %}
-                            {{ section.settings.gift_2_custom_text }}
-                          {% else %}
-                            FREE<br>{{ gift2_product.title }}
-                          {% endif %}
-                        </div>
+ {% if gift2_product.metafields.custom.progress_gift_image %}
+   <img
+     src="{{ gift2_product.metafields.custom.progress_gift_image | image_url: width: 80 }}"
+     alt="{{ gift2_product.title }}"
+     class="kv-milestone-gift-image">
+ {% elsif gift2_product.featured_image %}
+   <img
+     src="{{ gift2_product.featured_image | image_url: width: 80 }}"
+     alt="{{ gift2_product.title }}"
+     class="kv-milestone-gift-image">
+ {% endif %}
+ <div class="kv-milestone-gift-text">
+   {% if section.settings.gift_2_custom_text != blank %}
+     {{ section.settings.gift_2_custom_text }}
+   {% else %}
+     FREE<br>{{ gift2_product.title }}
+   {% endif %}
+ </div>
                       </div>
                     {% endif %}
                   </div>
@@ -175,24 +175,24 @@
                     <div class="kv-milestone-label">{{ milestone_3_label_text }}</div>
                     {% if section.settings.gift_3_product != blank %}
                       <div class="kv-milestone-gift">
-                        {% if gift3_product.metafields.custom.progress_gift_image %}
-                          <img
-                            src="{{ gift3_product.metafields.custom.progress_gift_image | image_url: width: 80 }}"
-                            alt="{{ gift3_product.title }}"
-                            class="kv-milestone-gift-image">
-                        {% elsif gift3_product.featured_image %}
-                          <img
-                            src="{{ gift3_product.featured_image | image_url: width: 80 }}"
-                            alt="{{ gift3_product.title }}"
-                            class="kv-milestone-gift-image">
-                        {% endif %}
-                        <div class="kv-milestone-gift-text">
-                          {% if section.settings.gift_3_custom_text != blank %}
-                            {{ section.settings.gift_3_custom_text }}
-                          {% else %}
-                            FREE<br>{{ gift3_product.title }}
-                          {% endif %}
-                        </div>
+ {% if gift3_product.metafields.custom.progress_gift_image %}
+   <img
+     src="{{ gift3_product.metafields.custom.progress_gift_image | image_url: width: 80 }}"
+     alt="{{ gift3_product.title }}"
+     class="kv-milestone-gift-image">
+ {% elsif gift3_product.featured_image %}
+   <img
+     src="{{ gift3_product.featured_image | image_url: width: 80 }}"
+     alt="{{ gift3_product.title }}"
+     class="kv-milestone-gift-image">
+ {% endif %}
+ <div class="kv-milestone-gift-text">
+   {% if section.settings.gift_3_custom_text != blank %}
+     {{ section.settings.gift_3_custom_text }}
+   {% else %}
+     FREE<br>{{ gift3_product.title }}
+   {% endif %}
+ </div>
                       </div>
                     {% endif %}
                   </div>
@@ -208,24 +208,24 @@
                     <div class="kv-milestone-label">{{ milestone_4_label_text }}</div>
                     {% if section.settings.gift_4_product != blank %}
                       <div class="kv-milestone-gift">
-                        {% if gift4_product.metafields.custom.progress_gift_image %}
-                          <img
-                            src="{{ gift4_product.metafields.custom.progress_gift_image | image_url: width: 80 }}"
-                            alt="{{ gift4_product.title }}"
-                            class="kv-milestone-gift-image">
-                        {% elsif gift4_product.featured_image %}
-                          <img
-                            src="{{ gift4_product.featured_image | image_url: width: 80 }}"
-                            alt="{{ gift4_product.title }}"
-                            class="kv-milestone-gift-image">
-                        {% endif %}
-                        <div class="kv-milestone-gift-text">
-                          {% if section.settings.gift_4_custom_text != blank %}
-                            {{ section.settings.gift_4_custom_text }}
-                          {% else %}
-                            FREE<br>{{ gift4_product.title }}
-                          {% endif %}
-                        </div>
+ {% if gift4_product.metafields.custom.progress_gift_image %}
+   <img
+     src="{{ gift4_product.metafields.custom.progress_gift_image | image_url: width: 80 }}"
+     alt="{{ gift4_product.title }}"
+     class="kv-milestone-gift-image">
+ {% elsif gift4_product.featured_image %}
+   <img
+     src="{{ gift4_product.featured_image | image_url: width: 80 }}"
+     alt="{{ gift4_product.title }}"
+     class="kv-milestone-gift-image">
+ {% endif %}
+ <div class="kv-milestone-gift-text">
+   {% if section.settings.gift_4_custom_text != blank %}
+     {{ section.settings.gift_4_custom_text }}
+   {% else %}
+     FREE<br>{{ gift4_product.title }}
+   {% endif %}
+ </div>
                       </div>
                     {% endif %}
                   </div>
@@ -332,36 +332,39 @@
                       style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-desktop: {{ intr.settings.image_height_desktop }}px; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
                       {{ intr.shopify_attributes }}>
                       <div class="kv-bundle-interrupter-media">
-                        {% if intr.settings.image != blank %}
-                          <img
-                            src="{{ intr.settings.image | image_url: width: 900 }}"
-                            alt="{{ intr.settings.heading | escape }}"
-                            loading="lazy"
-                            width="900"
-                            height="900">
-                        {% endif %}
-                        {% if intr.settings.badge_text != blank %}
-                          <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                        {% endif %}
+ {% if intr.settings.image != blank %}
+   <img
+     src="{{ intr.settings.image | image_url: width: 900 }}"
+     alt="{{ intr.settings.heading | escape }}"
+     loading="lazy"
+     width="900"
+     height="900">
+ {% endif %}
+ {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+ {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+ <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+ {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+ <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+ {%- endif -%}
                       </div>
                       <div class="kv-bundle-interrupter-content">
-                        {% if intr.settings.heading != blank %}
-                          <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                        {% endif %}
-                        {% if intr.settings.description != blank %}
-                          <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                        {% endif %}
-                        {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                          <a
-                            class="kv-bundle-interrupter-cta"
-                            href="{{ intr.settings.cta_link }}"
-                            {% if intr.settings.cta_new_tab %}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            {% endif %}>
-                            {{ intr.settings.cta_label }}
-                          </a>
-                        {% endif %}
+ {% if intr.settings.heading != blank %}
+   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+ {% endif %}
+ {% if intr.settings.description != blank %}
+   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+ {% endif %}
+ {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+   <a
+     class="kv-bundle-interrupter-cta"
+     href="{{ intr.settings.cta_link }}"
+     {% if intr.settings.cta_new_tab %}
+     target="_blank"
+     rel="noopener noreferrer"
+     {% endif %}>
+     {{ intr.settings.cta_label }}
+   </a>
+ {% endif %}
                       </div>
                     </div>
                     {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
@@ -375,36 +378,39 @@
                       style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
                       {{ intr.shopify_attributes }}>
                       <div class="kv-bundle-interrupter-media">
-                        {% if intr.settings.image != blank %}
-                          <img
-                            src="{{ intr.settings.image | image_url: width: 900 }}"
-                            alt="{{ intr.settings.heading | escape }}"
-                            loading="lazy"
-                            width="900"
-                            height="900">
-                        {% endif %}
-                        {% if intr.settings.badge_text != blank %}
-                          <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                        {% endif %}
+ {% if intr.settings.image != blank %}
+   <img
+     src="{{ intr.settings.image | image_url: width: 900 }}"
+     alt="{{ intr.settings.heading | escape }}"
+     loading="lazy"
+     width="900"
+     height="900">
+ {% endif %}
+ {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+           {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+           <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+           {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+           <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+           {%- endif -%}
                       </div>
                       <div class="kv-bundle-interrupter-content">
-                        {% if intr.settings.heading != blank %}
-                          <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                        {% endif %}
-                        {% if intr.settings.description != blank %}
-                          <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                        {% endif %}
-                        {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                          <a
-                            class="kv-bundle-interrupter-cta"
-                            href="{{ intr.settings.cta_link }}"
-                            {% if intr.settings.cta_new_tab %}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            {% endif %}>
-                            {{ intr.settings.cta_label }}
-                          </a>
-                        {% endif %}
+ {% if intr.settings.heading != blank %}
+   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+ {% endif %}
+ {% if intr.settings.description != blank %}
+   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+ {% endif %}
+ {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+   <a
+     class="kv-bundle-interrupter-cta"
+     href="{{ intr.settings.cta_link }}"
+     {% if intr.settings.cta_new_tab %}
+     target="_blank"
+     rel="noopener noreferrer"
+     {% endif %}>
+     {{ intr.settings.cta_label }}
+   </a>
+ {% endif %}
                       </div>
                     </div>
                     {% assign kv_rendered_interrupters_mobile = kv_rendered_interrupters_mobile | append: intr_token %}
@@ -422,93 +428,99 @@
                     {%- comment -%} Interrupter blocks (desktop/mobile positions) {%- endcomment -%}
                     {% for intr in section.blocks %}
                       {% if intr.type == 'interrupter' and intr.settings.enabled %}
-                        {% assign intr_token = '|' | append: intr.id | append: '|' %}
+ {% assign intr_token = '|' | append: intr.id | append: '|' %}
 
-                        {% if intr.settings.show_on_desktop and intr.settings.position_desktop == kv_card_index %}
-                          {% unless kv_rendered_interrupters_desktop contains intr_token %}
-                            <div
-                              class="kv-bundle-interrupter-card kv-bundle-interrupter-card--desktop{% if intr.settings.desktop_layout == 'stacked' %} kv-bundle-interrupter-card--stacked{% endif %}{% if intr.settings.desktop_layout != 'stacked' and intr.settings.image_position == 'right' %} kv-bundle-interrupter-card--image-right{% endif %}"
-                              style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-desktop: {{ intr.settings.image_height_desktop }}px; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
-                              {{ intr.shopify_attributes }}>
-                              <div class="kv-bundle-interrupter-media">
-                                {% if intr.settings.image != blank %}
-                                  <img
-                                    src="{{ intr.settings.image | image_url: width: 900 }}"
-                                    alt="{{ intr.settings.heading | escape }}"
-                                    loading="lazy"
-                                    width="900"
-                                    height="900">
-                                {% endif %}
-                                {% if intr.settings.badge_text != blank %}
-                                  <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                                {% endif %}
-                              </div>
-                              <div class="kv-bundle-interrupter-content">
-                                {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                                {% endif %}
-                                {% if intr.settings.description != blank %}
-                                  <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                                {% endif %}
-                                {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                                  <a
-                                    class="kv-bundle-interrupter-cta"
-                                    href="{{ intr.settings.cta_link }}"
-                                    {% if intr.settings.cta_new_tab %}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    {% endif %}>
-                                    {{ intr.settings.cta_label }}
-                                  </a>
-                                {% endif %}
-                              </div>
-                            </div>
-                            {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
-                          {% endunless %}
-                        {% endif %}
+ {% if intr.settings.show_on_desktop and intr.settings.position_desktop == kv_card_index %}
+   {% unless kv_rendered_interrupters_desktop contains intr_token %}
+     <div
+       class="kv-bundle-interrupter-card kv-bundle-interrupter-card--desktop{% if intr.settings.desktop_layout == 'stacked' %} kv-bundle-interrupter-card--stacked{% endif %}{% if intr.settings.desktop_layout != 'stacked' and intr.settings.image_position == 'right' %} kv-bundle-interrupter-card--image-right{% endif %}"
+       style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-desktop: {{ intr.settings.image_height_desktop }}px; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
+       {{ intr.shopify_attributes }}>
+       <div class="kv-bundle-interrupter-media">
+ {% if intr.settings.image != blank %}
+   <img
+     src="{{ intr.settings.image | image_url: width: 900 }}"
+     alt="{{ intr.settings.heading | escape }}"
+     loading="lazy"
+     width="900"
+     height="900">
+ {% endif %}
+ {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+ {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+ <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+ {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+ <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+ {%- endif -%}
+       </div>
+       <div class="kv-bundle-interrupter-content">
+ {% if intr.settings.heading != blank %}
+   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+ {% endif %}
+ {% if intr.settings.description != blank %}
+   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+ {% endif %}
+ {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+   <a
+     class="kv-bundle-interrupter-cta"
+     href="{{ intr.settings.cta_link }}"
+     {% if intr.settings.cta_new_tab %}
+     target="_blank"
+     rel="noopener noreferrer"
+     {% endif %}>
+     {{ intr.settings.cta_label }}
+   </a>
+ {% endif %}
+       </div>
+     </div>
+     {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
+   {% endunless %}
+ {% endif %}
 
-                        {% if intr.settings.show_on_mobile and intr.settings.position_mobile == kv_card_index %}
-                          {% unless kv_rendered_interrupters_mobile contains intr_token %}
-                            <div
-                              class="kv-bundle-interrupter-card kv-bundle-interrupter-card--mobile {% if intr.settings.mobile_layout == 'stacked' %}kv-bundle-interrupter-card--stacked{% endif %}"
-                              style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
-                              {{ intr.shopify_attributes }}>
-                              <div class="kv-bundle-interrupter-media">
-                                {% if intr.settings.image != blank %}
-                                  <img
-                                    src="{{ intr.settings.image | image_url: width: 900 }}"
-                                    alt="{{ intr.settings.heading | escape }}"
-                                    loading="lazy"
-                                    width="900"
-                                    height="900">
-                                {% endif %}
-                                {% if intr.settings.badge_text != blank %}
-                                  <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                                {% endif %}
-                              </div>
-                              <div class="kv-bundle-interrupter-content">
-                                {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                                {% endif %}
-                                {% if intr.settings.description != blank %}
-                                  <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                                {% endif %}
-                                {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                                  <a
-                                    class="kv-bundle-interrupter-cta"
-                                    href="{{ intr.settings.cta_link }}"
-                                    {% if intr.settings.cta_new_tab %}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    {% endif %}>
-                                    {{ intr.settings.cta_label }}
-                                  </a>
-                                {% endif %}
-                              </div>
-                            </div>
-                            {% assign kv_rendered_interrupters_mobile = kv_rendered_interrupters_mobile | append: intr_token %}
-                          {% endunless %}
-                        {% endif %}
+ {% if intr.settings.show_on_mobile and intr.settings.position_mobile == kv_card_index %}
+   {% unless kv_rendered_interrupters_mobile contains intr_token %}
+     <div
+       class="kv-bundle-interrupter-card kv-bundle-interrupter-card--mobile {% if intr.settings.mobile_layout == 'stacked' %}kv-bundle-interrupter-card--stacked{% endif %}"
+       style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
+       {{ intr.shopify_attributes }}>
+       <div class="kv-bundle-interrupter-media">
+ {% if intr.settings.image != blank %}
+   <img
+     src="{{ intr.settings.image | image_url: width: 900 }}"
+     alt="{{ intr.settings.heading | escape }}"
+     loading="lazy"
+     width="900"
+     height="900">
+ {% endif %}
+ {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+ {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+ <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+ {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+ <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+ {%- endif -%}
+       </div>
+       <div class="kv-bundle-interrupter-content">
+ {% if intr.settings.heading != blank %}
+   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+ {% endif %}
+ {% if intr.settings.description != blank %}
+   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+ {% endif %}
+ {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+   <a
+     class="kv-bundle-interrupter-cta"
+     href="{{ intr.settings.cta_link }}"
+     {% if intr.settings.cta_new_tab %}
+     target="_blank"
+     rel="noopener noreferrer"
+     {% endif %}>
+     {{ intr.settings.cta_label }}
+   </a>
+ {% endif %}
+       </div>
+     </div>
+     {% assign kv_rendered_interrupters_mobile = kv_rendered_interrupters_mobile | append: intr_token %}
+   {% endunless %}
+ {% endif %}
                       {% endif %}
                     {% endfor %}
 
@@ -525,169 +537,169 @@
                       {%- comment -%} Badge {%- endcomment -%}
                       {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
                       {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
-                        <div class="kv-bundle-product-badge kv-badge-preorder">Pre-Order</div>
+ <div class="kv-bundle-product-badge kv-badge-preorder">Pre-Order</div>
                       {%- elsif product.metafields.custom.collection_card_badge != blank -%}
-                        <div class="kv-bundle-product-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+ <div class="kv-bundle-product-badge">{{ product.metafields.custom.collection_card_badge }}</div>
                       {%- endif -%}
 
                       {%- comment -%} Product Image {%- endcomment -%}
                       {% assign card_image = product.metafields.custom.collection_card_image | default: product.featured_image %}
                       {% if card_image %}
-                        <img
-                          src="{{ card_image | image_url: width: 600 }}"
-                          alt="{{ product.title | escape }}"
-                          class="kv-bundle-product-image"
-                          loading="lazy"
-                          width="600"
-                          height="600">
+ <img
+   src="{{ card_image | image_url: width: 600 }}"
+   alt="{{ product.title | escape }}"
+   class="kv-bundle-product-image"
+   loading="lazy"
+   width="600"
+   height="600">
                       {% else %}
-                        <div class="kv-bundle-product-image" style="background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
-                          <span style="color: #999;">No image</span>
-                        </div>
+ <div class="kv-bundle-product-image" style="background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
+   <span style="color: #999;">No image</span>
+ </div>
                       {% endif %}
 
                       {%- comment -%} Product Title {%- endcomment -%}
                       <div class="kv-bundle-product-title">
-                        {{ product.title }}
-                        <button
-                          class="kv-bundle-product-info-icon kv-scent-info-btn"
-                          type="button"
-                          aria-label="View details"
-                          data-product-id="{{ product.id }}"
-                          data-product-title="{{ product.title | escape }}"
-                          data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
-                          data-product-details="{{ product.metafields.custom.scent_details | escape }}"
-                          data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
-                          data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
-                          data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 14 14"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                              d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z"
-                              stroke="#160000"
-                              stroke-width="0.875"
-                              stroke-miterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round" />
-                            <path
-                              d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375"
-                              stroke="#160000"
-                              stroke-width="0.875"
-                              stroke-miterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round" />
-                            <path
-                              d="M7 6.125V9.625"
-                              stroke="#160000"
-                              stroke-width="0.875"
-                              stroke-miterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round" />
-                          </svg>
-                        </button>
+ {{ product.title }}
+ <button
+   class="kv-bundle-product-info-icon kv-scent-info-btn"
+   type="button"
+   aria-label="View details"
+   data-product-id="{{ product.id }}"
+   data-product-title="{{ product.title | escape }}"
+   data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
+   data-product-details="{{ product.metafields.custom.scent_details | escape }}"
+   data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+   data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
+   data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
+   <svg
+     width="14"
+     height="14"
+     viewBox="0 0 14 14"
+     fill="none"
+     xmlns="http://www.w3.org/2000/svg">
+     <path
+       d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z"
+       stroke="#160000"
+       stroke-width="0.875"
+       stroke-miterlimit="10"
+       stroke-linecap="round"
+       stroke-linejoin="round" />
+     <path
+       d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375"
+       stroke="#160000"
+       stroke-width="0.875"
+       stroke-miterlimit="10"
+       stroke-linecap="round"
+       stroke-linejoin="round" />
+     <path
+       d="M7 6.125V9.625"
+       stroke="#160000"
+       stroke-width="0.875"
+       stroke-miterlimit="10"
+       stroke-linecap="round"
+       stroke-linejoin="round" />
+   </svg>
+ </button>
                       </div>
 
                       {%- comment -%} Product Description {%- endcomment -%}
                       {% assign card_description = product.metafields.custom.collection_card_description | default: product.description %}
                       {% if card_description != blank %}
-                        <div class="kv-bundle-product-description">
-                          {{ card_description | strip_html | truncate: 80 }}
-                        </div>
+ <div class="kv-bundle-product-description">
+   {{ card_description | strip_html | truncate: 80 }}
+ </div>
                       {% endif %}
 
                       {%- comment -%} Variant Selector (if product has multiple variants) {%- endcomment -%}
                       {% if product.variants.size > 1 %}
-                        <div class="kv-bundle-product-variants">
-                          {% for variant in product.variants limit: 5 %}
-                            {% if variant.featured_image %}
-                              <img
-                                src="{{ variant.featured_image | image_url: width: 100 }}"
-                                alt="{{ variant.title | escape }}"
-                                class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
-                                data-variant-id="{{ variant.id }}"
-                                data-variant-price="{{ variant.price }}"
-                                data-variant-compare-at-price="{{ variant.compare_at_price }}"
-                                title="{{ variant.title }}"
-                                loading="lazy"
-                                width="50"
-                                height="50">
-                            {% elsif product.featured_image %}
-                              <img
-                                src="{{ product.featured_image | image_url: width: 100 }}"
-                                alt="{{ variant.title | escape }}"
-                                class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
-                                data-variant-id="{{ variant.id }}"
-                                data-variant-price="{{ variant.price }}"
-                                data-variant-compare-at-price="{{ variant.compare_at_price }}"
-                                title="{{ variant.title }}"
-                                loading="lazy"
-                                width="50"
-                                height="50">
-                            {% endif %}
-                          {% endfor %}
-                        </div>
+ <div class="kv-bundle-product-variants">
+   {% for variant in product.variants limit: 5 %}
+     {% if variant.featured_image %}
+       <img
+ src="{{ variant.featured_image | image_url: width: 100 }}"
+ alt="{{ variant.title | escape }}"
+ class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
+ data-variant-id="{{ variant.id }}"
+ data-variant-price="{{ variant.price }}"
+ data-variant-compare-at-price="{{ variant.compare_at_price }}"
+ title="{{ variant.title }}"
+ loading="lazy"
+ width="50"
+ height="50">
+     {% elsif product.featured_image %}
+       <img
+ src="{{ product.featured_image | image_url: width: 100 }}"
+ alt="{{ variant.title | escape }}"
+ class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
+ data-variant-id="{{ variant.id }}"
+ data-variant-price="{{ variant.price }}"
+ data-variant-compare-at-price="{{ variant.compare_at_price }}"
+ title="{{ variant.title }}"
+ loading="lazy"
+ width="50"
+ height="50">
+     {% endif %}
+   {% endfor %}
+ </div>
                       {% endif %}
 
                       {%- comment -%} Product Controls (Quantity + Add to Cart) {%- endcomment -%}
                       <div class="kv-bundle-product-controls">
-                        <div class="kv-bundle-quantity-selector">
-                          <button
-                            class="kv-bundle-qty-btn kv-bundle-qty-decrease"
-                            type="button"
-                            aria-label="Decrease quantity">
-                            <svg
-                              width="4"
-                              height="2"
-                              viewBox="0 0 4 2"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path d="M0 0H3.77051V1.49805H0V0Z" fill="white" />
-                            </svg>
-                          </button>
-                          <input
-                            type="number"
-                            class="kv-bundle-qty-input"
-                            value="1"
-                            min="1"
-                            readonly
-                            aria-label="Quantity">
-                          <button
-                            class="kv-bundle-qty-btn kv-bundle-qty-increase"
-                            type="button"
-                            aria-label="Increase quantity">
-                            <svg
-                              width="7"
-                              height="7"
-                              viewBox="0 0 7 7"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path d="M0 2.34229H2.33594V0H3.68799V2.34229H6.03027V3.69434H3.68799V6.03662H2.33594V3.69434H0V2.34229Z" fill="white" />
-                            </svg>
-                          </button>
-                        </div>
+ <div class="kv-bundle-quantity-selector">
+   <button
+     class="kv-bundle-qty-btn kv-bundle-qty-decrease"
+     type="button"
+     aria-label="Decrease quantity">
+     <svg
+       width="4"
+       height="2"
+       viewBox="0 0 4 2"
+       fill="none"
+       xmlns="http://www.w3.org/2000/svg">
+       <path d="M0 0H3.77051V1.49805H0V0Z" fill="white" />
+     </svg>
+   </button>
+   <input
+     type="number"
+     class="kv-bundle-qty-input"
+     value="1"
+     min="1"
+     readonly
+     aria-label="Quantity">
+   <button
+     class="kv-bundle-qty-btn kv-bundle-qty-increase"
+     type="button"
+     aria-label="Increase quantity">
+     <svg
+       width="7"
+       height="7"
+       viewBox="0 0 7 7"
+       fill="none"
+       xmlns="http://www.w3.org/2000/svg">
+       <path d="M0 2.34229H2.33594V0H3.68799V2.34229H6.03027V3.69434H3.68799V6.03662H2.33594V3.69434H0V2.34229Z" fill="white" />
+     </svg>
+   </button>
+ </div>
 
-                        {% if product.available %}
-                          <button
-                            class="kv-bundle-add-to-cart"
-                            type="button"
-                            data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-                            data-variant-price="{{ product.selected_or_first_available_variant.price }}"
-                            data-variant-compare-at-price="{{ product.selected_or_first_available_variant.compare_at_price }}"
-                            data-product-id="{{ product.id }}">
-                            <span>{{ section.settings.text_add_button | default: '+ Add' }}</span>
-                          </button>
-                        {% else %}
-                          <button
-                            class="kv-bundle-add-to-cart"
-                            type="button"
-                            disabled>
-                            <span>{{ section.settings.text_sold_out | default: 'Sold Out' }}</span>
-                          </button>
-                        {% endif %}
+ {% if product.available %}
+   <button
+     class="kv-bundle-add-to-cart"
+     type="button"
+     data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+     data-variant-price="{{ product.selected_or_first_available_variant.price }}"
+     data-variant-compare-at-price="{{ product.selected_or_first_available_variant.compare_at_price }}"
+     data-product-id="{{ product.id }}">
+     <span>{{ section.settings.text_add_button | default: '+ Add' }}</span>
+   </button>
+ {% else %}
+   <button
+     class="kv-bundle-add-to-cart"
+     type="button"
+     disabled>
+     <span>{{ section.settings.text_sold_out | default: 'Sold Out' }}</span>
+   </button>
+ {% endif %}
                       </div>
                     </div>
 
@@ -707,93 +719,99 @@
                     {%- comment -%} Interrupter blocks (desktop/mobile positions) {%- endcomment -%}
                     {% for intr in section.blocks %}
                       {% if intr.type == 'interrupter' and intr.settings.enabled %}
-                        {% assign intr_token = '|' | append: intr.id | append: '|' %}
+ {% assign intr_token = '|' | append: intr.id | append: '|' %}
 
-                        {% if intr.settings.show_on_desktop and intr.settings.position_desktop == kv_card_index %}
-                          {% unless kv_rendered_interrupters_desktop contains intr_token %}
-                            <div
-                              class="kv-bundle-interrupter-card kv-bundle-interrupter-card--desktop{% if intr.settings.desktop_layout == 'stacked' %} kv-bundle-interrupter-card--stacked{% endif %}{% if intr.settings.desktop_layout != 'stacked' and intr.settings.image_position == 'right' %} kv-bundle-interrupter-card--image-right{% endif %}"
-                              style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-desktop: {{ intr.settings.image_height_desktop }}px; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
-                              {{ intr.shopify_attributes }}>
-                              <div class="kv-bundle-interrupter-media">
-                                {% if intr.settings.image != blank %}
-                                  <img
-                                    src="{{ intr.settings.image | image_url: width: 900 }}"
-                                    alt="{{ intr.settings.heading | escape }}"
-                                    loading="lazy"
-                                    width="900"
-                                    height="900">
-                                {% endif %}
-                                {% if intr.settings.badge_text != blank %}
-                                  <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                                {% endif %}
-                              </div>
-                              <div class="kv-bundle-interrupter-content">
-                                {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                                {% endif %}
-                                {% if intr.settings.description != blank %}
-                                  <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                                {% endif %}
-                                {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                                  <a
-                                    class="kv-bundle-interrupter-cta"
-                                    href="{{ intr.settings.cta_link }}"
-                                    {% if intr.settings.cta_new_tab %}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    {% endif %}>
-                                    {{ intr.settings.cta_label }}
-                                  </a>
-                                {% endif %}
-                              </div>
-                            </div>
-                            {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
-                          {% endunless %}
-                        {% endif %}
+ {% if intr.settings.show_on_desktop and intr.settings.position_desktop == kv_card_index %}
+   {% unless kv_rendered_interrupters_desktop contains intr_token %}
+     <div
+       class="kv-bundle-interrupter-card kv-bundle-interrupter-card--desktop{% if intr.settings.desktop_layout == 'stacked' %} kv-bundle-interrupter-card--stacked{% endif %}{% if intr.settings.desktop_layout != 'stacked' and intr.settings.image_position == 'right' %} kv-bundle-interrupter-card--image-right{% endif %}"
+       style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-desktop: {{ intr.settings.image_height_desktop }}px; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
+       {{ intr.shopify_attributes }}>
+       <div class="kv-bundle-interrupter-media">
+ {% if intr.settings.image != blank %}
+   <img
+     src="{{ intr.settings.image | image_url: width: 900 }}"
+     alt="{{ intr.settings.heading | escape }}"
+     loading="lazy"
+     width="900"
+     height="900">
+ {% endif %}
+ {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+ {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+ <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+ {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+ <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+ {%- endif -%}
+       </div>
+       <div class="kv-bundle-interrupter-content">
+ {% if intr.settings.heading != blank %}
+   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+ {% endif %}
+ {% if intr.settings.description != blank %}
+   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+ {% endif %}
+ {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+   <a
+     class="kv-bundle-interrupter-cta"
+     href="{{ intr.settings.cta_link }}"
+     {% if intr.settings.cta_new_tab %}
+     target="_blank"
+     rel="noopener noreferrer"
+     {% endif %}>
+     {{ intr.settings.cta_label }}
+   </a>
+ {% endif %}
+       </div>
+     </div>
+     {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
+   {% endunless %}
+ {% endif %}
 
-                        {% if intr.settings.show_on_mobile and intr.settings.position_mobile == kv_card_index %}
-                          {% unless kv_rendered_interrupters_mobile contains intr_token %}
-                            <div
-                              class="kv-bundle-interrupter-card kv-bundle-interrupter-card--mobile {% if intr.settings.mobile_layout == 'stacked' %}kv-bundle-interrupter-card--stacked{% endif %}"
-                              style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
-                              {{ intr.shopify_attributes }}>
-                              <div class="kv-bundle-interrupter-media">
-                                {% if intr.settings.image != blank %}
-                                  <img
-                                    src="{{ intr.settings.image | image_url: width: 900 }}"
-                                    alt="{{ intr.settings.heading | escape }}"
-                                    loading="lazy"
-                                    width="900"
-                                    height="900">
-                                {% endif %}
-                                {% if intr.settings.badge_text != blank %}
-                                  <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                                {% endif %}
-                              </div>
-                              <div class="kv-bundle-interrupter-content">
-                                {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                                {% endif %}
-                                {% if intr.settings.description != blank %}
-                                  <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                                {% endif %}
-                                {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                                  <a
-                                    class="kv-bundle-interrupter-cta"
-                                    href="{{ intr.settings.cta_link }}"
-                                    {% if intr.settings.cta_new_tab %}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    {% endif %}>
-                                    {{ intr.settings.cta_label }}
-                                  </a>
-                                {% endif %}
-                              </div>
-                            </div>
-                            {% assign kv_rendered_interrupters_mobile = kv_rendered_interrupters_mobile | append: intr_token %}
-                          {% endunless %}
-                        {% endif %}
+ {% if intr.settings.show_on_mobile and intr.settings.position_mobile == kv_card_index %}
+   {% unless kv_rendered_interrupters_mobile contains intr_token %}
+     <div
+       class="kv-bundle-interrupter-card kv-bundle-interrupter-card--mobile {% if intr.settings.mobile_layout == 'stacked' %}kv-bundle-interrupter-card--stacked{% endif %}"
+       style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
+       {{ intr.shopify_attributes }}>
+       <div class="kv-bundle-interrupter-media">
+ {% if intr.settings.image != blank %}
+   <img
+     src="{{ intr.settings.image | image_url: width: 900 }}"
+     alt="{{ intr.settings.heading | escape }}"
+     loading="lazy"
+     width="900"
+     height="900">
+ {% endif %}
+ {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+ {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+ <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+ {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+ <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+ {%- endif -%}
+       </div>
+       <div class="kv-bundle-interrupter-content">
+ {% if intr.settings.heading != blank %}
+   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+ {% endif %}
+ {% if intr.settings.description != blank %}
+   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+ {% endif %}
+ {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+   <a
+     class="kv-bundle-interrupter-cta"
+     href="{{ intr.settings.cta_link }}"
+     {% if intr.settings.cta_new_tab %}
+     target="_blank"
+     rel="noopener noreferrer"
+     {% endif %}>
+     {{ intr.settings.cta_label }}
+   </a>
+ {% endif %}
+       </div>
+     </div>
+     {% assign kv_rendered_interrupters_mobile = kv_rendered_interrupters_mobile | append: intr_token %}
+   {% endunless %}
+ {% endif %}
                       {% endif %}
                     {% endfor %}
 
@@ -809,169 +827,169 @@
                       {%- comment -%} Badge {%- endcomment -%}
                       {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
                       {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
-                        <div class="kv-bundle-product-badge kv-badge-preorder">Pre-Order</div>
+ <div class="kv-bundle-product-badge kv-badge-preorder">Pre-Order</div>
                       {%- elsif product.metafields.custom.collection_card_badge != blank -%}
-                        <div class="kv-bundle-product-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+ <div class="kv-bundle-product-badge">{{ product.metafields.custom.collection_card_badge }}</div>
                       {%- endif -%}
 
                       {%- comment -%} Product Image {%- endcomment -%}
                       {% assign card_image = product.metafields.custom.collection_card_image | default: product.featured_image %}
                       {% if card_image %}
-                        <img
-                          src="{{ card_image | image_url: width: 600 }}"
-                          alt="{{ product.title | escape }}"
-                          class="kv-bundle-product-image"
-                          loading="lazy"
-                          width="600"
-                          height="600">
+ <img
+   src="{{ card_image | image_url: width: 600 }}"
+   alt="{{ product.title | escape }}"
+   class="kv-bundle-product-image"
+   loading="lazy"
+   width="600"
+   height="600">
                       {% else %}
-                        <div class="kv-bundle-product-image" style="background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
-                          <span style="color: #999;">No image</span>
-                        </div>
+ <div class="kv-bundle-product-image" style="background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
+   <span style="color: #999;">No image</span>
+ </div>
                       {% endif %}
 
                       {%- comment -%} Product Title {%- endcomment -%}
                       <div class="kv-bundle-product-title">
-                        {{ product.title }}
-                        <button
-                          class="kv-bundle-product-info-icon kv-scent-info-btn"
-                          type="button"
-                          aria-label="View details"
-                          data-product-id="{{ product.id }}"
-                          data-product-title="{{ product.title | escape }}"
-                          data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
-                          data-product-details="{{ product.metafields.custom.scent_details | escape }}"
-                          data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
-                          data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
-                          data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 14 14"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                              d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z"
-                              stroke="#160000"
-                              stroke-width="0.875"
-                              stroke-miterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round" />
-                            <path
-                              d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375"
-                              stroke="#160000"
-                              stroke-width="0.875"
-                              stroke-miterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round" />
-                            <path
-                              d="M7 6.125V9.625"
-                              stroke="#160000"
-                              stroke-width="0.875"
-                              stroke-miterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round" />
-                          </svg>
-                        </button>
+ {{ product.title }}
+ <button
+   class="kv-bundle-product-info-icon kv-scent-info-btn"
+   type="button"
+   aria-label="View details"
+   data-product-id="{{ product.id }}"
+   data-product-title="{{ product.title | escape }}"
+   data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
+   data-product-details="{{ product.metafields.custom.scent_details | escape }}"
+   data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+   data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
+   data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
+   <svg
+     width="14"
+     height="14"
+     viewBox="0 0 14 14"
+     fill="none"
+     xmlns="http://www.w3.org/2000/svg">
+     <path
+       d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z"
+       stroke="#160000"
+       stroke-width="0.875"
+       stroke-miterlimit="10"
+       stroke-linecap="round"
+       stroke-linejoin="round" />
+     <path
+       d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375"
+       stroke="#160000"
+       stroke-width="0.875"
+       stroke-miterlimit="10"
+       stroke-linecap="round"
+       stroke-linejoin="round" />
+     <path
+       d="M7 6.125V9.625"
+       stroke="#160000"
+       stroke-width="0.875"
+       stroke-miterlimit="10"
+       stroke-linecap="round"
+       stroke-linejoin="round" />
+   </svg>
+ </button>
                       </div>
 
                       {%- comment -%} Product Description {%- endcomment -%}
                       {% assign card_description = product.metafields.custom.collection_card_description | default: product.description %}
                       {% if card_description != blank %}
-                        <div class="kv-bundle-product-description">
-                          {{ card_description | strip_html | truncate: 80 }}
-                        </div>
+ <div class="kv-bundle-product-description">
+   {{ card_description | strip_html | truncate: 80 }}
+ </div>
                       {% endif %}
 
                       {%- comment -%} Variant Selector (if product has multiple variants) {%- endcomment -%}
                       {% if product.variants.size > 1 %}
-                        <div class="kv-bundle-product-variants">
-                          {% for variant in product.variants limit: 5 %}
-                            {% if variant.featured_image %}
-                              <img
-                                src="{{ variant.featured_image | image_url: width: 100 }}"
-                                alt="{{ variant.title | escape }}"
-                                class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
-                                data-variant-id="{{ variant.id }}"
-                                data-variant-price="{{ variant.price }}"
-                                data-variant-compare-at-price="{{ variant.compare_at_price }}"
-                                title="{{ variant.title }}"
-                                loading="lazy"
-                                width="50"
-                                height="50">
-                            {% elsif product.featured_image %}
-                              <img
-                                src="{{ product.featured_image | image_url: width: 100 }}"
-                                alt="{{ variant.title | escape }}"
-                                class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
-                                data-variant-id="{{ variant.id }}"
-                                data-variant-price="{{ variant.price }}"
-                                data-variant-compare-at-price="{{ variant.compare_at_price }}"
-                                title="{{ variant.title }}"
-                                loading="lazy"
-                                width="50"
-                                height="50">
-                            {% endif %}
-                          {% endfor %}
-                        </div>
+ <div class="kv-bundle-product-variants">
+   {% for variant in product.variants limit: 5 %}
+     {% if variant.featured_image %}
+       <img
+ src="{{ variant.featured_image | image_url: width: 100 }}"
+ alt="{{ variant.title | escape }}"
+ class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
+ data-variant-id="{{ variant.id }}"
+ data-variant-price="{{ variant.price }}"
+ data-variant-compare-at-price="{{ variant.compare_at_price }}"
+ title="{{ variant.title }}"
+ loading="lazy"
+ width="50"
+ height="50">
+     {% elsif product.featured_image %}
+       <img
+ src="{{ product.featured_image | image_url: width: 100 }}"
+ alt="{{ variant.title | escape }}"
+ class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
+ data-variant-id="{{ variant.id }}"
+ data-variant-price="{{ variant.price }}"
+ data-variant-compare-at-price="{{ variant.compare_at_price }}"
+ title="{{ variant.title }}"
+ loading="lazy"
+ width="50"
+ height="50">
+     {% endif %}
+   {% endfor %}
+ </div>
                       {% endif %}
 
                       {%- comment -%} Product Controls (Quantity + Add to Cart) {%- endcomment -%}
                       <div class="kv-bundle-product-controls">
-                        <div class="kv-bundle-quantity-selector">
-                          <button
-                            class="kv-bundle-qty-btn kv-bundle-qty-decrease"
-                            type="button"
-                            aria-label="Decrease quantity">
-                            <svg
-                              width="4"
-                              height="2"
-                              viewBox="0 0 4 2"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path d="M0 0H3.77051V1.49805H0V0Z" fill="white" />
-                            </svg>
-                          </button>
-                          <input
-                            type="number"
-                            class="kv-bundle-qty-input"
-                            value="1"
-                            min="1"
-                            readonly
-                            aria-label="Quantity">
-                          <button
-                            class="kv-bundle-qty-btn kv-bundle-qty-increase"
-                            type="button"
-                            aria-label="Increase quantity">
-                            <svg
-                              width="7"
-                              height="7"
-                              viewBox="0 0 7 7"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path d="M0 2.34229H2.33594V0H3.68799V2.34229H6.03027V3.69434H3.68799V6.03662H2.33594V3.69434H0V2.34229Z" fill="white" />
-                            </svg>
-                          </button>
-                        </div>
+ <div class="kv-bundle-quantity-selector">
+   <button
+     class="kv-bundle-qty-btn kv-bundle-qty-decrease"
+     type="button"
+     aria-label="Decrease quantity">
+     <svg
+       width="4"
+       height="2"
+       viewBox="0 0 4 2"
+       fill="none"
+       xmlns="http://www.w3.org/2000/svg">
+       <path d="M0 0H3.77051V1.49805H0V0Z" fill="white" />
+     </svg>
+   </button>
+   <input
+     type="number"
+     class="kv-bundle-qty-input"
+     value="1"
+     min="1"
+     readonly
+     aria-label="Quantity">
+   <button
+     class="kv-bundle-qty-btn kv-bundle-qty-increase"
+     type="button"
+     aria-label="Increase quantity">
+     <svg
+       width="7"
+       height="7"
+       viewBox="0 0 7 7"
+       fill="none"
+       xmlns="http://www.w3.org/2000/svg">
+       <path d="M0 2.34229H2.33594V0H3.68799V2.34229H6.03027V3.69434H3.68799V6.03662H2.33594V3.69434H0V2.34229Z" fill="white" />
+     </svg>
+   </button>
+ </div>
 
-                        {% if product.available %}
-                          <button
-                            class="kv-bundle-add-to-cart"
-                            type="button"
-                            data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-                            data-variant-price="{{ product.selected_or_first_available_variant.price }}"
-                            data-variant-compare-at-price="{{ product.selected_or_first_available_variant.compare_at_price }}"
-                            data-product-id="{{ product.id }}">
-                            <span>{{ section.settings.text_add_button | default: '+ Add' }}</span>
-                          </button>
-                        {% else %}
-                          <button
-                            class="kv-bundle-add-to-cart"
-                            type="button"
-                            disabled>
-                            <span>{{ section.settings.text_sold_out | default: 'Sold Out' }}</span>
-                          </button>
-                        {% endif %}
+ {% if product.available %}
+   <button
+     class="kv-bundle-add-to-cart"
+     type="button"
+     data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+     data-variant-price="{{ product.selected_or_first_available_variant.price }}"
+     data-variant-compare-at-price="{{ product.selected_or_first_available_variant.compare_at_price }}"
+     data-product-id="{{ product.id }}">
+     <span>{{ section.settings.text_add_button | default: '+ Add' }}</span>
+   </button>
+ {% else %}
+   <button
+     class="kv-bundle-add-to-cart"
+     type="button"
+     disabled>
+     <span>{{ section.settings.text_sold_out | default: 'Sold Out' }}</span>
+   </button>
+ {% endif %}
                       </div>
                     </div>
 
@@ -994,36 +1012,39 @@
                       style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-desktop: {{ intr.settings.image_height_desktop }}px; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
                       {{ intr.shopify_attributes }}>
                       <div class="kv-bundle-interrupter-media">
-                        {% if intr.settings.image != blank %}
-                          <img
-                            src="{{ intr.settings.image | image_url: width: 900 }}"
-                            alt="{{ intr.settings.heading | escape }}"
-                            loading="lazy"
-                            width="900"
-                            height="900">
-                        {% endif %}
-                        {% if intr.settings.badge_text != blank %}
-                          <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                        {% endif %}
+ {% if intr.settings.image != blank %}
+   <img
+     src="{{ intr.settings.image | image_url: width: 900 }}"
+     alt="{{ intr.settings.heading | escape }}"
+     loading="lazy"
+     width="900"
+     height="900">
+ {% endif %}
+ {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+ {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+ <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+ {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+ <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+ {%- endif -%}
                       </div>
                       <div class="kv-bundle-interrupter-content">
-                        {% if intr.settings.heading != blank %}
-                          <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                        {% endif %}
-                        {% if intr.settings.description != blank %}
-                          <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                        {% endif %}
-                        {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                          <a
-                            class="kv-bundle-interrupter-cta"
-                            href="{{ intr.settings.cta_link }}"
-                            {% if intr.settings.cta_new_tab %}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            {% endif %}>
-                            {{ intr.settings.cta_label }}
-                          </a>
-                        {% endif %}
+ {% if intr.settings.heading != blank %}
+   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+ {% endif %}
+ {% if intr.settings.description != blank %}
+   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+ {% endif %}
+ {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+   <a
+     class="kv-bundle-interrupter-cta"
+     href="{{ intr.settings.cta_link }}"
+     {% if intr.settings.cta_new_tab %}
+     target="_blank"
+     rel="noopener noreferrer"
+     {% endif %}>
+     {{ intr.settings.cta_label }}
+   </a>
+ {% endif %}
                       </div>
                     </div>
                     {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
@@ -1037,36 +1058,39 @@
                       style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
                       {{ intr.shopify_attributes }}>
                       <div class="kv-bundle-interrupter-media">
-                        {% if intr.settings.image != blank %}
-                          <img
-                            src="{{ intr.settings.image | image_url: width: 900 }}"
-                            alt="{{ intr.settings.heading | escape }}"
-                            loading="lazy"
-                            width="900"
-                            height="900">
-                        {% endif %}
-                        {% if intr.settings.badge_text != blank %}
-                          <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                        {% endif %}
+ {% if intr.settings.image != blank %}
+   <img
+     src="{{ intr.settings.image | image_url: width: 900 }}"
+     alt="{{ intr.settings.heading | escape }}"
+     loading="lazy"
+     width="900"
+     height="900">
+ {% endif %}
+ {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+ {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+ <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+ {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+ <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+ {%- endif -%}
                       </div>
                       <div class="kv-bundle-interrupter-content">
-                        {% if intr.settings.heading != blank %}
-                          <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                        {% endif %}
-                        {% if intr.settings.description != blank %}
-                          <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                        {% endif %}
-                        {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                          <a
-                            class="kv-bundle-interrupter-cta"
-                            href="{{ intr.settings.cta_link }}"
-                            {% if intr.settings.cta_new_tab %}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            {% endif %}>
-                            {{ intr.settings.cta_label }}
-                          </a>
-                        {% endif %}
+ {% if intr.settings.heading != blank %}
+   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+ {% endif %}
+ {% if intr.settings.description != blank %}
+   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+ {% endif %}
+ {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+   <a
+     class="kv-bundle-interrupter-cta"
+     href="{{ intr.settings.cta_link }}"
+     {% if intr.settings.cta_new_tab %}
+     target="_blank"
+     rel="noopener noreferrer"
+     {% endif %}>
+     {{ intr.settings.cta_label }}
+   </a>
+ {% endif %}
                       </div>
                     </div>
                     {% assign kv_rendered_interrupters_mobile = kv_rendered_interrupters_mobile | append: intr_token %}
@@ -1095,87 +1119,93 @@
 
                     {% if intr.settings.show_on_desktop and intr.settings.position_desktop == kv_card_index %}
                       {% unless kv_rendered_interrupters_desktop contains intr_token %}
-                        <div
-                          class="kv-bundle-interrupter-card kv-bundle-interrupter-card--desktop{% if intr.settings.desktop_layout == 'stacked' %} kv-bundle-interrupter-card--stacked{% endif %}{% if intr.settings.desktop_layout != 'stacked' and intr.settings.image_position == 'right' %} kv-bundle-interrupter-card--image-right{% endif %}"
-                          style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-desktop: {{ intr.settings.image_height_desktop }}px; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
-                          {{ intr.shopify_attributes }}>
-                          <div class="kv-bundle-interrupter-media">
-                            {% if intr.settings.image != blank %}
-                              <img
-                                src="{{ intr.settings.image | image_url: width: 900 }}"
-                                alt="{{ intr.settings.heading | escape }}"
-                                loading="lazy"
-                                width="900"
-                                height="900">
-                            {% endif %}
-                            {% if intr.settings.badge_text != blank %}
-                              <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                            {% endif %}
-                          </div>
-                          <div class="kv-bundle-interrupter-content">
-                            {% if intr.settings.heading != blank %}
-                              <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                            {% endif %}
-                            {% if intr.settings.description != blank %}
-                              <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                            {% endif %}
-                            {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                              <a
-                                class="kv-bundle-interrupter-cta"
-                                href="{{ intr.settings.cta_link }}"
-                                {% if intr.settings.cta_new_tab %}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                {% endif %}>
-                                {{ intr.settings.cta_label }}
-                              </a>
-                            {% endif %}
-                          </div>
-                        </div>
-                        {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
+ <div
+   class="kv-bundle-interrupter-card kv-bundle-interrupter-card--desktop{% if intr.settings.desktop_layout == 'stacked' %} kv-bundle-interrupter-card--stacked{% endif %}{% if intr.settings.desktop_layout != 'stacked' and intr.settings.image_position == 'right' %} kv-bundle-interrupter-card--image-right{% endif %}"
+   style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-desktop: {{ intr.settings.image_height_desktop }}px; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
+   {{ intr.shopify_attributes }}>
+   <div class="kv-bundle-interrupter-media">
+     {% if intr.settings.image != blank %}
+       <img
+ src="{{ intr.settings.image | image_url: width: 900 }}"
+ alt="{{ intr.settings.heading | escape }}"
+ loading="lazy"
+ width="900"
+ height="900">
+     {% endif %}
+     {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+     {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+     <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+     {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+     <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+     {%- endif -%}
+   </div>
+   <div class="kv-bundle-interrupter-content">
+     {% if intr.settings.heading != blank %}
+       <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+     {% endif %}
+     {% if intr.settings.description != blank %}
+       <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+     {% endif %}
+     {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+       <a
+ class="kv-bundle-interrupter-cta"
+ href="{{ intr.settings.cta_link }}"
+ {% if intr.settings.cta_new_tab %}
+ target="_blank"
+ rel="noopener noreferrer"
+ {% endif %}>
+ {{ intr.settings.cta_label }}
+       </a>
+     {% endif %}
+   </div>
+ </div>
+ {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
                       {% endunless %}
                     {% endif %}
 
                     {% if intr.settings.show_on_mobile and intr.settings.position_mobile == kv_card_index %}
                       {% unless kv_rendered_interrupters_mobile contains intr_token %}
-                        <div
-                          class="kv-bundle-interrupter-card kv-bundle-interrupter-card--mobile {% if intr.settings.mobile_layout == 'stacked' %}kv-bundle-interrupter-card--stacked{% endif %}"
-                          style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
-                          {{ intr.shopify_attributes }}>
-                          <div class="kv-bundle-interrupter-media">
-                            {% if intr.settings.image != blank %}
-                              <img
-                                src="{{ intr.settings.image | image_url: width: 900 }}"
-                                alt="{{ intr.settings.heading | escape }}"
-                                loading="lazy"
-                                width="900"
-                                height="900">
-                            {% endif %}
-                            {% if intr.settings.badge_text != blank %}
-                              <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                            {% endif %}
-                          </div>
-                          <div class="kv-bundle-interrupter-content">
-                            {% if intr.settings.heading != blank %}
-                              <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                            {% endif %}
-                            {% if intr.settings.description != blank %}
-                              <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                            {% endif %}
-                            {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                              <a
-                                class="kv-bundle-interrupter-cta"
-                                href="{{ intr.settings.cta_link }}"
-                                {% if intr.settings.cta_new_tab %}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                {% endif %}>
-                                {{ intr.settings.cta_label }}
-                              </a>
-                            {% endif %}
-                          </div>
-                        </div>
-                        {% assign kv_rendered_interrupters_mobile = kv_rendered_interrupters_mobile | append: intr_token %}
+ <div
+   class="kv-bundle-interrupter-card kv-bundle-interrupter-card--mobile {% if intr.settings.mobile_layout == 'stacked' %}kv-bundle-interrupter-card--stacked{% endif %}"
+   style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
+   {{ intr.shopify_attributes }}>
+   <div class="kv-bundle-interrupter-media">
+     {% if intr.settings.image != blank %}
+       <img
+ src="{{ intr.settings.image | image_url: width: 900 }}"
+ alt="{{ intr.settings.heading | escape }}"
+ loading="lazy"
+ width="900"
+ height="900">
+     {% endif %}
+     {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+     {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+     <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+     {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+     <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+     {%- endif -%}
+   </div>
+   <div class="kv-bundle-interrupter-content">
+     {% if intr.settings.heading != blank %}
+       <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+     {% endif %}
+     {% if intr.settings.description != blank %}
+       <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+     {% endif %}
+     {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+       <a
+ class="kv-bundle-interrupter-cta"
+ href="{{ intr.settings.cta_link }}"
+ {% if intr.settings.cta_new_tab %}
+ target="_blank"
+ rel="noopener noreferrer"
+ {% endif %}>
+ {{ intr.settings.cta_label }}
+       </a>
+     {% endif %}
+   </div>
+ </div>
+ {% assign kv_rendered_interrupters_mobile = kv_rendered_interrupters_mobile | append: intr_token %}
                       {% endunless %}
                     {% endif %}
                   {% endif %}
@@ -1187,93 +1217,99 @@
                     {%- comment -%} Interrupter blocks (desktop/mobile positions) {%- endcomment -%}
                     {% for intr in section.blocks %}
                       {% if intr.type == 'interrupter' and intr.settings.enabled %}
-                        {% assign intr_token = '|' | append: intr.id | append: '|' %}
+ {% assign intr_token = '|' | append: intr.id | append: '|' %}
 
-                        {% if intr.settings.show_on_desktop and intr.settings.position_desktop == kv_card_index %}
-                          {% unless kv_rendered_interrupters_desktop contains intr_token %}
-                            <div
-                              class="kv-bundle-interrupter-card kv-bundle-interrupter-card--desktop{% if intr.settings.desktop_layout == 'stacked' %} kv-bundle-interrupter-card--stacked{% endif %}{% if intr.settings.desktop_layout != 'stacked' and intr.settings.image_position == 'right' %} kv-bundle-interrupter-card--image-right{% endif %}"
-                              style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-desktop: {{ intr.settings.image_height_desktop }}px; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
-                              {{ intr.shopify_attributes }}>
-                              <div class="kv-bundle-interrupter-media">
-                                {% if intr.settings.image != blank %}
-                                  <img
-                                    src="{{ intr.settings.image | image_url: width: 900 }}"
-                                    alt="{{ intr.settings.heading | escape }}"
-                                    loading="lazy"
-                                    width="900"
-                                    height="900">
-                                {% endif %}
-                                {% if intr.settings.badge_text != blank %}
-                                  <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                                {% endif %}
-                              </div>
-                              <div class="kv-bundle-interrupter-content">
-                                {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                                {% endif %}
-                                {% if intr.settings.description != blank %}
-                                  <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                                {% endif %}
-                                {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                                  <a
-                                    class="kv-bundle-interrupter-cta"
-                                    href="{{ intr.settings.cta_link }}"
-                                    {% if intr.settings.cta_new_tab %}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    {% endif %}>
-                                    {{ intr.settings.cta_label }}
-                                  </a>
-                                {% endif %}
-                              </div>
-                            </div>
-                            {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
-                          {% endunless %}
-                        {% endif %}
+ {% if intr.settings.show_on_desktop and intr.settings.position_desktop == kv_card_index %}
+   {% unless kv_rendered_interrupters_desktop contains intr_token %}
+     <div
+       class="kv-bundle-interrupter-card kv-bundle-interrupter-card--desktop{% if intr.settings.desktop_layout == 'stacked' %} kv-bundle-interrupter-card--stacked{% endif %}{% if intr.settings.desktop_layout != 'stacked' and intr.settings.image_position == 'right' %} kv-bundle-interrupter-card--image-right{% endif %}"
+       style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-desktop: {{ intr.settings.image_height_desktop }}px; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
+       {{ intr.shopify_attributes }}>
+       <div class="kv-bundle-interrupter-media">
+ {% if intr.settings.image != blank %}
+   <img
+     src="{{ intr.settings.image | image_url: width: 900 }}"
+     alt="{{ intr.settings.heading | escape }}"
+     loading="lazy"
+     width="900"
+     height="900">
+ {% endif %}
+ {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+ {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+ <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+ {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+ <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+ {%- endif -%}
+       </div>
+       <div class="kv-bundle-interrupter-content">
+ {% if intr.settings.heading != blank %}
+   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+ {% endif %}
+ {% if intr.settings.description != blank %}
+   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+ {% endif %}
+ {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+   <a
+     class="kv-bundle-interrupter-cta"
+     href="{{ intr.settings.cta_link }}"
+     {% if intr.settings.cta_new_tab %}
+     target="_blank"
+     rel="noopener noreferrer"
+     {% endif %}>
+     {{ intr.settings.cta_label }}
+   </a>
+ {% endif %}
+       </div>
+     </div>
+     {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
+   {% endunless %}
+ {% endif %}
 
-                        {% if intr.settings.show_on_mobile and intr.settings.position_mobile == kv_card_index %}
-                          {% unless kv_rendered_interrupters_mobile contains intr_token %}
-                            <div
-                              class="kv-bundle-interrupter-card kv-bundle-interrupter-card--mobile {% if intr.settings.mobile_layout == 'stacked' %}kv-bundle-interrupter-card--stacked{% endif %}"
-                              style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
-                              {{ intr.shopify_attributes }}>
-                              <div class="kv-bundle-interrupter-media">
-                                {% if intr.settings.image != blank %}
-                                  <img
-                                    src="{{ intr.settings.image | image_url: width: 900 }}"
-                                    alt="{{ intr.settings.heading | escape }}"
-                                    loading="lazy"
-                                    width="900"
-                                    height="900">
-                                {% endif %}
-                                {% if intr.settings.badge_text != blank %}
-                                  <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                                {% endif %}
-                              </div>
-                              <div class="kv-bundle-interrupter-content">
-                                {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                                {% endif %}
-                                {% if intr.settings.description != blank %}
-                                  <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                                {% endif %}
-                                {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                                  <a
-                                    class="kv-bundle-interrupter-cta"
-                                    href="{{ intr.settings.cta_link }}"
-                                    {% if intr.settings.cta_new_tab %}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    {% endif %}>
-                                    {{ intr.settings.cta_label }}
-                                  </a>
-                                {% endif %}
-                              </div>
-                            </div>
-                            {% assign kv_rendered_interrupters_mobile = kv_rendered_interrupters_mobile | append: intr_token %}
-                          {% endunless %}
-                        {% endif %}
+ {% if intr.settings.show_on_mobile and intr.settings.position_mobile == kv_card_index %}
+   {% unless kv_rendered_interrupters_mobile contains intr_token %}
+     <div
+       class="kv-bundle-interrupter-card kv-bundle-interrupter-card--mobile {% if intr.settings.mobile_layout == 'stacked' %}kv-bundle-interrupter-card--stacked{% endif %}"
+       style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
+       {{ intr.shopify_attributes }}>
+       <div class="kv-bundle-interrupter-media">
+ {% if intr.settings.image != blank %}
+   <img
+     src="{{ intr.settings.image | image_url: width: 900 }}"
+     alt="{{ intr.settings.heading | escape }}"
+     loading="lazy"
+     width="900"
+     height="900">
+ {% endif %}
+ {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+ {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+ <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+ {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+ <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+ {%- endif -%}
+       </div>
+       <div class="kv-bundle-interrupter-content">
+ {% if intr.settings.heading != blank %}
+   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+ {% endif %}
+ {% if intr.settings.description != blank %}
+   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+ {% endif %}
+ {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+   <a
+     class="kv-bundle-interrupter-cta"
+     href="{{ intr.settings.cta_link }}"
+     {% if intr.settings.cta_new_tab %}
+     target="_blank"
+     rel="noopener noreferrer"
+     {% endif %}>
+     {{ intr.settings.cta_label }}
+   </a>
+ {% endif %}
+       </div>
+     </div>
+     {% assign kv_rendered_interrupters_mobile = kv_rendered_interrupters_mobile | append: intr_token %}
+   {% endunless %}
+ {% endif %}
                       {% endif %}
                     {% endfor %}
 
@@ -1287,169 +1323,169 @@
                       {%- comment -%} Badge {%- endcomment -%}
                       {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
                       {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
-                        <div class="kv-bundle-product-badge kv-badge-preorder">Pre-Order</div>
+ <div class="kv-bundle-product-badge kv-badge-preorder">Pre-Order</div>
                       {%- elsif product.metafields.custom.collection_card_badge != blank -%}
-                        <div class="kv-bundle-product-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+ <div class="kv-bundle-product-badge">{{ product.metafields.custom.collection_card_badge }}</div>
                       {%- endif -%}
 
                       {%- comment -%} Product Image {%- endcomment -%}
                       {% assign card_image = product.metafields.custom.collection_card_image | default: product.featured_image %}
                       {% if card_image %}
-                        <img
-                          src="{{ card_image | image_url: width: 600 }}"
-                          alt="{{ product.title | escape }}"
-                          class="kv-bundle-product-image"
-                          loading="lazy"
-                          width="600"
-                          height="600">
+ <img
+   src="{{ card_image | image_url: width: 600 }}"
+   alt="{{ product.title | escape }}"
+   class="kv-bundle-product-image"
+   loading="lazy"
+   width="600"
+   height="600">
                       {% else %}
-                        <div class="kv-bundle-product-image" style="background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
-                          <span style="color: #999;">No image</span>
-                        </div>
+ <div class="kv-bundle-product-image" style="background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
+   <span style="color: #999;">No image</span>
+ </div>
                       {% endif %}
 
                       {%- comment -%} Product Title {%- endcomment -%}
                       <div class="kv-bundle-product-title">
-                        {{ product.title }}
-                        <button
-                          class="kv-bundle-product-info-icon kv-scent-info-btn"
-                          type="button"
-                          aria-label="View details"
-                          data-product-id="{{ product.id }}"
-                          data-product-title="{{ product.title | escape }}"
-                          data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
-                          data-product-details="{{ product.metafields.custom.scent_details | escape }}"
-                          data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
-                          data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
-                          data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 14 14"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                              d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z"
-                              stroke="#160000"
-                              stroke-width="0.875"
-                              stroke-miterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round" />
-                            <path
-                              d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375"
-                              stroke="#160000"
-                              stroke-width="0.875"
-                              stroke-miterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round" />
-                            <path
-                              d="M7 6.125V9.625"
-                              stroke="#160000"
-                              stroke-width="0.875"
-                              stroke-miterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round" />
-                          </svg>
-                        </button>
+ {{ product.title }}
+ <button
+   class="kv-bundle-product-info-icon kv-scent-info-btn"
+   type="button"
+   aria-label="View details"
+   data-product-id="{{ product.id }}"
+   data-product-title="{{ product.title | escape }}"
+   data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
+   data-product-details="{{ product.metafields.custom.scent_details | escape }}"
+   data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+   data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
+   data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
+   <svg
+     width="14"
+     height="14"
+     viewBox="0 0 14 14"
+     fill="none"
+     xmlns="http://www.w3.org/2000/svg">
+     <path
+       d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z"
+       stroke="#160000"
+       stroke-width="0.875"
+       stroke-miterlimit="10"
+       stroke-linecap="round"
+       stroke-linejoin="round" />
+     <path
+       d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375"
+       stroke="#160000"
+       stroke-width="0.875"
+       stroke-miterlimit="10"
+       stroke-linecap="round"
+       stroke-linejoin="round" />
+     <path
+       d="M7 6.125V9.625"
+       stroke="#160000"
+       stroke-width="0.875"
+       stroke-miterlimit="10"
+       stroke-linecap="round"
+       stroke-linejoin="round" />
+   </svg>
+ </button>
                       </div>
 
                       {%- comment -%} Product Description {%- endcomment -%}
                       {% assign card_description = product.metafields.custom.collection_card_description | default: product.description %}
                       {% if card_description != blank %}
-                        <div class="kv-bundle-product-description">
-                          {{ card_description | strip_html | truncate: 80 }}
-                        </div>
+ <div class="kv-bundle-product-description">
+   {{ card_description | strip_html | truncate: 80 }}
+ </div>
                       {% endif %}
 
                       {%- comment -%} Variant Selector (if product has multiple variants) {%- endcomment -%}
                       {% if product.variants.size > 1 %}
-                        <div class="kv-bundle-product-variants">
-                          {% for variant in product.variants limit: 5 %}
-                            {% if variant.featured_image %}
-                              <img
-                                src="{{ variant.featured_image | image_url: width: 100 }}"
-                                alt="{{ variant.title | escape }}"
-                                class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
-                                data-variant-id="{{ variant.id }}"
-                                data-variant-price="{{ variant.price }}"
-                                data-variant-compare-at-price="{{ variant.compare_at_price }}"
-                                title="{{ variant.title }}"
-                                loading="lazy"
-                                width="50"
-                                height="50">
-                            {% elsif product.featured_image %}
-                              <img
-                                src="{{ product.featured_image | image_url: width: 100 }}"
-                                alt="{{ variant.title | escape }}"
-                                class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
-                                data-variant-id="{{ variant.id }}"
-                                data-variant-price="{{ variant.price }}"
-                                data-variant-compare-at-price="{{ variant.compare_at_price }}"
-                                title="{{ variant.title }}"
-                                loading="lazy"
-                                width="50"
-                                height="50">
-                            {% endif %}
-                          {% endfor %}
-                        </div>
+ <div class="kv-bundle-product-variants">
+   {% for variant in product.variants limit: 5 %}
+     {% if variant.featured_image %}
+       <img
+ src="{{ variant.featured_image | image_url: width: 100 }}"
+ alt="{{ variant.title | escape }}"
+ class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
+ data-variant-id="{{ variant.id }}"
+ data-variant-price="{{ variant.price }}"
+ data-variant-compare-at-price="{{ variant.compare_at_price }}"
+ title="{{ variant.title }}"
+ loading="lazy"
+ width="50"
+ height="50">
+     {% elsif product.featured_image %}
+       <img
+ src="{{ product.featured_image | image_url: width: 100 }}"
+ alt="{{ variant.title | escape }}"
+ class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
+ data-variant-id="{{ variant.id }}"
+ data-variant-price="{{ variant.price }}"
+ data-variant-compare-at-price="{{ variant.compare_at_price }}"
+ title="{{ variant.title }}"
+ loading="lazy"
+ width="50"
+ height="50">
+     {% endif %}
+   {% endfor %}
+ </div>
                       {% endif %}
 
                       {%- comment -%} Product Controls (Quantity + Add to Cart) {%- endcomment -%}
                       <div class="kv-bundle-product-controls">
-                        <div class="kv-bundle-quantity-selector">
-                          <button
-                            class="kv-bundle-qty-btn kv-bundle-qty-decrease"
-                            type="button"
-                            aria-label="Decrease quantity">
-                            <svg
-                              width="4"
-                              height="2"
-                              viewBox="0 0 4 2"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path d="M0 0H3.77051V1.49805H0V0Z" fill="white" />
-                            </svg>
-                          </button>
-                          <input
-                            type="number"
-                            class="kv-bundle-qty-input"
-                            value="1"
-                            min="1"
-                            readonly
-                            aria-label="Quantity">
-                          <button
-                            class="kv-bundle-qty-btn kv-bundle-qty-increase"
-                            type="button"
-                            aria-label="Increase quantity">
-                            <svg
-                              width="7"
-                              height="7"
-                              viewBox="0 0 7 7"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path d="M0 2.34229H2.33594V0H3.68799V2.34229H6.03027V3.69434H3.68799V6.03662H2.33594V3.69434H0V2.34229Z" fill="white" />
-                            </svg>
-                          </button>
-                        </div>
+ <div class="kv-bundle-quantity-selector">
+   <button
+     class="kv-bundle-qty-btn kv-bundle-qty-decrease"
+     type="button"
+     aria-label="Decrease quantity">
+     <svg
+       width="4"
+       height="2"
+       viewBox="0 0 4 2"
+       fill="none"
+       xmlns="http://www.w3.org/2000/svg">
+       <path d="M0 0H3.77051V1.49805H0V0Z" fill="white" />
+     </svg>
+   </button>
+   <input
+     type="number"
+     class="kv-bundle-qty-input"
+     value="1"
+     min="1"
+     readonly
+     aria-label="Quantity">
+   <button
+     class="kv-bundle-qty-btn kv-bundle-qty-increase"
+     type="button"
+     aria-label="Increase quantity">
+     <svg
+       width="7"
+       height="7"
+       viewBox="0 0 7 7"
+       fill="none"
+       xmlns="http://www.w3.org/2000/svg">
+       <path d="M0 2.34229H2.33594V0H3.68799V2.34229H6.03027V3.69434H3.68799V6.03662H2.33594V3.69434H0V2.34229Z" fill="white" />
+     </svg>
+   </button>
+ </div>
 
-                        {% if product.available %}
-                          <button
-                            class="kv-bundle-add-to-cart"
-                            type="button"
-                            data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-                            data-variant-price="{{ product.selected_or_first_available_variant.price }}"
-                            data-variant-compare-at-price="{{ product.selected_or_first_available_variant.compare_at_price }}"
-                            data-product-id="{{ product.id }}">
-                            <span>{{ section.settings.text_add_button | default: '+ Add' }}</span>
-                          </button>
-                        {% else %}
-                          <button
-                            class="kv-bundle-add-to-cart"
-                            type="button"
-                            disabled>
-                            <span>{{ section.settings.text_sold_out | default: 'Sold Out' }}</span>
-                          </button>
-                        {% endif %}
+ {% if product.available %}
+   <button
+     class="kv-bundle-add-to-cart"
+     type="button"
+     data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+     data-variant-price="{{ product.selected_or_first_available_variant.price }}"
+     data-variant-compare-at-price="{{ product.selected_or_first_available_variant.compare_at_price }}"
+     data-product-id="{{ product.id }}">
+     <span>{{ section.settings.text_add_button | default: '+ Add' }}</span>
+   </button>
+ {% else %}
+   <button
+     class="kv-bundle-add-to-cart"
+     type="button"
+     disabled>
+     <span>{{ section.settings.text_sold_out | default: 'Sold Out' }}</span>
+   </button>
+ {% endif %}
                       </div>
                     </div>
 
@@ -1464,93 +1500,99 @@
                     {%- comment -%} Interrupter blocks (desktop/mobile positions) {%- endcomment -%}
                     {% for intr in section.blocks %}
                       {% if intr.type == 'interrupter' and intr.settings.enabled %}
-                        {% assign intr_token = '|' | append: intr.id | append: '|' %}
+ {% assign intr_token = '|' | append: intr.id | append: '|' %}
 
-                        {% if intr.settings.show_on_desktop and intr.settings.position_desktop == kv_card_index %}
-                          {% unless kv_rendered_interrupters_desktop contains intr_token %}
-                            <div
-                              class="kv-bundle-interrupter-card kv-bundle-interrupter-card--desktop{% if intr.settings.desktop_layout == 'stacked' %} kv-bundle-interrupter-card--stacked{% endif %}{% if intr.settings.desktop_layout != 'stacked' and intr.settings.image_position == 'right' %} kv-bundle-interrupter-card--image-right{% endif %}"
-                              style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-desktop: {{ intr.settings.image_height_desktop }}px; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
-                              {{ intr.shopify_attributes }}>
-                              <div class="kv-bundle-interrupter-media">
-                                {% if intr.settings.image != blank %}
-                                  <img
-                                    src="{{ intr.settings.image | image_url: width: 900 }}"
-                                    alt="{{ intr.settings.heading | escape }}"
-                                    loading="lazy"
-                                    width="900"
-                                    height="900">
-                                {% endif %}
-                                {% if intr.settings.badge_text != blank %}
-                                  <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                                {% endif %}
-                              </div>
-                              <div class="kv-bundle-interrupter-content">
-                                {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                                {% endif %}
-                                {% if intr.settings.description != blank %}
-                                  <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                                {% endif %}
-                                {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                                  <a
-                                    class="kv-bundle-interrupter-cta"
-                                    href="{{ intr.settings.cta_link }}"
-                                    {% if intr.settings.cta_new_tab %}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    {% endif %}>
-                                    {{ intr.settings.cta_label }}
-                                  </a>
-                                {% endif %}
-                              </div>
-                            </div>
-                            {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
-                          {% endunless %}
-                        {% endif %}
+ {% if intr.settings.show_on_desktop and intr.settings.position_desktop == kv_card_index %}
+   {% unless kv_rendered_interrupters_desktop contains intr_token %}
+     <div
+       class="kv-bundle-interrupter-card kv-bundle-interrupter-card--desktop{% if intr.settings.desktop_layout == 'stacked' %} kv-bundle-interrupter-card--stacked{% endif %}{% if intr.settings.desktop_layout != 'stacked' and intr.settings.image_position == 'right' %} kv-bundle-interrupter-card--image-right{% endif %}"
+       style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-desktop: {{ intr.settings.image_height_desktop }}px; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
+       {{ intr.shopify_attributes }}>
+       <div class="kv-bundle-interrupter-media">
+ {% if intr.settings.image != blank %}
+   <img
+     src="{{ intr.settings.image | image_url: width: 900 }}"
+     alt="{{ intr.settings.heading | escape }}"
+     loading="lazy"
+     width="900"
+     height="900">
+ {% endif %}
+ {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+           {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+           <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+           {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+           <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+           {%- endif -%}
+       </div>
+       <div class="kv-bundle-interrupter-content">
+ {% if intr.settings.heading != blank %}
+   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+ {% endif %}
+ {% if intr.settings.description != blank %}
+   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+ {% endif %}
+ {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+   <a
+     class="kv-bundle-interrupter-cta"
+     href="{{ intr.settings.cta_link }}"
+     {% if intr.settings.cta_new_tab %}
+     target="_blank"
+     rel="noopener noreferrer"
+     {% endif %}>
+     {{ intr.settings.cta_label }}
+   </a>
+ {% endif %}
+       </div>
+     </div>
+     {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
+   {% endunless %}
+ {% endif %}
 
-                        {% if intr.settings.show_on_mobile and intr.settings.position_mobile == kv_card_index %}
-                          {% unless kv_rendered_interrupters_mobile contains intr_token %}
-                            <div
-                              class="kv-bundle-interrupter-card kv-bundle-interrupter-card--mobile {% if intr.settings.mobile_layout == 'stacked' %}kv-bundle-interrupter-card--stacked{% endif %}"
-                              style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
-                              {{ intr.shopify_attributes }}>
-                              <div class="kv-bundle-interrupter-media">
-                                {% if intr.settings.image != blank %}
-                                  <img
-                                    src="{{ intr.settings.image | image_url: width: 900 }}"
-                                    alt="{{ intr.settings.heading | escape }}"
-                                    loading="lazy"
-                                    width="900"
-                                    height="900">
-                                {% endif %}
-                                {% if intr.settings.badge_text != blank %}
-                                  <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                                {% endif %}
-                              </div>
-                              <div class="kv-bundle-interrupter-content">
-                                {% if intr.settings.heading != blank %}
-                                  <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                                {% endif %}
-                                {% if intr.settings.description != blank %}
-                                  <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                                {% endif %}
-                                {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                                  <a
-                                    class="kv-bundle-interrupter-cta"
-                                    href="{{ intr.settings.cta_link }}"
-                                    {% if intr.settings.cta_new_tab %}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    {% endif %}>
-                                    {{ intr.settings.cta_label }}
-                                  </a>
-                                {% endif %}
-                              </div>
-                            </div>
-                            {% assign kv_rendered_interrupters_mobile = kv_rendered_interrupters_mobile | append: intr_token %}
-                          {% endunless %}
-                        {% endif %}
+ {% if intr.settings.show_on_mobile and intr.settings.position_mobile == kv_card_index %}
+   {% unless kv_rendered_interrupters_mobile contains intr_token %}
+     <div
+       class="kv-bundle-interrupter-card kv-bundle-interrupter-card--mobile {% if intr.settings.mobile_layout == 'stacked' %}kv-bundle-interrupter-card--stacked{% endif %}"
+       style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
+       {{ intr.shopify_attributes }}>
+       <div class="kv-bundle-interrupter-media">
+ {% if intr.settings.image != blank %}
+   <img
+     src="{{ intr.settings.image | image_url: width: 900 }}"
+     alt="{{ intr.settings.heading | escape }}"
+     loading="lazy"
+     width="900"
+     height="900">
+ {% endif %}
+ {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+ {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+ <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+ {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+ <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+ {%- endif -%}
+       </div>
+       <div class="kv-bundle-interrupter-content">
+ {% if intr.settings.heading != blank %}
+   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+ {% endif %}
+ {% if intr.settings.description != blank %}
+   <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+ {% endif %}
+ {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+   <a
+     class="kv-bundle-interrupter-cta"
+     href="{{ intr.settings.cta_link }}"
+     {% if intr.settings.cta_new_tab %}
+     target="_blank"
+     rel="noopener noreferrer"
+     {% endif %}>
+     {{ intr.settings.cta_label }}
+   </a>
+ {% endif %}
+       </div>
+     </div>
+     {% assign kv_rendered_interrupters_mobile = kv_rendered_interrupters_mobile | append: intr_token %}
+   {% endunless %}
+ {% endif %}
                       {% endif %}
                     {% endfor %}
 
@@ -1564,169 +1606,169 @@
                       {%- comment -%} Badge {%- endcomment -%}
                       {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
                       {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
-                        <div class="kv-bundle-product-badge kv-badge-preorder">Pre-Order</div>
+ <div class="kv-bundle-product-badge kv-badge-preorder">Pre-Order</div>
                       {%- elsif product.metafields.custom.collection_card_badge != blank -%}
-                        <div class="kv-bundle-product-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+ <div class="kv-bundle-product-badge">{{ product.metafields.custom.collection_card_badge }}</div>
                       {%- endif -%}
 
                       {%- comment -%} Product Image {%- endcomment -%}
                       {% assign card_image = product.metafields.custom.collection_card_image | default: product.featured_image %}
                       {% if card_image %}
-                        <img
-                          src="{{ card_image | image_url: width: 600 }}"
-                          alt="{{ product.title | escape }}"
-                          class="kv-bundle-product-image"
-                          loading="lazy"
-                          width="600"
-                          height="600">
+ <img
+   src="{{ card_image | image_url: width: 600 }}"
+   alt="{{ product.title | escape }}"
+   class="kv-bundle-product-image"
+   loading="lazy"
+   width="600"
+   height="600">
                       {% else %}
-                        <div class="kv-bundle-product-image" style="background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
-                          <span style="color: #999;">No image</span>
-                        </div>
+ <div class="kv-bundle-product-image" style="background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
+   <span style="color: #999;">No image</span>
+ </div>
                       {% endif %}
 
                       {%- comment -%} Product Title {%- endcomment -%}
                       <div class="kv-bundle-product-title">
-                        {{ product.title }}
-                        <button
-                          class="kv-bundle-product-info-icon kv-scent-info-btn"
-                          type="button"
-                          aria-label="View details"
-                          data-product-id="{{ product.id }}"
-                          data-product-title="{{ product.title | escape }}"
-                          data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
-                          data-product-details="{{ product.metafields.custom.scent_details | escape }}"
-                          data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
-                          data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
-                          data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 14 14"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                              d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z"
-                              stroke="#160000"
-                              stroke-width="0.875"
-                              stroke-miterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round" />
-                            <path
-                              d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375"
-                              stroke="#160000"
-                              stroke-width="0.875"
-                              stroke-miterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round" />
-                            <path
-                              d="M7 6.125V9.625"
-                              stroke="#160000"
-                              stroke-width="0.875"
-                              stroke-miterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round" />
-                          </svg>
-                        </button>
+ {{ product.title }}
+ <button
+   class="kv-bundle-product-info-icon kv-scent-info-btn"
+   type="button"
+   aria-label="View details"
+   data-product-id="{{ product.id }}"
+   data-product-title="{{ product.title | escape }}"
+   data-product-description="{{ product.metafields.custom.scent_popup_description | default: product.description | strip_html | strip | escape }}"
+   data-product-details="{{ product.metafields.custom.scent_details | escape }}"
+   data-product-image="{% if product.metafields.custom.scent_image %}{{ product.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+   data-product-variant="{{ product.metafields.custom.quantity_value | default: product.variants.first.title | escape }}"
+   data-product-badge="{{ product.metafields.custom.collection_card_badge | escape }}">
+   <svg
+     width="14"
+     height="14"
+     viewBox="0 0 14 14"
+     fill="none"
+     xmlns="http://www.w3.org/2000/svg">
+     <path
+       d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z"
+       stroke="#160000"
+       stroke-width="0.875"
+       stroke-miterlimit="10"
+       stroke-linecap="round"
+       stroke-linejoin="round" />
+     <path
+       d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375"
+       stroke="#160000"
+       stroke-width="0.875"
+       stroke-miterlimit="10"
+       stroke-linecap="round"
+       stroke-linejoin="round" />
+     <path
+       d="M7 6.125V9.625"
+       stroke="#160000"
+       stroke-width="0.875"
+       stroke-miterlimit="10"
+       stroke-linecap="round"
+       stroke-linejoin="round" />
+   </svg>
+ </button>
                       </div>
 
                       {%- comment -%} Product Description {%- endcomment -%}
                       {% assign card_description = product.metafields.custom.collection_card_description | default: product.description %}
                       {% if card_description != blank %}
-                        <div class="kv-bundle-product-description">
-                          {{ card_description | strip_html | truncate: 80 }}
-                        </div>
+ <div class="kv-bundle-product-description">
+   {{ card_description | strip_html | truncate: 80 }}
+ </div>
                       {% endif %}
 
                       {%- comment -%} Variant Selector (if product has multiple variants) {%- endcomment -%}
                       {% if product.variants.size > 1 %}
-                        <div class="kv-bundle-product-variants">
-                          {% for variant in product.variants limit: 5 %}
-                            {% if variant.featured_image %}
-                              <img
-                                src="{{ variant.featured_image | image_url: width: 100 }}"
-                                alt="{{ variant.title | escape }}"
-                                class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
-                                data-variant-id="{{ variant.id }}"
-                                data-variant-price="{{ variant.price }}"
-                                data-variant-compare-at-price="{{ variant.compare_at_price }}"
-                                title="{{ variant.title }}"
-                                loading="lazy"
-                                width="50"
-                                height="50">
-                            {% elsif product.featured_image %}
-                              <img
-                                src="{{ product.featured_image | image_url: width: 100 }}"
-                                alt="{{ variant.title | escape }}"
-                                class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
-                                data-variant-id="{{ variant.id }}"
-                                data-variant-price="{{ variant.price }}"
-                                data-variant-compare-at-price="{{ variant.compare_at_price }}"
-                                title="{{ variant.title }}"
-                                loading="lazy"
-                                width="50"
-                                height="50">
-                            {% endif %}
-                          {% endfor %}
-                        </div>
+ <div class="kv-bundle-product-variants">
+   {% for variant in product.variants limit: 5 %}
+     {% if variant.featured_image %}
+       <img
+ src="{{ variant.featured_image | image_url: width: 100 }}"
+ alt="{{ variant.title | escape }}"
+ class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
+ data-variant-id="{{ variant.id }}"
+ data-variant-price="{{ variant.price }}"
+ data-variant-compare-at-price="{{ variant.compare_at_price }}"
+ title="{{ variant.title }}"
+ loading="lazy"
+ width="50"
+ height="50">
+     {% elsif product.featured_image %}
+       <img
+ src="{{ product.featured_image | image_url: width: 100 }}"
+ alt="{{ variant.title | escape }}"
+ class="kv-bundle-variant-image {% if forloop.first %}active{% endif %}"
+ data-variant-id="{{ variant.id }}"
+ data-variant-price="{{ variant.price }}"
+ data-variant-compare-at-price="{{ variant.compare_at_price }}"
+ title="{{ variant.title }}"
+ loading="lazy"
+ width="50"
+ height="50">
+     {% endif %}
+   {% endfor %}
+ </div>
                       {% endif %}
 
                       {%- comment -%} Product Controls (Quantity + Add to Cart) {%- endcomment -%}
                       <div class="kv-bundle-product-controls">
-                        <div class="kv-bundle-quantity-selector">
-                          <button
-                            class="kv-bundle-qty-btn kv-bundle-qty-decrease"
-                            type="button"
-                            aria-label="Decrease quantity">
-                            <svg
-                              width="4"
-                              height="2"
-                              viewBox="0 0 4 2"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path d="M0 0H3.77051V1.49805H0V0Z" fill="white" />
-                            </svg>
-                          </button>
-                          <input
-                            type="number"
-                            class="kv-bundle-qty-input"
-                            value="1"
-                            min="1"
-                            readonly
-                            aria-label="Quantity">
-                          <button
-                            class="kv-bundle-qty-btn kv-bundle-qty-increase"
-                            type="button"
-                            aria-label="Increase quantity">
-                            <svg
-                              width="7"
-                              height="7"
-                              viewBox="0 0 7 7"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path d="M0 2.34229H2.33594V0H3.68799V2.34229H6.03027V3.69434H3.68799V6.03662H2.33594V3.69434H0V2.34229Z" fill="white" />
-                            </svg>
-                          </button>
-                        </div>
+ <div class="kv-bundle-quantity-selector">
+   <button
+     class="kv-bundle-qty-btn kv-bundle-qty-decrease"
+     type="button"
+     aria-label="Decrease quantity">
+     <svg
+       width="4"
+       height="2"
+       viewBox="0 0 4 2"
+       fill="none"
+       xmlns="http://www.w3.org/2000/svg">
+       <path d="M0 0H3.77051V1.49805H0V0Z" fill="white" />
+     </svg>
+   </button>
+   <input
+     type="number"
+     class="kv-bundle-qty-input"
+     value="1"
+     min="1"
+     readonly
+     aria-label="Quantity">
+   <button
+     class="kv-bundle-qty-btn kv-bundle-qty-increase"
+     type="button"
+     aria-label="Increase quantity">
+     <svg
+       width="7"
+       height="7"
+       viewBox="0 0 7 7"
+       fill="none"
+       xmlns="http://www.w3.org/2000/svg">
+       <path d="M0 2.34229H2.33594V0H3.68799V2.34229H6.03027V3.69434H3.68799V6.03662H2.33594V3.69434H0V2.34229Z" fill="white" />
+     </svg>
+   </button>
+ </div>
 
-                        {% if product.available %}
-                          <button
-                            class="kv-bundle-add-to-cart"
-                            type="button"
-                            data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-                            data-variant-price="{{ product.selected_or_first_available_variant.price }}"
-                            data-variant-compare-at-price="{{ product.selected_or_first_available_variant.compare_at_price }}"
-                            data-product-id="{{ product.id }}">
-                            <span>{{ section.settings.text_add_button | default: '+ Add' }}</span>
-                          </button>
-                        {% else %}
-                          <button
-                            class="kv-bundle-add-to-cart"
-                            type="button"
-                            disabled>
-                            <span>{{ section.settings.text_sold_out | default: 'Sold Out' }}</span>
-                          </button>
-                        {% endif %}
+ {% if product.available %}
+   <button
+     class="kv-bundle-add-to-cart"
+     type="button"
+     data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+     data-variant-price="{{ product.selected_or_first_available_variant.price }}"
+     data-variant-compare-at-price="{{ product.selected_or_first_available_variant.compare_at_price }}"
+     data-product-id="{{ product.id }}">
+     <span>{{ section.settings.text_add_button | default: '+ Add' }}</span>
+   </button>
+ {% else %}
+   <button
+     class="kv-bundle-add-to-cart"
+     type="button"
+     disabled>
+     <span>{{ section.settings.text_sold_out | default: 'Sold Out' }}</span>
+   </button>
+ {% endif %}
                       </div>
                     </div>
 
@@ -1742,87 +1784,93 @@
 
                     {% if intr.settings.show_on_desktop %}
                       {% unless kv_rendered_interrupters_desktop contains intr_token %}
-                        <div
-                          class="kv-bundle-interrupter-card kv-bundle-interrupter-card--desktop{% if intr.settings.desktop_layout == 'stacked' %} kv-bundle-interrupter-card--stacked{% endif %}{% if intr.settings.desktop_layout != 'stacked' and intr.settings.image_position == 'right' %} kv-bundle-interrupter-card--image-right{% endif %}"
-                          style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-desktop: {{ intr.settings.image_height_desktop }}px; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
-                          {{ intr.shopify_attributes }}>
-                          <div class="kv-bundle-interrupter-media">
-                            {% if intr.settings.image != blank %}
-                              <img
-                                src="{{ intr.settings.image | image_url: width: 900 }}"
-                                alt="{{ intr.settings.heading | escape }}"
-                                loading="lazy"
-                                width="900"
-                                height="900">
-                            {% endif %}
-                            {% if intr.settings.badge_text != blank %}
-                              <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                            {% endif %}
-                          </div>
-                          <div class="kv-bundle-interrupter-content">
-                            {% if intr.settings.heading != blank %}
-                              <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                            {% endif %}
-                            {% if intr.settings.description != blank %}
-                              <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                            {% endif %}
-                            {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                              <a
-                                class="kv-bundle-interrupter-cta"
-                                href="{{ intr.settings.cta_link }}"
-                                {% if intr.settings.cta_new_tab %}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                {% endif %}>
-                                {{ intr.settings.cta_label }}
-                              </a>
-                            {% endif %}
-                          </div>
-                        </div>
-                        {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
+ <div
+   class="kv-bundle-interrupter-card kv-bundle-interrupter-card--desktop{% if intr.settings.desktop_layout == 'stacked' %} kv-bundle-interrupter-card--stacked{% endif %}{% if intr.settings.desktop_layout != 'stacked' and intr.settings.image_position == 'right' %} kv-bundle-interrupter-card--image-right{% endif %}"
+   style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-desktop: {{ intr.settings.image_height_desktop }}px; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
+   {{ intr.shopify_attributes }}>
+   <div class="kv-bundle-interrupter-media">
+     {% if intr.settings.image != blank %}
+       <img
+ src="{{ intr.settings.image | image_url: width: 900 }}"
+ alt="{{ intr.settings.heading | escape }}"
+ loading="lazy"
+ width="900"
+ height="900">
+     {% endif %}
+     {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+     {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+     <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+     {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+     <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+     {%- endif -%}
+   </div>
+   <div class="kv-bundle-interrupter-content">
+     {% if intr.settings.heading != blank %}
+       <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+     {% endif %}
+     {% if intr.settings.description != blank %}
+       <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+     {% endif %}
+     {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+       <a
+ class="kv-bundle-interrupter-cta"
+ href="{{ intr.settings.cta_link }}"
+ {% if intr.settings.cta_new_tab %}
+ target="_blank"
+ rel="noopener noreferrer"
+ {% endif %}>
+ {{ intr.settings.cta_label }}
+       </a>
+     {% endif %}
+   </div>
+ </div>
+ {% assign kv_rendered_interrupters_desktop = kv_rendered_interrupters_desktop | append: intr_token %}
                       {% endunless %}
                     {% endif %}
 
                     {% if intr.settings.show_on_mobile %}
                       {% unless kv_rendered_interrupters_mobile contains intr_token %}
-                        <div
-                          class="kv-bundle-interrupter-card kv-bundle-interrupter-card--mobile {% if intr.settings.mobile_layout == 'stacked' %}kv-bundle-interrupter-card--stacked{% endif %}"
-                          style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
-                          {{ intr.shopify_attributes }}>
-                          <div class="kv-bundle-interrupter-media">
-                            {% if intr.settings.image != blank %}
-                              <img
-                                src="{{ intr.settings.image | image_url: width: 900 }}"
-                                alt="{{ intr.settings.heading | escape }}"
-                                loading="lazy"
-                                width="900"
-                                height="900">
-                            {% endif %}
-                            {% if intr.settings.badge_text != blank %}
-                              <div class="kv-bundle-interrupter-badge">{{ intr.settings.badge_text }}</div>
-                            {% endif %}
-                          </div>
-                          <div class="kv-bundle-interrupter-content">
-                            {% if intr.settings.heading != blank %}
-                              <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
-                            {% endif %}
-                            {% if intr.settings.description != blank %}
-                              <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
-                            {% endif %}
-                            {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
-                              <a
-                                class="kv-bundle-interrupter-cta"
-                                href="{{ intr.settings.cta_link }}"
-                                {% if intr.settings.cta_new_tab %}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                {% endif %}>
-                                {{ intr.settings.cta_label }}
-                              </a>
-                            {% endif %}
-                          </div>
-                        </div>
-                        {% assign kv_rendered_interrupters_mobile = kv_rendered_interrupters_mobile | append: intr_token %}
+ <div
+   class="kv-bundle-interrupter-card kv-bundle-interrupter-card--mobile {% if intr.settings.mobile_layout == 'stacked' %}kv-bundle-interrupter-card--stacked{% endif %}"
+   style="--kv-interrupter-bg: {{ intr.settings.background_color }}; --kv-interrupter-border: {{ intr.settings.border_color }}; --kv-interrupter-radius: {{ intr.settings.border_radius }}px; --kv-interrupter-padding: {{ intr.settings.padding }}px; --kv-interrupter-title-color: {{ intr.settings.title_color }}; --kv-interrupter-title-size: {{ intr.settings.title_size }}px; --kv-interrupter-text-color: {{ intr.settings.text_color }}; --kv-interrupter-text-size: {{ intr.settings.text_size }}px; --kv-interrupter-cta-bg: {{ intr.settings.cta_bg }}; --kv-interrupter-cta-text: {{ intr.settings.cta_text_color }}; --kv-interrupter-cta-border: {{ intr.settings.cta_border_color }}; --kv-interrupter-cta-radius: {{ intr.settings.cta_radius }}px; --kv-interrupter-image-width: {{ intr.settings.image_width_percent }}%; --kv-interrupter-image-fit: {{ intr.settings.image_fit }}; --kv-interrupter-image-height-mobile: {{ intr.settings.image_height_mobile }}px; --kv-interrupter-badge-bg: {{ intr.settings.badge_bg }}; --kv-interrupter-badge-text: {{ intr.settings.badge_text_color }};"
+   {{ intr.shopify_attributes }}>
+   <div class="kv-bundle-interrupter-media">
+     {% if intr.settings.image != blank %}
+       <img
+ src="{{ intr.settings.image | image_url: width: 900 }}"
+ alt="{{ intr.settings.heading | escape }}"
+ loading="lazy"
+ width="900"
+ height="900">
+     {% endif %}
+     {%- assign kv_inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+           {%- if kv_inv_qty <= 0 and product.metafields.custom.inventory_stock_date != blank -%}
+           <div class="kv-bundle-interrupter-badge kv-badge-preorder">Pre-Order</div>
+           {%- elsif product.metafields.custom.collection_card_badge != blank -%}
+           <div class="kv-bundle-interrupter-badge">{{ product.metafields.custom.collection_card_badge }}</div>
+           {%- endif -%}
+   </div>
+   <div class="kv-bundle-interrupter-content">
+     {% if intr.settings.heading != blank %}
+       <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}</div>
+     {% endif %}
+     {% if intr.settings.description != blank %}
+       <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
+     {% endif %}
+     {% if intr.settings.show_cta and intr.settings.cta_label != blank and intr.settings.cta_link != blank %}
+       <a
+ class="kv-bundle-interrupter-cta"
+ href="{{ intr.settings.cta_link }}"
+ {% if intr.settings.cta_new_tab %}
+ target="_blank"
+ rel="noopener noreferrer"
+ {% endif %}>
+ {{ intr.settings.cta_label }}
+       </a>
+     {% endif %}
+   </div>
+ </div>
+ {% assign kv_rendered_interrupters_mobile = kv_rendered_interrupters_mobile | append: intr_token %}
                       {% endunless %}
                     {% endif %}
                   {% endif %}
@@ -4413,7 +4461,7 @@
     margin: 0 auto;
     border-radius: 99px;
     border: 2px solid #C5C1BB;
-    background: #D9D3CD;
+    background: #fff;
   }
 
   .kv-progress-milestone.unlocked .kv-milestone-marker {
@@ -4590,14 +4638,14 @@
   }
 
   .kv-bundle-collection {
-    padding: 24px 0;
+    padding: 20px 0;
     background: #F8F7F4;
   }
 
   .kv-bundle-tabs {
     display: flex;
     gap: 8px;
-    margin: 0 0 44px;
+    margin: 0 0 20px;
     overflow-x: auto;
     scrollbar-width: thin;
   }
@@ -5949,7 +5997,7 @@
   }
 
   .kv-bundle-tabs {
-    margin: 0 0 32px;
+    margin: 0 0 20px;
   }
 
   .kv-bundle-products-grid {
