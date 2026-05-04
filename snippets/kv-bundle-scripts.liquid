@@ -483,13 +483,13 @@
             },
             body: JSON.stringify({
               attributes: {
-                'scent': ''
+                'scent': 'true'
               }
             })
           })
           .then(response => response.json())
           .then(cart => {
-            console.log('Scent property removed successfully:', cart.attributes);
+            console.log('Scent property added successfully:', cart.attributes);
           })
           .catch(error => console.error('Error:', error));
   

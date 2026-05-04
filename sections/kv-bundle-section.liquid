@@ -2278,6 +2278,13 @@
     ].filter(gift => gift.count > 0 && gift.image && gift.text);
   
     document.addEventListener('DOMContentLoaded', function() {
+      // Remove scent cart attribute on this page
+      fetch('/cart/update.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ attributes: { 'scent': '' } })
+      }).catch(error => console.error('Error removing scent attribute:', error));
+
       // Hide preloader after page load
       const preloader = document.getElementById('kv-page-preloader');
       if (preloader) {
