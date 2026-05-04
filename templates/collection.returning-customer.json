@@ -205,7 +205,7 @@
             "description": "<p>Smell spring at home, this bundle contains our 3 Limited Edition Spring scents.</p>",
             "show_cta": true,
             "cta_label": "+ Add 3 Scents",
-            "cta_product": "classic-charm",
+            "cta_product": "wild-blossom",
             "cta_default_quantity": 3,
             "image": "shopify://shop_images/d3f7110df2ea05ce12ba94d0b80d01cc55c55d17.png",
             "image_position": "left",
