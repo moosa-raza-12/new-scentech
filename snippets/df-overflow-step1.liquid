@@ -1,3 +1,247 @@
+<style>
+  .cds-highlight {
+    display: none;
+  }
+
+  .cds-cards.active .cds-highlight {
+    display: block;
+
+    /* or flex, depending on your layout */
+  }
+  .compare-icon-wrapper {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    cursor: pointer;
+  }
+  .custom-diffuser-selector {
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px 20px 0;
+    margin: auto;
+  }
+
+
+  /*
+
+   .cds-header-content{ 
+   display: flex; 
+   justify-content: space-between; 
+   } 
+*/
+
+  /* Header */.cds-header {
+    margin-bottom: 16px;
+  }
+  .cds-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cds-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  @media (max-width: 749px) {
+    .cds-left {
+      gap: 8px;
+    }
+  }
+  .cds-step {
+    width: 34px;
+    height: 34px;
+    background: #162518;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 16px;
+  }
+  @media (max-width: 639px) {
+    .cds-step{
+      width: 24px !important;
+      height: 24px !important;
+      font-size: 12px !important;
+    }
+    
+  }
+  .cds-title {
+    color: #160000;
+    font-weight: 400;
+    margin: 0;
+    font-size: 20px;
+  }
+  @media (max-width: 639px) {
+    .cds-title {
+      text-align: center;
+      font-size: 16px !important;
+    }
+    .compare-icon-wrapper {
+      gap: 6px;
+    }
+    .cds-subtext {
+      margin-top: 12px;
+      font-size: 12px;
+    }
+    .cds-header {
+      margin-bottom: 20px;
+    }
+    .cds-compare {
+      font-size: 14px;
+}
+  }
+
+  .cds-subtext {
+    margin-top: 16px;
+    color: #160000;
+
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .cds-compare {
+    color: #162518;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration-line: underline;
+  }
+
+  /* Banner */
+  .cds-banner {
+    border-radius: 6px;
+    background: #938E70;
+    color: #fff;
+    padding: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 14px;
+  }
+  @media screen and (max-width: 639px) {
+    .cds-banner {
+      padding: 10px 16px;
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+  }
+  /* Cards */
+  .cds-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .cds-cards {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .cds-cards.active {
+    border: 1px solid #160000;
+  }
+
+  .cds-card.active {
+    border: 2px solid #2e2e2e;
+  }
+
+  .cds-card-innerss {
+    display: flex;
+    gap: 20px;
+    padding: 6px;
+    padding-right: 20px;
+    cursor: pointer;
+    align-items: center;
+  }
+
+  .cds-image img {
+    width: 70px;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .cds-content {
+    flex: 1;
+  }
+
+  .cds-name {
+    margin: 0;
+    color: #160000;
+font-size: 20px;
+font-weight: 400;
+letter-spacing: 0;
+  }
+  @media (max-width: 639px) {
+    .cds-name {
+      font-size: 16px !important;
+    }
+    .cds-image img {
+      heigth: 80px;
+      width: 80px;
+    }
+  }
+
+  .cds-desc {
+    margin: 12px 0 0;
+    color: #160000;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+  @media (max-width: 639px) {
+    .cds-desc {
+      font-size: 12px !important;
+    }
+    .cds-header-content {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+  .cds-price {
+    text-align: right;
+    display: flex;
+    gap: 5px;
+  }
+
+  .cds-price .old {
+    display: block;
+    text-decoration: line-through;
+    color: #938E70;
+    font-size: 16px;
+  }
+
+  .cds-price .new {
+    font-weight: 600;
+    font-size: 16px;
+    color: #160000;
+  }
+  @media (max-width: 749px) {
+    .cds-price .new {
+      font-size: 12px;
+    }
+    .cds-price .old {
+      font-size: 12px;
+    }
+  }
+  /* Highlight footer */
+  .cds-highlight {
+    background: rgba(0, 0, 0, 0.10);
+    padding: 10px 12px;
+    text-align: center;
+    font-size: 12px;
+  }
+  .cds-highlight-text{
+    color: #162518;
+font-size: 12px;
+font-weight: 400;
+  }
+</style>
+
 <div class="custom-diffuser-selector">
 
   <!-- Header -->
@@ -136,7 +380,7 @@
 
           {% if discount_percent > 0 and new_price_display != blank %}
             <div class="cds-highlight">
-              {{ block.settings.selector_highlight_text | replace: '[price]', new_price_display | replace: '[percent]', discount_percent }}
+             <p class="cds-highlight-text"><b>Spring Sale:</b> Pay only <b>{{new_price_display }}</b> for your diffuser!</p>
             </div>
           {% endif %}
         </div>
@@ -210,240 +454,3 @@
   });
 </script>
 
-<style>
-  .cds-highlight {
-    display: none;
-  }
-
-  .cds-cards.active .cds-highlight {
-    display: block;
-
-    /* or flex, depending on your layout */
-  }
-  .compare-icon-wrapper {
-    display: inline-flex;
-    gap: 4px;
-    align-items: center;
-    cursor: pointer;
-  }
-  .custom-diffuser-selector {
-    width: 100%;
-    max-width: 1000px;
-    padding: 20px 20px 0;
-    margin: auto;
-  }
-
-
-  /*
-
-   .cds-header-content{ 
-   display: flex; 
-   justify-content: space-between; 
-   } 
-*/
-
-  /* Header */.cds-header {
-    margin-bottom: 16px;
-  }
-  .cds-header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .cds-left {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-  }
-  @media (max-width: 749px) {
-    .cds-left {
-      gap: 8px;
-    }
-  }
-  .cds-step {
-    width: 24px;
-    height: 24px;
-    background: #162518;
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 12px;
-  }
-  @media (max-width: 639px) {
-    .cds-step {
-      width: 24px !important;
-      height: 24px !important;
-      font-size: 12px !important;
-    }
-  }
-  .cds-title {
-    color: #160000;
-    font-weight: 400;
-    margin: 0;
-    font-size: 16px;
-  }
-  @media (max-width: 639px) {
-    .cds-title {
-      text-align: center;
-      font-size: 16px !important;
-    }
-    .compare-icon-wrapper {
-      gap: 6px;
-    }
-    .cds-subtext {
-      margin-top: 12px;
-      font-size: 12px;
-    }
-    .cds-header {
-      margin-bottom: 20px;
-    }
-  }
-
-  .cds-subtext {
-    margin-top: 12px;
-    color: #160000;
-
-    font-weight: 400;
-    letter-spacing: 0;
-  }
-
-  .cds-compare {
-    color: #162518;
-    font-size: 12px;
-    font-weight: 600;
-    text-decoration-line: underline;
-  }
-
-  /* Banner */
-  .cds-banner {
-    border-radius: 6px;
-    background: #938E70;
-    color: #fff;
-    padding: 14px;
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 12px;
-  }
-  @media screen and (max-width: 639px) {
-    .cds-banner {
-      padding: 10px 16px;
-      font-size: 12px;
-      margin-bottom: 20px;
-    }
-  }
-  /* Cards */
-  .cds-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .cds-cards {
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  .cds-cards.active {
-    border: 1px solid #160000;
-  }
-
-  .cds-card.active {
-    border: 2px solid #2e2e2e;
-  }
-
-  .cds-card-innerss {
-    display: flex;
-    gap: 20px;
-    padding: 6px;
-    padding-right: 20px;
-    cursor: pointer;
-    align-items: center;
-  }
-
-  .cds-image img {
-    width: 70px;
-    height: auto;
-    border-radius: 8px;
-  }
-
-  .cds-content {
-    flex: 1;
-  }
-
-  .cds-name {
-    margin: 0;
-    color: #160000;
-font-size: 16px;
-font-weight: 400;
-letter-spacing: 0;
-  }
-  @media (max-width: 639px) {
-    .cds-name {
-      font-size: 16px !important;
-    }
-    .cds-image img {
-      heigth: 80px;
-      width: 80px;
-    }
-  }
-
-  .cds-desc {
-    margin: 12px 0 0;
-    color: #160000;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0;
-  }
-  @media (max-width: 639px) {
-    .cds-desc {
-      font-size: 12px !important;
-    }
-    .cds-header-content {
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-    }
-    .cds-desc {
-      font-size: 12px;
-    }
-  }
-  .cds-price {
-    text-align: right;
-    display: flex;
-    gap: 5px;
-  }
-
-  .cds-price .old {
-    display: block;
-    text-decoration: line-through;
-    color: #938E70;
-    font-size: 12px;
-  }
-
-  .cds-price .new {
-    font-weight: 600;
-    font-size: 12px;
-    color: #160000;
-  }
-  @media (max-width: 749px) {
-    .cds-price .new {
-      font-size: 12px;
-    }
-    .cds-price .old {
-      font-size: 12px;
-    }
-  }
-  /* Highlight footer */
-  .cds-highlight {
-    background: rgba(0, 0, 0, 0.10);
-    padding: 10px 12px;
-    text-align: center;
-    font-size: 12px;
-  }
-</style>
