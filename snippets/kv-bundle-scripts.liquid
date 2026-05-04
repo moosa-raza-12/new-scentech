@@ -88,11 +88,21 @@
       giftPreOrderSuffix: '{{ section.settings.text_gift_preorder_suffix | default: "is on Pre-Order. Delivers on" }}'
     };
   
+    function parseMilestonePrice(priceStr) {
+      if (!priceStr) return 0;
+      const cleaned = priceStr.replace(/[^\d,\.]/g, '').replace(',', '.');
+      return Math.round(parseFloat(cleaned) * 100) || 0;
+    }
+
     const milestones = {
       milestone1: {{ section.settings.milestone_1_count | default: 0 }},
       milestone2: {{ section.settings.milestone_2_count | default: 0 }},
       milestone3: {{ section.settings.milestone_3_count | default: 0 }},
       milestone4: {{ section.settings.milestone_4_count | default: 0 }},
+      milestone1Price: parseMilestonePrice('{{ section.settings.milestone_1_price }}'),
+      milestone2Price: parseMilestonePrice('{{ section.settings.milestone_2_price }}'),
+      milestone3Price: parseMilestonePrice('{{ section.settings.milestone_3_price }}'),
+      milestone4Price: parseMilestonePrice('{{ section.settings.milestone_4_price }}'),
       milestone1Text: '{{ section.settings.milestone_1_text | default: "Add [count] more scents for a FREE gift!" }}',
       milestone2Text: '{{ section.settings.milestone_2_text | default: "Add [count] more scents for a FREE gift!" }}',
       milestone3Text: '{{ section.settings.milestone_3_text | default: "Add [count] more scents for a FREE gift!" }}',
@@ -100,6 +110,17 @@
       startText: '{{ section.settings.progress_start_text | default: "Start building your bundle!" }}',
       completeText: '{{ section.settings.progress_complete_text | default: "ðŸŽ‰ Congratulations! All rewards unlocked!" }}'
     };
+
+    function getMilestonePricePerScent(scentCount) {
+      if (milestones.milestone4 > 0 && scentCount >= milestones.milestone4) {
+        return milestones.milestone4Price;
+      } else if (milestones.milestone3 > 0 && scentCount >= milestones.milestone3) {
+        return milestones.milestone3Price;
+      } else if (milestones.milestone2 > 0 && scentCount >= milestones.milestone2) {
+        return milestones.milestone2Price;
+      }
+      return milestones.milestone1Price;
+    }
   
     const milestoneGifts = [];
   
@@ -816,18 +837,26 @@
       const existingProducts = carousel.querySelectorAll('.kv-bundle-thumbnail-wrapper:not(.kv-skeleton-placeholder)');
       existingProducts.forEach(el => el.remove());
   
+      const totalSelectedCount = selectedProducts.reduce((sum, product) => {
+        return sum + (product.quantity || 0);
+      }, 0);
+
+      // Build CTA pricing using milestone-based per-scent pricing
+      const scentCount = totalSelectedCount;
+      const pricePerScent = getMilestonePricePerScent(scentCount);
+      const runningTotal = (scentCount * pricePerScent) / 100;
+      const totalFormatted = formatMoney(runningTotal * 100);
+
       // Update continue button state and text
       if (selectedProducts.length === 0) {
         continueBtn.disabled = true;
         continueBtn.textContent = textLabels.addScents;
-        // Hide mini trigger when no products selected
         if (miniTrigger) {
           miniTrigger.style.display = 'none';
         }
       } else {
         continueBtn.disabled = false;
-        continueBtn.textContent = textLabels.continue;
-        // Show mini trigger when products are selected
+        continueBtn.textContent = `${textLabels.continue} ${totalFormatted}`;
         if (miniTrigger) {
           miniTrigger.style.display = 'flex';
         }
@@ -835,10 +864,6 @@
       
       // Show all skeletons first
       skeletons.forEach(skeleton => skeleton.classList.remove('hidden'));
-  
-      const totalSelectedCount = selectedProducts.reduce((sum, product) => {
-        return sum + (product.quantity || 0);
-      }, 0);
   
       const displayItems = [];
   
@@ -1213,24 +1238,26 @@
         }
       });
   
+      // Compute scent count for milestone tier pricing
+      const miniCartScentCount = selectedProducts
+        .reduce((sum, product) => sum + (product.quantity || 0), 0);
+      const miniCartPricePerScent = getMilestonePricePerScent(miniCartScentCount);
+
       // Add regular cart items after gifts
       selectedProducts.forEach((product, index) => {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'kv-mini-cart-item';
         itemDiv.setAttribute('data-product-id', product.productId);
         
-        const itemPrice = (product.price / 100) || 0;
+        const itemPrice = miniCartPricePerScent / 100;
         const itemSubtotal = itemPrice * product.quantity;
         total += itemSubtotal;
         
-        // Calculate compare-at price total
-        if (product.compareAtPrice && product.compareAtPrice > product.price) {
-          const compareAtPrice = (product.compareAtPrice / 100) || 0;
-          const compareAtSubtotal = compareAtPrice * product.quantity;
-          compareAtTotal += compareAtSubtotal;
+        if (product.price && product.price > miniCartPricePerScent) {
+          compareAtTotal += ((product.price || 0) / 100) * (product.quantity || 0);
         }
         
-        const priceDisplay = product.price ? formatMoney(product.price) : 'Loading...';
+        const priceDisplay = miniCartPricePerScent ? formatMoney(miniCartPricePerScent) : 'Loading...';
         const subtotalDisplay = product.price && product.quantity > 1 ? `<div class="kv-mini-cart-item-subtotal">Subtotal: ${formatMoney(itemSubtotal * 100)}</div>` : '';
         
         // Format inventory date if it exists and is not in the past
@@ -1277,19 +1304,10 @@
         miniCartItems.appendChild(itemDiv);
       });
   
-      const totalFormatted = formatMoney(total * 100);
-      miniCartTotal.textContent = totalFormatted;
-      
-      // Calculate total gift value
-      let giftTotal = 0;
-      unlockedMiniCartGifts.forEach(gift => {
-        if (gift.price && gift.price > 0) {
-          giftTotal += (gift.price / 100);
-        }
-      });
-      
-      // Add gift prices to the normal price to show total value
-      const totalWithGifts = total + giftTotal;
+      // Compute total using same single-multiplication as continue button
+      const miniCartTotal_cents = miniCartScentCount * miniCartPricePerScent;
+      const miniCartTotalFormatted = formatMoney(miniCartTotal_cents);
+      miniCartTotal.textContent = miniCartTotalFormatted;
       
       // Update mini-cart-footer with first product's ID
       const miniCartFooter = document.querySelector('.kv-mini-cart-footer');
@@ -1297,16 +1315,7 @@
         miniCartFooter.setAttribute('data-product-id', selectedProducts[0].productId || '');
       }
       
-      // Show compare-at price (normal price + gift value) if there are gifts or discount
-      if (giftTotal > 0 || (compareAtTotal > 0 && compareAtTotal > total)) {
-        // Use compareAtTotal if it's higher than normal price, otherwise use normal price
-        const baseCompareAt = (compareAtTotal > total) ? compareAtTotal : total;
-        const compareAtWithGifts = baseCompareAt + giftTotal;
-        const compareAtFormatted = formatMoney(compareAtWithGifts * 100);
-        checkoutBtn.innerHTML = `${textLabels.addToCart} <span class="kv-compare-at-price">${compareAtFormatted}</span> <span class="kv-normal-price" data-price-multiplier="${totalCount}">${totalFormatted}</span>`;
-      } else {
-        checkoutBtn.innerHTML = `${textLabels.addToCart} <span class="kv-normal-price" data-price-multiplier="${totalCount}">${totalFormatted}</span>`;
-      }
+      checkoutBtn.innerHTML = `${textLabels.addToCart} ${miniCartTotalFormatted}`;
 
       // Pre-order / in-stock delivery notice in footer
       const preorderNotice = document.getElementById('kv-minicart-preorder-notice');
