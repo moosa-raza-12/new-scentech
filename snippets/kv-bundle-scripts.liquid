@@ -1196,7 +1196,7 @@
         }
   
         const priceContainer = document.createElement('div');
-        priceContainer.className = 'kv-mini-cart-item-price kv-mini-cart-gift-price';
+        priceContainer.className = 'kv-bundle-scent-price kv-mini-cart-gift-price';
         priceContainer.textContent = textLabels.free;
         details.appendChild(priceContainer);
   
@@ -1284,7 +1284,7 @@
           <img src="${product.image.replace('width=600', 'width=160')}" alt="${product.title}" class="kv-mini-cart-item-image">
           <div class="kv-mini-cart-item-details">
             <div class="kv-mini-cart-item-title">${product.title}</div>
-            <div class="kv-mini-cart-item-price">${priceDisplay}</div>
+            <div class="kv-bundle-scent-price">${priceDisplay}</div>
             ${subtotalDisplay}
             ${inventoryDateDisplay}
           </div>
