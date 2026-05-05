@@ -160,6 +160,10 @@ NOTE TO DEVELOPERS: welcome to Impact theme! We hope that you will enjoy editing
       endif
     -%}
 
+    {%- if template.name == 'collection' and template.suffix == 'offer-page' -%}
+      <script type="text/javascript" src="https://cdn.506.io/eg/script.js?shop={{ shop.permanent_domain }}{% if customer %}&id={{ customer.id | escape_once }}&order_count={{ customer.orders_count | escape_once }}&total_spent={{ customer.total_spent | escape_once }}&tags={{ customer.tags | join: "," | url_encode }}{% endif %}"></script>
+    {%- endif -%}
+
     {%- if __set_scent -%}
       <script>
         fetch('/cart/update.js', {
