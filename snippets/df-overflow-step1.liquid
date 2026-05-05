@@ -288,6 +288,7 @@ font-weight: 400;
 
   <!-- Diffuser Blocks -->
   <div class="cds-list">
+    {% assign first_diffuser_rendered = false %}
     {% for block in section.blocks %}
       {% if block.type == "diffuser" %}
         {% assign product_obj = block.settings.selector_product %}
@@ -342,7 +343,7 @@ font-weight: 400;
         {% endif %}
 
         <div
-          class="cds-cards"
+          class="cds-cards {% if first_diffuser_rendered == false and template.suffix == 'v2-diffuser-overflow' %} active{% endif %}"
           data-product-id="{{ card_product_id }}"
           data-product-handle="{{ card_product_handle }}"
           data-variant-id="{{ card_variant_id }}"
@@ -389,6 +390,7 @@ font-weight: 400;
             </div>
           {% endif %}
         </div>
+        {% assign first_diffuser_rendered = true %}
       {% endif %}
     {% endfor %}
   </div>
