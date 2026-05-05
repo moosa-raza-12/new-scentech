@@ -458,6 +458,17 @@ font-weight: 400;
         detail: selectedProduct
       }));
     });
+
+    // Auto-click the first card after ALL DOMContentLoaded handlers have run (v2-diffuser-overflow only)
+    // setTimeout(0) defers the click until the v2 script's kv:selector-product-selected listener is registered
+    {% if template == 'page.v2-diffuser-overflow' %}
+    setTimeout(function() {
+      const firstCard = document.querySelector(cardSelector);
+      if (firstCard) {
+        firstCard.click();
+      }
+    }, 0);
+    {% endif %}
   });
 </script>
 
