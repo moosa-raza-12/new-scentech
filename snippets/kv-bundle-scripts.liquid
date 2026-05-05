@@ -497,22 +497,6 @@
         .then(data => {
           checkoutBtn.innerHTML = '✓ Added to Cart!';
 
-          fetch('/cart/update.js', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              attributes: {
-                'scent': 'true'
-              }
-            })
-          })
-          .then(response => response.json())
-          .then(cart => {
-            console.log('Scent property added successfully:', cart.attributes);
-          })
-          .catch(error => console.error('Error:', error));
   
           const cartPromises = [
             fetch('/cart.js').then(resp => {

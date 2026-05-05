@@ -164,12 +164,13 @@
       if (window.ResizeObserver) {
         const resizeObserver = new ResizeObserver(() => {
           updateHeroOffset();
+          calcStickyTrigger();
         });
         if (announcementBar) resizeObserver.observe(announcementBar);
         if (headerSection) resizeObserver.observe(headerSection);
       } else {
-        window.addEventListener('resize', updateHeroOffset);
-        window.addEventListener('load', updateHeroOffset);
+        window.addEventListener('resize', () => { updateHeroOffset(); calcStickyTrigger(); });
+        window.addEventListener('load', () => { updateHeroOffset(); calcStickyTrigger(); });
       }
   
       function updateStickyHeroHeight() {
@@ -182,20 +183,26 @@
         }
       }
   
+      const scentHeader = document.querySelector('.scent-header');
+      let stickyTriggerPoint = 0;
+      function calcStickyTrigger() {
+        if (!scentHeader) return;
+        const rect = scentHeader.getBoundingClientRect();
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        stickyTriggerPoint = rect.bottom + scrollY;
+      }
+      calcStickyTrigger();
+
       function handleHeroSticky() {
         const scentSelector=document.querySelector('.scent-selector')
-        // const progresFooter=document.querySelector('.kv-progress-footer2')
-        if (!heroSection) return;
-        const triggerPoint = heroSection.offsetHeight || 0;
-        if ((window.pageYOffset || document.documentElement.scrollTop) > triggerPoint) {
+        if (!heroSection || !scentHeader) return;
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrollY > stickyTriggerPoint) {
           heroSection.classList.add('sticky');
           scentSelector.style.display = 'none';
-        //   progresFooter.style.display = 'block';
-         console.log("Sticky Enabeled")
         } else {
           heroSection.classList.remove('sticky');
           scentSelector.style.display = 'block';
-          
         }
         updateStickyHeroHeight();
       }
@@ -626,15 +633,6 @@
         })
         .then(response => response.json())
         .then(data => {
-          fetch('/cart/update.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ attributes: { 'scent': 'true' } })
-          })
-          .then(response => response.json())
-          .then(cart => console.log('Scent property added successfully:', cart.attributes))
-          .catch(error => console.error('Error:', error));
-
           triggerBtn.innerHTML = '✓ Added to Cart!';
 
           const cartPromises = [

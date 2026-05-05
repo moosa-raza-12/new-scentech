@@ -140,6 +140,43 @@ NOTE TO DEVELOPERS: welcome to Impact theme! We hope that you will enjoy editing
     })(window, document, "clarity", "script", "sgpfyeb0eb");
 </script>
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+    {%- liquid
+      assign __set_scent = false
+      assign __remove_scent = false
+
+      if template.name == 'page' and template.suffix == 'v2-diffuser-overflow'
+        assign __set_scent = true
+      elsif template.name == 'page' and template.suffix == 'diffuser-overflow-v1'
+        assign __set_scent = true
+      elsif template.name == 'collection' and template.suffix == 'returning-customer'
+        assign __set_scent = true
+      endif
+
+      if template.name == 'collection' and template.suffix == blank
+        assign __remove_scent = true
+      elsif template.name == 'collection' and template.suffix == 'offer-page'
+        assign __remove_scent = true
+      endif
+    -%}
+
+    {%- if __set_scent -%}
+      <script>
+        fetch('/cart/update.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ attributes: { 'scent': 'true' } })
+        }).catch(function(e) { console.error('Error setting scent attribute:', e); });
+      </script>
+    {%- elsif __remove_scent -%}
+      <script>
+        fetch('/cart/update.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ attributes: { 'scent': '' } })
+        }).catch(function(e) { console.error('Error removing scent attribute:', e); });
+      </script>
+    {%- endif -%}
   </head>
   
 <body
