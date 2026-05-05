@@ -918,6 +918,14 @@
       // Enforce selector eligibility continuously as quantities change
       if (nonSelectorItemCount < 2) {
         const removedSelectorProducts = selectedProducts.filter(product => product.selectionSource === 'cds-selector');
+        const badgeText=document.querySelector('.text-update')
+        const badgeTextEmpty=document.getElementById('kv-progress-footer-message-empty')
+        if (badgeTextEmpty) {
+          badgeTextEmpty.textContent = 'Choose at least 2 scents';
+        }
+        if (badgeText) {
+          badgeText.textContent = 'Choose at least 2 scents';
+        }
         removedSelectorProducts.forEach(product => {
           syncProductState(product.productId, 'remove');
           syncProductQuantity(product.productId, 1);
@@ -927,6 +935,15 @@
 
       // Auto-select the first diffuser card when 2 scents are reached and none is selected yet
       if (nonSelectorItemCount >= 2) {
+        
+        const badgeText=document.querySelector('.text-update')
+        const badgeTextEmpty=document.getElementById('kv-progress-footer-message-empty')
+        if (badgeTextEmpty) {
+          badgeTextEmpty.textContent = 'Add more or place your order!';
+        }
+        if (badgeText) {
+          badgeText.textContent = 'Add more or place your order!';
+        }
         const hasSelectorProduct = selectedProducts.some(p => p.selectionSource === 'cds-selector');
         if (!hasSelectorProduct) {
           const firstCard = document.querySelector('.cds-cards');

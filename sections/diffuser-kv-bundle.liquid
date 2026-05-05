@@ -1,6 +1,10 @@
 {% render 'new-kv-bundle-css' %}
 {% render 'diffuser-kv-bundle-css' %}
-  
+  <style>
+    .kv-bundle-continue-btn {
+  width: 420px !important;
+  }
+  </style>
 <div class="kv-page-preloader" id="kv-page-preloader">
   <div class="kv-preloader-spinner"></div>
 </div>
@@ -22,7 +26,7 @@
  
      <h2 class="scent-title">{{ section.settings.heading }}</h2></div>
  
-     <div class="scent-badge">
+     <div class="scent-badge text-update">
        {{ section.settings.badge_text }}
      </div>
    </div>
@@ -91,12 +95,12 @@
          </div>
      </div> {% endcomment %}
     <div class="kv-progress-footer2" style="display: none;">
-       <div class="kv-progress-footer-message-empty">
+       <div class="kv-progress-footer-message-empty" id="kv-progress-footer-message-empty">
         {{ section.settings.badge_text }}
        </div>
    </div>
  </div>
-           {% comment %} <p>hello to the future</p> {% endcomment %}
+      
           </div>
         </div>
       </div>

@@ -385,9 +385,16 @@ font-weight: 400;
           </div>
 
           {% if discount_percent > 0 and new_price_display != blank %}
-            <div class="cds-highlight">
-             <p class="cds-highlight-text"><b>Spring Sale:</b> Pay only <b>{{new_price_display }}</b> for your diffuser!</p>
-            </div>
+            {% if template.suffix == "diffuser-overflow-v1" or template.name == "diffuser-overflow-v1" %}
+              <div class="cds-highlight">
+                <p class="cds-highlight-text"><b>Spring Sale:</b> Pay only <b>{{new_price_display }}</b> after adding 2 scents!</p>
+               </div>
+              {% else %}
+              <div class="cds-highlight">
+                <p class="cds-highlight-text"><b>Spring Sale:</b> Pay only <b>{{new_price_display }}</b> for your diffuser!</p>
+               </div>
+            {% endif %}
+           
           {% endif %}
         </div>
         {% assign first_diffuser_rendered = true %}

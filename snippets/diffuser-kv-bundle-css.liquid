@@ -11,8 +11,13 @@
   .kv-bundle-product-card{
     padding-right: 12px;
   }
+  @media (min-width: 640px) {
+    .kv-progress-footer2{
+      border-radius: 12px 12px 0 0;
+    }
+  }
   .kv-progress-footer2{
- /* border-radius: 12px 12px 0 0; */
+
  background: rgba(0, 0, 0, 0.10);
    padding: 10px 12px;
    text-align: center;
@@ -134,7 +139,7 @@
   
   .scent-badge {
   background: {{ section.settings.badge_bg }};
-  color: {{ section.settings.badge_text_color }};
+  color: #162518;
   padding: 6px 12px;
   border-radius: 10px;
   font-size: 14px;
@@ -151,14 +156,15 @@
 
 
  .cds-highlights p{
-   color: #17561F;
-            font-size: 12px;
-            font-weight: 600;
+color: #17561F;
+font-size: 12px;
+font-weight: 600;
+font-family: "Bai Jamjuree";
  }
  price-value{
    color: #17561F;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 600;         
  }
   /* CSS */
                       /* .disc-active-msg {
