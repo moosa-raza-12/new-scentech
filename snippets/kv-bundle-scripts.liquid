@@ -1,4 +1,8 @@
 <script>
+  (function() {
+    // Signal to any older version of this section on the same page to stand down
+    window._kvNewBundleActive = true;
+
     function getAmsterdamToday() {
       const now = new Date();
       const ams = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' }));
@@ -449,10 +453,11 @@
         if (document.getElementById('kv-scent-modal').classList.contains('active')) {
           return;
         }
+        // Rebuild content BEFORE the transition starts so stale prices never flash
+        updateMiniCart();
         miniCartOverlay.classList.add('active');
         miniCart.classList.add('active');
         document.body.style.overflow = 'hidden';
-        updateMiniCart();
       }
   
       function closeMiniCart() {
@@ -971,6 +976,11 @@
       
       // Update progress bar
       updateProgressBar();
+
+      // Keep mini cart prices in sync whenever selection changes
+      if (document.getElementById('kv-minicart') && document.getElementById('kv-minicart').classList.contains('active')) {
+        updateMiniCart();
+      }
     }
   
     // Update progress bar based on product count
@@ -1279,9 +1289,9 @@
             ${inventoryDateDisplay}
           </div>
           <div class="kv-mini-cart-item-qty-controls">
-              <button class="kv-mini-cart-qty-btn kv-mini-cart-qty-decrease" data-index="${index}" type="button" aria-label="Decrease quantity">-</button>
+              <button class="kv-mini-cart-qty-btn kv-mini-cart-qty-decrease" data-product-id="${product.productId}" type="button" aria-label="Decrease quantity">-</button>
               <span class="kv-mini-cart-qty-value">${product.quantity}</span>
-              <button class="kv-mini-cart-qty-btn kv-mini-cart-qty-increase" data-index="${index}" type="button" aria-label="Increase quantity">+</button>
+              <button class="kv-mini-cart-qty-btn kv-mini-cart-qty-increase" data-product-id="${product.productId}" type="button" aria-label="Increase quantity">+</button>
             </div>
         `;
         
@@ -1466,25 +1476,22 @@
       // Check if clicked element or its parent is the decrease button
       const decreaseBtn = e.target.classList.contains('kv-mini-cart-qty-decrease') ? e.target : e.target.closest('.kv-mini-cart-qty-decrease');
       if (decreaseBtn) {
-        const index = parseInt(decreaseBtn.getAttribute('data-index'));
-        const product = selectedProducts[index];
-        
-        if (!product) return;
-        
+        const productId = decreaseBtn.getAttribute('data-product-id');
+        const productIndex = selectedProducts.findIndex(p => p.productId === productId);
+        if (productIndex === -1) return;
+        const product = selectedProducts[productIndex];
+
         if (product.quantity > 1) {
           product.quantity--;
-          // Update ALL instances of this product across all tabs
           syncProductQuantity(product.productId, product.quantity);
           updateThumbnailCarousel();
           updateMiniCart();
         } else {
-          // Remove product - sync across all tabs
           syncProductState(product.productId, 'remove');
-          selectedProducts.splice(index, 1);
+          selectedProducts.splice(productIndex, 1);
           updateThumbnailCarousel();
           updateMiniCart();
-          
-          // Close mini cart if no products left
+
           if (selectedProducts.length === 0) {
             setTimeout(() => {
               document.getElementById('kv-minicart-overlay').classList.remove('active');
@@ -1495,17 +1502,16 @@
         }
         return;
       }
-  
+
       // Check if clicked element or its parent is the increase button
       const increaseBtn = e.target.classList.contains('kv-mini-cart-qty-increase') ? e.target : e.target.closest('.kv-mini-cart-qty-increase');
       if (increaseBtn) {
-        const index = parseInt(increaseBtn.getAttribute('data-index'));
-        const product = selectedProducts[index];
-        
-        if (!product) return;
-        
+        const productId = increaseBtn.getAttribute('data-product-id');
+        const productIndex = selectedProducts.findIndex(p => p.productId === productId);
+        if (productIndex === -1) return;
+        const product = selectedProducts[productIndex];
+
         product.quantity++;
-        // Update ALL instances of this product across all tabs
         syncProductQuantity(product.productId, product.quantity);
         updateThumbnailCarousel();
         updateMiniCart();
@@ -1535,4 +1541,5 @@
         expanded.style.display = 'none';
       }
     });
+  })();
 </script>

@@ -1020,7 +1020,7 @@
         }
       } else {
         continueBtn.disabled = false;
-        continueBtn.textContent = `${textLabels.addToCart} ${totalFormatted}`;
+        continueBtn.innerHTML = `${textLabels.addToCart}<span style="margin:0 8px;">·</span>${totalFormatted}`;
         // Show mini trigger when minimum item count is reached
         if (miniTrigger) {
           miniTrigger.style.display = 'flex';

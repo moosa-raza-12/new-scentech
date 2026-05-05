@@ -1194,9 +1194,14 @@
     padding: 15px;
     border-radius: 8px;
     background: #162518;
-    min-width: 390px;
+    /* min-width: 390px; */
     max-width: 100%;
   }
+  @media (max-width: 749px) {
+    .kv-bundle-continue-btn {
+    width: 100%;
+  }
+}
 
   .kv-bundle-items-sticky {
     border-radius: 12px 12px 0 0;
@@ -1232,12 +1237,18 @@
 
 
   .kv-bundle-items-sticky-inner {
-    max-width: 480px;
+   width: 100% !important;
     display: flex;
     gap: 24px;
     margin: auto;
     align-items: center;
   }
+
+  @media screen and (min-width: 750px) {
+    .kv-bundle-items-sticky-inner {
+    width: 480px !important;
+  }
+}
 
 
   .kv-bundle-continue {
