@@ -33,6 +33,9 @@ font-weight: 400;
 line-height: normal;
 opacity: 0.6;
     }
+  :root {
+    --cds-banner-bg: {{ section.settings.cds_banner_bg | default: '#938E70' }};
+  }
 </style>
        
 <div class="kv-page-preloader" id="kv-page-preloader">
@@ -2295,6 +2298,13 @@ opacity: 0.6;
   "id": "selector_banner_text",
   "label": "Banner Text",
   "default": "<p>Spring Sale: Get 50% off the diffuser when you add 2 scents</p>"
+     },
+     {
+  "type": "color",
+  "id": "cds_banner_bg",
+  "label": "Step Circle & Banner Background Color",
+  "info": "Controls the background color of the promo banner and all step circles",
+  "default": "#938E70"
      },
   {
     "type": "image_picker",
