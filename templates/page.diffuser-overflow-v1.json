@@ -57,7 +57,7 @@
             "text_size": 16,
             "badge_bg": "#ffffff",
             "badge_text_color": "#160000",
-            "cta_bg": "#ded9c5",
+            "cta_bg": "#5c220a",
             "cta_text_color": "#6a3b1e",
             "cta_border_color": "#ded9c5"
           }
@@ -139,6 +139,7 @@
         "circle_text": "#ffffff",
         "badge_bg": "#e5e5e5",
         "badge_text_color": "#333333",
+        "button_bg_color": "#5c220a",
         "heading_size": 24,
         "subtext_size": 14,
         "promo_banner_bold_text": "Winter Sale:",
@@ -185,8 +186,7 @@
         "milestone_4_count": 9,
         "milestone_4_label": "{count} geuren",
         "milestone_4_price": "€19,95",
-        "milestone_4_text": "Almost there! Add [count] more scents to unlock the Pro Diffuser!",
-        "button_bg_color": "#5c220a"
+        "milestone_4_text": "Almost there! Add [count] more scents to unlock the Pro Diffuser!"
       }
     }
   },
