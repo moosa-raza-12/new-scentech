@@ -33,8 +33,6 @@
             "selector_image": "shopify://shop_images/Images_Info_0e95c5fb-3eb6-456d-8fc6-b8a227c0183c.png",
             "selector_title": "Diffuser Lite",
             "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
-            "selector_old_price": "",
-            "selector_new_price": "",
             "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
           }
         },
@@ -45,8 +43,6 @@
             "selector_image": "shopify://shop_images/Images_Info_d009aa1b-9c64-4ff8-a9ec-bfda5fea114e.png",
             "selector_title": "Diffuser 2",
             "selector_description": "More consistent and noticeable scenting, designed for daily use. A strong balance between performance and control.",
-            "selector_old_price": "149,95€",
-            "selector_new_price": "€74,98",
             "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
           }
         },
@@ -56,8 +52,6 @@
             "selector_product": "smart-aroma-diffuser-pro",
             "selector_title": "Diffuser Pro",
             "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
-            "selector_old_price": "€149,95",
-            "selector_new_price": "€74,98",
             "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
           }
         },
@@ -109,14 +103,14 @@
         "subtext_size": 14,
         "promo_banner_bold_text": "Winter Sale:",
         "promo_banner_text": "All scents priced at €27,95",
-        "text_discount_prefix": "50% discount applied to your diffuser (",
-        "text_discount_suffix": " savings)",
-        "text_btn_disabled": "Add at least 2 Scents",
-        "text_add_more_order": "Add more or place your order!",
         "progress_empty_text": "Learn more about our diffusers",
         "info_popup_image": "shopify://shop_images/Screenshot_2026-03-16_at_15.19.48.png",
         "progress_start_text": "Start adding scents to unlock rewards!",
         "progress_complete_text": "🎉 Amazing! All gifts unlocked!",
+        "text_discount_prefix": "50% discount applied to your diffuser (",
+        "text_discount_suffix": " savings)",
+        "text_btn_disabled": "Add at least 2 Scents",
+        "text_add_more_order": "Add more or place your order!",
         "text_free": "FREE",
         "text_free_gift": "Free Gift",
         "text_add_scents": "Add Scents",
