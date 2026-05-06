@@ -4,6 +4,9 @@
     .kv-bundle-continue-btn {
   width: 420px !important;
   }
+  :root {
+    --cds-banner-bg: {{ section.settings.cds_banner_bg | default: '#938E70' }};
+  }
   </style>
 <div class="kv-page-preloader" id="kv-page-preloader">
   <div class="kv-preloader-spinner"></div>
@@ -2215,6 +2218,12 @@
   "id": "selector_banner_text",
   "label": "Banner Text",
   "default": "<p>Spring Sale: Get 50% off the diffuser when you add 2 scents</p>"
+     },
+     {
+  "type": "color",
+  "id": "cds_banner_bg",
+  "label": "CDS Banner Background Color",
+  "default": "#938E70"
      },
   {
     "type": "image_picker",
