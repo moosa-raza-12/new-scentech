@@ -182,6 +182,7 @@
         "progress_empty_text": "Learn more about our diffusers",
         "progress_start_text": "Start adding scents to unlock rewards!",
         "progress_complete_text": "🎉 Amazing! All gifts unlocked!",
+        "button_bg_color": "#5c220a",
         "text_free": "FREE",
         "text_free_gift": "Free Gift",
         "text_add_scents": "Add Scents",
@@ -216,8 +217,7 @@
         "milestone_4_count": 9,
         "milestone_4_label": "{count}  scents",
         "milestone_4_price": "€19,95",
-        "milestone_4_text": "Almost there! Add [count] more scents to unlock the Pro Diffuser!",
-        "button_bg_color": "#5c220a"
+        "milestone_4_text": "Almost there! Add [count] more scents to unlock the Pro Diffuser!"
       }
     }
   },
