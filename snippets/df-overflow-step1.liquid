@@ -181,6 +181,22 @@
     letter-spacing: 0;
     line-height: 1;
     font-family: N27;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .cds-info-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    pointer-events: auto;
+    position: relative;
+    z-index: 2;
   }
   @media (max-width: 639px) {
     .cds-name {
@@ -394,6 +410,22 @@ font-weight: 400;
                   {% else %}
                   {{ product_obj.title }} 
                   {% endif %}
+                  <button class="kv-bundle-product-info-icon kv-scent-info-btn cds-info-btn"
+                    type="button"
+                    aria-label="View details"
+                    data-product-id="{{ card_product_id }}"
+                    data-product-title="{{ card_title | escape }}"
+                    data-product-description="{{ product_obj.metafields.custom.scent_popup_description | default: product_obj.description | strip_html | strip | escape }}"
+                    data-product-details="{{ product_obj.metafields.custom.scent_details | escape }}"
+                    data-product-image="{% if product_obj.metafields.custom.scent_image %}{{ product_obj.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product_obj.featured_image %}{{ product_obj.featured_image | image_url: width: 1200 }}{% endif %}"
+                    data-product-variant="{{ product_obj.metafields.custom.quantity_value | default: product_obj.variants.first.title | escape }}"
+                    data-product-badge="{{ product_obj.metafields.custom.collection_card_badge | escape }}">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                  </button>
                 </p>
 
                 <div class="cds-price">
@@ -462,8 +494,63 @@ font-weight: 400;
     // Initially hide all highlights (if they are not already hidden by CSS)
     hideAllHighlights();
   
+    // Handle info icon clicks on diffuser cards
+    document.addEventListener('click', function(e) {
+      const infoBtn = e.target.closest('.cds-info-btn');
+      if (!infoBtn) return;
+      e.preventDefault();
+      e.stopPropagation();
+
+      const scentModal = document.getElementById('kv-scent-modal');
+      const scentModalOverlay = document.getElementById('kv-scent-modal-overlay');
+      if (!scentModal || !scentModalOverlay) return;
+
+      const modalImg = document.getElementById('kv-scent-modal-img');
+      const modalTitle = document.getElementById('kv-scent-modal-title');
+      const modalDescription = document.getElementById('kv-scent-modal-description');
+      const modalDetails = document.getElementById('kv-scent-modal-details');
+      const modalVariant = document.getElementById('kv-scent-modal-variant');
+      const modalBadge = document.getElementById('kv-scent-modal-badge');
+
+      if (modalTitle) modalTitle.textContent = infoBtn.getAttribute('data-product-title') || '';
+      if (modalDescription) modalDescription.textContent = infoBtn.getAttribute('data-product-description') || '';
+      if (modalVariant) modalVariant.textContent = infoBtn.getAttribute('data-product-variant') || '';
+
+      const badge = infoBtn.getAttribute('data-product-badge');
+      if (modalBadge) {
+        if (badge) {
+          modalBadge.textContent = badge;
+          modalBadge.style.display = '';
+        } else {
+          modalBadge.style.display = 'none';
+        }
+      }
+
+      const image = infoBtn.getAttribute('data-product-image');
+      if (modalImg) {
+        if (image) {
+          modalImg.src = image;
+          modalImg.alt = infoBtn.getAttribute('data-product-title') || '';
+          scentModal.querySelector('.kv-scent-modal-image').style.display = 'block';
+        } else {
+          scentModal.querySelector('.kv-scent-modal-image').style.display = 'none';
+        }
+      }
+
+      const details = infoBtn.getAttribute('data-product-details');
+      if (modalDetails) {
+        modalDetails.innerHTML = details ? details.replace(/\n/g, '<br>') : '';
+      }
+
+      scentModalOverlay.classList.add('active');
+      scentModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }, true);
+
     // Delegate click event to handle dynamically added cards
     document.body.addEventListener('click', function(e) {
+      if (e.target.closest('.cds-info-btn')) return;
+
       // Find the closest .cds-cards element (allows clicking on inner elements)
       const card = e.target.closest(cardSelector);
       if (!card) return;
