@@ -1182,10 +1182,12 @@
       
       if (!progressFill) return;
       
-      // Calculate current product count (total quantity across all products)
+      // Calculate current product count (scents only, exclude diffuser)
       let currentCount = 0;
       selectedProducts.forEach(product => {
-        currentCount += product.quantity;
+        if (product.selectionSource !== 'cds-selector') {
+          currentCount += product.quantity;
+        }
       });
       
       // Toggle footer visibility based on product selection
