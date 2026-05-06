@@ -1,5 +1,3 @@
-﻿{% render 'new-kv-bundle-css' %}
-
 <div class="kv-page-preloader" id="kv-page-preloader">
     <div class="kv-preloader-spinner"></div>
   </div>
@@ -2100,13 +2098,15 @@
 </div>
 {% endcomment %}
 {% render 'kv-bundle-scripts' %}
+{% render 'new-kv-bundle-css' %}
   
   {% schema %}
   {
     "name": "kv Collection Tabs",
     "tag": "section",
     "class": "section-kv-bundle-collection",
-    "settings": [
+    "settings": 
+    [
       {
         "type": "image_picker",
         "id": "hero_background_image",

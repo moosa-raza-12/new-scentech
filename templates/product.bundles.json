@@ -1,1 +1,928 @@
-{"sections":{"main":{"type":"main-product","blocks":{"liquid_UwEr8q":{"type":"liquid","settings":{"liquid":"<style>\n  .info-wrapper {\n    display: inline-flex;\n    align-items: center;\n    font-family: inherit;\n    font-size: 14px;\n    margin: 5px 0;\n    position: relative; \/* Belangrijk voor positionering tooltip *\/\n    border-radius: 6px;\n    padding: 10px 14px;\n    background-color: #162518;\n    color: #ffffff;\n    line-height: 1.2;\n  }\n\n  .info-icon {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    margin-left: 10px;\n    width: 20px;\n    height: 20px;\n    border: 1.5px solid #ffffff;\n    border-radius: 50%;\n    cursor: pointer;\n    flex-shrink: 0;\n    position: relative;\n    z-index: 11;\n  }\n\n  .info-i {\n    color: #ffffff !important;\n    font-family: serif !important;\n    font-size: 13px !important;\n    font-weight: bold !important;\n    line-height: 1 !important;\n    pointer-events: none; \/* Zorgt dat klik altijd op de cirkel landt *\/\n  }\n\n  .info-tooltip {\n    visibility: hidden;\n    opacity: 0;\n    position: absolute;\n    bottom: calc(100% + 15px);\n    left: 50%;\n    transform: translateX(-50%);\n    background-color: #162518;\n    color: #ffffff;\n    border: 1px solid rgba(255, 255, 255, 0.3);\n    padding: 15px;\n    border-radius: 8px;\n    width: 260px;\n    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);\n    font-size: 13px;\n    line-height: 1.5;\n    z-index: 9999;\n    transition: opacity 0.2s ease, visibility 0.2s ease;\n    pointer-events: none; \/* Voorkomt dat tooltip de muis blokkeert *\/\n  }\n\n  \/* Tooltip pijltje *\/\n  .info-tooltip::after {\n    content: \"\";\n    position: absolute;\n    top: 100%;\n    left: 50%;\n    margin-left: -8px;\n    border-width: 8px;\n    border-style: solid;\n    border-color: #162518 transparent transparent transparent;\n  }\n\n  \/* Hover & Active Logica *\/\n  .info-icon:hover ~ .info-tooltip,\n  .info-icon.active ~ .info-tooltip {\n    visibility: visible;\n    opacity: 1;\n  }\n\n  \/* Zorg dat vette tekst in de tooltip ook wit is *\/\n  .info-tooltip b, .info-tooltip strong {\n    color: #ffffff !important;\n  }\n<\/style>\n\n<div class=\"info-wrapper\">\n  <span>\n    {% assign title = product.metafields.custom.scent_duration_title %}\n    {{ title | default: \"Één geurtje gaat gemiddeld 2 maanden mee\" | escape }}\n  <\/span>\n\n  <div class=\"info-icon\" id=\"scentech-info-icon\" onclick=\"toggleTooltip(event, this)\">\n    <span class=\"info-i\">i<\/span>\n  <\/div>\n\n  <div class=\"info-tooltip\" id=\"scentech-tooltip\">\n    {% if product and product.metafields.custom.scent_duration_body != blank %}\n      {{ product.metafields.custom.scent_duration_body | metafield_tag }}\n    {% else %}\n      Bij een gemiddelde geurintensiteit verbruikt onze Smart Aroma Diffuser <b>0,08 ml per uur<\/b>. Eén ScentPod van 50 ml gaat dan <b>625 uur mee<\/b> – dat is ruim 2 maanden bij 10 uur gebruik per dag.\n    {% endif %}\n  <\/div>\n<\/div>\n\n<script>\n  function toggleTooltip(event, el) {\n    event.stopPropagation(); \/\/ Stopt het sluiten door de document-click\n    const isActive = el.classList.contains('active');\n    \n    \/\/ Reset alle icons\n    document.querySelectorAll('.info-icon').forEach(icon => icon.classList.remove('active'));\n    \n    \/\/ Toggle de huidige\n    if (!isActive) {\n      el.classList.add('active');\n    }\n  }\n\n  \/\/ Sluiten als je buiten de tooltip klikt\n  document.addEventListener('click', function(e) {\n    if (!e.target.closest('.info-wrapper')) {\n      document.querySelectorAll('.info-icon').forEach(icon => icon.classList.remove('active'));\n    }\n  });\n<\/script>"}},"klaviyo_reviews_average_rating_pR3Je8":{"type":"shopify:\/\/apps\/klaviyo-reviews\/blocks\/average-rating\/db20e365-d984-4ac4-9655-e1588d951ca9","settings":{"product":"{{product}}"}},"title":{"type":"title","settings":{"heading_tag":"h3"}},"price":{"type":"price","settings":{"show_taxes_notice":false}},"buy_buttons_zeLxRH":{"type":"buy_buttons","settings":{"show_payment_button":false,"show_gift_card_recipient":true,"show_shipping_info":true,"show_quantity_selector":false,"atc_button_background":"","atc_button_text_color":"","payment_button_background":"","payment_button_text_color":"","promo_enabled":true,"promo_image_1":"shopify:\/\/shop_images\/Selection_Icon_39b6a30c-832d-44b8-bb80-fb39d754fe49.png","promo_image_2":"shopify:\/\/shop_images\/Selection_Icon_703cde3c-0209-4068-9321-1d68826fc81d.png","promo_image_3":"shopify:\/\/shop_images\/Selection_Icon_8e56c555-b4ab-4a29-a250-45e94c23f0d5.png","promo_title_prefix":"Get it FREE with","promo_title_suffix":"Scents","promo_scent_metafield":"custom.scent_count","promo_fallback_count":"5","promo_subtitle":"Limited time offer","promo_url":"shopify:\/\/collections\/fall-sale"}},"liquid_QV3QCj":{"type":"liquid","disabled":true,"settings":{"liquid":"<!-- Klarna Installment Badge (links uitgelijnd) -->\n<div style=\"text-align: left; margin-top: -10px; margin-bottom: 10px;\">\n  <div style=\"display: flex; align-items: center; gap: 8px; padding: 8px 8px; background-color: #f7f7f7; border-radius: 8px; justify-content: flex-start;\">\n\n    <!-- Klarna Badge Icon -->\n    <svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" role=\"img\" width=\"38\" height=\"24\" viewBox=\"0 0 38 24\" aria-labelledby=\"pi-klarna\">\n      <title id=\"pi-klarna\">Klarna<\/title>\n      <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n        <path d=\"M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z\" fill=\"#FFB3C7\"><\/path>\n        <path d=\"M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32\" fill=\"#FFB3C7\"><\/path>\n        <path d=\"M34.117 13.184c-.487 0-.882.4-.882.892 0 .493.395.893.882.893.488 0 .883-.4.883-.893a.888.888 0 00-.883-.892zm-2.903-.69c0-.676-.57-1.223-1.274-1.223-.704 0-1.274.547-1.274 1.222 0 .675.57 1.223 1.274 1.223.704 0 1.274-.548 1.274-1.223zm.005-2.376h1.406v4.75h-1.406v-.303a2.446 2.446 0 01-1.394.435c-1.369 0-2.478-1.122-2.478-2.507 0-1.384 1.11-2.506 2.478-2.506.517 0 .996.16 1.394.435v-.304zm-11.253.619v-.619h-1.44v4.75h1.443v-2.217c0-.749.802-1.15 1.359-1.15h.016v-1.382c-.57 0-1.096.247-1.378.618zm-3.586 1.756c0-.675-.57-1.222-1.274-1.222-.703 0-1.274.547-1.274 1.222 0 .675.57 1.223 1.274 1.223.704 0 1.274-.548 1.274-1.223zm.005-2.375h1.406v4.75h-1.406v-.303A2.446 2.446 0 0114.99 15c-1.368 0-2.478-1.122-2.478-2.507 0-1.384 1.11-2.506 2.478-2.506.517 0 .997.16 1.394.435v-.304zm8.463-.128c-.561 0-1.093.177-1.448.663v-.535H22v4.75h1.417v-2.496c0-.722.479-1.076 1.055-1.076.618 0 .973.374.973 1.066v2.507h1.405v-3.021c0-1.106-.87-1.858-2.002-1.858zM10.465 14.87h1.472V8h-1.472v6.868zM4 14.87h1.558V8H4v6.87zM9.45 8a5.497 5.497 0 01-1.593 3.9l2.154 2.97H8.086l-2.341-3.228.604-.458A3.96 3.96 0 007.926 8H9.45z\" fill=\"#0A0B09\" fill-rule=\"nonzero\"><\/path>\n      <\/g>\n    <\/svg>\n\n    <!-- Klarna Installment Text + Klikbare Link -->\n    <span style=\"font-size: 12px; color: var(--color-foreground);\">\n      {{ product.metafields.custom.klarna_pay_with_installments }} {{ product.price | divided_by: 3 | money }}.\n      <a href=\"#\" id=\"show-klarna-popup\" class=\"link\" style=\"color: var(--color-foreground); font-weight: bold;\">\n        {{ product.metafields.custom.klarna_link_text }}\n      <\/a>\n    <\/span>\n\n  <\/div>\n<\/div>\n\n<!-- Klarna Pop-up Container -->\n<div id=\"klarna-popup\" style=\"\n  display: none;\n  position: fixed;\n  bottom: 30px; \/* Positions it 20px above the bottom of the screen *\/\n  left: 50%;\n  transform: translateX(-50%);\n  background-color: #fff;\n  padding: 20px;\n  border: 1px solid #ccc;\n  border-radius: 12px;\n  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);\n  z-index: 1000;\n  max-width: 90%;\n  width: 400px;\n  text-align: center;\n\">\n <div id=\"klarna-info-content\" style=\"\n    text-align: left;\n    margin-bottom: 20px;\n  \">\n\n  <style>\n    #klarna-info-content h2 {\n      font-size: 22px;\n      font-weight: bold;\n      margin-bottom: 10px;\n    }\n    #klarna-info-content h3 {\n      font-size: 18px;\n      font-weight: bold;\n      margin-top: 15px;\n      margin-bottom: 5px;\n    }\n    #klarna-info-content p {\n      margin-bottom: 10px;\n    }\n  <\/style>\n\n  <h2>Hoe werkt Klarna?<\/h2>\n\n  <h3>Stap 1: Kies Klarna bij het afrekenen<\/h3>\n  <p>Selecteer Klarna als betaalmethode tijdens het afrekenen.<\/p>\n\n  <h3>Stap 2: Betaal de eerste termijn direct<\/h3>\n  <p>Bij het afronden van je bestelling betaal je direct de eerste termijn.<\/p>\n\n  <h3>Stap 3: Betaal de resterende termijnen later<\/h3>\n  <p>De resterende twee termijnen worden automatisch afgeschreven met elk één maand tussentijd.<\/p>\n\n  <h3>Stap 4: Geen rente of extra kosten<\/h3>\n  <p>Je betaalt geen rente of extra kosten zolang je op tijd betaalt.<\/p>\n\n<\/div>\n\n\n\n\n  <button id=\"close-klarna-popup\" class=\"button button--primary\">\n    Sluiten\n  <\/button>\n<\/div>\n\n<!-- Overlay om achtergrond te dimmen -->\n<div id=\"klarna-overlay\" style=\"\n  display: none;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 999;\n\"><\/div>\n\n<!-- JavaScript voor pop-up functionaliteit -->\n<script>\n  document.getElementById('show-klarna-popup').addEventListener('click', function(event) {\n    event.preventDefault();\n    \n    \/\/ Toon de pop-up en overlay\n    document.getElementById('klarna-popup').style.display = 'block';\n    document.getElementById('klarna-overlay').style.display = 'block';\n  });\n\n  \/\/ Sluitknop functionaliteit\n  document.getElementById('close-klarna-popup').addEventListener('click', function() {\n    document.getElementById('klarna-popup').style.display = 'none';\n    document.getElementById('klarna-overlay').style.display = 'none';\n  });\n\n  \/\/ Klik op overlay sluit pop-up\n  document.getElementById('klarna-overlay').addEventListener('click', function() {\n    document.getElementById('klarna-popup').style.display = 'none';\n    this.style.display = 'none';\n  });\n<\/script>"}},"out_of_stock_text_eQmccL":{"type":"out-of-stock-text","settings":{"preorder_message":"Door de enorme toename in de vraag naar dit product is het tijdelijk uitverkocht. Als u nu besteld bent u volgende week de eerste die hem geleverd krijgt.","unavailable_message":"Dit product is momenteel niet beschikbaar.","show_in_stock_message":false,"in_stock_message":"Op voorraad - Direct leverbaar","preorder_bg_color":"#fff9db","preorder_border_color":"#ffe58f","preorder_text_color":"#333333","unavailable_bg_color":"#ffebee","unavailable_border_color":"#ffcdd2","unavailable_text_color":"#d32f2f","available_bg_color":"#e8f5e8","available_border_color":"#c8e6c9","available_text_color":"#2e7d32","enable_debug":false}},"description_kgfJMj":{"type":"description","settings":{"collapse_content":false}},"liquid_cBMrVw":{"type":"liquid","settings":{"liquid":"<style>\n  .custom-bullet-list {\n    list-style: none;\n    padding: 0;\n    margin: 0;\n  }\n\n  .custom-bullet-list li {\n    display: flex;\n    align-items: center; \/* Center align checkmark with the text *\/\n    margin-bottom: 10px;\n  }\n\n  .custom-bullet-list img {\n    width: 1em; \/* Match size to text *\/\n    height: 1em;\n    margin-right: 8px;\n    flex-shrink: 0; \/* Prevent resizing *\/\n  }\n\n  .custom-bullet-list span {\n    font-weight: bold; \/* Make text bold *\/\n    line-height: 1.5em; \/* Maintain readability for multi-line text *\/\n  }\n<\/style>\n\n<ul class=\"custom-bullet-list\">\n  <li>\n    <img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0888\/1219\/2090\/files\/Checkmark.svg?v=1732631297\" alt=\"Checkmark icon\" \/>\n    <span>{{ product.metafields.custom.main_product_benefit_1 }}<\/span>\n  <\/li>\n  <li>\n    <img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0888\/1219\/2090\/files\/Checkmark.svg?v=1732631297\" alt=\"Checkmark icon\" \/>\n    <span>{{ product.metafields.custom.main_product_benefit_2 }}<\/span>\n  <\/li>\n  <li>\n    <img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0888\/1219\/2090\/files\/Checkmark.svg?v=1732631297\" alt=\"Checkmark icon\" \/>\n    <span>{{ product.metafields.custom.main_product_benefit_3 }}<\/span>\n  <\/li>\n  <li>\n    <img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0888\/1219\/2090\/files\/Checkmark.svg?v=1732631297\" alt=\"Checkmark icon\" \/>\n    <span>{{ product.metafields.custom.main_product_benefit_4 }}<\/span>\n  <\/li>\n  <li>\n    <img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0888\/1219\/2090\/files\/Checkmark.svg?v=1732631297\" alt=\"Checkmark icon\" \/>\n    <span>{{ product.metafields.custom.main_product_benefit_5 }}<\/span>\n  <\/li>\n<\/ul>"}},"collapsible_text_TyRzcj":{"type":"collapsible_text","settings":{"title":"What is cold-air diffusion?","content":"<p>Cold-air diffusers disperse scents through <strong>nebulization<\/strong>—a process that breaks down fragrance oils into an ultrafine, dry mist. This advanced technology ensures that scents remain in the air <strong>up to 4 times longer<\/strong>. The nanoparticles in this mist are so small that they stay suspended for hours without leaving any residue. Unlike traditional diffusers, this cutting-edge method uses <strong>no water, alcohol, or heat<\/strong>, preserving the fragrance in its purest form.<\/p>","page":""}},"collapsible_text_Q9pMXa":{"type":"collapsible_text","settings":{"title":"Why is cold-air diffusion better?","content":"<p>Cold-air diffusers can cover <strong>twice the area<\/strong> of traditional scented candles, reed diffusers, plug-ins, and ultrasonic diffusers. With cold-air diffusion, <strong>95% of the oil<\/strong> is effectively dispersed into the air, compared to <strong>only 30%-40%<\/strong> with traditional diffusers. They provide <strong>consistent, even scent distribution<\/strong> and allow you to <strong>precisely control intensity<\/strong>.<\/p>","page":""}},"collapsible_text_dJt86C":{"type":"collapsible_text","settings":{"title":"Cold-air vs. traditional diffusers","content":"<ul><li><strong>Maximum scent diffusion<\/strong> – Cold-air diffusers disperse <strong>95-99% of the fragrance oil<\/strong> as ultrafine micro-particles, while ultrasonic diffusers are only <strong>30-50% effective<\/strong> due to dilution with water.<\/li><li><strong>Longer-lasting fragrance<\/strong> – The scent lingers <strong>up to 4 times longer<\/strong>, whereas mist from ultrasonic diffusers evaporates quickly or settles to the ground.<\/li><li><strong>Efficient oil usage<\/strong> – Our technology <strong>uses 50-80% less oil<\/strong>, so you can enjoy long-lasting fragrance without frequent refills.<\/li><\/ul>","page":""}},"collapsible_text_97ADVw":{"type":"collapsible_text","settings":{"title":"Technical Specifications","content":"<p><strong>Seamless Control:<\/strong> Manage effortlessly through the Bluetooth app<\/p><p><strong>Dimensions:<\/strong> 12 cm x 12 cm x 4 cm<\/p><p><strong>Weight:<\/strong> 450g<\/p><p><strong>Power Source:<\/strong> Battery Type D (included) or USB-C (also included)<\/p><p><strong>Coverage Area:<\/strong> 50 sq meters<\/p><p><strong>Material:<\/strong> Durable, lightweight ABS plastic with a matte finish<\/p><p><strong>Technology:<\/strong> Water-free nebulizing diffusion<\/p><p><strong>Compatibility:<\/strong> Works exclusively with Scentech ScentPods<\/p>","page":""}},"collapsible_text_UPHcAz":{"type":"collapsible_text","settings":{"title":"Shipping & Returns","content":"<p><strong>Free express shipping on orders over €30<\/strong><br\/>Enjoy fast, free shipping on orders above €30, with options for Express or Standard shipping available at checkout. All duties and taxes are included for a hassle-free experience.<\/p><p><strong>Returns<\/strong><br\/>We offer a 30-day return policy on all Scentech products. To start a return, simply reach out to our customer service team at <a href=\"mailto:support@scentech.store\" title=\"mailto:support@scentech.store\"><strong>support@scentech.store<\/strong><\/a><\/p>","page":""}},"collapsible_text_QP7fNm":{"type":"collapsible_text","settings":{"title":"Cleaning & Maintenance","content":"<p>Our Smart Aroma Diffuser is designed to be <strong>low-maintenance<\/strong>, so you can focus on enjoying your favorite fragrances. However, it can never hurt to give it a quick clean every once in a while. Simply:<\/p><p><strong>Remove the ScentPod<\/strong> and wipe the nozzle with a soft, dry cloth to keep it running smoothly.<\/p><p><strong>For a deeper clean<\/strong>, use a cotton swab dipped in isopropyl alcohol to gently clean the nozzle. Let it dry completely before reattaching the ScentPod.<\/p><p>That's all it takes to keep your diffuser performing at its best, delivering consistent, high-quality fragrance.<\/p>","page":""}},"video_reviews_carousel_WykR4H":{"type":"video_reviews_carousel","settings":{"heading":"Join 10 000+ happy customers with an amazing smelling home.","heading_color":"#160000","background_color":"#ffffff","video_1":"shopify:\/\/files\/videos\/afe172bef15747dea56f4a9816f2522a.mp4","reviewer_name_1":"wonen.met.lef","reviewer_avatar_1":"shopify:\/\/shop_images\/PF-wonenmetlef.jpg","verified_1":true,"video_2":"shopify:\/\/files\/videos\/video review.MOV","reviewer_name_2":"dutchlifestyle.nl","reviewer_avatar_2":"shopify:\/\/shop_images\/PF-dutchlifestyle.jpg","verified_2":true,"video_3":"shopify:\/\/files\/videos\/VID_20251028210443610.mov","reviewer_name_3":"amberclaes","reviewer_avatar_3":"shopify:\/\/shop_images\/Screenshot_2026-04-02_at_10.41.33.png","verified_3":true,"video_4":"shopify:\/\/files\/videos\/copy_BE6231CB-85FB-467B-A33F-7E2687C63BB9.mov","reviewer_name_4":"stacyhoogland","reviewer_avatar_4":"shopify:\/\/shop_images\/PF-Stacyhoogland.jpg","verified_4":true,"video_5":"shopify:\/\/files\/videos\/Video with VO_081310_1.mov","reviewer_name_5":"larissaduif","reviewer_avatar_5":"shopify:\/\/shop_images\/PF-larissaduif.jpg","verified_5":true,"reviewer_name_6":"","verified_6":true,"reviewer_name_7":"","verified_7":true,"reviewer_name_8":"","verified_8":true}}},"block_order":["liquid_UwEr8q","klaviyo_reviews_average_rating_pR3Je8","title","price","buy_buttons_zeLxRH","liquid_QV3QCj","out_of_stock_text_eQmccL","description_kgfJMj","liquid_cBMrVw","collapsible_text_TyRzcj","collapsible_text_Q9pMXa","collapsible_text_dJt86C","collapsible_text_97ADVw","collapsible_text_UPHcAz","collapsible_text_QP7fNm","video_reviews_carousel_WykR4H"],"custom_css":["@media screen and (min-width: 1000px) {.sticky-product-images {position: sticky; top: 130px; z-index: 0; \/* Keeps the images above other elements if needed *\/}"],"settings":{"full_width":true,"show_fixed_add_to_cart":true,"desktop_media_width":55,"desktop_media_layout":"carousel_thumbnails_left","mobile_media_size":"expanded","mobile_carousel_control":"thumbnails","enable_video_autoplay":false,"enable_video_looping":true,"enable_image_zoom":true,"max_image_zoom_level":3,"background":"","background_gradient":"","text_color":"","input_background":"rgba(0,0,0,0)","input_text_color":""}},"instant_n923s_gcpkw2_pz_pfq_znbnEB":{"type":"instant-N923sGcpkw2PzPfq","settings":{"text_4pnscOknvXEBfDm1":"<p>Improve Sleep<\/p>","text_DmtrTNHOtTvcVXcm":"<p>Increase Energy<\/p>","text_YpoSbeDkXdkr0TRV":"<p>Reduce Stress<\/p>","text_UJyKKhLiDNFEK2nE":"<p>Amazing Smell<\/p>","padding_top":0,"padding_bottom":0}},"images_with_text_scrolling_zA4bFj":{"type":"images-with-text-scrolling","blocks":{"item_3BNMri":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/Gemini_Generated_Image_oii3p4oii3p4oii3_1.png","icon":"none","icon_width":48,"title":"the smell of a luxury hotel","content":"<p>Scentech diffusers use the same technology found in luxury hotels.<\/p>"}},"item_nRnG7i":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/Ontwerp_zonder_titel_-_2025-12-17T133949.195.png","icon":"none","icon_width":48,"title":"Scent sticks don't work","content":"<p>Traditional scented products only work nearby. Our Smart Aroma Diffuser evenly scents up to 50m², covering your entire space with just one device.<\/p>"}},"item_J7wm4Q":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/app_controlled_visual.png","icon":"none","icon_width":48,"title":"App-controlled luxury","content":"<p>Enjoy effortless customization of scent intensity and schedules.<\/p>"}},"item_pGeMKR":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/Gemini_Generated_Image_8zsi0f8zsi0f8zsi_2_acb83c9c-b2b6-49de-aa27-14d4fe749bbb.png","icon":"none","icon_width":48,"title":"Better mood","content":"<p>Scent directly influences your mood and emotions. It can energize you, calm you, or help you focus.<\/p>"}}},"block_order":["item_3BNMri","item_nRnG7i","item_J7wm4Q","item_pGeMKR"],"custom_css":[".h1 {font-size: 20px; \/* mobile *\/}","@media (min-width: 768px) {.h1 {font-size: 40px; \/* desktop *\/ }}"],"settings":{"full_width":false,"stack_on_mobile":false,"show_counter":false,"desktop_image_effect":"fade","image_position":"end","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":""}},"image_with_text_overlay_Wyi7YM":{"type":"image-with-text-overlay","blocks":{"heading_8iFrbH":{"type":"heading","settings":{"text":"Find a scent that fits your personality.","heading_tag":"h3"}},"richtext_yFiPh3":{"type":"richtext","settings":{"content":"<p>Discover a fragrance crafted to match your unique essence and elevate your space.<\/p>"}},"button_brzK4z":{"type":"button","settings":{"style":"fill","size":"lg","text":"Take the quiz","url":"#open-quiz-tools\/perfect-product-finder\/find-a-fragrance-that-fits-your-personality","background":"#162518","text_color":"#ffffff"}}},"block_order":["heading_8iFrbH","richtext_yFiPh3","button_brzK4z"],"settings":{"full_width":true,"allow_transparent_header":false,"enable_parallax":false,"image_size":"sm","image":"shopify:\/\/shop_images\/All_Scents.png","mobile_image":"shopify:\/\/shop_images\/Ontwerp_zonder_titel_75.png","mobile_text_position":"place-self-end-start text-start","desktop_text_position":"sm:place-self-end-start sm:text-start","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"image_link_blocks_4VaJxj":{"type":"image-link-blocks","blocks":{"item_ptaqTd":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/4_335ee863-1629-450c-87af-4e7ee9844c45.png","stretch_image":true,"link_text":"Floral & Serene","link_url":"shopify:\/\/collections\/floral-romantic-scents","background":"rgba(0,0,0,0)","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"item_zbBnWa":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/2_00bc159b-0bbf-465c-a370-2f20142aaa37.png","stretch_image":true,"link_text":"Fresh & Vital","link_url":"shopify:\/\/collections\/fresh-energizing-scents","background":"","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"item_HkMaYn":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/woody_e8ba4946-f5d0-4449-aa16-bf216615d94b.png","stretch_image":true,"link_text":"Woody & Warm","link_url":"shopify:\/\/collections\/warm-indulgent-scents","background":"","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"item_FWeRV8":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/amber_ea161761-bfca-40a4-8407-e9fbb5db1467.png","stretch_image":true,"link_text":"Amber & Aura","link_url":"shopify:\/\/collections\/calming-serene-scents","background":"","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}}},"block_order":["item_ptaqTd","item_zbBnWa","item_HkMaYn","item_FWeRV8"],"custom_css":[".h2 {font-size: 23px; \/* mobile *\/}","@media (min-width: 768px) {.h1 {font-size: 40px; \/* desktop *\/ }}"],"settings":{"full_width":false,"block_size":"small","subheading":"","title":"Scent Collections","content":"","link_url":"","link_text":"","background":"rgba(0,0,0,0)","background_gradient":"","text_color":"","heading_color":"","heading_gradient":""}},"featured_collection_3VGaxc":{"type":"featured-collection","settings":{"collection":"fragrances","products":[],"full_width":true,"stack_products":false,"show_progress_bar":false,"products_count":6,"products_per_row_mobile":"2","products_per_row_desktop":4,"subheading":"","title":"","content":"","link_url":"shopify:\/\/collections\/fragrances","link_text":"All","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":"","product_card_background":"","product_card_text_color":""}},"scentech_benefits_qYibgT":{"type":"scentech-benefits","blocks":{"feature_BLrDCh":{"type":"feature","settings":{"feature_text":"{{ product.metafields.custom.key_notes.value }}","custom_checkmark":""}},"feature_Q9hFYK":{"type":"feature","settings":{"feature_text":"Adjustable intensity","custom_checkmark":""}},"feature_i4tgEr":{"type":"feature","settings":{"feature_text":"App controlled","custom_checkmark":""}},"feature_dVFH6G":{"type":"feature","settings":{"feature_text":"No messy cables","custom_checkmark":""}},"feature_37cdhp":{"type":"feature","settings":{"feature_text":"Pure fragrance oil","custom_checkmark":""}},"feature_WRwEUX":{"type":"feature","settings":{"feature_text":"No maintenance","custom_checkmark":""}},"feature_xD6pT4":{"type":"feature","settings":{"feature_text":"Whisper quiet","custom_checkmark":""}},"feature_MxYRYG":{"type":"feature","settings":{"feature_text":"Safe for pets and kids","custom_checkmark":""}},"feature_zHmCeG":{"type":"feature","settings":{"feature_text":"Automate schedules","custom_checkmark":""}}},"block_order":["feature_BLrDCh","feature_Q9hFYK","feature_i4tgEr","feature_dVFH6G","feature_37cdhp","feature_WRwEUX","feature_xD6pT4","feature_MxYRYG","feature_zHmCeG"],"custom_css":[".content-title {font-size: 25px; \/* mobile *\/}","@media (min-width: 768px) {.h1 {font-size: 50px; \/* desktop *\/ }}"],"name":"Scentech Features","settings":{"color_scheme":"background-1","title":"Scentech is the <br><span class=\"highlight\">perfect choice.<\/span>","description":"<p>Our Smart Aroma Diffusers make every room smell incredible.<\/p>","description_2":"","logo":"shopify:\/\/shop_images\/logo_NEW_white.png","header_icon":"◆","header_text":"","gradient_start":"#ffffff","gradient_end":"#ffffff","gradient_start2":"#f7f7f7","gradient_end2":"#f7f7f7","gradient_color2":"#000000","gradient_start3":"#928d6f","gradient_end3":"#928d6f","gradient_color3":"#ffffff","text_color":"#262626","highlight_color":"#928d6f","icon_gradient_start":"#ffffff","icon_gradient_end":"#ffffff","logo_bg":"#928d6f","title_size":48,"title_size_mobile":32,"text_size":16,"text_size_mobile":14,"features_text_size":15,"features_text_mobile":13,"logo_size":16,"logo_size_mobile":14,"padding_top":50,"padding_bottom":80,"mobile_padding_top":30,"mobile_padding_bottom":30,"feature_height":57,"feature_height_mobile":52,"glass_blur":10}},"rich_text_z7P3Vp":{"type":"rich-text","blocks":{"heading_xTpKTf":{"type":"heading","disabled":true,"settings":{"text":"Patented Nebulizing Technology.","heading_tag":"h1","text_color":"","gradient":"linear-gradient(46deg, rgba(13, 3, 131, 1) 13%, rgba(203, 5, 242, 1) 68%)"}}},"block_order":["heading_xTpKTf"],"settings":{"full_width":true,"content_width":"large","text_position":"center","background":"","background_gradient":"","text_color":""}},"video_HfFJXw":{"type":"video","settings":{"full_width":true,"allow_transparent_header":false,"autoplay":true,"video_size":"auto","video":"shopify:\/\/files\/videos\/(PC)Women_Making_Fragrance.mp4","mobile_video":"shopify:\/\/files\/videos\/Women_Making_Fragrance.mp4","external_video_url":"","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}},"testimonials_VYU7Lg":{"type":"testimonials","blocks":{"testimonial_PzExi8":{"type":"testimonial","settings":{"image":"shopify:\/\/shop_images\/11.png","round_avatar":true,"show_rating":true,"rating":5,"author":"Sarah K.","title":"Finally something that works","content":"<p>I've tried some many fragrance products like scented cndles, scent sticks, mini diffusers but nothing really worked. This thing just WORKS and i'm getting lots of compliments from guests as well. My place smells amazing now<\/p>"}},"testimonial_rJiM47":{"type":"testimonial","settings":{"image":"shopify:\/\/shop_images\/5_bd43493d-98bc-44fb-a830-a55d05d202be.png","round_avatar":true,"show_rating":true,"rating":5,"author":"Quint S.","title":"Bought it for my sister","content":"<p>I've never used it but my sister says this was the best gift she got all year. Uses it everyday. <\/p>"}},"testimonial_dBWF3Y":{"type":"testimonial","settings":{"image":"shopify:\/\/shop_images\/10_144b58fb-f06f-47c5-b27c-326eb5b2f44c.png","round_avatar":true,"show_rating":true,"rating":5,"author":"Mari U.","title":"WOW","content":"<p>My home smells incredible after installing this diffuser. I absolutely LOVE the Endless Path fragrance. Would really recommend.<\/p>"}},"testimonial_wnyfAX":{"type":"testimonial","settings":{"image":"shopify:\/\/shop_images\/4_43a197de-596d-45f6-a07e-095726db5d21.png","round_avatar":true,"show_rating":true,"rating":5,"author":"Joshua A.","title":"I don't smell my cats anymore","content":"<p>I really hated the smell of my litter box everythime i got home. This machine made my home smell incredibel so its a gamechanger for me. <\/p>"}},"testimonial_JVPp7r":{"type":"testimonial","settings":{"image":"shopify:\/\/shop_images\/9_b3b02d0d-29b8-4151-a346-c1fec9a3db87.png","round_avatar":true,"show_rating":true,"rating":5,"author":"Britney V.","title":"","content":"<p>It does what is should do. Makes my place smell great!<\/p>"}},"testimonial_tR4WaR":{"type":"testimonial","settings":{"image":"shopify:\/\/shop_images\/6_4e7918b2-552d-4eec-8631-37ce320e9ab6.png","round_avatar":true,"show_rating":true,"rating":5,"author":"Marian G.","title":"Adjustable intensity is great","content":"<p>I really like that I can adjust intensity. I don't really like the overpowering smell you have certain stores but with this machine I can have the same smell but adjust intensity to fit my preference. When I have guests I usually set it higher since I like it when they complement me ;)<\/p>"}},"testimonial_HVqkLa":{"type":"testimonial","settings":{"image":"shopify:\/\/shop_images\/7_141037e2-8f9e-49ab-8018-3f7b6a7bd92f.png","round_avatar":true,"show_rating":true,"rating":5,"author":"Jill B.","title":"Very strong machine","content":"<p>My house is pretty open-plan, and I was skeptical about how well this would work. But honestly, it fills the whole space! I can smell it in the living room, dining area, and even the hallway.<\/p>"}},"testimonial_KwgGnP":{"type":"testimonial","settings":{"image":"shopify:\/\/shop_images\/3_162a5bd1-91ed-4f16-ba63-15ccb20d5024.png","round_avatar":true,"show_rating":true,"rating":5,"author":"Sil V.","title":"Intensity feature is great","content":"<p>I didn’t think I’d use the intensity feature much, but now I can’t live without it. Some mornings I just want a light, refreshing scent, and other times I crank it up for guests. It’s so convenient!<\/p>"}},"testimonial_wyfNVj":{"type":"testimonial","settings":{"image":"shopify:\/\/shop_images\/8_60eabedf-5511-47e3-bd1e-8ea1a2fcd8e8.png","round_avatar":true,"show_rating":true,"rating":5,"author":"Emma H.","title":"Cheaper than the alternatives","content":"<p>Honestly, I was spending way too much on candles and sprays that didn’t last. With this, the pod lasts me a full month, and the scents are way more luxurious. Good value for money. <\/p>"}},"testimonial_ymtr94":{"type":"testimonial","settings":{"image":"shopify:\/\/shop_images\/1_ebff2af6-a817-400a-96bc-8dd0e1244b83.png","round_avatar":true,"show_rating":true,"rating":5,"author":"Max S.","title":"My mom really liked the gift","content":"<p>Bought this thing for my mom and she's in love with it. She got herself 2 more for upstairs.<\/p>"}}},"block_order":["testimonial_PzExi8","testimonial_rJiM47","testimonial_dBWF3Y","testimonial_wnyfAX","testimonial_JVPp7r","testimonial_tR4WaR","testimonial_HVqkLa","testimonial_KwgGnP","testimonial_wyfNVj","testimonial_ymtr94"],"custom_css":[".h2 {font-size: 25px; \/* mobile *\/}","@media (min-width: 768px) {.h1 {font-size: 50px; \/* desktop *\/ }}"],"settings":{"full_width":true,"stack_testimonials":false,"subheading":"","title":"Join 5000+ happy customers.","content":"","link_url":"","link_text":"","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":"","testimonial_card_background":"","testimonial_card_text_color":""}},"faq_URc397":{"type":"faq","blocks":{"item_ahiQ9j":{"type":"item","settings":{"title":"How does the smart aroma diffuser work?","content":"<p>The diffuser uses advanced nebulizing technology to disperse pure fragrance oil into the air without water. Simply attach a ScentPod, adjust the settings via the app, and enjoy a consistent, evenly distributed scent throughout your space.<\/p>"}},"item_jJjBhV":{"type":"item","settings":{"title":"Do I need water to use this diffuser?","content":"<p>No, the diffuser is water-free. It uses pure fragrance oils, eliminating the need for water and ensuring long-lasting, potent aromas.<\/p>"}},"item_xEY7N6":{"type":"item","settings":{"title":"Can I use the diffuser in a child’s room or near pets?","content":"<p>Yes, our fragrance oils are safe when used as directed. However, we recommend keeping the diffuser out of reach of children and ensuring good ventilation in areas with pets.<\/p>"}},"item_9LjMJg":{"type":"item","settings":{"title":" Can I use the diffuser while sleeping?","content":"<p>Absolutely! You can set a timer via the app to turn the diffuser off after a set duration or reduce the intensity for nighttime use.<\/p>"}},"item_JTXxdt":{"type":"item","settings":{"title":"How large of an area does the diffuser cover?","content":"<p>The diffuser is designed to evenly scent areas up to 50 square meters, making it perfect for living rooms, bedrooms, and office spaces.<\/p>"}},"item_Ueccra":{"type":"item","settings":{"title":"How do I adjust the scent intensity and schedule?","content":"<p>You can easily control the scent intensity and schedule through the app, allowing you to customize your experience to fit your lifestyle.<\/p>"}},"item_ztixcR":{"type":"item","settings":{"title":"How long does each 50ml fragrance pod last?","content":"<p>Each 50ml pod is designed to last for one month of intensive use.<\/p>"}},"item_G9eQxb":{"type":"item","settings":{"title":"Is the diffuser covered by a warranty?","content":"<p>Yes, the scentech diffuser comes with a life-time warranty, covering any manufacturing defects. If it breaks, you'll get a new one in a matter of days. <\/p>"}},"item_zmmnCX":{"type":"item","settings":{"title":"What kind of oils can I use with this diffuser?","content":"<p>Our diffuser is specifically designed to work seamlessly with our ScentPods, which feature premium-grade fragrance oils optimized for the device. Using oils from other sources may cause clogging due to variations in oil viscosity and concentration, which can impair performance. Additionally, using non-ScentPod oils will void the product warranty.<\/p>"}}},"block_order":["item_ahiQ9j","item_jJjBhV","item_xEY7N6","item_9LjMJg","item_JTXxdt","item_Ueccra","item_ztixcR","item_G9eQxb","item_zmmnCX"],"settings":{"full_width":true,"subheading":"","title":"FAQ","content":"","team_avatar_width":160,"support_hours":"","answer_time":"","button_text":"Any more questions?","button_url":"shopify:\/\/pages\/faq","text_position":"end","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":"","button_background":"","button_text_color":"","accordion_background":"","accordion_text_color":""}},"173270383137dc2679":{"type":"apps","blocks":{"klaviyo_reviews_all_reviews_gNEPey":{"type":"shopify:\/\/apps\/klaviyo-reviews\/blocks\/all-reviews\/db20e365-d984-4ac4-9655-e1588d951ca9","settings":{}},"okendo_reviews_widget_yLzRf3":{"type":"shopify:\/\/apps\/okendo\/blocks\/reviews-widget\/bb689e69-ea70-4661-8fb7-ad24a2e23c29","disabled":true,"settings":{"product":"{{product}}","widget_type":"combined_widget"}}},"block_order":["klaviyo_reviews_all_reviews_gNEPey","okendo_reviews_widget_yLzRf3"],"settings":{"full_width":true,"remove_vertical_spacing":false,"remove_horizontal_spacing":false,"background":"","background_gradient":"","text_color":""}},"video_ge3Mmq":{"type":"video","settings":{"full_width":true,"allow_transparent_header":false,"autoplay":true,"video_size":"auto","video":"shopify:\/\/files\/videos\/(PC)Women_In_Flower_Field.mp4","mobile_video":"shopify:\/\/files\/videos\/Women_In_Flower_Field.mp4","external_video_url":"https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}},"simple-bundles":{"type":"simple-bundles","settings":{}}},"order":["main","instant_n923s_gcpkw2_pz_pfq_znbnEB","images_with_text_scrolling_zA4bFj","image_with_text_overlay_Wyi7YM","image_link_blocks_4VaJxj","featured_collection_3VGaxc","scentech_benefits_qYibgT","rich_text_z7P3Vp","video_HfFJXw","testimonials_VYU7Lg","faq_URc397","173270383137dc2679","video_ge3Mmq","simple-bundles"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "liquid_UwEr8q": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "<style>\n  .info-wrapper {\n    display: inline-flex;\n    align-items: center;\n    font-family: inherit;\n    font-size: 14px;\n    margin: 5px 0;\n    position: relative; /* Belangrijk voor positionering tooltip */\n    border-radius: 6px;\n    padding: 10px 14px;\n    background-color: #162518;\n    color: #ffffff;\n    line-height: 1.2;\n  }\n\n  .info-icon {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    margin-left: 10px;\n    width: 20px;\n    height: 20px;\n    border: 1.5px solid #ffffff;\n    border-radius: 50%;\n    cursor: pointer;\n    flex-shrink: 0;\n    position: relative;\n    z-index: 11;\n  }\n\n  .info-i {\n    color: #ffffff !important;\n    font-family: serif !important;\n    font-size: 13px !important;\n    font-weight: bold !important;\n    line-height: 1 !important;\n    pointer-events: none; /* Zorgt dat klik altijd op de cirkel landt */\n  }\n\n  .info-tooltip {\n    visibility: hidden;\n    opacity: 0;\n    position: absolute;\n    bottom: calc(100% + 15px);\n    left: 50%;\n    transform: translateX(-50%);\n    background-color: #162518;\n    color: #ffffff;\n    border: 1px solid rgba(255, 255, 255, 0.3);\n    padding: 15px;\n    border-radius: 8px;\n    width: 260px;\n    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);\n    font-size: 13px;\n    line-height: 1.5;\n    z-index: 9999;\n    transition: opacity 0.2s ease, visibility 0.2s ease;\n    pointer-events: none; /* Voorkomt dat tooltip de muis blokkeert */\n  }\n\n  /* Tooltip pijltje */\n  .info-tooltip::after {\n    content: \"\";\n    position: absolute;\n    top: 100%;\n    left: 50%;\n    margin-left: -8px;\n    border-width: 8px;\n    border-style: solid;\n    border-color: #162518 transparent transparent transparent;\n  }\n\n  /* Hover & Active Logica */\n  .info-icon:hover ~ .info-tooltip,\n  .info-icon.active ~ .info-tooltip {\n    visibility: visible;\n    opacity: 1;\n  }\n\n  /* Zorg dat vette tekst in de tooltip ook wit is */\n  .info-tooltip b, .info-tooltip strong {\n    color: #ffffff !important;\n  }\n</style>\n\n<div class=\"info-wrapper\">\n  <span>\n    {% assign title = product.metafields.custom.scent_duration_title %}\n    {{ title | default: \"Één geurtje gaat gemiddeld 2 maanden mee\" | escape }}\n  </span>\n\n  <div class=\"info-icon\" id=\"scentech-info-icon\" onclick=\"toggleTooltip(event, this)\">\n    <span class=\"info-i\">i</span>\n  </div>\n\n  <div class=\"info-tooltip\" id=\"scentech-tooltip\">\n    {% if product and product.metafields.custom.scent_duration_body != blank %}\n      {{ product.metafields.custom.scent_duration_body | metafield_tag }}\n    {% else %}\n      Bij een gemiddelde geurintensiteit verbruikt onze Smart Aroma Diffuser <b>0,08 ml per uur</b>. Eén ScentPod van 50 ml gaat dan <b>625 uur mee</b> – dat is ruim 2 maanden bij 10 uur gebruik per dag.\n    {% endif %}\n  </div>\n</div>\n\n<script>\n  function toggleTooltip(event, el) {\n    event.stopPropagation(); // Stopt het sluiten door de document-click\n    const isActive = el.classList.contains('active');\n    \n    // Reset alle icons\n    document.querySelectorAll('.info-icon').forEach(icon => icon.classList.remove('active'));\n    \n    // Toggle de huidige\n    if (!isActive) {\n      el.classList.add('active');\n    }\n  }\n\n  // Sluiten als je buiten de tooltip klikt\n  document.addEventListener('click', function(e) {\n    if (!e.target.closest('.info-wrapper')) {\n      document.querySelectorAll('.info-icon').forEach(icon => icon.classList.remove('active'));\n    }\n  });\n</script>"
+          }
+        },
+        "klaviyo_reviews_average_rating_pR3Je8": {
+          "type": "shopify://apps/klaviyo-reviews/blocks/average-rating/db20e365-d984-4ac4-9655-e1588d951ca9",
+          "settings": {
+            "product": "{{product}}"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "heading_tag": "h3"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_taxes_notice": false
+          }
+        },
+        "buy_buttons_zeLxRH": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_payment_button": false,
+            "show_gift_card_recipient": true,
+            "show_shipping_info": true,
+            "show_quantity_selector": false,
+            "atc_button_background": "",
+            "atc_button_text_color": "",
+            "payment_button_background": "",
+            "payment_button_text_color": "",
+            "promo_enabled": true,
+            "promo_image_1": "shopify://shop_images/Selection_Icon_39b6a30c-832d-44b8-bb80-fb39d754fe49.png",
+            "promo_image_2": "shopify://shop_images/Selection_Icon_703cde3c-0209-4068-9321-1d68826fc81d.png",
+            "promo_image_3": "shopify://shop_images/Selection_Icon_8e56c555-b4ab-4a29-a250-45e94c23f0d5.png",
+            "promo_title_prefix": "Get it FREE with",
+            "promo_title_suffix": "Scents",
+            "promo_scent_metafield": "custom.scent_count",
+            "promo_fallback_count": "5",
+            "promo_subtitle": "Limited time offer",
+            "promo_url": "shopify://collections/fall-sale"
+          }
+        },
+        "liquid_QV3QCj": {
+          "type": "liquid",
+          "disabled": true,
+          "settings": {
+            "liquid": "<!-- Klarna Installment Badge (links uitgelijnd) -->\n<div style=\"text-align: left; margin-top: -10px; margin-bottom: 10px;\">\n  <div style=\"display: flex; align-items: center; gap: 8px; padding: 8px 8px; background-color: #f7f7f7; border-radius: 8px; justify-content: flex-start;\">\n\n    <!-- Klarna Badge Icon -->\n    <svg xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" width=\"38\" height=\"24\" viewBox=\"0 0 38 24\" aria-labelledby=\"pi-klarna\">\n      <title id=\"pi-klarna\">Klarna</title>\n      <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n        <path d=\"M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z\" fill=\"#FFB3C7\"></path>\n        <path d=\"M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32\" fill=\"#FFB3C7\"></path>\n        <path d=\"M34.117 13.184c-.487 0-.882.4-.882.892 0 .493.395.893.882.893.488 0 .883-.4.883-.893a.888.888 0 00-.883-.892zm-2.903-.69c0-.676-.57-1.223-1.274-1.223-.704 0-1.274.547-1.274 1.222 0 .675.57 1.223 1.274 1.223.704 0 1.274-.548 1.274-1.223zm.005-2.376h1.406v4.75h-1.406v-.303a2.446 2.446 0 01-1.394.435c-1.369 0-2.478-1.122-2.478-2.507 0-1.384 1.11-2.506 2.478-2.506.517 0 .996.16 1.394.435v-.304zm-11.253.619v-.619h-1.44v4.75h1.443v-2.217c0-.749.802-1.15 1.359-1.15h.016v-1.382c-.57 0-1.096.247-1.378.618zm-3.586 1.756c0-.675-.57-1.222-1.274-1.222-.703 0-1.274.547-1.274 1.222 0 .675.57 1.223 1.274 1.223.704 0 1.274-.548 1.274-1.223zm.005-2.375h1.406v4.75h-1.406v-.303A2.446 2.446 0 0114.99 15c-1.368 0-2.478-1.122-2.478-2.507 0-1.384 1.11-2.506 2.478-2.506.517 0 .997.16 1.394.435v-.304zm8.463-.128c-.561 0-1.093.177-1.448.663v-.535H22v4.75h1.417v-2.496c0-.722.479-1.076 1.055-1.076.618 0 .973.374.973 1.066v2.507h1.405v-3.021c0-1.106-.87-1.858-2.002-1.858zM10.465 14.87h1.472V8h-1.472v6.868zM4 14.87h1.558V8H4v6.87zM9.45 8a5.497 5.497 0 01-1.593 3.9l2.154 2.97H8.086l-2.341-3.228.604-.458A3.96 3.96 0 007.926 8H9.45z\" fill=\"#0A0B09\" fill-rule=\"nonzero\"></path>\n      </g>\n    </svg>\n\n    <!-- Klarna Installment Text + Klikbare Link -->\n    <span style=\"font-size: 12px; color: var(--color-foreground);\">\n      {{ product.metafields.custom.klarna_pay_with_installments }} {{ product.price | divided_by: 3 | money }}.\n      <a href=\"#\" id=\"show-klarna-popup\" class=\"link\" style=\"color: var(--color-foreground); font-weight: bold;\">\n        {{ product.metafields.custom.klarna_link_text }}\n      </a>\n    </span>\n\n  </div>\n</div>\n\n<!-- Klarna Pop-up Container -->\n<div id=\"klarna-popup\" style=\"\n  display: none;\n  position: fixed;\n  bottom: 30px; /* Positions it 20px above the bottom of the screen */\n  left: 50%;\n  transform: translateX(-50%);\n  background-color: #fff;\n  padding: 20px;\n  border: 1px solid #ccc;\n  border-radius: 12px;\n  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);\n  z-index: 1000;\n  max-width: 90%;\n  width: 400px;\n  text-align: center;\n\">\n <div id=\"klarna-info-content\" style=\"\n    text-align: left;\n    margin-bottom: 20px;\n  \">\n\n  <style>\n    #klarna-info-content h2 {\n      font-size: 22px;\n      font-weight: bold;\n      margin-bottom: 10px;\n    }\n    #klarna-info-content h3 {\n      font-size: 18px;\n      font-weight: bold;\n      margin-top: 15px;\n      margin-bottom: 5px;\n    }\n    #klarna-info-content p {\n      margin-bottom: 10px;\n    }\n  </style>\n\n  <h2>Hoe werkt Klarna?</h2>\n\n  <h3>Stap 1: Kies Klarna bij het afrekenen</h3>\n  <p>Selecteer Klarna als betaalmethode tijdens het afrekenen.</p>\n\n  <h3>Stap 2: Betaal de eerste termijn direct</h3>\n  <p>Bij het afronden van je bestelling betaal je direct de eerste termijn.</p>\n\n  <h3>Stap 3: Betaal de resterende termijnen later</h3>\n  <p>De resterende twee termijnen worden automatisch afgeschreven met elk één maand tussentijd.</p>\n\n  <h3>Stap 4: Geen rente of extra kosten</h3>\n  <p>Je betaalt geen rente of extra kosten zolang je op tijd betaalt.</p>\n\n</div>\n\n\n\n\n  <button id=\"close-klarna-popup\" class=\"button button--primary\">\n    Sluiten\n  </button>\n</div>\n\n<!-- Overlay om achtergrond te dimmen -->\n<div id=\"klarna-overlay\" style=\"\n  display: none;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 999;\n\"></div>\n\n<!-- JavaScript voor pop-up functionaliteit -->\n<script>\n  document.getElementById('show-klarna-popup').addEventListener('click', function(event) {\n    event.preventDefault();\n    \n    // Toon de pop-up en overlay\n    document.getElementById('klarna-popup').style.display = 'block';\n    document.getElementById('klarna-overlay').style.display = 'block';\n  });\n\n  // Sluitknop functionaliteit\n  document.getElementById('close-klarna-popup').addEventListener('click', function() {\n    document.getElementById('klarna-popup').style.display = 'none';\n    document.getElementById('klarna-overlay').style.display = 'none';\n  });\n\n  // Klik op overlay sluit pop-up\n  document.getElementById('klarna-overlay').addEventListener('click', function() {\n    document.getElementById('klarna-popup').style.display = 'none';\n    this.style.display = 'none';\n  });\n</script>"
+          }
+        },
+        "out_of_stock_text_eQmccL": {
+          "type": "out-of-stock-text",
+          "settings": {
+            "preorder_message": "Door de enorme toename in de vraag naar dit product is het tijdelijk uitverkocht. Als u nu besteld bent u volgende week de eerste die hem geleverd krijgt.",
+            "unavailable_message": "Dit product is momenteel niet beschikbaar.",
+            "show_in_stock_message": false,
+            "in_stock_message": "Op voorraad - Direct leverbaar",
+            "preorder_bg_color": "#fff9db",
+            "preorder_border_color": "#ffe58f",
+            "preorder_text_color": "#333333",
+            "unavailable_bg_color": "#ffebee",
+            "unavailable_border_color": "#ffcdd2",
+            "unavailable_text_color": "#d32f2f",
+            "available_bg_color": "#e8f5e8",
+            "available_border_color": "#c8e6c9",
+            "available_text_color": "#2e7d32",
+            "enable_debug": false
+          }
+        },
+        "description_kgfJMj": {
+          "type": "description",
+          "settings": {
+            "collapse_content": false
+          }
+        },
+        "liquid_cBMrVw": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "<style>\n  .custom-bullet-list {\n    list-style: none;\n    padding: 0;\n    margin: 0;\n  }\n\n  .custom-bullet-list li {\n    display: flex;\n    align-items: center; /* Center align checkmark with the text */\n    margin-bottom: 10px;\n  }\n\n  .custom-bullet-list img {\n    width: 1em; /* Match size to text */\n    height: 1em;\n    margin-right: 8px;\n    flex-shrink: 0; /* Prevent resizing */\n  }\n\n  .custom-bullet-list span {\n    font-weight: bold; /* Make text bold */\n    line-height: 1.5em; /* Maintain readability for multi-line text */\n  }\n</style>\n\n<ul class=\"custom-bullet-list\">\n  <li>\n    <img src=\"https://cdn.shopify.com/s/files/1/0888/1219/2090/files/Checkmark.svg?v=1732631297\" alt=\"Checkmark icon\" />\n    <span>{{ product.metafields.custom.main_product_benefit_1 }}</span>\n  </li>\n  <li>\n    <img src=\"https://cdn.shopify.com/s/files/1/0888/1219/2090/files/Checkmark.svg?v=1732631297\" alt=\"Checkmark icon\" />\n    <span>{{ product.metafields.custom.main_product_benefit_2 }}</span>\n  </li>\n  <li>\n    <img src=\"https://cdn.shopify.com/s/files/1/0888/1219/2090/files/Checkmark.svg?v=1732631297\" alt=\"Checkmark icon\" />\n    <span>{{ product.metafields.custom.main_product_benefit_3 }}</span>\n  </li>\n  <li>\n    <img src=\"https://cdn.shopify.com/s/files/1/0888/1219/2090/files/Checkmark.svg?v=1732631297\" alt=\"Checkmark icon\" />\n    <span>{{ product.metafields.custom.main_product_benefit_4 }}</span>\n  </li>\n  <li>\n    <img src=\"https://cdn.shopify.com/s/files/1/0888/1219/2090/files/Checkmark.svg?v=1732631297\" alt=\"Checkmark icon\" />\n    <span>{{ product.metafields.custom.main_product_benefit_5 }}</span>\n  </li>\n</ul>"
+          }
+        },
+        "collapsible_text_TyRzcj": {
+          "type": "collapsible_text",
+          "settings": {
+            "title": "What is cold-air diffusion?",
+            "content": "<p>Cold-air diffusers disperse scents through <strong>nebulization</strong>—a process that breaks down fragrance oils into an ultrafine, dry mist. This advanced technology ensures that scents remain in the air <strong>up to 4 times longer</strong>. The nanoparticles in this mist are so small that they stay suspended for hours without leaving any residue. Unlike traditional diffusers, this cutting-edge method uses <strong>no water, alcohol, or heat</strong>, preserving the fragrance in its purest form.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_text_Q9pMXa": {
+          "type": "collapsible_text",
+          "settings": {
+            "title": "Why is cold-air diffusion better?",
+            "content": "<p>Cold-air diffusers can cover <strong>twice the area</strong> of traditional scented candles, reed diffusers, plug-ins, and ultrasonic diffusers. With cold-air diffusion, <strong>95% of the oil</strong> is effectively dispersed into the air, compared to <strong>only 30%-40%</strong> with traditional diffusers. They provide <strong>consistent, even scent distribution</strong> and allow you to <strong>precisely control intensity</strong>.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_text_dJt86C": {
+          "type": "collapsible_text",
+          "settings": {
+            "title": "Cold-air vs. traditional diffusers",
+            "content": "<ul><li><strong>Maximum scent diffusion</strong> – Cold-air diffusers disperse <strong>95-99% of the fragrance oil</strong> as ultrafine micro-particles, while ultrasonic diffusers are only <strong>30-50% effective</strong> due to dilution with water.</li><li><strong>Longer-lasting fragrance</strong> – The scent lingers <strong>up to 4 times longer</strong>, whereas mist from ultrasonic diffusers evaporates quickly or settles to the ground.</li><li><strong>Efficient oil usage</strong> – Our technology <strong>uses 50-80% less oil</strong>, so you can enjoy long-lasting fragrance without frequent refills.</li></ul>",
+            "page": ""
+          }
+        },
+        "collapsible_text_97ADVw": {
+          "type": "collapsible_text",
+          "settings": {
+            "title": "Technical Specifications",
+            "content": "<p><strong>Seamless Control:</strong> Manage effortlessly through the Bluetooth app</p><p><strong>Dimensions:</strong> 12 cm x 12 cm x 4 cm</p><p><strong>Weight:</strong> 450g</p><p><strong>Power Source:</strong> Battery Type D (included) or USB-C (also included)</p><p><strong>Coverage Area:</strong> 50 sq meters</p><p><strong>Material:</strong> Durable, lightweight ABS plastic with a matte finish</p><p><strong>Technology:</strong> Water-free nebulizing diffusion</p><p><strong>Compatibility:</strong> Works exclusively with Scentech ScentPods</p>",
+            "page": ""
+          }
+        },
+        "collapsible_text_UPHcAz": {
+          "type": "collapsible_text",
+          "settings": {
+            "title": "Shipping & Returns",
+            "content": "<p><strong>Free express shipping on orders over €30</strong><br/>Enjoy fast, free shipping on orders above €30, with options for Express or Standard shipping available at checkout. All duties and taxes are included for a hassle-free experience.</p><p><strong>Returns</strong><br/>We offer a 30-day return policy on all Scentech products. To start a return, simply reach out to our customer service team at <a href=\"mailto:support@scentech.store\" title=\"mailto:support@scentech.store\"><strong>support@scentech.store</strong></a></p>",
+            "page": ""
+          }
+        },
+        "collapsible_text_QP7fNm": {
+          "type": "collapsible_text",
+          "settings": {
+            "title": "Cleaning & Maintenance",
+            "content": "<p>Our Smart Aroma Diffuser is designed to be <strong>low-maintenance</strong>, so you can focus on enjoying your favorite fragrances. However, it can never hurt to give it a quick clean every once in a while. Simply:</p><p><strong>Remove the ScentPod</strong> and wipe the nozzle with a soft, dry cloth to keep it running smoothly.</p><p><strong>For a deeper clean</strong>, use a cotton swab dipped in isopropyl alcohol to gently clean the nozzle. Let it dry completely before reattaching the ScentPod.</p><p>That's all it takes to keep your diffuser performing at its best, delivering consistent, high-quality fragrance.</p>",
+            "page": ""
+          }
+        },
+        "video_reviews_carousel_WykR4H": {
+          "type": "video_reviews_carousel",
+          "settings": {
+            "heading": "Join 10 000+ happy customers with an amazing smelling home.",
+            "heading_color": "#160000",
+            "background_color": "#ffffff",
+            "video_1": "shopify://files/videos/afe172bef15747dea56f4a9816f2522a.mp4",
+            "reviewer_name_1": "wonen.met.lef",
+            "reviewer_avatar_1": "shopify://shop_images/PF-wonenmetlef.jpg",
+            "verified_1": true,
+            "video_2": "shopify://files/videos/video review.MOV",
+            "reviewer_name_2": "dutchlifestyle.nl",
+            "reviewer_avatar_2": "shopify://shop_images/PF-dutchlifestyle.jpg",
+            "verified_2": true,
+            "video_3": "shopify://files/videos/VID_20251028210443610.mov",
+            "reviewer_name_3": "amberclaes",
+            "reviewer_avatar_3": "shopify://shop_images/Screenshot_2026-04-02_at_10.41.33.png",
+            "verified_3": true,
+            "video_4": "shopify://files/videos/copy_BE6231CB-85FB-467B-A33F-7E2687C63BB9.mov",
+            "reviewer_name_4": "stacyhoogland",
+            "reviewer_avatar_4": "shopify://shop_images/PF-Stacyhoogland.jpg",
+            "verified_4": true,
+            "video_5": "shopify://files/videos/Video with VO_081310_1.mov",
+            "reviewer_name_5": "larissaduif",
+            "reviewer_avatar_5": "shopify://shop_images/PF-larissaduif.jpg",
+            "verified_5": true,
+            "reviewer_name_6": "",
+            "verified_6": true,
+            "reviewer_name_7": "",
+            "verified_7": true,
+            "reviewer_name_8": "",
+            "verified_8": true
+          }
+        }
+      },
+      "block_order": [
+        "liquid_UwEr8q",
+        "klaviyo_reviews_average_rating_pR3Je8",
+        "title",
+        "price",
+        "buy_buttons_zeLxRH",
+        "liquid_QV3QCj",
+        "out_of_stock_text_eQmccL",
+        "description_kgfJMj",
+        "liquid_cBMrVw",
+        "collapsible_text_TyRzcj",
+        "collapsible_text_Q9pMXa",
+        "collapsible_text_dJt86C",
+        "collapsible_text_97ADVw",
+        "collapsible_text_UPHcAz",
+        "collapsible_text_QP7fNm",
+        "video_reviews_carousel_WykR4H"
+      ],
+      "custom_css": [
+        "@media screen and (min-width: 1000px) {.sticky-product-images {position: sticky; top: 130px; z-index: 0; /* Keeps the images above other elements if needed */}"
+      ],
+      "settings": {
+        "full_width": true,
+        "show_fixed_add_to_cart": true,
+        "desktop_media_width": 55,
+        "desktop_media_layout": "carousel_thumbnails_left",
+        "mobile_media_size": "expanded",
+        "mobile_carousel_control": "thumbnails",
+        "enable_video_autoplay": false,
+        "enable_video_looping": true,
+        "enable_image_zoom": true,
+        "max_image_zoom_level": 3,
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "input_background": "rgba(0,0,0,0)",
+        "input_text_color": ""
+      }
+    },
+    "instant_n923s_gcpkw2_pz_pfq_znbnEB": {
+      "type": "instant-N923sGcpkw2PzPfq",
+      "settings": {
+        "text_4pnscOknvXEBfDm1": "<p>Improve Sleep</p>",
+        "text_DmtrTNHOtTvcVXcm": "<p>Increase Energy</p>",
+        "text_YpoSbeDkXdkr0TRV": "<p>Reduce Stress</p>",
+        "text_UJyKKhLiDNFEK2nE": "<p>Amazing Smell</p>",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "images_with_text_scrolling_zA4bFj": {
+      "type": "images-with-text-scrolling",
+      "blocks": {
+        "item_3BNMri": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_oii3p4oii3p4oii3_1.png",
+            "icon": "none",
+            "icon_width": 48,
+            "title": "the smell of a luxury hotel",
+            "content": "<p>Scentech diffusers use the same technology found in luxury hotels.</p>"
+          }
+        },
+        "item_nRnG7i": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Ontwerp_zonder_titel_-_2025-12-17T133949.195.png",
+            "icon": "none",
+            "icon_width": 48,
+            "title": "Scent sticks don't work",
+            "content": "<p>Traditional scented products only work nearby. Our Smart Aroma Diffuser evenly scents up to 50m², covering your entire space with just one device.</p>"
+          }
+        },
+        "item_J7wm4Q": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/app_controlled_visual.png",
+            "icon": "none",
+            "icon_width": 48,
+            "title": "App-controlled luxury",
+            "content": "<p>Enjoy effortless customization of scent intensity and schedules.</p>"
+          }
+        },
+        "item_pGeMKR": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_8zsi0f8zsi0f8zsi_2_acb83c9c-b2b6-49de-aa27-14d4fe749bbb.png",
+            "icon": "none",
+            "icon_width": 48,
+            "title": "Better mood",
+            "content": "<p>Scent directly influences your mood and emotions. It can energize you, calm you, or help you focus.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_3BNMri",
+        "item_nRnG7i",
+        "item_J7wm4Q",
+        "item_pGeMKR"
+      ],
+      "custom_css": [
+        ".h1 {font-size: 20px; /* mobile */}",
+        "@media (min-width: 768px) {.h1 {font-size: 40px; /* desktop */ }}"
+      ],
+      "settings": {
+        "full_width": false,
+        "stack_on_mobile": false,
+        "show_counter": false,
+        "desktop_image_effect": "fade",
+        "image_position": "end",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": ""
+      }
+    },
+    "image_with_text_overlay_Wyi7YM": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_8iFrbH": {
+          "type": "heading",
+          "settings": {
+            "text": "Find a scent that fits your personality.",
+            "heading_tag": "h3"
+          }
+        },
+        "richtext_yFiPh3": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Discover a fragrance crafted to match your unique essence and elevate your space.</p>"
+          }
+        },
+        "button_brzK4z": {
+          "type": "button",
+          "settings": {
+            "style": "fill",
+            "size": "lg",
+            "text": "Take the quiz",
+            "url": "#open-quiz-tools/perfect-product-finder/find-a-fragrance-that-fits-your-personality",
+            "background": "#162518",
+            "text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "heading_8iFrbH",
+        "richtext_yFiPh3",
+        "button_brzK4z"
+      ],
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": false,
+        "enable_parallax": false,
+        "image_size": "sm",
+        "image": "shopify://shop_images/All_Scents.png",
+        "mobile_image": "shopify://shop_images/Ontwerp_zonder_titel_75.png",
+        "mobile_text_position": "place-self-end-start text-start",
+        "desktop_text_position": "sm:place-self-end-start sm:text-start",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
+    "image_link_blocks_4VaJxj": {
+      "type": "image-link-blocks",
+      "blocks": {
+        "item_ptaqTd": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/4_335ee863-1629-450c-87af-4e7ee9844c45.png",
+            "stretch_image": true,
+            "link_text": "Floral & Serene",
+            "link_url": "shopify://collections/floral-romantic-scents",
+            "background": "rgba(0,0,0,0)",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "item_zbBnWa": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/2_00bc159b-0bbf-465c-a370-2f20142aaa37.png",
+            "stretch_image": true,
+            "link_text": "Fresh & Vital",
+            "link_url": "shopify://collections/fresh-energizing-scents",
+            "background": "",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "item_HkMaYn": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/woody_e8ba4946-f5d0-4449-aa16-bf216615d94b.png",
+            "stretch_image": true,
+            "link_text": "Woody & Warm",
+            "link_url": "shopify://collections/warm-indulgent-scents",
+            "background": "",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "item_FWeRV8": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/amber_ea161761-bfca-40a4-8407-e9fbb5db1467.png",
+            "stretch_image": true,
+            "link_text": "Amber & Aura",
+            "link_url": "shopify://collections/calming-serene-scents",
+            "background": "",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        }
+      },
+      "block_order": [
+        "item_ptaqTd",
+        "item_zbBnWa",
+        "item_HkMaYn",
+        "item_FWeRV8"
+      ],
+      "custom_css": [
+        ".h2 {font-size: 23px; /* mobile */}",
+        "@media (min-width: 768px) {.h1 {font-size: 40px; /* desktop */ }}"
+      ],
+      "settings": {
+        "full_width": false,
+        "block_size": "small",
+        "subheading": "",
+        "title": "Scent Collections",
+        "content": "",
+        "link_url": "",
+        "link_text": "",
+        "background": "rgba(0,0,0,0)",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": ""
+      }
+    },
+    "featured_collection_3VGaxc": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "fragrances",
+        "products": [],
+        "full_width": true,
+        "stack_products": false,
+        "show_progress_bar": false,
+        "products_count": 6,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "subheading": "",
+        "title": "",
+        "content": "",
+        "link_url": "shopify://collections/fragrances",
+        "link_text": "All",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "product_card_background": "",
+        "product_card_text_color": ""
+      }
+    },
+    "scentech_benefits_qYibgT": {
+      "type": "scentech-benefits",
+      "blocks": {
+        "feature_BLrDCh": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "{{ product.metafields.custom.key_notes.value }}",
+            "custom_checkmark": ""
+          }
+        },
+        "feature_Q9hFYK": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Adjustable intensity",
+            "custom_checkmark": ""
+          }
+        },
+        "feature_i4tgEr": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "App controlled",
+            "custom_checkmark": ""
+          }
+        },
+        "feature_dVFH6G": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "No messy cables",
+            "custom_checkmark": ""
+          }
+        },
+        "feature_37cdhp": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Pure fragrance oil",
+            "custom_checkmark": ""
+          }
+        },
+        "feature_WRwEUX": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "No maintenance",
+            "custom_checkmark": ""
+          }
+        },
+        "feature_xD6pT4": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Whisper quiet",
+            "custom_checkmark": ""
+          }
+        },
+        "feature_MxYRYG": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Safe for pets and kids",
+            "custom_checkmark": ""
+          }
+        },
+        "feature_zHmCeG": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Automate schedules",
+            "custom_checkmark": ""
+          }
+        }
+      },
+      "block_order": [
+        "feature_BLrDCh",
+        "feature_Q9hFYK",
+        "feature_i4tgEr",
+        "feature_dVFH6G",
+        "feature_37cdhp",
+        "feature_WRwEUX",
+        "feature_xD6pT4",
+        "feature_MxYRYG",
+        "feature_zHmCeG"
+      ],
+      "custom_css": [
+        ".content-title {font-size: 25px; /* mobile */}",
+        "@media (min-width: 768px) {.h1 {font-size: 50px; /* desktop */ }}"
+      ],
+      "name": "Scentech Features",
+      "settings": {
+        "color_scheme": "background-1",
+        "title": "Scentech is the <br><span class=\"highlight\">perfect choice.</span>",
+        "description": "<p>Our Smart Aroma Diffusers make every room smell incredible.</p>",
+        "description_2": "",
+        "logo": "shopify://shop_images/logo_NEW_white.png",
+        "header_icon": "◆",
+        "header_text": "",
+        "gradient_start": "#ffffff",
+        "gradient_end": "#ffffff",
+        "gradient_start2": "#f7f7f7",
+        "gradient_end2": "#f7f7f7",
+        "gradient_color2": "#000000",
+        "gradient_start3": "#928d6f",
+        "gradient_end3": "#928d6f",
+        "gradient_color3": "#ffffff",
+        "text_color": "#262626",
+        "highlight_color": "#928d6f",
+        "icon_gradient_start": "#ffffff",
+        "icon_gradient_end": "#ffffff",
+        "logo_bg": "#928d6f",
+        "title_size": 48,
+        "title_size_mobile": 32,
+        "text_size": 16,
+        "text_size_mobile": 14,
+        "features_text_size": 15,
+        "features_text_mobile": 13,
+        "logo_size": 16,
+        "logo_size_mobile": 14,
+        "padding_top": 50,
+        "padding_bottom": 80,
+        "mobile_padding_top": 30,
+        "mobile_padding_bottom": 30,
+        "feature_height": 57,
+        "feature_height_mobile": 52,
+        "glass_blur": 10
+      }
+    },
+    "rich_text_z7P3Vp": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_xTpKTf": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "text": "Patented Nebulizing Technology.",
+            "heading_tag": "h1",
+            "text_color": "",
+            "gradient": "linear-gradient(46deg, rgba(13, 3, 131, 1) 13%, rgba(203, 5, 242, 1) 68%)"
+          }
+        }
+      },
+      "block_order": [
+        "heading_xTpKTf"
+      ],
+      "settings": {
+        "full_width": true,
+        "content_width": "large",
+        "text_position": "center",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "video_HfFJXw": {
+      "type": "video",
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": false,
+        "autoplay": true,
+        "video_size": "auto",
+        "video": "shopify://files/videos/(PC)Women_Making_Fragrance.mp4",
+        "mobile_video": "shopify://files/videos/Women_Making_Fragrance.mp4",
+        "external_video_url": "",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
+    "testimonials_VYU7Lg": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_PzExi8": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/11.png",
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "Sarah K.",
+            "title": "Finally something that works",
+            "content": "<p>I've tried some many fragrance products like scented cndles, scent sticks, mini diffusers but nothing really worked. This thing just WORKS and i'm getting lots of compliments from guests as well. My place smells amazing now</p>"
+          }
+        },
+        "testimonial_rJiM47": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/5_bd43493d-98bc-44fb-a830-a55d05d202be.png",
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "Quint S.",
+            "title": "Bought it for my sister",
+            "content": "<p>I've never used it but my sister says this was the best gift she got all year. Uses it everyday. </p>"
+          }
+        },
+        "testimonial_dBWF3Y": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/10_144b58fb-f06f-47c5-b27c-326eb5b2f44c.png",
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "Mari U.",
+            "title": "WOW",
+            "content": "<p>My home smells incredible after installing this diffuser. I absolutely LOVE the Endless Path fragrance. Would really recommend.</p>"
+          }
+        },
+        "testimonial_wnyfAX": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/4_43a197de-596d-45f6-a07e-095726db5d21.png",
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "Joshua A.",
+            "title": "I don't smell my cats anymore",
+            "content": "<p>I really hated the smell of my litter box everythime i got home. This machine made my home smell incredibel so its a gamechanger for me. </p>"
+          }
+        },
+        "testimonial_JVPp7r": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/9_b3b02d0d-29b8-4151-a346-c1fec9a3db87.png",
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "Britney V.",
+            "title": "",
+            "content": "<p>It does what is should do. Makes my place smell great!</p>"
+          }
+        },
+        "testimonial_tR4WaR": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/6_4e7918b2-552d-4eec-8631-37ce320e9ab6.png",
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "Marian G.",
+            "title": "Adjustable intensity is great",
+            "content": "<p>I really like that I can adjust intensity. I don't really like the overpowering smell you have certain stores but with this machine I can have the same smell but adjust intensity to fit my preference. When I have guests I usually set it higher since I like it when they complement me ;)</p>"
+          }
+        },
+        "testimonial_HVqkLa": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/7_141037e2-8f9e-49ab-8018-3f7b6a7bd92f.png",
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "Jill B.",
+            "title": "Very strong machine",
+            "content": "<p>My house is pretty open-plan, and I was skeptical about how well this would work. But honestly, it fills the whole space! I can smell it in the living room, dining area, and even the hallway.</p>"
+          }
+        },
+        "testimonial_KwgGnP": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/3_162a5bd1-91ed-4f16-ba63-15ccb20d5024.png",
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "Sil V.",
+            "title": "Intensity feature is great",
+            "content": "<p>I didn’t think I’d use the intensity feature much, but now I can’t live without it. Some mornings I just want a light, refreshing scent, and other times I crank it up for guests. It’s so convenient!</p>"
+          }
+        },
+        "testimonial_wyfNVj": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/8_60eabedf-5511-47e3-bd1e-8ea1a2fcd8e8.png",
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "Emma H.",
+            "title": "Cheaper than the alternatives",
+            "content": "<p>Honestly, I was spending way too much on candles and sprays that didn’t last. With this, the pod lasts me a full month, and the scents are way more luxurious. Good value for money. </p>"
+          }
+        },
+        "testimonial_ymtr94": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/1_ebff2af6-a817-400a-96bc-8dd0e1244b83.png",
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "Max S.",
+            "title": "My mom really liked the gift",
+            "content": "<p>Bought this thing for my mom and she's in love with it. She got herself 2 more for upstairs.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_PzExi8",
+        "testimonial_rJiM47",
+        "testimonial_dBWF3Y",
+        "testimonial_wnyfAX",
+        "testimonial_JVPp7r",
+        "testimonial_tR4WaR",
+        "testimonial_HVqkLa",
+        "testimonial_KwgGnP",
+        "testimonial_wyfNVj",
+        "testimonial_ymtr94"
+      ],
+      "custom_css": [
+        ".h2 {font-size: 25px; /* mobile */}",
+        "@media (min-width: 768px) {.h1 {font-size: 50px; /* desktop */ }}"
+      ],
+      "settings": {
+        "full_width": true,
+        "stack_testimonials": false,
+        "subheading": "",
+        "title": "Join 5000+ happy customers.",
+        "content": "",
+        "link_url": "",
+        "link_text": "",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "testimonial_card_background": "",
+        "testimonial_card_text_color": ""
+      }
+    },
+    "faq_URc397": {
+      "type": "faq",
+      "blocks": {
+        "item_ahiQ9j": {
+          "type": "item",
+          "settings": {
+            "title": "How does the smart aroma diffuser work?",
+            "content": "<p>The diffuser uses advanced nebulizing technology to disperse pure fragrance oil into the air without water. Simply attach a ScentPod, adjust the settings via the app, and enjoy a consistent, evenly distributed scent throughout your space.</p>"
+          }
+        },
+        "item_jJjBhV": {
+          "type": "item",
+          "settings": {
+            "title": "Do I need water to use this diffuser?",
+            "content": "<p>No, the diffuser is water-free. It uses pure fragrance oils, eliminating the need for water and ensuring long-lasting, potent aromas.</p>"
+          }
+        },
+        "item_xEY7N6": {
+          "type": "item",
+          "settings": {
+            "title": "Can I use the diffuser in a child’s room or near pets?",
+            "content": "<p>Yes, our fragrance oils are safe when used as directed. However, we recommend keeping the diffuser out of reach of children and ensuring good ventilation in areas with pets.</p>"
+          }
+        },
+        "item_9LjMJg": {
+          "type": "item",
+          "settings": {
+            "title": " Can I use the diffuser while sleeping?",
+            "content": "<p>Absolutely! You can set a timer via the app to turn the diffuser off after a set duration or reduce the intensity for nighttime use.</p>"
+          }
+        },
+        "item_JTXxdt": {
+          "type": "item",
+          "settings": {
+            "title": "How large of an area does the diffuser cover?",
+            "content": "<p>The diffuser is designed to evenly scent areas up to 50 square meters, making it perfect for living rooms, bedrooms, and office spaces.</p>"
+          }
+        },
+        "item_Ueccra": {
+          "type": "item",
+          "settings": {
+            "title": "How do I adjust the scent intensity and schedule?",
+            "content": "<p>You can easily control the scent intensity and schedule through the app, allowing you to customize your experience to fit your lifestyle.</p>"
+          }
+        },
+        "item_ztixcR": {
+          "type": "item",
+          "settings": {
+            "title": "How long does each 50ml fragrance pod last?",
+            "content": "<p>Each 50ml pod is designed to last for one month of intensive use.</p>"
+          }
+        },
+        "item_G9eQxb": {
+          "type": "item",
+          "settings": {
+            "title": "Is the diffuser covered by a warranty?",
+            "content": "<p>Yes, the scentech diffuser comes with a life-time warranty, covering any manufacturing defects. If it breaks, you'll get a new one in a matter of days. </p>"
+          }
+        },
+        "item_zmmnCX": {
+          "type": "item",
+          "settings": {
+            "title": "What kind of oils can I use with this diffuser?",
+            "content": "<p>Our diffuser is specifically designed to work seamlessly with our ScentPods, which feature premium-grade fragrance oils optimized for the device. Using oils from other sources may cause clogging due to variations in oil viscosity and concentration, which can impair performance. Additionally, using non-ScentPod oils will void the product warranty.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_ahiQ9j",
+        "item_jJjBhV",
+        "item_xEY7N6",
+        "item_9LjMJg",
+        "item_JTXxdt",
+        "item_Ueccra",
+        "item_ztixcR",
+        "item_G9eQxb",
+        "item_zmmnCX"
+      ],
+      "settings": {
+        "full_width": true,
+        "subheading": "",
+        "title": "FAQ",
+        "content": "",
+        "team_avatar_width": 160,
+        "support_hours": "",
+        "answer_time": "",
+        "button_text": "Any more questions?",
+        "button_url": "shopify://pages/faq",
+        "text_position": "end",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "button_background": "",
+        "button_text_color": "",
+        "accordion_background": "",
+        "accordion_text_color": ""
+      }
+    },
+    "173270383137dc2679": {
+      "type": "apps",
+      "blocks": {
+        "klaviyo_reviews_all_reviews_gNEPey": {
+          "type": "shopify://apps/klaviyo-reviews/blocks/all-reviews/db20e365-d984-4ac4-9655-e1588d951ca9",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "klaviyo_reviews_all_reviews_gNEPey"
+      ],
+      "settings": {
+        "full_width": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false,
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "video_ge3Mmq": {
+      "type": "video",
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": false,
+        "autoplay": true,
+        "video_size": "auto",
+        "video": "shopify://files/videos/(PC)Women_In_Flower_Field.mp4",
+        "mobile_video": "shopify://files/videos/Women_In_Flower_Field.mp4",
+        "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
+    "simple-bundles": {
+      "type": "simple-bundles",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "instant_n923s_gcpkw2_pz_pfq_znbnEB",
+    "images_with_text_scrolling_zA4bFj",
+    "image_with_text_overlay_Wyi7YM",
+    "image_link_blocks_4VaJxj",
+    "featured_collection_3VGaxc",
+    "scentech_benefits_qYibgT",
+    "rich_text_z7P3Vp",
+    "video_HfFJXw",
+    "testimonials_VYU7Lg",
+    "faq_URc397",
+    "173270383137dc2679",
+    "video_ge3Mmq",
+    "simple-bundles"
+  ]
+}

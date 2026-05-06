@@ -1,1 +1,452 @@
-{"sections":{"banner":{"type":"collection-banner","disabled":true,"settings":{"full_width":false,"allow_transparent_header":false,"enable_parallax":true,"show_collection_title":true,"show_collection_description":true,"show_collection_image":true,"collection_title_size":"h3","image_size":"auto","mobile_text_position":"place-self-center text-center","desktop_text_position":"sm:place-self-center sm:text-center","featured_product":"","featured_product_heading":"Featured product","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"main":{"type":"main-collection","disabled":true,"settings":{"products_per_page":24,"products_per_row_mobile":"2","products_per_row_desktop":3,"filter_layout":"drawer","show_sort_by":true,"show_filters":false,"show_filter_group_name":false,"show_filter_values_count":true,"open_first_filter_group":false}},"instant_sl7m_y8s8_uw8_le_p_bq_aBxfRC":{"type":"instant-Sl7mY8s8Uw8LePBq","settings":{"text_5qF5M9ziQEnfWvUT":"<p>{{ collection.metafields.custom.hero_text.value }}<\/p>","text_G2jSMF5nfw2Fbx9Q":"<p><strong>Rated 4.9 out of 5<\/strong><\/p>","text_Nk8lpzfaaK6MnaXb":"<p>{{ collection.metafields.custom.lander_heading.value }}<\/p>","text_Br7Si7HdFWSl8PeM":"<p><strong>{{ collection.metafields.custom.main_benefit_3.value }}<\/strong><\/p>","text_ELMSukdmo24WY66B":"<p><strong>{{ collection.metafields.custom.main_benefit_1.value }}<\/strong><\/p>","text_d8Lv4ltnO0XGcZme":"<p><strong>{{ collection.metafields.custom.main_benefit_2.value }}<\/strong><\/p>","padding_top":0,"padding_bottom":0}},"instant_n923s_gcpkw2_pz_pfq_FJfdwy":{"type":"instant-N923sGcpkw2PzPfq","disabled":true,"settings":{"text_4pnscOknvXEBfDm1":"<p>Improve Sleep<\/p>","text_DmtrTNHOtTvcVXcm":"<p>Increase Energy<\/p>","text_YpoSbeDkXdkr0TRV":"<p>Reduce Stress<\/p>","text_UJyKKhLiDNFEK2nE":"<p>Amazing Smell<\/p>","padding_top":16,"padding_bottom":0}},"featured_collection_KMFqdG":{"type":"featured-collection","settings":{"collection":"","products":["smart-aroma-diffuser-2","smart-aroma-diffuser-pro","smart-aroma-diffuser","classic-charm","dark-elixir","endless-path","tea-whisper","pure-nirvana","garden-mist","calming-lavender","wild-blossom","pure-blossom","energize","winter-breeze-copy","winter-breeze"],"full_width":true,"stack_products":false,"show_progress_bar":false,"products_count":6,"products_per_row_mobile":"2","products_per_row_desktop":4,"subheading":"","title":"","content":"","link_url":"","link_text":"","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":"","product_card_background":"","product_card_text_color":""}},"rich_text_xmiy9N":{"type":"rich-text","blocks":{"heading_7yrwW3":{"type":"heading","settings":{"text":"{{ collection.metafields.custom.general_problem_headline.value }}","heading_tag":"h4","text_color":"","gradient":""}}},"block_order":["heading_7yrwW3"],"settings":{"full_width":true,"content_width":"small","text_position":"center","background":"","background_gradient":"","text_color":""}},"images_with_text_scrolling_Mmbmzt":{"type":"images-with-text-scrolling","blocks":{"item_QPmd8t":{"type":"item","settings":{"image":"{{ collection.metafields.custom.problem_image.value }}","icon":"none","icon_width":48,"title":"{{ collection.metafields.custom.problem_headline.value }}","content":"<p>{{ collection.metafields.custom.problem_body | metafield_tag }}<\/p>"}},"item_Y8fw6g":{"type":"item","settings":{"image":"{{ collection.metafields.custom.solution_1_image.value }}","icon":"none","icon_width":48,"title":"{{ collection.metafields.custom.solution_1_headline.value }}","content":"<p>{{ collection.metafields.custom.solution_body_1 | metafield_tag }}<\/p>"}},"item_baCBHX":{"type":"item","settings":{"image":"{{ collection.metafields.custom.solution_3_image.value }}","icon":"none","icon_width":48,"title":"{{ collection.metafields.custom.solution_3_healine.value }}","content":"<p>{{ collection.metafields.custom.solution_3_body | metafield_tag }}<\/p>"}},"item_V9QcCx":{"type":"item","settings":{"image":"{{ collection.metafields.custom.solution_2_image.value }}","icon":"none","icon_width":48,"title":"{{ collection.metafields.custom.solution_2_headline.value }}","content":"<p>{{ collection.metafields.custom.solution_2_body | metafield_tag }}<\/p>"}}},"block_order":["item_QPmd8t","item_Y8fw6g","item_baCBHX","item_V9QcCx"],"custom_css":[".h1 {font-size: 16px; \/* mobile *\/}","@media (min-width: 768px) {.h1 {font-size: 40px; \/* desktop *\/ }}"],"settings":{"full_width":true,"stack_on_mobile":false,"show_counter":false,"desktop_image_effect":"reveal","image_position":"end","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":""}},"image_link_blocks_eVHrz3":{"type":"image-link-blocks","blocks":{"item_mVjpgj":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/4_335ee863-1629-450c-87af-4e7ee9844c45.png","stretch_image":true,"link_text":"Floral & Serene","link_url":"shopify:\/\/collections\/floral-romantic-scents","background":"rgba(0,0,0,0)","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"item_hFiHdm":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/2_00bc159b-0bbf-465c-a370-2f20142aaa37.png","stretch_image":true,"link_text":"Fresh & Vital","link_url":"shopify:\/\/collections\/fresh-energizing-scents","background":"","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"item_WaEGnm":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/woody_e8ba4946-f5d0-4449-aa16-bf216615d94b.png","stretch_image":true,"link_text":"Woody & Warm","link_url":"shopify:\/\/collections\/warm-indulgent-scents","background":"","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"item_A6Mcnn":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/amber_ea161761-bfca-40a4-8407-e9fbb5db1467.png","stretch_image":true,"link_text":"Amber & Aura","link_url":"shopify:\/\/collections\/calming-serene-scents","background":"","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}}},"block_order":["item_mVjpgj","item_hFiHdm","item_WaEGnm","item_A6Mcnn"],"custom_css":["h2 {font-size: 23px;}"],"settings":{"full_width":false,"block_size":"small","subheading":"","title":"Scent Collections","content":"","link_url":"","link_text":"","background":"rgba(0,0,0,0)","background_gradient":"","text_color":"","heading_color":"","heading_gradient":""}},"featured_collection_nV6wtk":{"type":"featured-collection","settings":{"collection":"fragrances","products":[],"full_width":true,"stack_products":false,"show_progress_bar":false,"products_count":50,"products_per_row_mobile":"2","products_per_row_desktop":5,"subheading":"","title":"","content":"","link_url":"shopify:\/\/collections\/fragrances","link_text":"All","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":"","product_card_background":"","product_card_text_color":""}},"image_with_text_overlay_QHJaMQ":{"type":"image-with-text-overlay","blocks":{"heading_QYFVW7":{"type":"heading","settings":{"text":"Find a scent that fits your personality.","heading_tag":"h3"}},"richtext_pg3Wrj":{"type":"richtext","settings":{"content":"<p>Discover a fragrance crafted to match your unique essence and elevate your space.<\/p>"}},"button_hcWA3R":{"type":"button","settings":{"style":"fill","size":"lg","text":"Take the quiz","url":"#open-quiz-tools\/perfect-product-finder\/find-a-fragrance-that-fits-your-personality","background":"#162518","text_color":"#ffffff"}}},"block_order":["heading_QYFVW7","richtext_pg3Wrj","button_hcWA3R"],"settings":{"full_width":true,"allow_transparent_header":false,"enable_parallax":false,"image_size":"sm","image":"shopify:\/\/shop_images\/All_Scents.png","mobile_image":"shopify:\/\/shop_images\/Ontwerp_zonder_titel_75.png","mobile_text_position":"place-self-end-start text-start","desktop_text_position":"sm:place-self-end-start sm:text-start","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"featured_collection_Dd7kTw":{"type":"featured-collection","settings":{"collection":"","products":["smart-aroma-diffuser-2","smart-aroma-diffuser-pro","smart-aroma-diffuser"],"full_width":true,"stack_products":true,"show_progress_bar":false,"products_count":4,"products_per_row_mobile":"2","products_per_row_desktop":3,"subheading":"","title":"","content":"","link_url":"","link_text":"","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":"","product_card_background":"","product_card_text_color":""}},"blog_posts_yqzEMp":{"type":"blog-posts","blocks":{"article_YdF8fJ":{"type":"article","settings":{"article":"news\/hoe-luxe-merken-je-laten-betalen-voor-iets-dat-niet-werkt","background":"","text_color":""}}},"block_order":["article_YdF8fJ"],"custom_css":[".h2 {font-size: 20px; \/* kies je gewenste grootte *\/ line-height: 1.3;}"],"name":"Featured blog post","settings":{"full_width":true,"show_excerpt":true,"show_date":true,"show_author":false,"show_comments_count":false,"show_category":true,"subheading":"","title":"","content":"","link_url":"","link_text":"","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":""}},"1733749215d7a45864":{"type":"apps","blocks":{"okendo_reviews_widget_hGTjQ9":{"type":"shopify:\/\/apps\/okendo\/blocks\/reviews-widget\/bb689e69-ea70-4661-8fb7-ad24a2e23c29","settings":{"product":"","widget_type":"reviews_widget"}}},"block_order":["okendo_reviews_widget_hGTjQ9"],"settings":{"full_width":true,"remove_vertical_spacing":false,"remove_horizontal_spacing":false,"background":"","background_gradient":"","text_color":""}}},"order":["banner","main","instant_sl7m_y8s8_uw8_le_p_bq_aBxfRC","instant_n923s_gcpkw2_pz_pfq_FJfdwy","featured_collection_KMFqdG","rich_text_xmiy9N","images_with_text_scrolling_Mmbmzt","image_link_blocks_eVHrz3","featured_collection_nV6wtk","image_with_text_overlay_QHJaMQ","featured_collection_Dd7kTw","blog_posts_yqzEMp","1733749215d7a45864"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "collection-banner",
+      "disabled": true,
+      "settings": {
+        "full_width": false,
+        "allow_transparent_header": false,
+        "enable_parallax": true,
+        "show_collection_title": true,
+        "show_collection_description": true,
+        "show_collection_image": true,
+        "collection_title_size": "h3",
+        "image_size": "auto",
+        "mobile_text_position": "place-self-center text-center",
+        "desktop_text_position": "sm:place-self-center sm:text-center",
+        "featured_product": "",
+        "featured_product_heading": "Featured product",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "disabled": true,
+      "settings": {
+        "products_per_page": 24,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 3,
+        "filter_layout": "drawer",
+        "show_sort_by": true,
+        "show_filters": false,
+        "show_filter_group_name": false,
+        "show_filter_values_count": true,
+        "open_first_filter_group": false
+      }
+    },
+    "instant_sl7m_y8s8_uw8_le_p_bq_aBxfRC": {
+      "type": "instant-Sl7mY8s8Uw8LePBq",
+      "settings": {
+        "text_5qF5M9ziQEnfWvUT": "<p>{{ collection.metafields.custom.hero_text.value }}</p>",
+        "text_G2jSMF5nfw2Fbx9Q": "<p><strong>Rated 4.9 out of 5</strong></p>",
+        "text_Nk8lpzfaaK6MnaXb": "<p>{{ collection.metafields.custom.lander_heading.value }}</p>",
+        "text_Br7Si7HdFWSl8PeM": "<p><strong>{{ collection.metafields.custom.main_benefit_3.value }}</strong></p>",
+        "text_ELMSukdmo24WY66B": "<p><strong>{{ collection.metafields.custom.main_benefit_1.value }}</strong></p>",
+        "text_d8Lv4ltnO0XGcZme": "<p><strong>{{ collection.metafields.custom.main_benefit_2.value }}</strong></p>",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "instant_n923s_gcpkw2_pz_pfq_FJfdwy": {
+      "type": "instant-N923sGcpkw2PzPfq",
+      "disabled": true,
+      "settings": {
+        "text_4pnscOknvXEBfDm1": "<p>Improve Sleep</p>",
+        "text_DmtrTNHOtTvcVXcm": "<p>Increase Energy</p>",
+        "text_YpoSbeDkXdkr0TRV": "<p>Reduce Stress</p>",
+        "text_UJyKKhLiDNFEK2nE": "<p>Amazing Smell</p>",
+        "padding_top": 16,
+        "padding_bottom": 0
+      }
+    },
+    "featured_collection_KMFqdG": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "",
+        "products": [
+          "smart-aroma-diffuser-2",
+          "smart-aroma-diffuser-pro",
+          "smart-aroma-diffuser",
+          "classic-charm",
+          "dark-elixir",
+          "endless-path",
+          "tea-whisper",
+          "pure-nirvana",
+          "garden-mist",
+          "calming-lavender",
+          "wild-blossom",
+          "pure-blossom",
+          "energize",
+          "winter-breeze-copy",
+          "winter-breeze"
+        ],
+        "full_width": true,
+        "stack_products": false,
+        "show_progress_bar": false,
+        "products_count": 6,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "subheading": "",
+        "title": "",
+        "content": "",
+        "link_url": "",
+        "link_text": "",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "product_card_background": "",
+        "product_card_text_color": ""
+      }
+    },
+    "rich_text_xmiy9N": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_7yrwW3": {
+          "type": "heading",
+          "settings": {
+            "text": "{{ collection.metafields.custom.general_problem_headline.value }}",
+            "heading_tag": "h4",
+            "text_color": "",
+            "gradient": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_7yrwW3"
+      ],
+      "settings": {
+        "full_width": true,
+        "content_width": "small",
+        "text_position": "center",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "images_with_text_scrolling_Mmbmzt": {
+      "type": "images-with-text-scrolling",
+      "blocks": {
+        "item_QPmd8t": {
+          "type": "item",
+          "settings": {
+            "image": "{{ collection.metafields.custom.problem_image.value }}",
+            "icon": "none",
+            "icon_width": 48,
+            "title": "{{ collection.metafields.custom.problem_headline.value }}",
+            "content": "<p>{{ collection.metafields.custom.problem_body | metafield_tag }}</p>"
+          }
+        },
+        "item_Y8fw6g": {
+          "type": "item",
+          "settings": {
+            "image": "{{ collection.metafields.custom.solution_1_image.value }}",
+            "icon": "none",
+            "icon_width": 48,
+            "title": "{{ collection.metafields.custom.solution_1_headline.value }}",
+            "content": "<p>{{ collection.metafields.custom.solution_body_1 | metafield_tag }}</p>"
+          }
+        },
+        "item_baCBHX": {
+          "type": "item",
+          "settings": {
+            "image": "{{ collection.metafields.custom.solution_3_image.value }}",
+            "icon": "none",
+            "icon_width": 48,
+            "title": "{{ collection.metafields.custom.solution_3_healine.value }}",
+            "content": "<p>{{ collection.metafields.custom.solution_3_body | metafield_tag }}</p>"
+          }
+        },
+        "item_V9QcCx": {
+          "type": "item",
+          "settings": {
+            "image": "{{ collection.metafields.custom.solution_2_image.value }}",
+            "icon": "none",
+            "icon_width": 48,
+            "title": "{{ collection.metafields.custom.solution_2_headline.value }}",
+            "content": "<p>{{ collection.metafields.custom.solution_2_body | metafield_tag }}</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_QPmd8t",
+        "item_Y8fw6g",
+        "item_baCBHX",
+        "item_V9QcCx"
+      ],
+      "custom_css": [
+        ".h1 {font-size: 16px; /* mobile */}",
+        "@media (min-width: 768px) {.h1 {font-size: 40px; /* desktop */ }}"
+      ],
+      "settings": {
+        "full_width": true,
+        "stack_on_mobile": false,
+        "show_counter": false,
+        "desktop_image_effect": "reveal",
+        "image_position": "end",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": ""
+      }
+    },
+    "image_link_blocks_eVHrz3": {
+      "type": "image-link-blocks",
+      "blocks": {
+        "item_mVjpgj": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/4_335ee863-1629-450c-87af-4e7ee9844c45.png",
+            "stretch_image": true,
+            "link_text": "Floral & Serene",
+            "link_url": "shopify://collections/floral-romantic-scents",
+            "background": "rgba(0,0,0,0)",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "item_hFiHdm": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/2_00bc159b-0bbf-465c-a370-2f20142aaa37.png",
+            "stretch_image": true,
+            "link_text": "Fresh & Vital",
+            "link_url": "shopify://collections/fresh-energizing-scents",
+            "background": "",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "item_WaEGnm": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/woody_e8ba4946-f5d0-4449-aa16-bf216615d94b.png",
+            "stretch_image": true,
+            "link_text": "Woody & Warm",
+            "link_url": "shopify://collections/warm-indulgent-scents",
+            "background": "",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "item_A6Mcnn": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/amber_ea161761-bfca-40a4-8407-e9fbb5db1467.png",
+            "stretch_image": true,
+            "link_text": "Amber & Aura",
+            "link_url": "shopify://collections/calming-serene-scents",
+            "background": "",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        }
+      },
+      "block_order": [
+        "item_mVjpgj",
+        "item_hFiHdm",
+        "item_WaEGnm",
+        "item_A6Mcnn"
+      ],
+      "custom_css": [
+        "h2 {font-size: 23px;}"
+      ],
+      "settings": {
+        "full_width": false,
+        "block_size": "small",
+        "subheading": "",
+        "title": "Scent Collections",
+        "content": "",
+        "link_url": "",
+        "link_text": "",
+        "background": "rgba(0,0,0,0)",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": ""
+      }
+    },
+    "featured_collection_nV6wtk": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "fragrances",
+        "products": [],
+        "full_width": true,
+        "stack_products": false,
+        "show_progress_bar": false,
+        "products_count": 50,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 5,
+        "subheading": "",
+        "title": "",
+        "content": "",
+        "link_url": "shopify://collections/fragrances",
+        "link_text": "All",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "product_card_background": "",
+        "product_card_text_color": ""
+      }
+    },
+    "image_with_text_overlay_QHJaMQ": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_QYFVW7": {
+          "type": "heading",
+          "settings": {
+            "text": "Find a scent that fits your personality.",
+            "heading_tag": "h3"
+          }
+        },
+        "richtext_pg3Wrj": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Discover a fragrance crafted to match your unique essence and elevate your space.</p>"
+          }
+        },
+        "button_hcWA3R": {
+          "type": "button",
+          "settings": {
+            "style": "fill",
+            "size": "lg",
+            "text": "Take the quiz",
+            "url": "#open-quiz-tools/perfect-product-finder/find-a-fragrance-that-fits-your-personality",
+            "background": "#162518",
+            "text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "heading_QYFVW7",
+        "richtext_pg3Wrj",
+        "button_hcWA3R"
+      ],
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": false,
+        "enable_parallax": false,
+        "image_size": "sm",
+        "image": "shopify://shop_images/All_Scents.png",
+        "mobile_image": "shopify://shop_images/Ontwerp_zonder_titel_75.png",
+        "mobile_text_position": "place-self-end-start text-start",
+        "desktop_text_position": "sm:place-self-end-start sm:text-start",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
+    "featured_collection_Dd7kTw": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "",
+        "products": [
+          "smart-aroma-diffuser-2",
+          "smart-aroma-diffuser-pro",
+          "smart-aroma-diffuser"
+        ],
+        "full_width": true,
+        "stack_products": true,
+        "show_progress_bar": false,
+        "products_count": 4,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 3,
+        "subheading": "",
+        "title": "",
+        "content": "",
+        "link_url": "",
+        "link_text": "",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "product_card_background": "",
+        "product_card_text_color": ""
+      }
+    },
+    "blog_posts_yqzEMp": {
+      "type": "blog-posts",
+      "blocks": {
+        "article_YdF8fJ": {
+          "type": "article",
+          "settings": {
+            "article": "news/hoe-luxe-merken-je-laten-betalen-voor-iets-dat-niet-werkt",
+            "background": "",
+            "text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "article_YdF8fJ"
+      ],
+      "custom_css": [
+        ".h2 {font-size: 20px; /* kies je gewenste grootte */ line-height: 1.3;}"
+      ],
+      "name": "Featured blog post",
+      "settings": {
+        "full_width": true,
+        "show_excerpt": true,
+        "show_date": true,
+        "show_author": false,
+        "show_comments_count": false,
+        "show_category": true,
+        "subheading": "",
+        "title": "",
+        "content": "",
+        "link_url": "",
+        "link_text": "",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": ""
+      }
+    },
+    "1733749215d7a45864": {
+      "type": "apps",
+      "settings": {
+        "full_width": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false,
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "main",
+    "instant_sl7m_y8s8_uw8_le_p_bq_aBxfRC",
+    "instant_n923s_gcpkw2_pz_pfq_FJfdwy",
+    "featured_collection_KMFqdG",
+    "rich_text_xmiy9N",
+    "images_with_text_scrolling_Mmbmzt",
+    "image_link_blocks_eVHrz3",
+    "featured_collection_nV6wtk",
+    "image_with_text_overlay_QHJaMQ",
+    "featured_collection_Dd7kTw",
+    "blog_posts_yqzEMp",
+    "1733749215d7a45864"
+  ]
+}

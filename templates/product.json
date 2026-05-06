@@ -1,1 +1,762 @@
-{"sections":{"main":{"type":"main-product","blocks":{"okendo_star_rating_YxJP4j":{"type":"shopify:\/\/apps\/okendo\/blocks\/star-rating\/bb689e69-ea70-4661-8fb7-ad24a2e23c29","settings":{"product":"{{product}}"}},"title":{"type":"title","settings":{"heading_tag":"h2"}},"button_Ck4C3b":{"type":"button","settings":{"link":"","text":"Take the fragrance quiz to find your perfect scent","size":"sm","style":"fill","stretch":false,"background":"#d4d4d4","text_color":""}},"price":{"type":"price","settings":{"show_taxes_notice":false}},"variant_picker_fhRg4e":{"type":"variant_picker","settings":{"hide_sold_out_variants":false,"stack_blocks":false,"selector_style":"block","swatch_selector_style":"block_swatch","variant_image_options":"Choose your scent","size_chart_page":""}},"inventory_narAYN":{"type":"inventory","settings":{"low_inventory_threshold":100}},"buy_buttons_zeLxRH":{"type":"buy_buttons","settings":{"show_payment_button":false,"show_gift_card_recipient":true,"show_shipping_info":false,"show_quantity_selector":false,"atc_button_background":"","atc_button_text_color":"","payment_button_background":"","payment_button_text_color":"","promo_enabled":false,"promo_title_prefix":"Get it FREE with","promo_title_suffix":"Scents","promo_scent_metafield":"custom.scent_count","promo_fallback_count":"9","promo_subtitle":"Limited time offer","promo_url":""}},"liquid_PH6gz3":{"type":"liquid","settings":{"liquid":"<!-- Pay safe with link, icon, and styling -->\n<div style=\"text-align: center; margin-top: -10px; margin-bottom: 10px;\">\n  <div style=\"display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background-color: #f7f7f7; border-radius: 8px;\">\n\n    <!-- Lock Icon (Adjusted Size) -->\n    <svg role=\"presentation\" fill=\"none\" focusable=\"false\" stroke-width=\"2\" width=\"20\" height=\"20\" class=\"icon icon-picto-lock\" viewBox=\"0 0 24 24\">\n      <path d=\"M3.236 18.182a5.071 5.071 0 0 0 4.831 4.465 114.098 114.098 0 0 0 7.865-.001 5.07 5.07 0 0 0 4.831-4.464 23.03 23.03 0 0 0 .165-2.611c0-.881-.067-1.752-.165-2.61a5.07 5.07 0 0 0-4.83-4.465c-1.311-.046-2.622-.07-3.933-.069a109.9 109.9 0 0 0-3.933.069 5.07 5.07 0 0 0-4.83 4.466 23.158 23.158 0 0 0-.165 2.609c0 .883.067 1.754.164 2.61Z\" fill=\"currentColor\" fill-opacity=\".12\" stroke=\"currentColor\"><\/path>\n      <path d=\"M17 8.43V6.285A5 5 0 0 0 7 6.286V8.43\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><\/path>\n      <path d=\"M12 17.714a2.143 2.143 0 1 0 0-4.286 2.143 2.143 0 0 0 0 4.286Z\" stroke=\"currentColor\"><\/path>\n    <\/svg>\n\n    <!-- Text and Bold Link (2px Smaller) -->\n    <span style=\"font-size: 12px; color: var(--color-foreground);\">\n      {{ product.metafields.custom.payment_method_text_1 }}\n      <a href=\"#\" id=\"show-payment-options\" class=\"link\" style=\"color: var(--color-foreground); font-weight: bold;\">\n        {{ product.metafields.custom.payment_method_text_2 }}\n      <\/a>\n    <\/span>\n\n  <\/div>\n<\/div>\n\n\n<!-- Hidden pop-up container -->\n<div id=\"payment-popup\" style=\"\n  display: none;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  background-color: #fff;\n  padding: 20px;\n  border: 1px solid #ccc;\n  border-radius: 12px;\n  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);\n  z-index: 1000;\n  max-width: 90%;\n  width: 400px;\n  text-align: center;\n\">\n  <h3 style=\"margin-top: 0; margin-bottom: 15px;\">{{ product.metafields.custom.payment_method_text_3 }}<\/h3>\n  <div id=\"dynamic-payment-icons\" style=\"\n    display: flex;\n    justify-content: center;\n    flex-wrap: wrap;\n    gap: 8px;\n    margin-bottom: 20px;\n  \">\n    <!-- Payment icons will be dynamically inserted here -->\n  <\/div>\n  <button id=\"close-popup\" class=\"button button--primary\">\n    Close\n  <\/button>\n<\/div>\n\n<!-- Overlay to darken background -->\n<div id=\"overlay\" style=\"\n  display: none;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 999;\n\"><\/div>\n\n<!-- JavaScript for handling pop-up functionality -->\n<script>\n  document.getElementById('show-payment-options').addEventListener('click', function(event) {\n    event.preventDefault();\n\n    \/\/ Find the payment icons in the footer\n    const footerIcons = document.querySelector('.footer__payment-icons');\n    const popupIconsContainer = document.getElementById('dynamic-payment-icons');\n\n    if (footerIcons) {\n      \/\/ Clear existing icons in the pop-up\n      popupIconsContainer.innerHTML = '';\n\n      \/\/ Clone the footer icons and append them to the pop-up container\n      const clonedIcons = footerIcons.cloneNode(true);\n      clonedIcons.classList.remove('footer__payment-icons'); \/\/ Optional: remove footer-specific styling\n      popupIconsContainer.appendChild(clonedIcons);\n    }\n\n    \/\/ Show the pop-up and overlay\n    document.getElementById('payment-popup').style.display = 'block';\n    document.getElementById('overlay').style.display = 'block';\n  });\n\n  \/\/ Close button functionality\n  document.getElementById('close-popup').addEventListener('click', function() {\n    document.getElementById('payment-popup').style.display = 'none';\n    document.getElementById('overlay').style.display = 'none';\n  });\n\n  \/\/ Overlay click to close pop-up\n  document.getElementById('overlay').addEventListener('click', function() {\n    document.getElementById('payment-popup').style.display = 'none';\n    this.style.display = 'none';\n  });\n<\/script>"}},"separator_ww8YLW":{"type":"separator","settings":{}},"liquid_fFWWV7":{"type":"liquid","settings":{"liquid":"{% assign review = \"Scentech's nebulizing technology offers pure, consistent fragrance, and the app makes customizing scent intensity and schedules effortless. A truly luxurious home experience.\" %}\n{% assign author = \"- Dr. Amy Johnson, Fragrance Chemist\" %}\n{% assign image = \"https:\/\/cdn.shopify.com\/s\/files\/1\/0888\/1219\/2090\/files\/Fragrance_Chemist.png?v=1729861874\" %}\n{% assign rating = 5 %}\n\n<div class=\"featured-review\">\n    <img class=\"review-img\" src=\"{{ image }}\" alt=\"Review\">\n\n    <div class=\"content\">\n        <div class=\"stars\">\n            {% for i in (1..rating) %}\n            <span class=\"star\"><\/span>\n            {% endfor %}\n        <\/div>\n\n        <div class=\"review-text\">\"{{ review }}\"<\/div>\n\n        <div class=\"author-info\">\n            {{ author }}\n        <\/div>\n    <\/div>\n<\/div>\n\n<style>\n    .featured-review {\n        display: flex;\n        align-items: center;\n        gap: 20px;\n    }\n\n    .review-img {\n        width: 75px;\n        height: 75px;\n        border-radius: 50%;\n    }\n\n    .content {\n        display: flex;\n        flex-direction: column;\n        gap: 8px;\n    }\n\n    .stars {\n        display: flex;\n        gap: 2px;\n    }\n\n    .star {\n        width: 13px;\n        height: 13px;\n        background: url('data:image\/svg+xml;utf8,<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" viewBox=\"0 0 24 24\"><path fill=\"%23FFD700\" d=\"M12 .587l3.668 7.429 8.332 1.19-6.004 5.897 1.416 8.267L12 18.896l-7.412 3.374 1.416-8.267-6.004-5.897 8.332-1.19z\"\/><\/svg>') no-repeat center;\n        background-size: cover;\n    }\n\n    .review-text {\n        font-size: 0.8rem;\n        line-height: 18px;\n        text-align: left;\n        font-family: 'DIN Next Regular', sans-serif; \/* Use DIN Next Regular *\/\n    }\n\n    .author-info {\n        font-size: 0.8rem;\n        font-weight: Bold;\n        font-family: 'DIN Next Regular', sans-serif; \/* Use DIN Next Regular *\/\n    }\n\n    @media (max-width: 290px) {\n        .featured-review {\n            flex-direction: column;\n        }\n\n        .content .stars, .content .author-info {\n            justify-content: center;\n        }\n\n        .content .review-text {\n            text-align: center;\n        }\n    }\n<\/style>"}}},"block_order":["okendo_star_rating_YxJP4j","title","button_Ck4C3b","price","variant_picker_fhRg4e","inventory_narAYN","buy_buttons_zeLxRH","liquid_PH6gz3","separator_ww8YLW","liquid_fFWWV7"],"custom_css":["@media screen and (min-width: 1000px) {.sticky-product-images {position: sticky; top: 130px; \/* Adjust this value based on how far from the top you want it to stick *\/ z-index: 0; \/* Keeps the images above other elements if needed *\/}"],"settings":{"full_width":true,"show_fixed_add_to_cart":true,"desktop_media_width":55,"desktop_media_layout":"carousel_thumbnails_left","mobile_media_size":"contained","mobile_carousel_control":"floating_dots","enable_video_autoplay":false,"enable_video_looping":true,"enable_image_zoom":true,"max_image_zoom_level":3,"background":"","background_gradient":"","text_color":"","input_background":"rgba(0,0,0,0)","input_text_color":""}},"image_with_text_overlay_fcqgRM":{"type":"image-with-text-overlay","settings":{"full_width":true,"allow_transparent_header":false,"enable_parallax":false,"image_size":"auto","image":"shopify:\/\/shop_images\/Ontwerp_zonder_titel_50.png","mobile_image":"shopify:\/\/shop_images\/Ontwerp_zonder_titel_48.png","mobile_text_position":"place-self-center text-center","desktop_text_position":"sm:place-self-center sm:text-center","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}},"rich_text_7Vt7bd":{"type":"rich-text","blocks":{"heading_j6GzW3":{"type":"heading","settings":{"text":"How it works.","heading_tag":"h1","text_color":"","gradient":""}}},"block_order":["heading_j6GzW3"],"settings":{"full_width":true,"content_width":"medium","text_position":"center","background":"","background_gradient":"","text_color":""}},"images_with_text_scrolling_FDy3bR":{"type":"images-with-text-scrolling","blocks":{"item_KPghW7":{"type":"item","settings":{"icon":"none","icon_width":48,"title":"Choose.","content":"<p>Choose one of our 10 high-quality ScentPods. Take our fragrance quiz to find out which one best fits your taste! <a href=\"#\" title=\"#\">Take the fragrance quiz here.<\/a><\/p>"}},"item_QeYKN4":{"type":"item","settings":{"icon":"none","icon_width":48,"title":"Subscribe.","content":"<p>Subscribe to your favorite scent, delivered to your mailbox each month, and get a free Scentech diffuser with your first order.<\/p>"}},"item_Mab9br":{"type":"item","settings":{"icon":"none","icon_width":48,"title":"Enjoy.","content":"<p>Each 50ml fragrance pod lasts an entire month of intensive use, keeping your space continuously refreshed.<\/p>"}},"item_dRecKM":{"type":"item","settings":{"icon":"none","icon_width":48,"title":"Modify.","content":"<p>Easily switch between scents anytime. Simply log into your personal dashboard and select a new scent each month.<\/p>"}}},"block_order":["item_KPghW7","item_QeYKN4","item_Mab9br","item_dRecKM"],"settings":{"full_width":true,"stack_on_mobile":false,"show_counter":true,"desktop_image_effect":"reveal","image_position":"end","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":""}},"accordion_content_cYgmHN":{"type":"accordion-content","blocks":{"item_8AKRG7":{"type":"item","settings":{"title":"Sleep Well","content":"<p>Write content to help your customers to better understand your products or policies.<\/p>","page":""}},"item_xzM9iU":{"type":"item","settings":{"title":"Energized","content":"<p>Write content to help your customers to better understand your products or policies.<\/p>","page":""}},"item_PWxLTg":{"type":"item","settings":{"title":"Calming","content":"<p>Write content to help your customers to better understand your products or policies.<\/p>","page":""}},"item_QBYcbY":{"type":"item","settings":{"title":"Deep Work","content":"<p>Write content to help your customers to better understand your products or policies.<\/p>","page":""}},"item_CU6iFG":{"type":"item","settings":{"title":"Fragrance 5","content":"<p>Write content to help your customers to better understand your products or policies.<\/p>","page":""}},"item_MYfAcT":{"type":"item","settings":{"title":"Fragrance 6","content":"<p>Write content to help your customers to better understand your products or policies.<\/p>","page":""}},"item_8gHqwX":{"type":"item","settings":{"title":"Fragrance 7","content":"<p>Write content to help your customers to better understand your products or policies.<\/p>","page":""}},"item_n8897J":{"type":"item","settings":{"title":"Fragrance 8","content":"<p>Write content to help your customers to better understand your products or policies.<\/p>","page":""}}},"block_order":["item_8AKRG7","item_xzM9iU","item_PWxLTg","item_QBYcbY","item_CU6iFG","item_MYfAcT","item_8gHqwX","item_n8897J"],"settings":{"full_width":true,"subheading":"","title":"Find your perfect fragrance.","content":"","button_text":"Take the quiz","button_url":"","text_position":"start","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":"linear-gradient(45deg, rgba(0, 51, 102, 1) 14%, rgba(187, 48, 254, 1) 83%)","button_background":"","button_text_color":"","accordion_background":"","accordion_text_color":""}},"image_with_text_overlay_JwFrdr":{"type":"image-with-text-overlay","settings":{"full_width":true,"allow_transparent_header":false,"enable_parallax":false,"image_size":"auto","mobile_text_position":"place-self-start text-start","desktop_text_position":"sm:place-self-start sm:text-start","text_color":"#ffffff","overlay_color":"#ffffff","overlay_opacity":0}},"text_with_icons_YYzV44":{"type":"text-with-icons","blocks":{"item_MLFmnE":{"type":"item","settings":{"icon":"picto-stop","mobile_icon_width":24,"icon_width":32,"icon_background_type":"circle","icon_background":"","icon_color":"","title":"Water-Free Technology.","content":"<p>Unlike traditional diffusers, scentech uses cutting-edge nebulizing technology to deliver pure, undiluted fragrance. This ensures a consistent, long-lasting scent without the need for water or heat.<\/p>"}},"item_XAFTRw":{"type":"item","settings":{"icon":"picto-wifi","mobile_icon_width":24,"icon_width":32,"icon_background_type":"circle","icon_background":"","icon_color":"","title":"Smart Control.","content":"<p>Easily customize your scent experience with the app. Adjust scent intensity and set schedules to match your mood or daily routine.<\/p>"}},"item_GcKfAQ":{"type":"item","settings":{"icon":"picto-star","mobile_icon_width":24,"icon_width":32,"icon_background_type":"circle","icon_background":"","icon_color":"","title":"Elegant Design.","content":"<p>Its sleek, modern design fits seamlessly into any home decor, adding a touch of sophistication to your living space.<\/p>"}}},"block_order":["item_MLFmnE","item_XAFTRw","item_GcKfAQ"],"settings":{"full_width":true,"stack_on_mobile":false,"title":"Our revolutionary diffuser.","heading_tag":"h5","text_alignment":"center","icon_spacing":"medium","background":"","background_gradient":"","text_color":""}},"multiple_images_with_text_8Hjp8Q":{"type":"multiple-images-with-text","blocks":{"item_WRz3t4":{"type":"item","settings":{"image_rotation_degrees":-2,"subheading":"","title":"The future of home fragrances is here.","content":"<p>At scentech, we believe your home deserves more than just a scent – it deserves an experience. That’s why we’ve combined advanced nebulizing technology with luxurious, long-lasting fragrance oils to bring a touch of elegance to your daily life.<\/p><p>Our subscription makes it easy to fill your home with signature scents designed to enhance your mood. From calming lavender notes to complex fragrances inspired by luxury hotels.<\/p>","button_url":"","button_text":"Discover all fragrances"}}},"block_order":["item_WRz3t4"],"settings":{"full_width":true,"images_layout":"stacked","collage_images_alignment":"middle","background":"","background_gradient":"","text_color":"","button_background":"","button_text_color":""}},"text_with_icons_aLAiMq":{"type":"text-with-icons","blocks":{"item_i7xVTX":{"type":"item","settings":{"icon":"picto-gift","mobile_icon_width":36,"icon_width":32,"icon_background_type":"circle","icon_background":"","icon_color":"","title":"Free diffuser","content":"<p>Receive the high-tech scentech  diffuser with your subscription.<\/p>"}},"item_fytHJc":{"type":"item","settings":{"icon":"picto-star","mobile_icon_width":24,"icon_width":32,"icon_background_type":"circle","icon_background":"","icon_color":"","title":"Premium scents","content":"<p>Choose from a variety of luxury fragrance pods, carefully crafted to enhance your mood and wellbeing.<\/p>"}},"item_Chc99G":{"type":"item","settings":{"icon":"picto-truck","mobile_icon_width":24,"icon_width":32,"icon_background_type":"circle","icon_background":"","icon_color":"","title":"Monthly deliveries","content":"<p>Get fresh scents delivered straight through your mailbox every month, no hassle.<\/p>"}}},"block_order":["item_i7xVTX","item_fytHJc","item_Chc99G"],"settings":{"full_width":true,"stack_on_mobile":false,"title":"Why choose the scentech subscription?","heading_tag":"h5","text_alignment":"center","icon_spacing":"medium","background":"","background_gradient":"","text_color":""}},"testimonials_VYU7Lg":{"type":"testimonials","blocks":{"testimonial_PzExi8":{"type":"testimonial","settings":{"round_avatar":true,"show_rating":true,"rating":4,"author":"John S.","title":"Testimonial 1","content":"<p>Share what your customers are saying about your products, customer service or shipping rates.<\/p>"}},"testimonial_dBWF3Y":{"type":"testimonial","settings":{"round_avatar":true,"show_rating":true,"rating":5,"author":"Mary U.","title":"Testimonial 2","content":"<p>Share what your customers are saying about your products, customer service or shipping rates.<\/p>"}},"testimonial_wnyfAX":{"type":"testimonial","settings":{"round_avatar":true,"show_rating":true,"rating":4,"author":"Joshua A.","title":"Testimonial 3","content":"<p>Share what your customers are saying about your products, customer service or shipping rates.<\/p>"}},"testimonial_tR4WaR":{"type":"testimonial","settings":{"round_avatar":true,"show_rating":true,"rating":4,"author":"","title":"Testimonial","content":"<p>Share what your customers are saying about your products, customer service or shipping rates.<\/p>"}},"testimonial_HVqkLa":{"type":"testimonial","settings":{"round_avatar":true,"show_rating":true,"rating":4,"author":"","title":"Testimonial","content":"<p>Share what your customers are saying about your products, customer service or shipping rates.<\/p>"}},"testimonial_KwgGnP":{"type":"testimonial","settings":{"round_avatar":true,"show_rating":true,"rating":4,"author":"","title":"Testimonial","content":"<p>Share what your customers are saying about your products, customer service or shipping rates.<\/p>"}},"testimonial_wyfNVj":{"type":"testimonial","settings":{"round_avatar":true,"show_rating":true,"rating":4,"author":"","title":"Testimonial","content":"<p>Share what your customers are saying about your products, customer service or shipping rates.<\/p>"}},"testimonial_ymtr94":{"type":"testimonial","settings":{"round_avatar":true,"show_rating":true,"rating":4,"author":"","title":"Testimonial","content":"<p>Share what your customers are saying about your products, customer service or shipping rates.<\/p>"}}},"block_order":["testimonial_PzExi8","testimonial_dBWF3Y","testimonial_wnyfAX","testimonial_tR4WaR","testimonial_HVqkLa","testimonial_KwgGnP","testimonial_wyfNVj","testimonial_ymtr94"],"settings":{"full_width":true,"stack_testimonials":false,"subheading":"","title":"Join 5000+ happy subscribers.","content":"","link_url":"","link_text":"See all testimonials","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":"","testimonial_card_background":"","testimonial_card_text_color":""}},"faq_URc397":{"type":"faq","blocks":{"item_zB6F66":{"type":"item","settings":{"title":"How does the subscription work?","content":"<p>With our subscription, you'll receive a 50ml fragrance oil pod each month, and a free scentech diffuser with your first order. You can easily switch scents each month through your personal dashboard.<\/p>"}},"item_Q4Fh3q":{"type":"item","settings":{"title":"Is there a minimum subscription period?","content":"<p>Yes, the minimum subscription period is 3 months. After 3 months, you can cancel anytime. <\/p>"}},"item_gzDVp3":{"type":"item","settings":{"title":"Can I pause my subscription?","content":"<p>Yes, you can pause your subscription at any time through your personal account dashboard. Simply choose the pause option, and you won't receive or be charged for that month.<\/p>"}},"item_Yk4VmH":{"type":"item","settings":{"title":"What if I don't like the scent I chose?","content":"<p>If you don’t like a scent, you can always switch to a different fragrance for the next month. Additionally, feel free to take our scent quiz for personalized recommendations.<\/p>"}},"item_Rbaf4j":{"type":"item","settings":{"title":"How do I change my scent selections?","content":"<p>You can adjust your scent preferences through our app or website before your next shipment.<\/p>"}},"item_ztixcR":{"type":"item","settings":{"title":"How long does each 50ml fragrance pod last?","content":"<p>Each 50ml pod is designed to last for one month of intensive use.<\/p>"}},"item_G9eQxb":{"type":"item","settings":{"title":"Is the diffuser covered by a warranty?","content":"<p>Yes, the scentech diffuser comes with a life-time warranty, covering any manufacturing defects. If it breaks, you'll get a new one in a matter of days. <\/p>"}},"item_bWbtPa":{"type":"item","settings":{"title":"Do I have to return the diffuser if I cancel my subscription?","content":"<p>Yes, if you cancel your subscription you need to return the diffuser to us using our hassle free returns portal. <\/p>"}},"item_Ueccra":{"type":"item","settings":{"title":"How do I adjust the scent intensity and schedule?","content":"<p>You can easily control the scent intensity and schedule through the app, allowing you to customize your experience to fit your lifestyle.<\/p>"}},"item_zmmnCX":{"type":"item","settings":{"title":"Can I use other essential oils with the scentech diffuser?","content":"<p>For the best performance and longest-lasting scent, we recommend using only scentech fragrance pods, which are specifically designed for our diffuser's technology. If you use other oils, the machine can get clogged due to different oil concentrations. <\/p>"}},"item_KVahGt":{"type":"item","settings":{"title":"How long does it take to receive my first order?","content":"<p>Your first order, including the free scentech diffuser, will typically arrive the day after you ordered. <\/p>"}},"item_yL8rtK":{"type":"item","settings":{"title":"How do I clean the diffuser?","content":"<p>The scentech diffuser is designed to be low-maintenance. To clean, simply wipe down the exterior with a damp cloth, and run a cleaning solution through the diffuser once a month for optimal performance.<\/p>"}}},"block_order":["item_zB6F66","item_Q4Fh3q","item_gzDVp3","item_Yk4VmH","item_Rbaf4j","item_ztixcR","item_G9eQxb","item_bWbtPa","item_Ueccra","item_zmmnCX","item_KVahGt","item_yL8rtK"],"settings":{"full_width":true,"subheading":"","title":"FAQ","content":"","team_avatar_width":160,"support_hours":"Our customer support is available Monday to Friday: 8am-8:30pm.","answer_time":"Average answer time: 1h","button_text":"","button_url":"","text_position":"center","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":"","button_background":"","button_text_color":"","accordion_background":"","accordion_text_color":""}},"17273668021c32eb2a":{"type":"apps","settings":{"full_width":true,"remove_vertical_spacing":false,"remove_horizontal_spacing":false,"background":"","background_gradient":"","text_color":""}},"media_with_text_e7tNpG":{"type":"media-with-text","settings":{"full_width":false,"spacing":"small"}}},"order":["main","image_with_text_overlay_fcqgRM","rich_text_7Vt7bd","images_with_text_scrolling_FDy3bR","accordion_content_cYgmHN","image_with_text_overlay_JwFrdr","text_with_icons_YYzV44","multiple_images_with_text_8Hjp8Q","text_with_icons_aLAiMq","testimonials_VYU7Lg","faq_URc397","17273668021c32eb2a","media_with_text_e7tNpG"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "heading_tag": "h2"
+          }
+        },
+        "button_Ck4C3b": {
+          "type": "button",
+          "settings": {
+            "link": "",
+            "text": "Take the fragrance quiz to find your perfect scent",
+            "size": "sm",
+            "style": "fill",
+            "stretch": false,
+            "background": "#d4d4d4",
+            "text_color": ""
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_taxes_notice": false
+          }
+        },
+        "variant_picker_fhRg4e": {
+          "type": "variant_picker",
+          "settings": {
+            "hide_sold_out_variants": false,
+            "stack_blocks": false,
+            "selector_style": "block",
+            "swatch_selector_style": "block_swatch",
+            "variant_image_options": "Choose your scent",
+            "size_chart_page": ""
+          }
+        },
+        "inventory_narAYN": {
+          "type": "inventory",
+          "settings": {
+            "low_inventory_threshold": 100
+          }
+        },
+        "buy_buttons_zeLxRH": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_payment_button": false,
+            "show_gift_card_recipient": true,
+            "show_shipping_info": false,
+            "show_quantity_selector": false,
+            "atc_button_background": "",
+            "atc_button_text_color": "",
+            "payment_button_background": "",
+            "payment_button_text_color": "",
+            "promo_enabled": false,
+            "promo_title_prefix": "Get it FREE with",
+            "promo_title_suffix": "Scents",
+            "promo_scent_metafield": "custom.scent_count",
+            "promo_fallback_count": "9",
+            "promo_subtitle": "Limited time offer",
+            "promo_url": ""
+          }
+        },
+        "liquid_PH6gz3": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "<!-- Pay safe with link, icon, and styling -->\n<div style=\"text-align: center; margin-top: -10px; margin-bottom: 10px;\">\n  <div style=\"display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background-color: #f7f7f7; border-radius: 8px;\">\n\n    <!-- Lock Icon (Adjusted Size) -->\n    <svg role=\"presentation\" fill=\"none\" focusable=\"false\" stroke-width=\"2\" width=\"20\" height=\"20\" class=\"icon icon-picto-lock\" viewBox=\"0 0 24 24\">\n      <path d=\"M3.236 18.182a5.071 5.071 0 0 0 4.831 4.465 114.098 114.098 0 0 0 7.865-.001 5.07 5.07 0 0 0 4.831-4.464 23.03 23.03 0 0 0 .165-2.611c0-.881-.067-1.752-.165-2.61a5.07 5.07 0 0 0-4.83-4.465c-1.311-.046-2.622-.07-3.933-.069a109.9 109.9 0 0 0-3.933.069 5.07 5.07 0 0 0-4.83 4.466 23.158 23.158 0 0 0-.165 2.609c0 .883.067 1.754.164 2.61Z\" fill=\"currentColor\" fill-opacity=\".12\" stroke=\"currentColor\"></path>\n      <path d=\"M17 8.43V6.285A5 5 0 0 0 7 6.286V8.43\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n      <path d=\"M12 17.714a2.143 2.143 0 1 0 0-4.286 2.143 2.143 0 0 0 0 4.286Z\" stroke=\"currentColor\"></path>\n    </svg>\n\n    <!-- Text and Bold Link (2px Smaller) -->\n    <span style=\"font-size: 12px; color: var(--color-foreground);\">\n      {{ product.metafields.custom.payment_method_text_1 }}\n      <a href=\"#\" id=\"show-payment-options\" class=\"link\" style=\"color: var(--color-foreground); font-weight: bold;\">\n        {{ product.metafields.custom.payment_method_text_2 }}\n      </a>\n    </span>\n\n  </div>\n</div>\n\n\n<!-- Hidden pop-up container -->\n<div id=\"payment-popup\" style=\"\n  display: none;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  background-color: #fff;\n  padding: 20px;\n  border: 1px solid #ccc;\n  border-radius: 12px;\n  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);\n  z-index: 1000;\n  max-width: 90%;\n  width: 400px;\n  text-align: center;\n\">\n  <h3 style=\"margin-top: 0; margin-bottom: 15px;\">{{ product.metafields.custom.payment_method_text_3 }}</h3>\n  <div id=\"dynamic-payment-icons\" style=\"\n    display: flex;\n    justify-content: center;\n    flex-wrap: wrap;\n    gap: 8px;\n    margin-bottom: 20px;\n  \">\n    <!-- Payment icons will be dynamically inserted here -->\n  </div>\n  <button id=\"close-popup\" class=\"button button--primary\">\n    Close\n  </button>\n</div>\n\n<!-- Overlay to darken background -->\n<div id=\"overlay\" style=\"\n  display: none;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 999;\n\"></div>\n\n<!-- JavaScript for handling pop-up functionality -->\n<script>\n  document.getElementById('show-payment-options').addEventListener('click', function(event) {\n    event.preventDefault();\n\n    // Find the payment icons in the footer\n    const footerIcons = document.querySelector('.footer__payment-icons');\n    const popupIconsContainer = document.getElementById('dynamic-payment-icons');\n\n    if (footerIcons) {\n      // Clear existing icons in the pop-up\n      popupIconsContainer.innerHTML = '';\n\n      // Clone the footer icons and append them to the pop-up container\n      const clonedIcons = footerIcons.cloneNode(true);\n      clonedIcons.classList.remove('footer__payment-icons'); // Optional: remove footer-specific styling\n      popupIconsContainer.appendChild(clonedIcons);\n    }\n\n    // Show the pop-up and overlay\n    document.getElementById('payment-popup').style.display = 'block';\n    document.getElementById('overlay').style.display = 'block';\n  });\n\n  // Close button functionality\n  document.getElementById('close-popup').addEventListener('click', function() {\n    document.getElementById('payment-popup').style.display = 'none';\n    document.getElementById('overlay').style.display = 'none';\n  });\n\n  // Overlay click to close pop-up\n  document.getElementById('overlay').addEventListener('click', function() {\n    document.getElementById('payment-popup').style.display = 'none';\n    this.style.display = 'none';\n  });\n</script>"
+          }
+        },
+        "separator_ww8YLW": {
+          "type": "separator",
+          "settings": {}
+        },
+        "liquid_fFWWV7": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "{% assign review = \"Scentech's nebulizing technology offers pure, consistent fragrance, and the app makes customizing scent intensity and schedules effortless. A truly luxurious home experience.\" %}\n{% assign author = \"- Dr. Amy Johnson, Fragrance Chemist\" %}\n{% assign image = \"https://cdn.shopify.com/s/files/1/0888/1219/2090/files/Fragrance_Chemist.png?v=1729861874\" %}\n{% assign rating = 5 %}\n\n<div class=\"featured-review\">\n    <img class=\"review-img\" src=\"{{ image }}\" alt=\"Review\">\n\n    <div class=\"content\">\n        <div class=\"stars\">\n            {% for i in (1..rating) %}\n            <span class=\"star\"></span>\n            {% endfor %}\n        </div>\n\n        <div class=\"review-text\">\"{{ review }}\"</div>\n\n        <div class=\"author-info\">\n            {{ author }}\n        </div>\n    </div>\n</div>\n\n<style>\n    .featured-review {\n        display: flex;\n        align-items: center;\n        gap: 20px;\n    }\n\n    .review-img {\n        width: 75px;\n        height: 75px;\n        border-radius: 50%;\n    }\n\n    .content {\n        display: flex;\n        flex-direction: column;\n        gap: 8px;\n    }\n\n    .stars {\n        display: flex;\n        gap: 2px;\n    }\n\n    .star {\n        width: 13px;\n        height: 13px;\n        background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path fill=\"%23FFD700\" d=\"M12 .587l3.668 7.429 8.332 1.19-6.004 5.897 1.416 8.267L12 18.896l-7.412 3.374 1.416-8.267-6.004-5.897 8.332-1.19z\"/></svg>') no-repeat center;\n        background-size: cover;\n    }\n\n    .review-text {\n        font-size: 0.8rem;\n        line-height: 18px;\n        text-align: left;\n        font-family: 'DIN Next Regular', sans-serif; /* Use DIN Next Regular */\n    }\n\n    .author-info {\n        font-size: 0.8rem;\n        font-weight: Bold;\n        font-family: 'DIN Next Regular', sans-serif; /* Use DIN Next Regular */\n    }\n\n    @media (max-width: 290px) {\n        .featured-review {\n            flex-direction: column;\n        }\n\n        .content .stars, .content .author-info {\n            justify-content: center;\n        }\n\n        .content .review-text {\n            text-align: center;\n        }\n    }\n</style>"
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "button_Ck4C3b",
+        "price",
+        "variant_picker_fhRg4e",
+        "inventory_narAYN",
+        "buy_buttons_zeLxRH",
+        "liquid_PH6gz3",
+        "separator_ww8YLW",
+        "liquid_fFWWV7"
+      ],
+      "custom_css": [
+        "@media screen and (min-width: 1000px) {.sticky-product-images {position: sticky; top: 130px; /* Adjust this value based on how far from the top you want it to stick */ z-index: 0; /* Keeps the images above other elements if needed */}"
+      ],
+      "settings": {
+        "full_width": true,
+        "show_fixed_add_to_cart": true,
+        "desktop_media_width": 55,
+        "desktop_media_layout": "carousel_thumbnails_left",
+        "mobile_media_size": "contained",
+        "mobile_carousel_control": "floating_dots",
+        "enable_video_autoplay": false,
+        "enable_video_looping": true,
+        "enable_image_zoom": true,
+        "max_image_zoom_level": 3,
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "input_background": "rgba(0,0,0,0)",
+        "input_text_color": ""
+      }
+    },
+    "image_with_text_overlay_fcqgRM": {
+      "type": "image-with-text-overlay",
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": false,
+        "enable_parallax": false,
+        "image_size": "auto",
+        "image": "shopify://shop_images/Ontwerp_zonder_titel_50.png",
+        "mobile_image": "shopify://shop_images/Ontwerp_zonder_titel_48.png",
+        "mobile_text_position": "place-self-center text-center",
+        "desktop_text_position": "sm:place-self-center sm:text-center",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
+    "rich_text_7Vt7bd": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_j6GzW3": {
+          "type": "heading",
+          "settings": {
+            "text": "How it works.",
+            "heading_tag": "h1",
+            "text_color": "",
+            "gradient": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_j6GzW3"
+      ],
+      "settings": {
+        "full_width": true,
+        "content_width": "medium",
+        "text_position": "center",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "images_with_text_scrolling_FDy3bR": {
+      "type": "images-with-text-scrolling",
+      "blocks": {
+        "item_KPghW7": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "icon_width": 48,
+            "title": "Choose.",
+            "content": "<p>Choose one of our 10 high-quality ScentPods. Take our fragrance quiz to find out which one best fits your taste! <a href=\"#\" title=\"#\">Take the fragrance quiz here.</a></p>"
+          }
+        },
+        "item_QeYKN4": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "icon_width": 48,
+            "title": "Subscribe.",
+            "content": "<p>Subscribe to your favorite scent, delivered to your mailbox each month, and get a free Scentech diffuser with your first order.</p>"
+          }
+        },
+        "item_Mab9br": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "icon_width": 48,
+            "title": "Enjoy.",
+            "content": "<p>Each 50ml fragrance pod lasts an entire month of intensive use, keeping your space continuously refreshed.</p>"
+          }
+        },
+        "item_dRecKM": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "icon_width": 48,
+            "title": "Modify.",
+            "content": "<p>Easily switch between scents anytime. Simply log into your personal dashboard and select a new scent each month.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_KPghW7",
+        "item_QeYKN4",
+        "item_Mab9br",
+        "item_dRecKM"
+      ],
+      "settings": {
+        "full_width": true,
+        "stack_on_mobile": false,
+        "show_counter": true,
+        "desktop_image_effect": "reveal",
+        "image_position": "end",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": ""
+      }
+    },
+    "accordion_content_cYgmHN": {
+      "type": "accordion-content",
+      "blocks": {
+        "item_8AKRG7": {
+          "type": "item",
+          "settings": {
+            "title": "Sleep Well",
+            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "page": ""
+          }
+        },
+        "item_xzM9iU": {
+          "type": "item",
+          "settings": {
+            "title": "Energized",
+            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "page": ""
+          }
+        },
+        "item_PWxLTg": {
+          "type": "item",
+          "settings": {
+            "title": "Calming",
+            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "page": ""
+          }
+        },
+        "item_QBYcbY": {
+          "type": "item",
+          "settings": {
+            "title": "Deep Work",
+            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "page": ""
+          }
+        },
+        "item_CU6iFG": {
+          "type": "item",
+          "settings": {
+            "title": "Fragrance 5",
+            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "page": ""
+          }
+        },
+        "item_MYfAcT": {
+          "type": "item",
+          "settings": {
+            "title": "Fragrance 6",
+            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "page": ""
+          }
+        },
+        "item_8gHqwX": {
+          "type": "item",
+          "settings": {
+            "title": "Fragrance 7",
+            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "page": ""
+          }
+        },
+        "item_n8897J": {
+          "type": "item",
+          "settings": {
+            "title": "Fragrance 8",
+            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_8AKRG7",
+        "item_xzM9iU",
+        "item_PWxLTg",
+        "item_QBYcbY",
+        "item_CU6iFG",
+        "item_MYfAcT",
+        "item_8gHqwX",
+        "item_n8897J"
+      ],
+      "settings": {
+        "full_width": true,
+        "subheading": "",
+        "title": "Find your perfect fragrance.",
+        "content": "",
+        "button_text": "Take the quiz",
+        "button_url": "",
+        "text_position": "start",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "linear-gradient(45deg, rgba(0, 51, 102, 1) 14%, rgba(187, 48, 254, 1) 83%)",
+        "button_background": "",
+        "button_text_color": "",
+        "accordion_background": "",
+        "accordion_text_color": ""
+      }
+    },
+    "image_with_text_overlay_JwFrdr": {
+      "type": "image-with-text-overlay",
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": false,
+        "enable_parallax": false,
+        "image_size": "auto",
+        "mobile_text_position": "place-self-start text-start",
+        "desktop_text_position": "sm:place-self-start sm:text-start",
+        "text_color": "#ffffff",
+        "overlay_color": "#ffffff",
+        "overlay_opacity": 0
+      }
+    },
+    "text_with_icons_YYzV44": {
+      "type": "text-with-icons",
+      "blocks": {
+        "item_MLFmnE": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-stop",
+            "mobile_icon_width": 24,
+            "icon_width": 32,
+            "icon_background_type": "circle",
+            "icon_background": "",
+            "icon_color": "",
+            "title": "Water-Free Technology.",
+            "content": "<p>Unlike traditional diffusers, scentech uses cutting-edge nebulizing technology to deliver pure, undiluted fragrance. This ensures a consistent, long-lasting scent without the need for water or heat.</p>"
+          }
+        },
+        "item_XAFTRw": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-wifi",
+            "mobile_icon_width": 24,
+            "icon_width": 32,
+            "icon_background_type": "circle",
+            "icon_background": "",
+            "icon_color": "",
+            "title": "Smart Control.",
+            "content": "<p>Easily customize your scent experience with the app. Adjust scent intensity and set schedules to match your mood or daily routine.</p>"
+          }
+        },
+        "item_GcKfAQ": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-star",
+            "mobile_icon_width": 24,
+            "icon_width": 32,
+            "icon_background_type": "circle",
+            "icon_background": "",
+            "icon_color": "",
+            "title": "Elegant Design.",
+            "content": "<p>Its sleek, modern design fits seamlessly into any home decor, adding a touch of sophistication to your living space.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_MLFmnE",
+        "item_XAFTRw",
+        "item_GcKfAQ"
+      ],
+      "settings": {
+        "full_width": true,
+        "stack_on_mobile": false,
+        "title": "Our revolutionary diffuser.",
+        "heading_tag": "h5",
+        "text_alignment": "center",
+        "icon_spacing": "medium",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "multiple_images_with_text_8Hjp8Q": {
+      "type": "multiple-images-with-text",
+      "blocks": {
+        "item_WRz3t4": {
+          "type": "item",
+          "settings": {
+            "image_rotation_degrees": -2,
+            "subheading": "",
+            "title": "The future of home fragrances is here.",
+            "content": "<p>At scentech, we believe your home deserves more than just a scent – it deserves an experience. That’s why we’ve combined advanced nebulizing technology with luxurious, long-lasting fragrance oils to bring a touch of elegance to your daily life.</p><p>Our subscription makes it easy to fill your home with signature scents designed to enhance your mood. From calming lavender notes to complex fragrances inspired by luxury hotels.</p>",
+            "button_url": "",
+            "button_text": "Discover all fragrances"
+          }
+        }
+      },
+      "block_order": [
+        "item_WRz3t4"
+      ],
+      "settings": {
+        "full_width": true,
+        "images_layout": "stacked",
+        "collage_images_alignment": "middle",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "button_background": "",
+        "button_text_color": ""
+      }
+    },
+    "text_with_icons_aLAiMq": {
+      "type": "text-with-icons",
+      "blocks": {
+        "item_i7xVTX": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-gift",
+            "mobile_icon_width": 36,
+            "icon_width": 32,
+            "icon_background_type": "circle",
+            "icon_background": "",
+            "icon_color": "",
+            "title": "Free diffuser",
+            "content": "<p>Receive the high-tech scentech  diffuser with your subscription.</p>"
+          }
+        },
+        "item_fytHJc": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-star",
+            "mobile_icon_width": 24,
+            "icon_width": 32,
+            "icon_background_type": "circle",
+            "icon_background": "",
+            "icon_color": "",
+            "title": "Premium scents",
+            "content": "<p>Choose from a variety of luxury fragrance pods, carefully crafted to enhance your mood and wellbeing.</p>"
+          }
+        },
+        "item_Chc99G": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-truck",
+            "mobile_icon_width": 24,
+            "icon_width": 32,
+            "icon_background_type": "circle",
+            "icon_background": "",
+            "icon_color": "",
+            "title": "Monthly deliveries",
+            "content": "<p>Get fresh scents delivered straight through your mailbox every month, no hassle.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_i7xVTX",
+        "item_fytHJc",
+        "item_Chc99G"
+      ],
+      "settings": {
+        "full_width": true,
+        "stack_on_mobile": false,
+        "title": "Why choose the scentech subscription?",
+        "heading_tag": "h5",
+        "text_alignment": "center",
+        "icon_spacing": "medium",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "testimonials_VYU7Lg": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_PzExi8": {
+          "type": "testimonial",
+          "settings": {
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 4,
+            "author": "John S.",
+            "title": "Testimonial 1",
+            "content": "<p>Share what your customers are saying about your products, customer service or shipping rates.</p>"
+          }
+        },
+        "testimonial_dBWF3Y": {
+          "type": "testimonial",
+          "settings": {
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "Mary U.",
+            "title": "Testimonial 2",
+            "content": "<p>Share what your customers are saying about your products, customer service or shipping rates.</p>"
+          }
+        },
+        "testimonial_wnyfAX": {
+          "type": "testimonial",
+          "settings": {
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 4,
+            "author": "Joshua A.",
+            "title": "Testimonial 3",
+            "content": "<p>Share what your customers are saying about your products, customer service or shipping rates.</p>"
+          }
+        },
+        "testimonial_tR4WaR": {
+          "type": "testimonial",
+          "settings": {
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 4,
+            "author": "",
+            "title": "Testimonial",
+            "content": "<p>Share what your customers are saying about your products, customer service or shipping rates.</p>"
+          }
+        },
+        "testimonial_HVqkLa": {
+          "type": "testimonial",
+          "settings": {
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 4,
+            "author": "",
+            "title": "Testimonial",
+            "content": "<p>Share what your customers are saying about your products, customer service or shipping rates.</p>"
+          }
+        },
+        "testimonial_KwgGnP": {
+          "type": "testimonial",
+          "settings": {
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 4,
+            "author": "",
+            "title": "Testimonial",
+            "content": "<p>Share what your customers are saying about your products, customer service or shipping rates.</p>"
+          }
+        },
+        "testimonial_wyfNVj": {
+          "type": "testimonial",
+          "settings": {
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 4,
+            "author": "",
+            "title": "Testimonial",
+            "content": "<p>Share what your customers are saying about your products, customer service or shipping rates.</p>"
+          }
+        },
+        "testimonial_ymtr94": {
+          "type": "testimonial",
+          "settings": {
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 4,
+            "author": "",
+            "title": "Testimonial",
+            "content": "<p>Share what your customers are saying about your products, customer service or shipping rates.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_PzExi8",
+        "testimonial_dBWF3Y",
+        "testimonial_wnyfAX",
+        "testimonial_tR4WaR",
+        "testimonial_HVqkLa",
+        "testimonial_KwgGnP",
+        "testimonial_wyfNVj",
+        "testimonial_ymtr94"
+      ],
+      "settings": {
+        "full_width": true,
+        "stack_testimonials": false,
+        "subheading": "",
+        "title": "Join 5000+ happy subscribers.",
+        "content": "",
+        "link_url": "",
+        "link_text": "See all testimonials",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "testimonial_card_background": "",
+        "testimonial_card_text_color": ""
+      }
+    },
+    "faq_URc397": {
+      "type": "faq",
+      "blocks": {
+        "item_zB6F66": {
+          "type": "item",
+          "settings": {
+            "title": "How does the subscription work?",
+            "content": "<p>With our subscription, you'll receive a 50ml fragrance oil pod each month, and a free scentech diffuser with your first order. You can easily switch scents each month through your personal dashboard.</p>"
+          }
+        },
+        "item_Q4Fh3q": {
+          "type": "item",
+          "settings": {
+            "title": "Is there a minimum subscription period?",
+            "content": "<p>Yes, the minimum subscription period is 3 months. After 3 months, you can cancel anytime. </p>"
+          }
+        },
+        "item_gzDVp3": {
+          "type": "item",
+          "settings": {
+            "title": "Can I pause my subscription?",
+            "content": "<p>Yes, you can pause your subscription at any time through your personal account dashboard. Simply choose the pause option, and you won't receive or be charged for that month.</p>"
+          }
+        },
+        "item_Yk4VmH": {
+          "type": "item",
+          "settings": {
+            "title": "What if I don't like the scent I chose?",
+            "content": "<p>If you don’t like a scent, you can always switch to a different fragrance for the next month. Additionally, feel free to take our scent quiz for personalized recommendations.</p>"
+          }
+        },
+        "item_Rbaf4j": {
+          "type": "item",
+          "settings": {
+            "title": "How do I change my scent selections?",
+            "content": "<p>You can adjust your scent preferences through our app or website before your next shipment.</p>"
+          }
+        },
+        "item_ztixcR": {
+          "type": "item",
+          "settings": {
+            "title": "How long does each 50ml fragrance pod last?",
+            "content": "<p>Each 50ml pod is designed to last for one month of intensive use.</p>"
+          }
+        },
+        "item_G9eQxb": {
+          "type": "item",
+          "settings": {
+            "title": "Is the diffuser covered by a warranty?",
+            "content": "<p>Yes, the scentech diffuser comes with a life-time warranty, covering any manufacturing defects. If it breaks, you'll get a new one in a matter of days. </p>"
+          }
+        },
+        "item_bWbtPa": {
+          "type": "item",
+          "settings": {
+            "title": "Do I have to return the diffuser if I cancel my subscription?",
+            "content": "<p>Yes, if you cancel your subscription you need to return the diffuser to us using our hassle free returns portal. </p>"
+          }
+        },
+        "item_Ueccra": {
+          "type": "item",
+          "settings": {
+            "title": "How do I adjust the scent intensity and schedule?",
+            "content": "<p>You can easily control the scent intensity and schedule through the app, allowing you to customize your experience to fit your lifestyle.</p>"
+          }
+        },
+        "item_zmmnCX": {
+          "type": "item",
+          "settings": {
+            "title": "Can I use other essential oils with the scentech diffuser?",
+            "content": "<p>For the best performance and longest-lasting scent, we recommend using only scentech fragrance pods, which are specifically designed for our diffuser's technology. If you use other oils, the machine can get clogged due to different oil concentrations. </p>"
+          }
+        },
+        "item_KVahGt": {
+          "type": "item",
+          "settings": {
+            "title": "How long does it take to receive my first order?",
+            "content": "<p>Your first order, including the free scentech diffuser, will typically arrive the day after you ordered. </p>"
+          }
+        },
+        "item_yL8rtK": {
+          "type": "item",
+          "settings": {
+            "title": "How do I clean the diffuser?",
+            "content": "<p>The scentech diffuser is designed to be low-maintenance. To clean, simply wipe down the exterior with a damp cloth, and run a cleaning solution through the diffuser once a month for optimal performance.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_zB6F66",
+        "item_Q4Fh3q",
+        "item_gzDVp3",
+        "item_Yk4VmH",
+        "item_Rbaf4j",
+        "item_ztixcR",
+        "item_G9eQxb",
+        "item_bWbtPa",
+        "item_Ueccra",
+        "item_zmmnCX",
+        "item_KVahGt",
+        "item_yL8rtK"
+      ],
+      "settings": {
+        "full_width": true,
+        "subheading": "",
+        "title": "FAQ",
+        "content": "",
+        "team_avatar_width": 160,
+        "support_hours": "Our customer support is available Monday to Friday: 8am-8:30pm.",
+        "answer_time": "Average answer time: 1h",
+        "button_text": "",
+        "button_url": "",
+        "text_position": "center",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "button_background": "",
+        "button_text_color": "",
+        "accordion_background": "",
+        "accordion_text_color": ""
+      }
+    },
+    "17273668021c32eb2a": {
+      "type": "apps",
+      "settings": {
+        "full_width": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false,
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "media_with_text_e7tNpG": {
+      "type": "media-with-text",
+      "settings": {
+        "full_width": false,
+        "spacing": "small"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_with_text_overlay_fcqgRM",
+    "rich_text_7Vt7bd",
+    "images_with_text_scrolling_FDy3bR",
+    "accordion_content_cYgmHN",
+    "image_with_text_overlay_JwFrdr",
+    "text_with_icons_YYzV44",
+    "multiple_images_with_text_8Hjp8Q",
+    "text_with_icons_aLAiMq",
+    "testimonials_VYU7Lg",
+    "faq_URc397",
+    "17273668021c32eb2a",
+    "media_with_text_e7tNpG"
+  ]
+}

@@ -1,0 +1,231 @@
+<style>
+  .discount-callout {
+    display: none;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 6px;
+    padding: 12px 14px;
+    background: rgb(var(--announcement-bar-background, 198 94 44));
+    color: rgb(var(--announcement-bar-text-color, 255 255 255));
+    margin-bottom: 16px;
+  }
+
+  .discount-callout__icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  .discount-callout__icon svg {
+    width: 10px;
+    height: 10px;
+    fill: rgb(var(--announcement-bar-text-color, 255 255 255));
+  }
+
+  .discount-callout__text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgb(var(--announcement-bar-text-color, 255 255 255));
+  }
+
+  .discount-callout__text strong {
+    font-family: monospace;
+    font-size: 12px;
+    background: rgb(var(--announcement-bar-text-color, 255 255 255));
+    color: rgb(var(--announcement-bar-background, 198 94 44));
+    padding: 1px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  .discount-price-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: #c65e2c;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .discount-price-badge svg {
+    width: 9px;
+    height: 9px;
+    fill: #fff;
+    flex-shrink: 0;
+  }
+</style>
+
+<div class="discount-callout" id="discount-callout">
+  <div class="discount-callout__icon">
+    <svg viewBox="0 0 12 12"><path d="M10.3 2.3L4.5 8.1 1.7 5.3.3 6.7l4.2 4.2 7.2-7.2z"/></svg>
+  </div>
+  <div class="discount-callout__text">
+    {{ 'discount_banner.code_before' | t }} <strong id="discount-callout-code"></strong> {{ 'discount_banner.code_after' | t }}
+  </div>
+</div>
+
+<script>
+  (function() {
+    var CAMPAIGN_CODE = {{ campaign_code | upcase | json }};
+    var CAMPAIGN_EXPIRY = {{ campaign_expiry | default: '' | json }};
+
+    // Expiry check — wis en stop als de sale voorbij is
+    if (CAMPAIGN_EXPIRY && new Date() > new Date(CAMPAIGN_EXPIRY)) {
+      sessionStorage.removeItem('sc_discount');
+      document.cookie = 'discount_code=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      return;
+    }
+
+    // Kopieer kleuren van announcement bar naar CSS variabelen
+    (function syncAnnouncementBarColors() {
+      var bar = document.querySelector('.announcement-bar');
+      if (!bar) return;
+      var style = bar.getAttribute('style') || '';
+      var bgMatch = style.match(/--background:\s*([\d,\s]+)/);
+      var txtMatch = style.match(/--text-color:\s*([\d,\s]+)/);
+      if (bgMatch) document.documentElement.style.setProperty('--announcement-bar-background', bgMatch[1].trim());
+      if (txtMatch) document.documentElement.style.setProperty('--announcement-bar-text-color', txtMatch[1].trim());
+    })();
+
+    function init(code) {
+
+    // Show callout box
+    var callout = document.getElementById('discount-callout');
+    var codeEl = document.getElementById('discount-callout-code');
+    if (callout && codeEl) {
+      codeEl.textContent = code.toUpperCase();
+      callout.style.display = 'flex';
+    }
+
+    // Show badge
+    var badge = document.getElementById('discount-price-badge');
+    var badgeCode = document.getElementById('discount-price-badge-code');
+    if (badge && badgeCode) {
+      badgeCode.textContent = code.toUpperCase();
+      badge.style.display = 'inline-flex';
+    }
+
+    // Extract discount percentage from code name (e.g. KONINGSDAG27 → 27)
+    var pctMatch = code.match(/(\d+)$/);
+    if (!pctMatch) return;
+    var pct = parseInt(pctMatch[1]);
+    if (pct <= 0 || pct >= 100) return;
+
+    function formatMoney(cents) {
+      return '\u20ac' + (cents / 100).toFixed(2).replace('.', ',');
+    }
+
+    function applyDiscountToList(priceList) {
+      var priceInCents = parseInt(priceList.dataset.price);
+      if (!priceInCents) return;
+
+      var discounted = Math.round(priceInCents * (1 - pct / 100));
+
+      // Update sale-price
+      var saleEl = priceList.querySelector('sale-price');
+      if (saleEl) {
+        var srOnly = saleEl.querySelector('.sr-only');
+        saleEl.className = saleEl.className.replace('text-subdued', 'text-on-sale');
+        if (!saleEl.className.includes('text-on-sale')) saleEl.className += ' text-on-sale';
+        saleEl.textContent = formatMoney(discounted);
+        if (srOnly) saleEl.prepend(srOnly);
+      }
+
+      // Hide existing compare-at-price (bundles already have one)
+      priceList.querySelectorAll('compare-at-price').forEach(function(el) {
+        el.style.display = 'none';
+      });
+
+      // Insert our own compare-at showing the original price
+      var existing = priceList.querySelector('.discount-original-price');
+      if (!existing) {
+        var orig = document.createElement('compare-at-price');
+        orig.className = 'text-subdued line-through discount-original-price';
+        orig.textContent = formatMoney(priceInCents);
+        if (saleEl) saleEl.after(orig);
+      }
+
+      // Show discount percentage badge
+      var pctBadge = priceList.querySelector('.discount-pct-badge');
+      if (!pctBadge) {
+        pctBadge = document.createElement('span');
+        pctBadge.className = 'discount-pct-badge';
+        pctBadge.style.cssText = 'background:rgb(var(--announcement-bar-background,198 94 44));color:rgb(var(--announcement-bar-text-color,255 255 255));font-size:12px;font-weight:700;padding:2px 7px;border-radius:4px;white-space:nowrap;';
+        pctBadge.textContent = '-' + pct + '%';
+        var origEl = priceList.querySelector('.discount-original-price');
+        if (origEl) origEl.after(pctBadge);
+      }
+
+      // Update ATC button price
+      var atcPrice = document.getElementById('atc-price');
+      if (atcPrice) atcPrice.textContent = formatMoney(discounted);
+    }
+
+    function initPriceDiscount() {
+      document.querySelectorAll('price-list[data-price]').forEach(function(priceList) {
+        applyDiscountToList(priceList);
+
+        // Reapply if theme swaps price elements (e.g. variant with different price)
+        // Use subtree:false + exclude own nodes to prevent infinite loop
+        new MutationObserver(function(mutations) {
+          var external = mutations.some(function(m) {
+            return Array.from(m.addedNodes).concat(Array.from(m.removedNodes)).some(function(n) {
+              return n.nodeType === 1
+                && !n.classList.contains('discount-original-price')
+                && !n.classList.contains('discount-pct-badge');
+            });
+          });
+          if (external) applyDiscountToList(priceList);
+        }).observe(priceList, { childList: true, subtree: false });
+      });
+    }
+
+    // Wait for full DOM before querying price-list
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPriceDiscount);
+    } else {
+      initPriceDiscount();
+    }
+    }
+
+    function matchesCampaign(code) {
+      return code && code.toUpperCase() === CAMPAIGN_CODE;
+    }
+
+    var code = new URLSearchParams(window.location.search).get('discount');
+    if (matchesCampaign(code)) {
+      sessionStorage.setItem('sc_discount', code);
+      init(code);
+    } else {
+      code = sessionStorage.getItem('sc_discount');
+      if (matchesCampaign(code)) {
+        init(code);
+      } else {
+        fetch('/cart.js')
+          .then(function(r) { return r.json(); })
+          .then(function(cart) {
+            var codes = cart.discount_codes || [];
+            if (codes.length > 0) {
+              var c = codes[0].code;
+              if (matchesCampaign(c)) {
+                sessionStorage.setItem('sc_discount', c);
+                init(c);
+              }
+            }
+          });
+      }
+    }
+  })();
+</script>

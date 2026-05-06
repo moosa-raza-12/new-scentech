@@ -50,7 +50,7 @@
     "show_product_rating": false,
     "product_rating_mode": "rating",
     "show_sold_out_badge": false,
-    "show_discount": true,
+    "show_discount": false,
     "discount_mode": "saving",
     "product_color_display": "hide",
     "product_image_aspect_ratio": "natural",
@@ -127,6 +127,13 @@
         "disabled": false,
         "settings": {}
       },
+      "10605408327587305396": {
+        "type": "shopify://apps/eg-auto-add-to-cart/blocks/app-embed/0f7d4f74-1e89-4820-aec4-6564d7e535d2",
+        "disabled": false,
+        "settings": {
+          "version": "v3"
+        }
+      },
       "2200952712151285029": {
         "type": "shopify://apps/microsoft-clarity/blocks/brandAgents_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
         "disabled": false,
@@ -151,13 +158,6 @@
         "type": "shopify://apps/intelligems-a-b-testing/blocks/intelligems-script/fa83b64c-0c77-4c0c-b4b2-b94b42f5ef19",
         "disabled": true,
         "settings": {}
-      },
-      "10605408327587305396": {
-        "type": "shopify://apps/eg-auto-add-to-cart/blocks/app-embed/0f7d4f74-1e89-4820-aec4-6564d7e535d2",
-        "disabled": true,
-        "settings": {
-          "version": "v3"
-        }
       }
     }
   },
