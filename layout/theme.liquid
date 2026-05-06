@@ -225,7 +225,7 @@ NOTE TO DEVELOPERS: welcome to Impact theme! We hope that you will enjoy editing
 
       {%- if (template.name == 'page' and template.suffix == 'diffuser-overflow-v1')
           or (template.name == 'page' and template.suffix == 'v2-diffuser-overflow') -%}
-        <style>
+        {% comment %} <style>
           .shopify-section-group--footer-group,
           footer,
           #footer,
@@ -233,7 +233,7 @@ NOTE TO DEVELOPERS: welcome to Impact theme! We hope that you will enjoy editing
           [class*="footer"] {
             display: none !important;
           }
-        </style>
+        </style> {% endcomment %}
       {%- endif -%}
 
          {% if template contains 'blog' or template contains 'article' %}
