@@ -58,7 +58,7 @@
             "badge_bg": "#ffffff",
             "badge_text_color": "#160000",
             "cta_bg": "#5c220a",
-            "cta_text_color": "#6a3b1e",
+            "cta_text_color": "#ffffff",
             "cta_border_color": "#ded9c5"
           }
         },
@@ -127,6 +127,7 @@
         "selector_compare_text": "Compare diffusers",
         "selector_compare_link": "#open-comparison-popup",
         "selector_banner_text": "<p><strong>Mothersday Sale:</strong> Get 50% off the diffuser when you add 2 scents</p>",
+        "cds_banner_bg": "#5c220a",
         "promo_banner_enabled": false,
         "step_number": "2",
         "heading": "Add scents",
