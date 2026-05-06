@@ -26,6 +26,42 @@
     "diffuser_kv_bundle_LqGpYW": {
       "type": "diffuser-kv-bundle",
       "blocks": {
+        "interrupter_p7EVEY": {
+          "type": "interrupter",
+          "settings": {
+            "enabled": true,
+            "show_on_desktop": true,
+            "position_desktop": 0,
+            "show_on_mobile": true,
+            "position_mobile": 0,
+            "badge_text": "New",
+            "heading": "Wild Blossom",
+            "description": "<p>A soft, dewy floral that feels fresh, clean, and quietly uplifting, bringing a light, elegant scent into any space without ever feeling heavy.</p>",
+            "show_cta": true,
+            "cta_label": "+Add",
+            "cta_product": "wild-blossom",
+            "cta_default_quantity": 1,
+            "image": "shopify://shop_images/d3f7110df2ea05ce12ba94d0b80d01cc55c55d17.png",
+            "image_position": "left",
+            "desktop_layout": "stacked",
+            "mobile_layout": "side",
+            "image_width_percent": 38,
+            "image_height_mobile": 180,
+            "image_height_desktop": 180,
+            "image_fit": "cover",
+            "background_color": "#f1efe8",
+            "border_color": "#d9d4c5",
+            "title_color": "#160000",
+            "title_size": 28,
+            "text_color": "#160000",
+            "text_size": 16,
+            "badge_bg": "#ffffff",
+            "badge_text_color": "#160000",
+            "cta_bg": "#ded9c5",
+            "cta_text_color": "#6a3b1e",
+            "cta_border_color": "#ded9c5"
+          }
+        },
         "diffuser_TfKVLj": {
           "type": "diffuser",
           "settings": {
@@ -33,6 +69,7 @@
             "selector_image": "shopify://shop_images/Images_Info_0e95c5fb-3eb6-456d-8fc6-b8a227c0183c.png",
             "selector_title": "Diffuser Lite",
             "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
+            "selector_discount_percent": 50,
             "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
           }
         },
@@ -43,6 +80,7 @@
             "selector_image": "shopify://shop_images/Images_Info_d009aa1b-9c64-4ff8-a9ec-bfda5fea114e.png",
             "selector_title": "Diffuser 2",
             "selector_description": "More consistent and noticeable scenting, designed for daily use. A strong balance between performance and control.",
+            "selector_discount_percent": 50,
             "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
           }
         },
@@ -52,6 +90,7 @@
             "selector_product": "smart-aroma-diffuser-pro",
             "selector_title": "Diffuser Pro",
             "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
+            "selector_discount_percent": 50,
             "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
           }
         },
@@ -73,6 +112,7 @@
         }
       },
       "block_order": [
+        "interrupter_p7EVEY",
         "diffuser_TfKVLj",
         "diffuser_JKTBEi",
         "diffuser_n47YqG",
@@ -86,7 +126,7 @@
         "selector_subtext": "Choose the diffuser that fits your needs best.",
         "selector_compare_text": "Compare diffusers",
         "selector_compare_link": "#open-comparison-popup",
-        "selector_banner_text": "<p><strong>Spring Sale:</strong> Get 50% off the diffuser when you add 2 scents</p>",
+        "selector_banner_text": "<p><strong>Mothersday Sale:</strong> Get 50% off the diffuser when you add 2 scents</p>",
         "promo_banner_enabled": false,
         "step_number": "2",
         "heading": "Add scents",
@@ -108,7 +148,7 @@
         "progress_start_text": "Start adding scents to unlock rewards!",
         "progress_complete_text": "🎉 Amazing! All gifts unlocked!",
         "text_discount_prefix": "50% discount applied to your diffuser (",
-        "text_discount_suffix": " savings)",
+        "text_discount_suffix": "savings)",
         "text_btn_disabled": "Add at least 2 Scents",
         "text_add_more_order": "Add more or place your order!",
         "text_free": "FREE",

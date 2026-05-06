@@ -360,25 +360,69 @@
             selectedProducts[existingIndex].quantity = quantity;
           }
 
+          syncProductState(productId, 'add');
           updateThumbnailCarousel();
 
-          // Visual feedback: loading → success → restore
-          const originalLabel = intrAddToCartBtn.textContent.trim();
-          intrAddToCartBtn.disabled = true;
-          intrAddToCartBtn.classList.add('loading');
-          intrAddToCartBtn.textContent = '';
+          // Hide CTA button and show inline quantity selector
+          intrAddToCartBtn.style.display = 'none';
+          let qtyWrapper = intrAddToCartBtn.parentElement.querySelector('.kv-interrupter-qty-wrapper');
+          if (!qtyWrapper) {
+            qtyWrapper = document.createElement('div');
+            qtyWrapper.className = 'kv-interrupter-qty-wrapper kv-bundle-quantity-selector active';
+            qtyWrapper.setAttribute('data-product-id', productId);
+            qtyWrapper.innerHTML = `
+              <button class="kv-bundle-qty-btn kv-intr-qty-decrease" type="button" aria-label="Decrease quantity">
+                <svg width="4" height="2" viewBox="0 0 4 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 0H3.77051V1.49805H0V0Z" fill="white"/></svg>
+              </button>
+              <input type="number" class="kv-bundle-qty-input" value="${quantity}" min="1" readonly aria-label="Quantity">
+              <button class="kv-bundle-qty-btn kv-intr-qty-increase" type="button" aria-label="Increase quantity">
+                <svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 2.34229H2.33594V0H3.68799V2.34229H6.03027V3.69434H3.68799V6.03662H2.33594V3.69434H0V2.34229Z" fill="white"/></svg>
+              </button>
+            `;
+            intrAddToCartBtn.insertAdjacentElement('afterend', qtyWrapper);
+          } else {
+            qtyWrapper.querySelector('.kv-bundle-qty-input').value = quantity;
+            qtyWrapper.style.display = '';
+          }
+        }
+      });
 
-          setTimeout(function() {
-            intrAddToCartBtn.classList.remove('loading');
-            intrAddToCartBtn.textContent = '✓ Added!';
-            intrAddToCartBtn.classList.add('kv-interrupter-added');
+      // Interrupter quantity controls (decrease / increase)
+      document.addEventListener('click', function(e) {
+        const decreaseBtn = e.target.classList.contains('kv-intr-qty-decrease') ? e.target : e.target.closest('.kv-intr-qty-decrease');
+        if (decreaseBtn) {
+          const wrapper = decreaseBtn.closest('.kv-interrupter-qty-wrapper');
+          if (!wrapper) return;
+          const productId = wrapper.getAttribute('data-product-id');
+          const input = wrapper.querySelector('.kv-bundle-qty-input');
+          const currentValue = parseInt(input.value);
+          if (currentValue > 1) {
+            const newValue = currentValue - 1;
+            input.value = newValue;
+            updateProductQuantity(productId, newValue);
+            syncProductQuantity(productId, newValue);
+          } else {
+            // Quantity reaches 0 → remove product, hide qty wrapper, restore CTA button
+            wrapper.style.display = 'none';
+            const ctaBtn = wrapper.parentElement.querySelector('.kv-interrupter-add-to-cart');
+            if (ctaBtn) ctaBtn.style.display = '';
+            syncProductState(productId, 'remove');
+            removeSelectedProduct(productId);
+          }
+          return;
+        }
 
-            setTimeout(function() {
-              intrAddToCartBtn.textContent = originalLabel;
-              intrAddToCartBtn.classList.remove('kv-interrupter-added');
-              intrAddToCartBtn.disabled = false;
-            }, 1500);
-          }, 400);
+        const increaseBtn = e.target.classList.contains('kv-intr-qty-increase') ? e.target : e.target.closest('.kv-intr-qty-increase');
+        if (increaseBtn) {
+          const wrapper = increaseBtn.closest('.kv-interrupter-qty-wrapper');
+          if (!wrapper) return;
+          const productId = wrapper.getAttribute('data-product-id');
+          const input = wrapper.querySelector('.kv-bundle-qty-input');
+          const currentValue = parseInt(input.value);
+          const newValue = currentValue + 1;
+          input.value = newValue;
+          updateProductQuantity(productId, newValue);
+          syncProductQuantity(productId, newValue);
         }
       });
   
