@@ -136,6 +136,20 @@
         }, 300);
       }
   
+      // Init interrupter CTA buttons: hide if no products configured
+      (function initInterrupterButtons() {
+        var intrData = window.__kvInterrupterProducts || {};
+        document.querySelectorAll('.kv-interrupter-add-to-cart').forEach(function(btn) {
+          var blockId = btn.getAttribute('data-block-id');
+          var products = intrData[blockId] || [];
+          if (products.length === 0) {
+            btn.style.display = 'none';
+            return;
+          }
+          btn.setAttribute('data-original-label', btn.textContent.trim());
+        });
+      })();
+
       // Update total count - count of all products across all tabs
       const totalCountElement = document.getElementById('kv-total-count');
       if (totalCountElement) {
@@ -468,61 +482,43 @@
         }
       });
   
-      // Interrupter card add-to-cart
+      // Interrupter card add-to-cart (multi-product): adds all products, shows qty controls
       document.addEventListener('click', function(e) {
-        const intrAddToCartBtn = e.target.classList.contains('kv-interrupter-add-to-cart') ? e.target : e.target.closest('.kv-interrupter-add-to-cart');
-        if (intrAddToCartBtn) {
-          const quantity = parseInt(intrAddToCartBtn.getAttribute('data-quantity')) || 1;
-  
-          const productId = intrAddToCartBtn.getAttribute('data-product-id');
-          const productHandle = intrAddToCartBtn.getAttribute('data-product-handle');
-          const variantId = intrAddToCartBtn.getAttribute('data-variant-id');
-          const variantPrice = intrAddToCartBtn.getAttribute('data-variant-price');
-          const variantCompareAtPrice = intrAddToCartBtn.getAttribute('data-variant-compare-at-price');
-          const productTitle = intrAddToCartBtn.getAttribute('data-product-title');
-          const productImage = intrAddToCartBtn.getAttribute('data-product-image');
-          const inventoryDate = intrAddToCartBtn.getAttribute('data-inventory-date');
-          const inventoryQuantity = parseInt(intrAddToCartBtn.getAttribute('data-inventory-quantity')) || 0;
-  
-          const productData = {
-            productId: productId,
-            productHandle: productHandle,
-            variantId: variantId,
-            quantity: quantity,
-            image: productImage,
-            title: productTitle,
-            price: parseInt(variantPrice) || 0,
-            compareAtPrice: parseInt(variantCompareAtPrice) || 0,
-            inventoryDate: inventoryDate || '',
-            inventoryQuantity: inventoryQuantity
-          };
-  
-          const existingIndex = selectedProducts.findIndex(p => p.productId === productId);
-          if (existingIndex === -1) {
-            selectedProducts.push(productData);
-          } else {
-            selectedProducts[existingIndex].quantity = quantity;
-          }
-  
-          updateThumbnailCarousel();
-  
-          // Visual feedback: loading → success → restore
-          const originalLabel = intrAddToCartBtn.textContent.trim();
-          intrAddToCartBtn.disabled = true;
-          intrAddToCartBtn.classList.add('loading');
-          intrAddToCartBtn.textContent = '';
-  
-          setTimeout(function() {
-            intrAddToCartBtn.classList.remove('loading');
-            intrAddToCartBtn.textContent = '✓ Added!';
-            intrAddToCartBtn.classList.add('kv-interrupter-added');
-  
-            setTimeout(function() {
-              intrAddToCartBtn.textContent = originalLabel;
-              intrAddToCartBtn.classList.remove('kv-interrupter-added');
-              intrAddToCartBtn.disabled = false;
-            }, 1500);
-          }, 400);
+        var intrAddToCartBtn = e.target.classList.contains('kv-interrupter-add-to-cart') ? e.target : e.target.closest('.kv-interrupter-add-to-cart');
+        if (!intrAddToCartBtn) return;
+
+        var blockId = intrAddToCartBtn.getAttribute('data-block-id');
+        var productsData = (window.__kvInterrupterProducts || {})[blockId] || [];
+        if (productsData.length === 0) return;
+
+        addInterrupterProducts(blockId);
+        var qty = getInterrupterQty(blockId);
+        syncInterrupterQtyUI(blockId, qty);
+      });
+
+      // Interrupter quantity controls (decrease / increase)
+      document.addEventListener('click', function(e) {
+        var decreaseBtn = e.target.classList.contains('kv-intr-qty-decrease') ? e.target : e.target.closest('.kv-intr-qty-decrease');
+        if (decreaseBtn) {
+          var wrapper = decreaseBtn.closest('.kv-interrupter-qty-wrapper');
+          if (!wrapper) return;
+          var blockId = wrapper.getAttribute('data-block-id');
+          if (!blockId) return;
+          decreaseInterrupterProducts(blockId);
+          var qty = getInterrupterQty(blockId);
+          syncInterrupterQtyUI(blockId, qty);
+          return;
+        }
+
+        var increaseBtn = e.target.classList.contains('kv-intr-qty-increase') ? e.target : e.target.closest('.kv-intr-qty-increase');
+        if (increaseBtn) {
+          var wrapper = increaseBtn.closest('.kv-interrupter-qty-wrapper');
+          if (!wrapper) return;
+          var blockId = wrapper.getAttribute('data-block-id');
+          if (!blockId) return;
+          addInterrupterProducts(blockId);
+          var qty = getInterrupterQty(blockId);
+          syncInterrupterQtyUI(blockId, qty);
         }
       });
   
@@ -945,10 +941,124 @@
       }
     }
   
+    // --- Interrupter multi-product helpers ---
+
+    function addInterrupterProducts(blockId) {
+      var productsData = (window.__kvInterrupterProducts || {})[blockId] || [];
+      productsData.forEach(function(p) {
+        var pid = String(p.id);
+        var existing = selectedProducts.find(function(sp) { return sp.productId === pid; });
+        if (existing) {
+          existing.quantity += 1;
+          syncProductQuantity(pid, existing.quantity);
+        } else {
+          selectedProducts.push({
+            productId: pid,
+            productHandle: p.handle,
+            variantId: String(p.variantId),
+            quantity: 1,
+            image: p.image,
+            title: p.title,
+            price: parseInt(p.variantPrice) || 0,
+            compareAtPrice: parseInt(p.compareAtPrice) || 0,
+            inventoryDate: p.inventoryDate || '',
+            inventoryQuantity: parseInt(p.inventoryQty) || 0
+          });
+          syncProductState(pid, 'add');
+        }
+      });
+      updateThumbnailCarousel();
+    }
+
+    function decreaseInterrupterProducts(blockId) {
+      var productsData = (window.__kvInterrupterProducts || {})[blockId] || [];
+      productsData.forEach(function(p) {
+        var pid = String(p.id);
+        var existing = selectedProducts.find(function(sp) { return sp.productId === pid; });
+        if (existing) {
+          if (existing.quantity > 1) {
+            existing.quantity -= 1;
+            syncProductQuantity(pid, existing.quantity);
+          } else {
+            syncProductState(pid, 'remove');
+            removeSelectedProduct(pid);
+          }
+        }
+      });
+      updateThumbnailCarousel();
+    }
+
+    function getInterrupterQty(blockId) {
+      var productsData = (window.__kvInterrupterProducts || {})[blockId] || [];
+      if (productsData.length === 0) return 0;
+      var minQty = Infinity;
+      productsData.forEach(function(p) {
+        var existing = selectedProducts.find(function(sp) { return sp.productId === String(p.id); });
+        minQty = Math.min(minQty, existing ? existing.quantity : 0);
+      });
+      return minQty === Infinity ? 0 : minQty;
+    }
+
+    function syncInterrupterQtyUI(blockId, qty) {
+      document.querySelectorAll('.kv-interrupter-add-to-cart[data-block-id="' + blockId + '"]').forEach(function(btn) {
+        var wrapper = btn.parentElement.querySelector('.kv-interrupter-qty-wrapper[data-block-id="' + blockId + '"]');
+        if (qty > 0) {
+          btn.style.display = 'none';
+          if (!wrapper) {
+            wrapper = document.createElement('div');
+            wrapper.className = 'kv-interrupter-qty-wrapper kv-bundle-quantity-selector active';
+            wrapper.setAttribute('data-block-id', blockId);
+            wrapper.innerHTML =
+              '<button class="kv-bundle-qty-btn kv-intr-qty-decrease" type="button" aria-label="Decrease quantity">' +
+                '<svg width="4" height="2" viewBox="0 0 4 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 0H3.77051V1.49805H0V0Z" fill="white"/></svg>' +
+              '</button>' +
+              '<input type="number" class="kv-bundle-qty-input" value="' + qty + '" min="0" readonly aria-label="Quantity">' +
+              '<button class="kv-bundle-qty-btn kv-intr-qty-increase" type="button" aria-label="Increase quantity">' +
+                '<svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 2.34229H2.33594V0H3.68799V2.34229H6.03027V3.69434H3.68799V6.03662H2.33594V3.69434H0V2.34229Z" fill="white"/></svg>' +
+              '</button>';
+            btn.insertAdjacentElement('afterend', wrapper);
+          } else {
+            wrapper.querySelector('.kv-bundle-qty-input').value = qty;
+            wrapper.style.display = '';
+          }
+        } else {
+          btn.style.display = '';
+          if (wrapper) wrapper.style.display = 'none';
+        }
+      });
+    }
+
+    function checkInterrupterBlockState() {
+      var intrData = window.__kvInterrupterProducts || {};
+      var checkedBlocks = {};
+      document.querySelectorAll('.kv-interrupter-qty-wrapper[data-block-id]').forEach(function(wrapper) {
+        var blockId = wrapper.getAttribute('data-block-id');
+        if (checkedBlocks[blockId]) return;
+        checkedBlocks[blockId] = true;
+        var productsData = intrData[blockId] || [];
+        var allRemoved = productsData.every(function(p) {
+          return !selectedProducts.some(function(sp) { return sp.productId === String(p.id); });
+        });
+        if (allRemoved) {
+          syncInterrupterQtyUI(blockId, 0);
+        } else {
+          var minQty = Infinity;
+          productsData.forEach(function(p) {
+            var existing = selectedProducts.find(function(sp) { return sp.productId === String(p.id); });
+            minQty = Math.min(minQty, existing ? existing.quantity : 0);
+          });
+          if (minQty !== Infinity && minQty >= 0) {
+            syncInterrupterQtyUI(blockId, minQty);
+          }
+        }
+      });
+    }
+
     // Remove product from selected products
     function removeSelectedProduct(productId) {
       selectedProducts = selectedProducts.filter(p => p.productId !== productId);
       updateThumbnailCarousel();
+      checkInterrupterBlockState();
       if (document.getElementById('kv-minicart').classList.contains('active')) {
         updateMiniCart();
         
