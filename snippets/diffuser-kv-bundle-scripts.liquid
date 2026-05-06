@@ -1,4 +1,6 @@
 <script>
+    const isOverflowV1 = {{ template.suffix | json }} === 'diffuser-overflow-v1';
+
     function getAmsterdamToday() {
       const now = new Date();
       const ams = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' }));
@@ -938,10 +940,21 @@
           syncProductQuantity(product.productId, 1);
         });
         selectedProducts = selectedProducts.filter(product => product.selectionSource !== 'cds-selector');
+
+        if (isOverflowV1) {
+          document.querySelectorAll('.cds-cards').forEach(c => {
+            c.classList.add('cds-locked');
+            c.classList.remove('active');
+            const hl = c.querySelector('.cds-highlight');
+            if (hl) hl.style.display = 'none';
+          });
+        }
       }
 
       // Auto-select the first diffuser card when 2 scents are reached and none is selected yet
       if (nonSelectorItemCount >= 2) {
+
+        document.querySelectorAll('.cds-cards').forEach(c => c.classList.remove('cds-locked'));
         
         const badgeText=document.querySelector('.text-update')
         const badgeTextEmpty=document.getElementById('kv-progress-footer-message-empty')
