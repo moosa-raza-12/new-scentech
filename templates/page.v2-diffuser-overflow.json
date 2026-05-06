@@ -64,6 +64,7 @@
             "selector_product": "smart-aroma-diffuser",
             "selector_title": "Diffuser Lite",
             "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
+            "selector_discount_percent": 50,
             "selector_old_price": "€149,95",
             "selector_new_price": "€74,98",
             "selector_highlight_text": "<p><strong>Spring Sale:</strong> Pay only €74,98 after adding 2 scents!</p>"
@@ -75,6 +76,7 @@
             "selector_product": "smart-aroma-diffuser-2",
             "selector_title": "Diffuser 2",
             "selector_description": "More consistent and noticeable scenting, designed for daily use. A strong balance between performance and control.",
+            "selector_discount_percent": 50,
             "selector_old_price": "€149,95",
             "selector_new_price": "€74,98",
             "selector_highlight_text": "<p><strong>Spring Sale:</strong> Pay only €74,98 after adding 2 scents!</p>"
@@ -86,6 +88,7 @@
             "selector_product": "smart-aroma-diffuser-pro",
             "selector_title": "Diffuser Pro",
             "selector_description": "High-performance scenting with maximum coverage and intensity. Built for a stronger, more immersive experience.",
+            "selector_discount_percent": 50,
             "selector_old_price": "€149,95",
             "selector_new_price": "€74,98",
             "selector_highlight_text": "<p><strong>Spring Sale:</strong> Pay only €74,98 after adding 2 scents!</p>"
@@ -109,6 +112,7 @@
         "selector_compare_text": "Compare diffusers",
         "selector_compare_link": "#open-comparison-popup",
         "selector_banner_text": "<p><strong>Spring Sale:</strong> Get 50% off on the diffusers</p>",
+        "cds_banner_bg": "#5c220a",
         "promo_banner_enabled": false,
         "step_number": "2",
         "heading": "Add scents",
@@ -121,6 +125,7 @@
         "circle_text": "#ffffff",
         "badge_bg": "#e5e5e5",
         "badge_text_color": "#333333",
+        "button_bg_color": "#5c220a",
         "heading_size": 24,
         "subtext_size": 14,
         "promo_banner_bold_text": "Winter Sale:",
@@ -162,8 +167,7 @@
         "milestone_4_count": 9,
         "milestone_4_label": "{count} geuren",
         "milestone_4_price": "€19,95",
-        "milestone_4_text": "Almost there! Add [count] more scents to unlock the Pro Diffuser!",
-        "button_bg_color": "#5c220a"
+        "milestone_4_text": "Almost there! Add [count] more scents to unlock the Pro Diffuser!"
       }
     }
   },
