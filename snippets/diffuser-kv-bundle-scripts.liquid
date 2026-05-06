@@ -938,11 +938,13 @@
         
         const badgeText=document.querySelector('.text-update')
         const badgeTextEmpty=document.getElementById('kv-progress-footer-message-empty')
+        const sectionEl = document.querySelector('.kv-bundle-section');
+        const addMoreOrderText = sectionEl?.dataset.textAddMoreOrder || 'Add more or place your order!';
         if (badgeTextEmpty) {
-          badgeTextEmpty.textContent = 'Add more or place your order!';
+          badgeTextEmpty.textContent = addMoreOrderText;
         }
         if (badgeText) {
-          badgeText.textContent = 'Add more or place your order!';
+          badgeText.textContent = addMoreOrderText;
         }
         const hasSelectorProduct = selectedProducts.some(p => p.selectionSource === 'cds-selector');
         if (!hasSelectorProduct) {
