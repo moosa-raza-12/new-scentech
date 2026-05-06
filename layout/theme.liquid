@@ -223,6 +223,19 @@ NOTE TO DEVELOPERS: welcome to Impact theme! We hope that you will enjoy editing
         {%- endunless -%}
       {%- endif -%}
 
+      {%- if (template.name == 'page' and template.suffix == 'diffuser-overflow-v1')
+          or (template.name == 'page' and template.suffix == 'v2-diffuser-overflow') -%}
+        <style>
+          .shopify-section-group--footer-group,
+          footer,
+          #footer,
+          [id*="footer"],
+          [class*="footer"] {
+            display: none !important;
+          }
+        </style>
+      {%- endif -%}
+
          {% if template contains 'blog' or template contains 'article' %}
   <style>
     #shopify-chat {
