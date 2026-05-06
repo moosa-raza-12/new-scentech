@@ -185,7 +185,8 @@
         "milestone_4_count": 9,
         "milestone_4_label": "{count} geuren",
         "milestone_4_price": "€19,95",
-        "milestone_4_text": "Almost there! Add [count] more scents to unlock the Pro Diffuser!"
+        "milestone_4_text": "Almost there! Add [count] more scents to unlock the Pro Diffuser!",
+        "button_bg_color": "#5c220a"
       }
     }
   },

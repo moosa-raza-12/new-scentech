@@ -173,38 +173,46 @@
         window.addEventListener('load', () => { updateHeroOffset(); calcStickyTrigger(); });
       }
   
-      function updateStickyHeroHeight() {
-        if (!heroSection) return;
-        if (heroSection.classList.contains('sticky')) {
-          const stickyHeight = heroSection.offsetHeight;
-          document.documentElement.style.setProperty('--kv-sticky-hero-height', `${stickyHeight}px`);
+      const bundleCollectionEl = document.querySelector('.kv-bundle-collection');
+
+      function updateCollectionPadding() {
+        if (!bundleCollectionEl) return;
+        if (heroSection && heroSection.classList.contains('sticky')) {
+          bundleCollectionEl.style.paddingTop = '400px';
         } else {
-          document.documentElement.style.setProperty('--kv-sticky-hero-height', '0px');
+          bundleCollectionEl.style.paddingTop = '';
         }
       }
-  
+
+      const step1Section = document.querySelector('.custom-diffuser-selector');
       const scentHeader = document.querySelector('.scent-header');
       let stickyTriggerPoint = 0;
       function calcStickyTrigger() {
-        if (!scentHeader) return;
-        const rect = scentHeader.getBoundingClientRect();
+        const el = step1Section || scentHeader;
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
         const scrollY = window.pageYOffset || document.documentElement.scrollTop;
         stickyTriggerPoint = rect.bottom + scrollY;
       }
       calcStickyTrigger();
 
       function handleHeroSticky() {
-        const scentSelector=document.querySelector('.scent-selector')
-        if (!heroSection || !scentHeader) return;
+        const scentSelector = document.querySelector('.scent-selector');
+        if (!heroSection) return;
         const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrollY > stickyTriggerPoint) {
-          heroSection.classList.add('sticky');
-          scentSelector.style.display = 'none';
-        } else {
-          heroSection.classList.remove('sticky');
-          scentSelector.style.display = 'block';
+        const wasSticky = heroSection.classList.contains('sticky');
+        const shouldBeSticky = scrollY > stickyTriggerPoint;
+
+        if (shouldBeSticky !== wasSticky) {
+          if (shouldBeSticky) {
+            heroSection.classList.add('sticky');
+            if (scentSelector) scentSelector.style.display = 'none';
+          } else {
+            heroSection.classList.remove('sticky');
+            if (scentSelector) scentSelector.style.display = 'block';
+          }
+          updateCollectionPadding();
         }
-        updateStickyHeroHeight();
       }
   
       handleHeroSticky();
@@ -227,14 +235,13 @@
       window.addEventListener('scroll', updateProgressFooterScrollVisibility, { passive: true });
       window.addEventListener('resize', updateProgressFooterScrollVisibility);
   
-      // Update sticky height on resize
       if (window.ResizeObserver) {
         const heroResizeObserver = new ResizeObserver(() => {
-          updateStickyHeroHeight();
+          updateCollectionPadding();
         });
         heroResizeObserver.observe(heroSection);
       } else {
-        window.addEventListener('resize', updateStickyHeroHeight);
+        window.addEventListener('resize', updateCollectionPadding);
       }
   
       // Tab switching

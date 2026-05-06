@@ -115,7 +115,7 @@
     padding-top: 12px;
     width: 100%;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.80);
+    background: #e5e5e5;
     max-width: 400px;
     transition: all 0.3s ease;
   }
@@ -388,8 +388,8 @@
 
   .kv-bundle-tab.active {
     color: #ffffff;
-    border-color: #162518;
-    background: #162518;
+    border-color: {{ section.settings.button_bg_color | default: '#5c220a' }};
+    background: {{ section.settings.button_bg_color | default: '#5c220a' }};
   }
 
   .kv-bundle-tab #kv-total-count {
@@ -404,8 +404,8 @@
 
   .kv-bundle-tabs:not(:has(.kv-bundle-tab.active)) .kv-bundle-tab:nth-child(2) {
     color: #ffffff;
-    border-color: #162518;
-    background: #162518;
+    border-color: {{ section.settings.button_bg_color | default: '#5c220a' }};
+    background: {{ section.settings.button_bg_color | default: '#5c220a' }};
   }
 
   .kv-bundle-tabs:not(:has(.kv-bundle-tab.active)) .kv-bundle-tab:nth-child(2) #kv-total-count {
@@ -660,7 +660,7 @@
     font-weight: 600;
     line-height: normal;
     border-radius: 6px;
-    background: #162518;
+    background: {{ section.settings.button_bg_color | default: '#5c220a' }};
   }
 
   .kv-badge-preorder {
@@ -1102,7 +1102,7 @@
     transition: all 0.2s;
     flex-shrink: 0;
     border-radius: 6px;
-    background: #162518;
+    background: {{ section.settings.button_bg_color | default: '#5c220a' }};
     flex-shrink: 0;
   }
 
@@ -1143,7 +1143,7 @@
     justify-content: center;
     gap: 8px;
     border-radius: 6px;
-    background: #162518;
+    background: {{ section.settings.button_bg_color | default: '#5c220a' }};
     color: #FFF;
     text-align: center;
     font-size: 14px;
@@ -1194,7 +1194,7 @@
     line-height: normal;
     padding: 15px;
     border-radius: 8px;
-    background: #162518;
+    background: {{ section.settings.button_bg_color | default: '#5c220a' }};
     /* min-width: 390px; */
    width: 100%;
   }
@@ -1647,7 +1647,7 @@
     justify-content: center;
     transition: all 0.2s;
     border-radius: 6px;
-    background: #162518;
+    background: {{ section.settings.button_bg_color | default: '#5c220a' }};
   }
 
   .kv-mini-cart-qty-btn:hover {
@@ -1759,7 +1759,7 @@
     cursor: pointer;
     transition: all 0.2s;
     border-radius: 8px;
-    background: #162518;
+    background: {{ section.settings.button_bg_color | default: '#5c220a' }};
     color: #FFF;
     text-align: center;
     font-size: 16px;
