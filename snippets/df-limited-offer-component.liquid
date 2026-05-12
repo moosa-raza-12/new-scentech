@@ -9,6 +9,7 @@
     aria-expanded="false"
     aria-controls="{{ accordion_id }}">
     <div class="lp-diffuser-accordion__heading-wrap">
+
       <span class="lp-diffuser-accordion__heading">
         {{ section.settings.closed_heading }}
       </span>
@@ -17,13 +18,14 @@
         {{ section.settings.closed_subtext }}
       </span>
     </div>
-
-    <span
-      class="lp-diffuser-accordion__icon"
-      data-open-icon="{{ section.settings.open_icon }}"
-      data-close-icon="{{ section.settings.close_icon }}">
-      {{ section.settings.close_icon }}
-    </span>
+    <div class="lp-diffuser-accordion__icon">
+      <span
+        class="accordion__icon"
+        data-open-icon='{{ section.settings.open_icon_svg | escape }}'
+        data-close-icon='{{ section.settings.close_icon_svg | escape }}'>
+        {{ section.settings.close_icon_svg }}
+      </span>
+    </div>
   </button>
 
   <div id="{{ accordion_id }}" class="lp-diffuser-accordion__content">
@@ -36,12 +38,22 @@
 <style>
   .lp-diffuser-accordion {
     width: 100%;
+    max-width: 960px;
+    margin: auto;
+  }
+
+  @media (min-width: 749px) {
+    .lp-diffuser-accordion__trigger {
+
+      padding: 4px 4px 4px 20px;
+    }
   }
 
   .lp-diffuser-accordion__trigger {
+
     width: 100%;
-    border: 1px dashed{{ section.settings.border_color }};
-    border-radius: {{ section.settings.border_radius }}px;
+    border-radius: 8px;
+    border: 1px dashed rgba(22, 0, 0, 0.10);
     background: {{ section.settings.background_color }};
 
     padding: {{ section.settings.padding_vertical }}px{{ section.settings.padding_horizontal }}px;
@@ -63,10 +75,20 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 4px;
+    /* gap: 4px; */
     text-align: left;
   }
-
+  .icon-wraper {
+    display: flex;
+    width: 28px;
+    height: 28px;
+    padding: 12px 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
+  }
   .lp-diffuser-accordion__heading {
     color: {{ section.settings.heading_color-id }};
     font-size: {{ section.settings.heading_size }}px;
@@ -81,18 +103,14 @@
   }
 
   .lp-diffuser-accordion__icon {
-    width: {{ section.settings.icon_size }}px;
-    height: {{ section.settings.icon_size }}px;
-
-    border-radius: {{ section.settings.icon_radius }}px;
-    background: {{ section.settings.icon_background }};
-
     display: flex;
-    align-items: center;
+    width: 28px;
+    height: 28px;
+    /* padding: 12px 20px; */
     justify-content: center;
-
-    flex-shrink: 0;
-
+    align-items: center;
+    border-radius: 6px;
+    background: {{ section.settings.icon_background }};
     color: {{ section.settings.icon_color }};
     font-size: {{ section.settings.icon_font_size }}px;
     font-weight: 600;
@@ -149,7 +167,7 @@
         heading.textContent = closedHeading;
         subtext.textContent = closedSubtext;
   
-        icon.textContent = icon.dataset.closeIcon;
+        icon.innerHTML = icon.dataset.closeIcon;
       } else {
         content.style.maxHeight = content.scrollHeight + 'px';
   
@@ -157,8 +175,7 @@
   
         heading.textContent = openHeading;
         subtext.textContent = openSubtext;
-  
-        icon.textContent = icon.dataset.openIcon;
+        icon.innerHTML = icon.dataset.openIcon;
       }
     });
   });
