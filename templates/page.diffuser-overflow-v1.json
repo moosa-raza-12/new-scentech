@@ -26,6 +26,15 @@
     "diffuser_kv_bundle_LqGpYW": {
       "type": "diffuser-kv-bundle",
       "blocks": {
+        "diffuser_limited_time_izEEnx": {
+          "type": "diffuser_limited_time",
+          "settings": {
+            "selector_product": "smart-aroma-diffuser-2",
+            "selector_title": "Diffuser 2",
+            "selector_description": "More consistent and noticeable scenting, designed for daily use. A strong balance between performance and control.",
+            "selector_discount_percent": 50
+          }
+        },
         "diffuser_limited_time_JXLGRK": {
           "type": "diffuser_limited_time",
           "settings": {
@@ -146,6 +155,7 @@
         }
       },
       "block_order": [
+        "diffuser_limited_time_izEEnx",
         "diffuser_limited_time_JXLGRK",
         "interrupter_p7EVEY",
         "diffuser_TfKVLj",
