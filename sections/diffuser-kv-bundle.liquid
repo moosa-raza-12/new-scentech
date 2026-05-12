@@ -1,8 +1,36 @@
 {% render 'new-kv-bundle-css' %}
 {% render 'diffuser-kv-bundle-css' %}
   <style>
-    
-    .kv-bundle-continue-btn {
+ @media screen and (min-width: 768px) {
+.high-class{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 200px;
+    }
+.kv-bundle-dynamic-image{
+  display:block !important;
+  width: 720px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.kv-bundle-dynamic-image img{
+  width: 100%;
+    /* height: 100%; */
+    object-fit: fill;
+    transition: opacity 0.3s ease;
+}
+.low-class{
+  width:430px;
+}
+
+}
+.kv-bundle-dynamic-image{
+  display:none;
+}  
+.kv-bundle-continue-btn {
   width: 420px !important;
   }
 
@@ -50,12 +78,55 @@
 <div class="kv-page-preloader" id="kv-page-preloader">
   <div class="kv-preloader-spinner"></div>
 </div>
+{% liquid
+  assign kv_default_desktop_hero_url = blank
+  for block in section.blocks
+    if block.type == 'diffuser'
+      assign _hero = block.settings.cds_desktop_hero_image
+      assign _sel = block.settings.selector_image
+      assign _prod = block.settings.selector_product
+      if _hero != blank
+        assign kv_default_desktop_hero_url = _hero | image_url: width: 1200
+      elsif _sel != blank
+        assign kv_default_desktop_hero_url = _sel | image_url: width: 1200
+      elsif _prod != blank and _prod.featured_image != blank
+        assign kv_default_desktop_hero_url = _prod.featured_image | image_url: width: 1200
+      endif
+      break
+    endif
+  endfor
+  if kv_default_desktop_hero_url == blank
+    for block in section.blocks
+      if block.type == 'diffuser_limited_time'
+        assign _hero = block.settings.cds_desktop_hero_image
+        assign _sel = block.settings.selector_image
+        assign _prod = block.settings.selector_product
+        if _hero != blank
+          assign kv_default_desktop_hero_url = _hero | image_url: width: 1200
+        elsif _sel != blank
+          assign kv_default_desktop_hero_url = _sel | image_url: width: 1200
+        elsif _prod != blank and _prod.featured_image != blank
+          assign kv_default_desktop_hero_url = _prod.featured_image | image_url: width: 1200
+        endif
+        break
+      endif
+    endfor
+  endif
+%}
 <div class="kv-bundle-section"
   data-text-discount-prefix="{{ section.settings.text_discount_prefix | escape }}"
   data-text-discount-suffix="{{ section.settings.text_discount_suffix | escape }}"
   data-text-btn-disabled="{{ section.settings.text_btn_disabled | escape }}"
   data-text-add-more-order="{{ section.settings.text_add_more_order | escape }}">
-       
+   <div class="high-class">   
+    
+   <div class="kv-bundle-dynamic-image" id="dynamic-image-container">
+   <img
+     id="kv-bundle-dynamic-image-img"
+     src="{% if kv_default_desktop_hero_url != blank %}{{ kv_default_desktop_hero_url }}{% else %}{{ 'image-1.png' | asset_img_url: '1200x' }}{% endif %}"
+     alt="">
+  </div>
+  <div class="low-class">  
  {% render 'df-overflow-step1' %}
  
   {%- comment -%} Progress Banner {%- endcomment -%}
@@ -134,6 +205,7 @@
              </div>
              {% endif %}
          </div>
+         </div>
      </div>
      {% comment %} <div class="kv-progress-footer2" id="kv-progress-footer-normal" style="display: block;">
          <div class="kv-progress-footer-message" id="kv-progress-footer-message">
@@ -166,7 +238,7 @@
     </div>
   </div>
   {% endif %}
-  
+  </div>
   <div class="kv-bundle-collection">
       <div class="kv-bundle-collection-inner">
       {% if section.blocks.size > 0 %}
@@ -2285,26 +2357,42 @@ window.__kvInterrupterProducts = {};
   document.addEventListener('DOMContentLoaded', function() {
     const priceDisplay = document.getElementById('selected-price-display');
     const infoDisplay = document.getElementById('product-info-display');
-    const messageDiv= document.querySelector('.cds-highlights')
-    
+    const messageDiv = document.querySelector('.cds-highlights');
+    const desktopMq = window.matchMedia('(min-width: 768px)');
+
+    function syncKvBundleDesktopHeroImage() {
+      if (!desktopMq.matches) return;
+      var dynImg = document.getElementById('kv-bundle-dynamic-image-img');
+      if (!dynImg) return;
+      var active = document.querySelector('.cds-cards.active');
+      var card = active || document.querySelector('.cds-cards');
+      if (!card) return;
+      var url = card.getAttribute('data-cds-desktop-hero-image') || card.getAttribute('data-product-image');
+      if (url) dynImg.src = url;
+    }
+
+    window.addEventListener('resize', syncKvBundleDesktopHeroImage);
+
     // Listen for selections from the snippet
     document.addEventListener('kv:selector-product-selected', function(event) {
       const product = event.detail;
-      
+
       // Price is already calculated in the snippet as 50% off
       // You can either recalculate or trust the snippet's calculation
       if (priceDisplay && product.variantPrice) {
         const discountedPrice = (product.variantPrice * 0.5) / 100;
         priceDisplay.innerHTML = `€${discountedPrice.toFixed(2).replace('.', ',')}`;
-        messageDiv.style.display='flex';
+        if (messageDiv) messageDiv.style.display = 'flex';
       }
-      
+
       if (infoDisplay) {
         infoDisplay.innerHTML = `
           <p>Product: ${product.title}</p>
           <p>Variant ID: ${product.variantId}</p>
         `;
       }
+
+      syncKvBundleDesktopHeroImage();
     });
   });
 </script>  
@@ -2951,6 +3039,12 @@ window.__kvInterrupterProducts = {};
       "label": "Diffuser Image"
     },
     {
+      "type": "image_picker",
+      "id": "cds_desktop_hero_image",
+      "label": "Desktop sticky panel image",
+      "info": "Large image shown left of the bundle on desktop. If empty, the diffuser image or product photo is used."
+    },
+    {
       "type": "text",
       "id": "selector_title",
       "label": "Title",
@@ -2987,6 +3081,12 @@ window.__kvInterrupterProducts = {};
         "type": "image_picker",
         "id": "selector_image",
         "label": "Diffuser Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "cds_desktop_hero_image",
+        "label": "Desktop sticky panel image",
+        "info": "Large image shown left of the bundle on desktop. If empty, the diffuser image or product photo is used."
       },
       {
         "type": "text",

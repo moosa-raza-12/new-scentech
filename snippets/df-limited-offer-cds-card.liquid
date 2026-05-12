@@ -53,6 +53,16 @@
   elsif img_url != blank
     assign card_image = img_url | image_url: width: 600
   endif
+
+  assign desktop_hero_url = blank
+  assign _cds_hero = block.settings.cds_desktop_hero_image
+  if _cds_hero != blank
+    assign desktop_hero_url = _cds_hero | image_url: width: 1200
+  elsif img_url != blank
+    assign desktop_hero_url = img_url | image_url: width: 1200
+  elsif product_obj != blank and product_obj.featured_image != blank
+    assign desktop_hero_url = product_obj.featured_image | image_url: width: 1200
+  endif
 %}
 <div
   class="cds-cards{% if template.suffix == 'diffuser-overflow-v1' %} cds-locked{% endif %}"
@@ -63,6 +73,7 @@
   data-variant-compare-at-price="{{ card_variant_compare_at_price }}"
   data-product-title="{{ card_title | escape }}"
   data-product-image="{{ card_image | escape }}"
+  data-cds-desktop-hero-image="{{ desktop_hero_url | escape }}"
   {{ block.shopify_attributes }}>
   <div class="cds-card-innerss">
     {% if img_url %}
