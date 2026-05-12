@@ -1,3 +1,295 @@
+<style>
+  .cds-highlight {
+    display: none;
+  }
+
+  .cds-cards.active .cds-highlight {
+    display: block;
+
+    /* or flex, depending on your layout */
+  }
+  .compare-icon-wrapper {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    cursor: pointer;
+  }
+  .custom-diffuser-selector {
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px;
+    margin: auto;
+  }
+@media (max-width: 639px) {
+  .custom-diffuser-selector {
+    padding: 20px 20px 0;
+  }
+}
+
+  /*
+
+   .cds-header-content{ 
+   display: flex; 
+   justify-content: space-between; 
+   } 
+*/
+
+  /* Header */.cds-header {
+    margin-bottom: 16px;
+  }
+  .cds-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cds-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  @media (max-width: 749px) {
+    .cds-left {
+      gap: 8px;
+    }
+  }
+  .cds-step {
+    width: 34px;
+    height: 34px;
+    background: var(--cds-banner-bg, #938E70);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 16px;
+  }
+  @media (max-width: 639px) {
+    .cds-step{
+      width: 24px !important;
+      height: 24px !important;
+      font-size: 12px !important;
+    }
+    
+  }
+  .cds-title {
+    color: #160000;
+    font-weight: 400;
+    margin: 0;
+    font-size: 20px;
+    font-family: N27;
+  }
+  @media (max-width: 639px) {
+    .cds-title {
+      text-align: center;
+      font-size: 16px !important;
+    }
+    .compare-icon-wrapper {
+      gap: 6px;
+    }
+    .cds-subtext {
+      margin-top: 12px;
+      font-size: 12px;
+    }
+    .cds-header {
+      margin-bottom: 20px;
+    }
+    .cds-compare {
+      font-size: 14px;
+}
+  }
+
+  .cds-subtext {
+    margin-top: 12px;
+    color: #160000;
+
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .cds-compare {
+    color: #162518;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration-line: underline;
+  }
+
+  /* Banner */
+  .cds-banner {
+    border-radius: 6px;
+    background: var(--cds-banner-bg, #938E70);
+    color: #fff;
+    padding: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 14px;
+  }
+  @media screen and (max-width: 639px) {
+    .cds-banner {
+      padding: 10px 16px;
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+  }
+  /* Cards */
+  .cds-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .cds-cards {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .cds-cards.active {
+    border: 1px solid #160000;
+  }
+
+  .cds-card.active {
+    border: 2px solid #2e2e2e;
+  }
+
+  .cds-card-innerss {
+    display: flex;
+    gap: 20px;
+    padding: 6px;
+    padding-right: 20px;
+    cursor: pointer;
+    align-items: center;
+  }
+
+  .cds-image img {
+    width: 70px;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .cds-content {
+    flex: 1;
+  }
+
+  .cds-name {
+    margin: 0;
+    color: #160000;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1;
+    font-family: N27;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .cds-info-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    pointer-events: auto;
+    position: relative;
+    z-index: 2;
+  }
+  @media (max-width: 639px) {
+    .cds-name {
+      font-size: 16px !important;
+    }
+    .cds-image img {
+      heigth: 80px;
+      width: 80px;
+    }
+  }
+
+  .cds-desc {
+    margin: 5px 0 0;
+    color: #160000;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  @media (max-width: 639px) {
+    .cds-desc {
+      font-size: 12px !important;
+    }
+    .cds-header-content {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+  .cds-price {
+    text-align: right;
+    display: flex;
+    gap: 5px;
+  }
+
+  .cds-price .old {
+    display: block;
+    text-decoration: line-through;
+    color: #160000;
+    font-size: 16px;
+    opacity: 0.4;
+  }
+
+  .cds-price .new {
+    font-weight: 600;
+    font-size: 16px;
+    color: #160000;
+  }
+  @media (max-width: 749px) {
+    .cds-price .new {
+      font-size: 12px;
+    }
+    .cds-price .old {
+      font-size: 12px;
+    }
+  }
+  /* Locked state – cards not selectable until 2 scents are added */
+  .cds-cards.cds-locked {
+    /* opacity: 0.45; */
+    pointer-events: none;
+    position: relative;
+    user-select: none;
+  }
+  .cds-cards.cds-locked .cds-card-innerss {
+    cursor: not-allowed;
+  }
+  .cds-lock-overlay {
+    display: none;
+    background: rgba(0,0,0,0.06);
+    padding: 8px 12px;
+    text-align: center;
+    font-size: 12px;
+    color: #5c220a;
+    font-weight: 600;
+  }
+  .cds-cards.cds-locked .cds-lock-overlay {
+    display: block;
+  }
+
+  /* Highlight footer */
+  .cds-highlight {
+    background: rgba(0, 0, 0, 0.10);
+    padding: 10px 12px;
+    text-align: center;
+    font-size: 12px;
+  }
+  .cds-highlight-text{
+    color: #5c220a;
+font-size: 12px;
+font-weight: 400;
+  }
+</style>
+
 <div class="custom-diffuser-selector">
 
   <!-- Header -->
@@ -39,11 +331,13 @@
 
   <!-- Diffuser Blocks -->
   <div class="cds-list">
+    {% assign first_diffuser_rendered = false %}
     {% for block in section.blocks %}
       {% if block.type == "diffuser" %}
         {% assign product_obj = block.settings.selector_product %}
         {% assign new_price_display = nil %}
         {% assign old_price_display = nil %}
+        {% assign discount_percent = block.settings.selector_discount_percent | default: 0 %}
 
         {% comment %} Get image {% endcomment %}
         {% assign img_url = block.settings.selector_image %}
@@ -52,20 +346,16 @@
         {% endif %}
 
         {% if product_obj != blank %}
-          {% comment %} Get the actual product price (original price) {% endcomment %}
           {% assign original_price_cents = product_obj.price %}
 
-          {% comment %} Calculate 50% discount {% endcomment %}
-          {% assign discounted_price_cents = original_price_cents | times: 50 | divided_by: 100 %}
-
-          {% comment %} Format prices {% endcomment %}
-          {% assign old_price_display = original_price_cents | money %}
-          {% assign new_price_display = discounted_price_cents | money %}
-
+          {% if discount_percent > 0 %}
+            {% assign discount_multiplier = 100 | minus: discount_percent %}
+            {% assign discounted_price_cents = original_price_cents | times: discount_multiplier | divided_by: 100 %}
+            {% assign old_price_display = original_price_cents | money %}
+            {% assign new_price_display = discounted_price_cents | money %}
           {% else %}
-          {% comment %} Fallback to manual prices if no product selected {% endcomment %}
-          {% assign new_price_display = block.settings.selector_new_price %}
-          {% assign old_price_display = block.settings.selector_old_price %}
+            {% assign new_price_display = original_price_cents | money %}
+          {% endif %}
         {% endif %}
 
         {% assign selected_variant = product_obj.selected_or_first_available_variant %}
@@ -96,7 +386,7 @@
         {% endif %}
 
         <div
-          class="cds-cards"
+          class="cds-cards{% if template.suffix == 'diffuser-overflow-v1' %} cds-locked{% endif %}"
           data-product-id="{{ card_product_id }}"
           data-product-handle="{{ card_product_handle }}"
           data-variant-id="{{ card_variant_id }}"
@@ -114,19 +404,38 @@
 
             <div class="cds-content">
               <div class="cds-header-content">
-                <h3 class="cds-name">
+                <p class="cds-name">
                   {% if product_obj != blank %}
-                    {{ product_obj.title }}
+                  {{ block.settings.selector_title }}
                   {% else %}
-                    {{ block.settings.selector_title }}
+                  {{ product_obj.title }} 
                   {% endif %}
-                </h3>
+                  <button class="kv-bundle-product-info-icon kv-scent-info-btn cds-info-btn"
+                    type="button"
+                    aria-label="View details"
+                    data-product-id="{{ card_product_id }}"
+                    data-product-title="{{ card_title | escape }}"
+                    data-product-description="{{ product_obj.metafields.custom.scent_popup_description | default: product_obj.description | strip_html | strip | escape }}"
+                    data-product-details="{{ product_obj.metafields.custom.scent_details | escape }}"
+                    data-product-image="{% if product_obj.metafields.custom.scent_image %}{{ product_obj.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product_obj.featured_image %}{{ product_obj.featured_image | image_url: width: 1200 }}{% endif %}"
+                    data-product-variant="{{ product_obj.metafields.custom.quantity_value | default: product_obj.variants.first.title | escape }}"
+                    data-product-badge="{{ product_obj.metafields.custom.collection_card_badge | escape }}">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                  </button>
+                </p>
 
                 <div class="cds-price">
-                  <span class="old">{{ old_price_display }}</span>
-                  {% comment %} {% if product_obj != blank %}
-                                                    <span class="discount-badge">50% off</span>
-                                        {% endif %} {% endcomment %}
+                  
+                    {% if old_price_display != nil and old_price_display != blank %}
+                    <span class="old">{{ old_price_display }}</span>
+                    {% else %}
+                    <span class="old">{{ new_price_display }}</span>
+                    {% endif %}
+                
                   <span class="new">{{ new_price_display }}</span>
                 </div>
               </div>
@@ -134,14 +443,27 @@
             </div>
           </div>
 
-          <div class="cds-highlight">
-            {% comment %} {{ block.settings.selector_highlight_text }} {% endcomment %}
-            <b>Spring Sale:</b>
-            Pay only
-            <b>{{ new_price_display }}</b>
-            after adding 2 scents!
-          </div>
+          {% if discount_percent > 0 and new_price_display != blank %}
+            {% if template.suffix == "diffuser-overflow-v1" or template.name == "diffuser-overflow-v1" %}
+              {% assign cds_highlight_overflow_text = section.settings.cds_highlight_overflow_text | default: '<b>Spring:</b> Pay only <b>[price]</b> after adding 2 scents!' %}
+              {% assign cds_highlight_overflow_text = cds_highlight_overflow_text | replace: '[price]', new_price_display %}
+              <div class="cds-highlight">
+                <p class="cds-highlight-text">{{ cds_highlight_overflow_text }}</p>
+               </div>
+              {% else %}
+              {% assign cds_highlight_default_text = section.settings.cds_highlight_default_text | default: '<b>Spring:</b> Pay only <b>[price]</b> for your diffuser!' %}
+              {% assign cds_highlight_default_text = cds_highlight_default_text | replace: '[price]', new_price_display %}
+              <div class="cds-highlight">
+                <p class="cds-highlight-text">{{ cds_highlight_default_text }}</p>
+               </div>
+            {% endif %}
+           
+          {% endif %}
+          {% if template.suffix == 'diffuser-overflow-v1' %}
+            <div class="cds-lock-overlay">{{ section.settings.cds_lock_overlay_text | default: 'Add at least 2 scents to select a diffuser' }}</div>
+          {% endif %}
         </div>
+        {% assign first_diffuser_rendered = true %}
       {% endif %}
     {% endfor %}
   </div>
@@ -176,11 +498,68 @@
     // Initially hide all highlights (if they are not already hidden by CSS)
     hideAllHighlights();
   
+    // Handle info icon clicks on diffuser cards
+    document.addEventListener('click', function(e) {
+      const infoBtn = e.target.closest('.cds-info-btn');
+      if (!infoBtn) return;
+      e.preventDefault();
+      e.stopPropagation();
+
+      const scentModal = document.getElementById('kv-scent-modal');
+      const scentModalOverlay = document.getElementById('kv-scent-modal-overlay');
+      if (!scentModal || !scentModalOverlay) return;
+
+      const modalImg = document.getElementById('kv-scent-modal-img');
+      const modalTitle = document.getElementById('kv-scent-modal-title');
+      const modalDescription = document.getElementById('kv-scent-modal-description');
+      const modalDetails = document.getElementById('kv-scent-modal-details');
+      const modalVariant = document.getElementById('kv-scent-modal-variant');
+      const modalBadge = document.getElementById('kv-scent-modal-badge');
+
+      if (modalTitle) modalTitle.textContent = infoBtn.getAttribute('data-product-title') || '';
+      if (modalDescription) modalDescription.textContent = infoBtn.getAttribute('data-product-description') || '';
+      if (modalVariant) modalVariant.textContent = infoBtn.getAttribute('data-product-variant') || '';
+
+      const badge = infoBtn.getAttribute('data-product-badge');
+      if (modalBadge) {
+        if (badge) {
+          modalBadge.textContent = badge;
+          modalBadge.style.display = '';
+        } else {
+          modalBadge.style.display = 'none';
+        }
+      }
+
+      const image = infoBtn.getAttribute('data-product-image');
+      if (modalImg) {
+        if (image) {
+          modalImg.src = image;
+          modalImg.alt = infoBtn.getAttribute('data-product-title') || '';
+          scentModal.querySelector('.kv-scent-modal-image').style.display = 'block';
+        } else {
+          scentModal.querySelector('.kv-scent-modal-image').style.display = 'none';
+        }
+      }
+
+      const details = infoBtn.getAttribute('data-product-details');
+      if (modalDetails) {
+        modalDetails.innerHTML = details ? details.replace(/\n/g, '<br>') : '';
+      }
+
+      scentModalOverlay.classList.add('active');
+      scentModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }, true);
+
     // Delegate click event to handle dynamically added cards
     document.body.addEventListener('click', function(e) {
+      if (e.target.closest('.cds-info-btn')) return;
+
       // Find the closest .cds-cards element (allows clicking on inner elements)
       const card = e.target.closest(cardSelector);
       if (!card) return;
+
+      if (card.classList.contains('cds-locked')) return;
   
       // If this card is already active, do nothing (or optionally unselect – decide)
       if (card.classList.contains(activeClass)) {
@@ -209,236 +588,17 @@
         detail: selectedProduct
       }));
     });
+
+    // Auto-click the first card after ALL DOMContentLoaded handlers have run (v2-diffuser-overflow only)
+    // setTimeout(0) defers the click until the v2 script's kv:selector-product-selected listener is registered
+    // {% if template == 'page.v2-diffuser-overflow' %}
+    // setTimeout(function() {
+    //   const firstCard = document.querySelector(cardSelector);
+    //   if (firstCard) {
+    //     firstCard.click();
+    //   }
+    // }, 0);
+    // {% endif %}
   });
 </script>
 
-<style>
-  .cds-highlight {
-    display: none;
-  }
-
-  .cds-cards.active .cds-highlight {
-    display: block;
-
-    /* or flex, depending on your layout */
-  }
-  .compare-icon-wrapper {
-    display: inline-flex;
-    gap: 4px;
-    align-items: center;
-    cursor: pointer;
-  }
-  .custom-diffuser-selector {
-    width: 100%;
-    max-width: 1000px;
-    padding: 20px 20px 0;
-    margin: auto;
-  }
-
-
-  /*
-
-   .cds-header-content{ 
-   display: flex; 
-   justify-content: space-between; 
-   } 
-*/
-
-  /* Header */.cds-header {
-    margin-bottom: 16px;
-  }
-  .cds-header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .cds-left {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-  }
-  @media (max-width: 749px) {
-    .cds-left {
-      gap: 8px;
-    }
-  }
-  .cds-step {
-    width: 40px;
-    height: 40px;
-    background: #1f3d2b;
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-  }
-  @media (max-width: 639px) {
-    .cds-step {
-      width: 24px !important;
-      height: 24px !important;
-      font-size: 12px !important;
-    }
-  }
-  .cds-title {
-    color: #160000;
-    font-weight: 400;
-    margin: 0;
-    font-size: 24px;
-  }
-  @media (max-width: 639px) {
-    .cds-title {
-      text-align: center;
-      font-size: 16px !important;
-    }
-    .compare-icon-wrapper {
-      gap: 6px;
-    }
-    .cds-subtext {
-      margin-top: 12px;
-      font-size: 12px;
-    }
-    .cds-header {
-      margin-bottom: 20px;
-    }
-  }
-
-  .cds-subtext {
-    margin-top: 10px;
-    color: #160000;
-
-    font-weight: 400;
-    letter-spacing: 0;
-  }
-
-  .cds-compare {
-    color: #162518;
-    font-size: 12px;
-    font-weight: 600;
-    text-decoration-line: underline;
-  }
-
-  /* Banner */
-  .cds-banner {
-    border-radius: 6px;
-    background: #938E70;
-    color: #fff;
-    padding: 14px;
-    margin-bottom: 16px;
-    text-align: center;
-  }
-  @media screen and (max-width: 639px) {
-    .cds-banner {
-      padding: 10px 16px;
-      font-size: 12px;
-      margin-bottom: 20px;
-    }
-  }
-  /* Cards */
-  .cds-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .cds-cards {
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  .cds-cards.active {
-    border: 1px solid #160000;
-  }
-
-  .cds-card.active {
-    border: 2px solid #2e2e2e;
-  }
-
-  .cds-card-innerss {
-    display: flex;
-    gap: 20px;
-    padding: 6px;
-    align-items: center;
-  }
-
-  .cds-image img {
-    width: 70px;
-    height: auto;
-    border-radius: 8px;
-  }
-
-  .cds-content {
-    flex: 1;
-  }
-
-  .cds-name {
-    margin: 0;
-    color: #160000;
-    font-size: 18px;
-    font-weight: 400;
-  }
-  @media (max-width: 639px) {
-    .cds-name {
-      font-size: 16px !important;
-    }
-    .cds-image img {
-      heigth: 80px;
-      width: 80px;
-    }
-  }
-
-  .cds-desc {
-    margin: 12px 0 0;
-    color: #555;
-    font-size: 14px;
-    font-weight: 400;
-  }
-  @media (max-width: 639px) {
-    .cds-desc {
-      font-size: 12px !important;
-    }
-    .cds-header-content {
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-    }
-    .cds-desc {
-      font-size: 12px;
-    }
-  }
-  .cds-price {
-    text-align: right;
-    display: flex;
-    gap: 5px;
-  }
-
-  .cds-price .old {
-    display: block;
-    text-decoration: line-through;
-    color: #999;
-    font-size: 16px;
-  }
-
-  .cds-price .new {
-    font-weight: 600;
-    font-size: 16px;
-  }
-  @media (max-width: 749px) {
-    .cds-price .new {
-      font-size: 12px;
-    }
-    .cds-price .old {
-      font-size: 12px;
-    }
-  }
-  /* Highlight footer */
-  .cds-highlight {
-    background: rgba(0, 0, 0, 0.10);
-    padding: 10px 12px;
-    text-align: center;
-    font-size: 12px;
-  }
-</style>

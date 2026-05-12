@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "page": "Page {{ page }}",
@@ -420,5 +429,6 @@
     "links": {
       "powered_by_shopify": " "
     }
-  }
+  },
+  "discount_banner": {"code_before": "Discount code", "code_after": "is active"}
 }

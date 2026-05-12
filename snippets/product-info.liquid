@@ -117,6 +117,26 @@ Supported variables
 
         {%- when 'price' -%}
           {%- if product.selected_or_first_available_variant != nil -%}
+            {%- if context == 'main_product' and settings.discount_campaign_active and settings.discount_campaign_code != blank -%}
+              {%- assign in_discount_collection = false -%}
+              {%- if settings.discount_campaign_collections == blank -%}
+                {%- assign in_discount_collection = true -%}
+              {%- else -%}
+                {%- assign campaign_cols = settings.discount_campaign_collections | split: ',' -%}
+                {%- for col in product.collections -%}
+                  {%- for dc in campaign_cols -%}
+                    {%- if col.handle == dc -%}
+                      {%- assign in_discount_collection = true -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endfor -%}
+              {%- endif -%}
+              {%- if in_discount_collection -%}
+                {%- render 'discount-code-banner',
+                  campaign_code: settings.discount_campaign_code,
+                  campaign_expiry: settings.discount_campaign_expiry -%}
+              {%- endif -%}
+            {%- endif -%}
             <div class="product-info__price" data-product-id="{{ product.id }}">
               <div class="rating-with-text">
                 {%- render 'price-list', variant: product.selected_or_first_available_variant, size: 'lg' -%}
@@ -735,6 +755,15 @@ Supported variables
                   transition: box-shadow 0.2s ease;
                   height: 59px;
                 }
+
+                .product-info .product-info__block-item .promo-banner {
+    display: none !important;
+}
+
+.product-info .product-info__block-item .promo-banner.group-b {
+    display: flex !important;
+    margin: 0 0 8px 0;
+}
 
                 .promo-banner:hover {
                   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);

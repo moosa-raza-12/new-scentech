@@ -1,0 +1,245 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "article",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "enable_sticky": false,
+        "autoplay": false,
+        "cycle_speed": 6,
+        "text_size": "text-xs",
+        "navigation_mode": "arrows",
+        "scrolling_speed": 20,
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "article-hero": {
+      "type": "article-hero",
+      "settings": {
+        "headline": "De Beste Aroma Diffuser van 2026 — En Waarom de Meeste Mensen de Verkeerde Kopen",
+        "subheadline": "Een vergelijking van de 4 populairste typen diffusers; van goedkope rommel tot hotelkwaliteit.",
+        "show_breadcrumb": true,
+        "breadcrumb_1_label": "Home",
+        "breadcrumb_1_url": "/",
+        "breadcrumb_2_label": "Diffusers & Bundels",
+        "breadcrumb_2_url": "shopify://collections/diffusers-bundles",
+        "author_avatar": "shopify://shop_images/Ontwerp_zonder_titel_8.png",
+        "author_name": "Bart van der Sterren",
+        "author_label": "Geurexpert · Scentech",
+        "updated_date": "April 2026",
+        "read_time": "5 minuten",
+        "show_trust": false,
+        "rating_text": "Testpanel van 5000+ gebruikers",
+        "methodology_text": "Dit waren de beoordelingen op basis van een testpanel van 5000 gebruikers van verschillende geursystemen.",
+        "badge_text": "Lees verder voor de resultaten",
+        "color_bg": "#ffffff",
+        "color_text": "#231f20",
+        "color_accent": "#ffb74a",
+        "color_muted": "#8a8a8a"
+      }
+    },
+    "beste-diffuser-comparison": {
+      "type": "beste-diffuser-comparison",
+      "blocks": {
+        "rank-1": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_eb8fjeeb8fjeeb8f_1.png",
+            "rank": 1,
+            "title": "Scentech Cold Air Diffuser",
+            "badge_text": "Beste keuze",
+            "summary": "Dezelfde technologie als luxe hotels maar dan voor thuis. Geur word met luchtdruk verspreidt in micro-mist voor een gelijkmatige dekking in grote ruimtes. Dit heet cold-air diffusion technologie en is pas sinds kort beschikbaar voor consumenten. Dit is echt mijn nummer 1 tip als je die luxe hotelgeur wilt nabootsen in je eigen huis.",
+            "score_stars": 5,
+            "score_overall": "9.2/10",
+            "crit_1_label": "Geurkracht",
+            "crit_1_stars": 5,
+            "crit_1_note": "Cold air = geen verlies van geurmoleculen",
+            "crit_2_label": "Gebruiksgemak",
+            "crit_2_stars": 5,
+            "crit_2_note": "Plug & play, app-bediening",
+            "crit_3_label": "Slimme bediening",
+            "crit_3_stars": 5,
+            "crit_3_note": "Schema + intensiteit via app",
+            "crit_4_label": "Design",
+            "crit_4_stars": 4,
+            "crit_4_note": "Premium, past in elk interieur",
+            "crit_5_label": "Kosten per dag",
+            "crit_5_stars": 4,
+            "crit_5_note": "<€1 per dag (€29,95 / 30–60 dagen)",
+            "show_link": true,
+            "link_url": "shopify://products/smart-aroma-diffuser-pro",
+            "link_text": "Bekijk Scentech →"
+          }
+        },
+        "rank-2": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/1_1b5f96e4-4fbb-444b-8ad0-86b87b1bc83b.png",
+            "rank": 2,
+            "title": "Professioneel HVAC-geursysteem",
+            "badge_text": "",
+            "summary": "De originele cold air diffusion technologie die ze tot op de dag van vandaag in alle hotels en luxe winkels gebruiken. Dit werkt geweldig en ik ken zelfs mensen die dit geïnstalleerd in hun eigen huis. Dit soort systemen kosten al gauw €5000 en vereisen veel technische kennis om aan te sluiten. Zeer goede optie maar helaas niet haalbaar voor de meeste mensen. Daarnaast heb je een luchtbehandeling systeem nodig wat 99% van de huizen in Nederland niet hebben.",
+            "score_stars": 4,
+            "score_overall": "7.1/10",
+            "crit_1_label": "Geurkracht",
+            "crit_1_stars": 5,
+            "crit_1_note": "Professioneel, krachtig",
+            "crit_2_label": "Gebruiksgemak",
+            "crit_2_stars": 2,
+            "crit_2_note": "Installatievereisten, niet plug & play",
+            "crit_3_label": "Slimme bediening",
+            "crit_3_stars": 4,
+            "crit_3_note": "Aanwezig, maar complex",
+            "crit_4_label": "Design",
+            "crit_4_stars": 3,
+            "crit_4_note": "Technisch, niet woonkamervriendelijk",
+            "crit_5_label": "Kosten per dag",
+            "crit_5_stars": 1,
+            "crit_5_note": "Aanschaf al €1.500+, plus installatie",
+            "show_link": false,
+            "link_url": "",
+            "link_text": "Bekijk Scentech →"
+          }
+        },
+        "rank-3": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/2_6bf0832c-a368-4872-8a80-7a7612885776.png",
+            "rank": 3,
+            "title": "Ultrasone diffuser",
+            "badge_text": "",
+            "summary": "Dit is de bestverkochte aroma diffuser van Nederland. Toch werkt hij voor het beoogde doel nauwelijks.\nBij dit type meng je geurolie met water, waarna het water wordt verdampt en de geur meedraagt de ruimte in. In de praktijk werkt dit beter als luchtbevochtiger dan als geurverspreider. Waterdamp is te zwaar om zich gelijkmatig door een ruimte te verplaatsen. Het koelt snel af, daalt neer op je meubels en vloer, en laat de geur achter op een paar vierkante meter rond het apparaat.\nHet resultaat: je ruikt het sterk als je er vlakbij staat, en nauwelijks zodra je een meter verderop loopt. Voor één klein hoekje van een kamer prima. Voor een woning die overal subtiel en gelijkmatig ruikt, ongeschikt.",
+            "score_stars": 3,
+            "score_overall": "5.4/10",
+            "crit_1_label": "Geurkracht",
+            "crit_1_stars": 2,
+            "crit_1_note": "Water + warmte = verlies van geurintensiteit",
+            "crit_2_label": "Gebruiksgemak",
+            "crit_2_stars": 4,
+            "crit_2_note": "Eenvoudig, water bijvullen",
+            "crit_3_label": "Slimme bediening",
+            "crit_3_stars": 2,
+            "crit_3_note": "Beperkt of geen app",
+            "crit_4_label": "Design",
+            "crit_4_stars": 3,
+            "crit_4_note": "Plastic, functioneel",
+            "crit_5_label": "Kosten per dag",
+            "crit_5_stars": 4,
+            "crit_5_note": "Goedkoop in aanschaf, olie snel op",
+            "show_link": false,
+            "link_url": "",
+            "link_text": "Bekijk Scentech →"
+          }
+        },
+        "rank-4": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/3_f50a8c06-0d07-4dec-b7e1-fa67709331a7.png",
+            "rank": 4,
+            "title": "Kleine plug-in diffusers",
+            "badge_text": "",
+            "summary": "Plug-in diffusers ken je van de supermarkt of drogist. Je steekt ze in het stopcontact en een verwarmingselement smelt langzaam een geurolie die de damp de ruimte in laat trekken.\nHet probleem zit in de techniek. Warmte breekt de fijnere geurmoleculen af, waardoor je een platte, vaak chemische geur overhoudt in plaats van een verfijnde. En het bereik blijft beperkt tot enkele meters rond het stopcontact.\nPrima voor een klein toilet of gangetje om vieze geurtjes te maskeren. Geen serieuze manier om een heel huis gelijkmatig (en lekker) te laten ruiken.",
+            "score_stars": 2,
+            "score_overall": "3.8/10",
+            "crit_1_label": "Geurkracht",
+            "crit_1_stars": 2,
+            "crit_1_note": "Oppervlakkig, lokaal effect",
+            "crit_2_label": "Gebruiksgemak",
+            "crit_2_stars": 5,
+            "crit_2_note": "Insteken en klaar",
+            "crit_3_label": "Slimme bediening",
+            "crit_3_stars": 1,
+            "crit_3_note": "Geen",
+            "crit_4_label": "Design",
+            "crit_4_stars": 3,
+            "crit_4_note": "Neutraal, verdwijnt in de muur",
+            "crit_5_label": "Kosten per dag",
+            "crit_5_stars": 2,
+            "crit_5_note": "Cartridges zijn duur per geurdag",
+            "show_link": false,
+            "link_url": "",
+            "link_text": "Bekijk Scentech →"
+          }
+        }
+      },
+      "block_order": [
+        "rank-1",
+        "rank-2",
+        "rank-3",
+        "rank-4"
+      ],
+      "settings": {
+        "heading": "",
+        "intro": "Als echte hotelliefhebber geniet ik enorm van de luxe en sfeer van een mooi hotel. Tijdens mijn vele verblijven viel me telkens weer op hoe aangenaam het daar rook — een subtiele, luxe geur die direct een gevoel van rust en comfort oproept. Thuis lukte het me maar niet om datzelfde gevoel echt te creëren.Die nieuwsgierigheid groeide uit tot een zoektocht. Ik ben me gaan verdiepen in de verschillende manieren waarop je een huis langdurig en gelijkmatig lekker kunt laten ruiken. Daarbij heb ik uitgebreid onderzoek gedaan en allerlei systemen getest: van eenvoudige plug-in diffusers tot ultrasone diffusers en professionele geurverspreiding via HVAC-systemen.Uiteindelijk ontdekte ik dat vooral cold-air diffusion technologie het meest effectief is. Dit is dezelfde techniek die veel luxe hotels gebruiken om geur op een subtiele en constante manier door een ruimte of ventilatiesysteem te verspreiden.Op deze vergelijkingpagina bekijken we de belangrijkste verschillen tussen cold-air diffusion HVAC-systemen, ultrasone diffusers en warmtegestuurde plug-in diffusers.",
+        "color_bg": "#ffffff",
+        "color_text": "#231f20",
+        "color_accent": "#ffb74a",
+        "color_badge_bg": "#160000"
+      }
+    },
+    "lp_promo_block_FBrKM9": {
+      "type": "lp-promo-block",
+      "settings": {
+        "show_label": true,
+        "label_text": "SPRING SALE",
+        "product_image": "shopify://shop_images/smart_diffuser_1_perspective_render_1.0_acecefce-4b3c-4b15-b274-7c9f6ed1bdaa.png",
+        "title": "Smart Aroma Diffuser Pro",
+        "show_description": true,
+        "description": "Onze diffusers leveren een hotelwaardige geurbeleving dankzij geavanceerde Cold-Air Diffusion Technologie. Luxe geur met één druk op de knop.",
+        "offer_text": "Nu GRATIS vanaf 9 geuren!",
+        "show_usp_1": true,
+        "usp_item_1": "Laat je huis ruiken als een luxe hotel",
+        "show_usp_2": true,
+        "usp_item_2": "Bereik tot maar liefst 100m²",
+        "show_usp_3": true,
+        "usp_item_3": "Volledig draadloos (4 dagen batterijduur)",
+        "show_usp_4": true,
+        "usp_item_4": "Volledig stille werking voor optimale ontspanning",
+        "cta_text": "Claim jouw gratis diffuser",
+        "cta_url": "shopify://collections/fall-sale",
+        "color_bg": "#ffffff",
+        "color_text": "#231f20",
+        "color_btn_bg": "#160000",
+        "color_btn_text": "#ffffff",
+        "color_label_bg": "#ae4e42",
+        "font_heading": "Bai Jamjuree",
+        "font_body": "Bai Jamjuree",
+        "font_btn": "Bai Jamjuree"
+      }
+    },
+    "lp-sticky-cta": {
+      "type": "lp-sticky-cta",
+      "settings": {
+        "cta_text": "Krijg de diffuser gratis",
+        "cta_url": "shopify://collections/fall-sale",
+        "show_trust": true,
+        "trust_text": "★★★★★ 4.7 sterren · 5.785+ tevreden klanten",
+        "show_mobile_title": false,
+        "mobile_title": "Smart Aroma Diffuser 2",
+        "color_bg": "#ffffff",
+        "color_btn_bg": "#160000",
+        "color_btn_text": "#ffffff",
+        "color_trust_text": "#8a8a8a",
+        "font_btn": "Bai Jamjuree"
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "article-hero",
+    "beste-diffuser-comparison",
+    "lp_promo_block_FBrKM9",
+    "lp-sticky-cta"
+  ]
+}
