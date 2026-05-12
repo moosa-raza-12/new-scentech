@@ -29,9 +29,9 @@
         "diffuser_limited_time_JXLGRK": {
           "type": "diffuser_limited_time",
           "settings": {
-            "selector_product": "calming-lavender",
-            "selector_title": "Diffuser Name",
-            "selector_description": "Describe the diffuser here.",
+            "selector_product": "smart-aroma-diffuser",
+            "selector_title": "Diffuser Lite",
+            "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
             "selector_discount_percent": 50
           }
         },
