@@ -163,7 +163,7 @@
         "open_subtext": "Limited-time promotional offer",
         "content": "<p>Add another diffuser and save more on your order.</p>",
         "close_icon": "+",
-        "open_icon": "−",
+        "open_icon": "x",
         "background_color": "#f8f7f4",
         "border_color": "#d7d7d7",
         "heading_color": "#160000",
