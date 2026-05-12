@@ -1,4 +1,41 @@
-﻿{% render 'new-kv-bundle-css' %}
+{% render 'new-kv-bundle-css' %}
+
+<style>
+  .shopify-section-group-footer-group { display: none !important; }
+  body { padding-bottom: var(--kv-sticky-height, 0px); }
+</style>
+<script>
+  (function () {
+    function updateStickyHeight() {
+      var sticky = document.querySelector('.kv-bundle-items-sticky');
+      if (!sticky) {
+        document.documentElement.style.setProperty('--kv-sticky-height', '0px');
+        return;
+      }
+      var h = sticky.offsetHeight || 0;
+      document.documentElement.style.setProperty('--kv-sticky-height', h + 'px');
+    }
+    function attachObserver() {
+      var sticky = document.querySelector('.kv-bundle-items-sticky');
+      if (!sticky) { return setTimeout(attachObserver, 250); }
+      updateStickyHeight();
+      if ('ResizeObserver' in window) {
+        new ResizeObserver(updateStickyHeight).observe(sticky);
+      }
+      if ('MutationObserver' in window) {
+        new MutationObserver(updateStickyHeight).observe(sticky, { childList: true, subtree: true, characterData: true });
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', attachObserver);
+    } else {
+      attachObserver();
+    }
+    window.addEventListener('load', updateStickyHeight);
+    window.addEventListener('resize', updateStickyHeight);
+    window.addEventListener('orientationchange', updateStickyHeight);
+  })();
+</script>
 
 <div class="kv-page-preloader" id="kv-page-preloader">
     <div class="kv-preloader-spinner"></div>
@@ -103,16 +140,31 @@
       <div class="kv-bundle-collection">
           <div class="kv-bundle-collection-inner">
           {% if section.blocks.size > 0 %}
-              {%- comment -%} Build exclusion list of product handles used in interrupter blocks {%- endcomment -%}
+              {%- comment -%}
+                Build exclusion list of product handles used in interrupter blocks.
+                Only single-product interrupters exclude their product from the grid.
+                Bundle interrupters (>= 2 products) keep showing their products in the
+                grid as well, so each scent in the bundle remains individually purchasable.
+              {%- endcomment -%}
               {% assign kv_intr_excluded = '' %}
               {% for block in section.blocks %}
                 {% if block.type == 'interrupter' and block.settings.enabled %}
-                  {% if block.settings.cta_product_1 != blank %}{% assign kv_intr_excluded = kv_intr_excluded | append: '|' | append: block.settings.cta_product_1 | append: '|' %}{% endif %}
-                  {% if block.settings.cta_product_2 != blank %}{% assign kv_intr_excluded = kv_intr_excluded | append: '|' | append: block.settings.cta_product_2 | append: '|' %}{% endif %}
-                  {% if block.settings.cta_product_3 != blank %}{% assign kv_intr_excluded = kv_intr_excluded | append: '|' | append: block.settings.cta_product_3 | append: '|' %}{% endif %}
-                  {% if block.settings.cta_product_4 != blank %}{% assign kv_intr_excluded = kv_intr_excluded | append: '|' | append: block.settings.cta_product_4 | append: '|' %}{% endif %}
-                  {% if block.settings.cta_product_5 != blank %}{% assign kv_intr_excluded = kv_intr_excluded | append: '|' | append: block.settings.cta_product_5 | append: '|' %}{% endif %}
-                  {% if block.settings.cta_product_6 != blank %}{% assign kv_intr_excluded = kv_intr_excluded | append: '|' | append: block.settings.cta_product_6 | append: '|' %}{% endif %}
+                  {% assign kv_intr_product_count = 0 %}
+                  {% if block.settings.cta_product_1 != blank %}{% assign kv_intr_product_count = kv_intr_product_count | plus: 1 %}{% endif %}
+                  {% if block.settings.cta_product_2 != blank %}{% assign kv_intr_product_count = kv_intr_product_count | plus: 1 %}{% endif %}
+                  {% if block.settings.cta_product_3 != blank %}{% assign kv_intr_product_count = kv_intr_product_count | plus: 1 %}{% endif %}
+                  {% if block.settings.cta_product_4 != blank %}{% assign kv_intr_product_count = kv_intr_product_count | plus: 1 %}{% endif %}
+                  {% if block.settings.cta_product_5 != blank %}{% assign kv_intr_product_count = kv_intr_product_count | plus: 1 %}{% endif %}
+                  {% if block.settings.cta_product_6 != blank %}{% assign kv_intr_product_count = kv_intr_product_count | plus: 1 %}{% endif %}
+
+                  {% if kv_intr_product_count == 1 %}
+                    {% if block.settings.cta_product_1 != blank %}{% assign kv_intr_excluded = kv_intr_excluded | append: '|' | append: block.settings.cta_product_1 | append: '|' %}{% endif %}
+                    {% if block.settings.cta_product_2 != blank %}{% assign kv_intr_excluded = kv_intr_excluded | append: '|' | append: block.settings.cta_product_2 | append: '|' %}{% endif %}
+                    {% if block.settings.cta_product_3 != blank %}{% assign kv_intr_excluded = kv_intr_excluded | append: '|' | append: block.settings.cta_product_3 | append: '|' %}{% endif %}
+                    {% if block.settings.cta_product_4 != blank %}{% assign kv_intr_excluded = kv_intr_excluded | append: '|' | append: block.settings.cta_product_4 | append: '|' %}{% endif %}
+                    {% if block.settings.cta_product_5 != blank %}{% assign kv_intr_excluded = kv_intr_excluded | append: '|' | append: block.settings.cta_product_5 | append: '|' %}{% endif %}
+                    {% if block.settings.cta_product_6 != blank %}{% assign kv_intr_excluded = kv_intr_excluded | append: '|' | append: block.settings.cta_product_6 | append: '|' %}{% endif %}
+                  {% endif %}
                 {% endif %}
               {% endfor %}
 
@@ -572,6 +624,7 @@
        </button>
    {% endif %}
    </div>
+                    {% render 'kv-bundle-part-of-tag', product: product, section: section %}
                     </div>
 
                     {% assign kv_card_index = kv_card_index | plus: 1 %}
@@ -927,6 +980,7 @@
      </button>
  {% endif %}
  </div>
+                    {% render 'kv-bundle-part-of-tag', product: product, section: section %}
                     </div>
 
                     {% assign kv_card_index = kv_card_index | plus: 1 %}
@@ -1526,6 +1580,7 @@
        </button>
    {% endif %}
  </div>
+                    {% render 'kv-bundle-part-of-tag', product: product, section: section %}
                     </div>
 
                     {% assign kv_card_index = kv_card_index | plus: 1 %}
@@ -1816,6 +1871,7 @@
      </button>
  {% endif %}
  </div>
+                    {% render 'kv-bundle-part-of-tag', product: product, section: section %}
                     </div>
 
                     {% assign kv_card_index = kv_card_index | plus: 1 %}
@@ -2337,6 +2393,13 @@ window.__kvInterrupterProducts = {};
         "label": "Sold Out Text",
         "default": "Sold Out",
         "info": "Text shown when a product is unavailable"
+      },
+      {
+        "type": "inline_richtext",
+        "id": "text_part_of_bundle",
+        "label": "Part of Bundle Prefix",
+        "default": "Part of",
+        "info": "Prefix shown on product cards that belong to a bundle interrupter (the bundle name is taken from the interrupter heading)."
       },
       {
         "type": "inline_richtext",

@@ -17,7 +17,7 @@
   .custom-diffuser-selector {
     width: 100%;
     max-width: 1000px;
-    padding: 20px 0;
+    padding: 20px;
     margin: auto;
   }
 @media (max-width: 639px) {
@@ -284,7 +284,7 @@
     font-size: 12px;
   }
   .cds-highlight-text{
-    color: #162518;
+    color: #5c220a;
 font-size: 12px;
 font-weight: 400;
   }
@@ -445,18 +445,22 @@ font-weight: 400;
 
           {% if discount_percent > 0 and new_price_display != blank %}
             {% if template.suffix == "diffuser-overflow-v1" or template.name == "diffuser-overflow-v1" %}
+              {% assign cds_highlight_overflow_text = section.settings.cds_highlight_overflow_text | default: '<b>Spring:</b> Pay only <b>[price]</b> after adding 2 scents!' %}
+              {% assign cds_highlight_overflow_text = cds_highlight_overflow_text | replace: '[price]', new_price_display %}
               <div class="cds-highlight">
-                <p class="cds-highlight-text"><b>Spring Sale:</b> Pay only <b>{{new_price_display }}</b> after adding 2 scents!</p>
+                <p class="cds-highlight-text">{{ cds_highlight_overflow_text }}</p>
                </div>
               {% else %}
+              {% assign cds_highlight_default_text = section.settings.cds_highlight_default_text | default: '<b>Spring:</b> Pay only <b>[price]</b> for your diffuser!' %}
+              {% assign cds_highlight_default_text = cds_highlight_default_text | replace: '[price]', new_price_display %}
               <div class="cds-highlight">
-                <p class="cds-highlight-text"><b>Spring Sale:</b> Pay only <b>{{new_price_display }}</b> for your diffuser!</p>
+                <p class="cds-highlight-text">{{ cds_highlight_default_text }}</p>
                </div>
             {% endif %}
            
           {% endif %}
           {% if template.suffix == 'diffuser-overflow-v1' %}
-            <div class="cds-lock-overlay">Add at least 2 scents to select a diffuser</div>
+            <div class="cds-lock-overlay">{{ section.settings.cds_lock_overlay_text | default: 'Add at least 2 scents to select a diffuser' }}</div>
           {% endif %}
         </div>
         {% assign first_diffuser_rendered = true %}

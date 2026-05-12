@@ -26,12 +26,85 @@
     "v2_diffuser_kv_bundle_fA7kKV": {
       "type": "v2-diffuser-kv-bundle",
       "blocks": {
-        "collection_83jWBx": {
-          "type": "collection",
+        "interrupter_dPr84A": {
+          "type": "interrupter",
           "settings": {
-            "collection": "",
-            "products_limit": 12,
-            "badge_text": ""
+            "enabled": true,
+            "show_on_desktop": true,
+            "position_desktop": 0,
+            "show_on_mobile": true,
+            "position_mobile": 0,
+            "badge_text": "New",
+            "heading": "Velvet Wood",
+            "description": "<p>Woody blend with leather, sandalwood, amber, and musk.</p>",
+            "show_cta": true,
+            "cta_label": "+ Add",
+            "cta_product_1": "velvet-wood",
+            "cta_product_2": "",
+            "cta_product_3": "",
+            "cta_product_4": "",
+            "cta_product_5": "",
+            "cta_product_6": "",
+            "image": "shopify://shop_images/c8b404391788a94577d2407aad919b3c_exif.jpg",
+            "image_position": "left",
+            "desktop_layout": "stacked",
+            "mobile_layout": "side",
+            "image_width_percent": 38,
+            "image_height_mobile": 180,
+            "image_height_desktop": 180,
+            "image_fit": "cover",
+            "background_color": "#f1efe8",
+            "border_color": "#d9d4c5",
+            "title_color": "#160000",
+            "title_size": 28,
+            "text_color": "#160000",
+            "text_size": 16,
+            "badge_bg": "#ffffff",
+            "badge_text_color": "#160000",
+            "cta_bg": "#5c220a",
+            "cta_text_color": "#ffffff",
+            "cta_border_color": "#ded9c5"
+          }
+        },
+        "interrupter_VRhqXc": {
+          "type": "interrupter",
+          "disabled": true,
+          "settings": {
+            "enabled": true,
+            "show_on_desktop": true,
+            "position_desktop": 0,
+            "show_on_mobile": true,
+            "position_mobile": 0,
+            "badge_text": "New",
+            "heading": "Bundle Test",
+            "description": "<p>Woody blend with leather, sandalwood, amber, and musk.</p>",
+            "show_cta": true,
+            "cta_label": "+ Add",
+            "cta_product_1": "classic-charm",
+            "cta_product_2": "tea-whisper",
+            "cta_product_3": "",
+            "cta_product_4": "",
+            "cta_product_5": "",
+            "cta_product_6": "",
+            "image": "shopify://shop_images/c8b404391788a94577d2407aad919b3c_exif.jpg",
+            "image_position": "right",
+            "desktop_layout": "stacked",
+            "mobile_layout": "side",
+            "image_width_percent": 38,
+            "image_height_mobile": 180,
+            "image_height_desktop": 180,
+            "image_fit": "cover",
+            "background_color": "#f1efe8",
+            "border_color": "#d9d4c5",
+            "title_color": "#160000",
+            "title_size": 28,
+            "text_color": "#160000",
+            "text_size": 16,
+            "badge_bg": "#ffffff",
+            "badge_text_color": "#160000",
+            "cta_bg": "#ded9c5",
+            "cta_text_color": "#6a3b1e",
+            "cta_border_color": "#ded9c5"
           }
         },
         "collection_P9aJaF": {
@@ -50,6 +123,22 @@
             "badge_text": ""
           }
         },
+        "collection_cbyaEX": {
+          "type": "collection",
+          "settings": {
+            "collection": "fresh-energizing-scents",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
+        "collection_83jWBx": {
+          "type": "collection",
+          "settings": {
+            "collection": "calming-serene-scents",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
         "collection_Ckicqw": {
           "type": "collection",
           "settings": {
@@ -64,10 +153,7 @@
             "selector_product": "smart-aroma-diffuser",
             "selector_title": "Diffuser Lite",
             "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
-            "selector_discount_percent": 50,
-            "selector_old_price": "€149,95",
-            "selector_new_price": "€74,98",
-            "selector_highlight_text": "<p><strong>Spring Sale:</strong> Pay only €74,98 after adding 2 scents!</p>"
+            "selector_discount_percent": 50
           }
         },
         "diffuser_BGpK3B": {
@@ -76,10 +162,7 @@
             "selector_product": "smart-aroma-diffuser-2",
             "selector_title": "Diffuser 2",
             "selector_description": "More consistent and noticeable scenting, designed for daily use. A strong balance between performance and control.",
-            "selector_discount_percent": 50,
-            "selector_old_price": "€149,95",
-            "selector_new_price": "€74,98",
-            "selector_highlight_text": "<p><strong>Spring Sale:</strong> Pay only €74,98 after adding 2 scents!</p>"
+            "selector_discount_percent": 50
           }
         },
         "diffuser_YtKKHF": {
@@ -88,17 +171,17 @@
             "selector_product": "smart-aroma-diffuser-pro",
             "selector_title": "Diffuser Pro",
             "selector_description": "High-performance scenting with maximum coverage and intensity. Built for a stronger, more immersive experience.",
-            "selector_discount_percent": 50,
-            "selector_old_price": "€149,95",
-            "selector_new_price": "€74,98",
-            "selector_highlight_text": "<p><strong>Spring Sale:</strong> Pay only €74,98 after adding 2 scents!</p>"
+            "selector_discount_percent": 50
           }
         }
       },
       "block_order": [
-        "collection_83jWBx",
+        "interrupter_dPr84A",
+        "interrupter_VRhqXc",
         "collection_P9aJaF",
         "collection_RKkGgt",
+        "collection_cbyaEX",
+        "collection_83jWBx",
         "collection_Ckicqw",
         "diffuser_TFAztV",
         "diffuser_BGpK3B",
@@ -111,7 +194,10 @@
         "selector_subtext": "Choose the diffuser that fits your needs best.",
         "selector_compare_text": "Compare diffusers",
         "selector_compare_link": "#open-comparison-popup",
-        "selector_banner_text": "<p><strong>Spring Sale:</strong> Get 50% off on the diffusers</p>",
+        "selector_banner_text": "<p><strong>Mothersday Sale:</strong> Get 50% off on the diffusers</p>",
+        "cds_highlight_overflow_text": "<strong>Mothersday Sale:</strong> Pay only <strong>[price]</strong> after adding 2 scents!",
+        "cds_highlight_default_text": "<strong>Mothersday Sale:</strong> Pay only <strong>[price]</strong> for your diffuser!",
+        "cds_lock_overlay_text": "Add at least 2 scents to select a diffuser",
         "cds_banner_bg": "#5c220a",
         "promo_banner_enabled": false,
         "step_number": "2",
@@ -135,13 +221,14 @@
         "progress_complete_text": "🎉 Amazing! All gifts unlocked!",
         "text_free": "FREE",
         "text_free_gift": "Free Gift",
-        "text_add_scents": "Add Scents",
+        "text_add_scents": "Select a diffuser",
         "text_continue": "Continue",
         "text_add_to_cart": "Add to Cart",
         "text_no_items": "No items selected",
         "text_save": "SAVE",
         "text_add_button": "+ Add",
         "text_sold_out": "Sold Out",
+        "text_part_of_bundle": "Part of",
         "text_preorder_ships": "Pre-Order: Ships by",
         "text_gift_preorder_prefix": "The",
         "text_gift_preorder_suffix": "is on Pre-Order. Delivers on",
@@ -154,19 +241,19 @@
         "text_instock_expanded": "Your order ships out today from the Netherlands. These items are in stock at our warehouse in Gorinchem and are shipped by our reliable delivery partners.",
         "milestone_1_count": 1,
         "milestone_1_label": "{count} geuren",
-        "milestone_1_price": "€27,95",
+        "milestone_1_price": "€29,95",
         "milestone_1_text": "Add [count] more scents for FREE diffuser",
         "milestone_2_count": 3,
         "milestone_2_label": "{count} geuren",
-        "milestone_2_price": "€25,95",
+        "milestone_2_price": "€26,95",
         "milestone_2_text": "Keep going! Add [count] more scents to unlock the next reward!",
         "milestone_3_count": 5,
         "milestone_3_label": "{count} geuren",
-        "milestone_3_price": "€22,95",
+        "milestone_3_price": "€24,95",
         "milestone_3_text": "Almost there! Add [count] more scents to unlock the next reward!",
-        "milestone_4_count": 9,
+        "milestone_4_count": 7,
         "milestone_4_label": "{count} geuren",
-        "milestone_4_price": "€19,95",
+        "milestone_4_price": "€22,95",
         "milestone_4_text": "Almost there! Add [count] more scents to unlock the Pro Diffuser!"
       }
     }

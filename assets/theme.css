@@ -10205,7 +10205,7 @@ body.lock .ai-announcement-bar-expired-ayw9tms9ls1ramucvwaigenblock7a3a74b3wqqtd
 @media (max-width: 768px) {
   .intercom-lightweight-app-launcher,
   .intercom-launcher {
-    bottom: 28px !important; /* adjust this value until it looks right */
+    bottom: 28px; /* adjust this value until it looks right */
   }
 }
 

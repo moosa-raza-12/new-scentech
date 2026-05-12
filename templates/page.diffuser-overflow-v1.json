@@ -35,13 +35,17 @@
             "show_on_mobile": true,
             "position_mobile": 0,
             "badge_text": "New",
-            "heading": "Wild Blossom",
-            "description": "<p>A soft, dewy floral that feels fresh, clean, and quietly uplifting, bringing a light, elegant scent into any space without ever feeling heavy.</p>",
+            "heading": "Velvet Wood",
+            "description": "<p>Woody blend with leather, sandalwood, amber, and musk.</p>",
             "show_cta": true,
-            "cta_label": "+Add",
-            "cta_product": "wild-blossom",
-            "cta_default_quantity": 1,
-            "image": "shopify://shop_images/d3f7110df2ea05ce12ba94d0b80d01cc55c55d17.png",
+            "cta_label": "+ Add",
+            "cta_product_1": "velvet-wood",
+            "cta_product_2": "",
+            "cta_product_3": "",
+            "cta_product_4": "",
+            "cta_product_5": "",
+            "cta_product_6": "",
+            "image": "shopify://shop_images/c8b404391788a94577d2407aad919b3c_exif.jpg",
             "image_position": "left",
             "desktop_layout": "stacked",
             "mobile_layout": "side",
@@ -69,8 +73,7 @@
             "selector_image": "shopify://shop_images/Images_Info_0e95c5fb-3eb6-456d-8fc6-b8a227c0183c.png",
             "selector_title": "Diffuser Lite",
             "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
-            "selector_discount_percent": 50,
-            "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
+            "selector_discount_percent": 50
           }
         },
         "diffuser_JKTBEi": {
@@ -80,8 +83,7 @@
             "selector_image": "shopify://shop_images/Images_Info_d009aa1b-9c64-4ff8-a9ec-bfda5fea114e.png",
             "selector_title": "Diffuser 2",
             "selector_description": "More consistent and noticeable scenting, designed for daily use. A strong balance between performance and control.",
-            "selector_discount_percent": 50,
-            "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
+            "selector_discount_percent": 50
           }
         },
         "diffuser_n47YqG": {
@@ -89,15 +91,14 @@
           "settings": {
             "selector_product": "smart-aroma-diffuser-pro",
             "selector_title": "Diffuser Pro",
-            "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
-            "selector_discount_percent": 50,
-            "selector_highlight_text": "<p>Spring Sale: Pay only €74,98 after adding 2 scents!</p>"
+            "selector_description": "High-performance scenting with maximum coverage and intensity. Built for a stronger, more immersive experience.",
+            "selector_discount_percent": 50
           }
         },
         "collection_9xA4KV": {
           "type": "collection",
           "settings": {
-            "collection": "fragrances",
+            "collection": "all",
             "products_limit": 12,
             "badge_text": ""
           }
@@ -109,6 +110,30 @@
             "products_limit": 12,
             "badge_text": ""
           }
+        },
+        "collection_6nrRKH": {
+          "type": "collection",
+          "settings": {
+            "collection": "calming-serene-scents",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
+        "collection_PF4wkY": {
+          "type": "collection",
+          "settings": {
+            "collection": "fresh-energizing-scents",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
+        "collection_7mUQbq": {
+          "type": "collection",
+          "settings": {
+            "collection": "floral-romantic-scents",
+            "products_limit": 12,
+            "badge_text": ""
+          }
         }
       },
       "block_order": [
@@ -117,7 +142,10 @@
         "diffuser_JKTBEi",
         "diffuser_n47YqG",
         "collection_9xA4KV",
-        "collection_Q6zXnA"
+        "collection_Q6zXnA",
+        "collection_6nrRKH",
+        "collection_PF4wkY",
+        "collection_7mUQbq"
       ],
       "name": "Diffuser KV Bundle",
       "settings": {
@@ -127,6 +155,9 @@
         "selector_compare_text": "Compare diffusers",
         "selector_compare_link": "#open-comparison-popup",
         "selector_banner_text": "<p><strong>Mothersday Sale:</strong> Get 50% off the diffuser when you add 2 scents</p>",
+        "cds_highlight_overflow_text": "<strong>Mothersday Sale:</strong> Pay only <strong>[price]</strong> after adding 2 scents!",
+        "cds_highlight_default_text": "<strong>Mothersday Sale:</strong> Pay only <strong>[price]</strong> for your diffuser!",
+        "cds_lock_overlay_text": "Add at least 2 scents to select a diffuser",
         "cds_banner_bg": "#5c220a",
         "promo_banner_enabled": false,
         "step_number": "2",
@@ -162,6 +193,7 @@
         "text_save": "SAVE",
         "text_add_button": "+ Add",
         "text_sold_out": "Sold Out",
+        "text_part_of_bundle": "Part of",
         "text_preorder_ships": "Pre-Order: Ships by",
         "text_gift_preorder_prefix": "The",
         "text_gift_preorder_suffix": "is on Pre-Order. Delivers on",
@@ -174,19 +206,19 @@
         "text_instock_expanded": "Your order ships out today from the Netherlands. These items are in stock at our warehouse in Gorinchem and are shipped by our reliable delivery partners.",
         "milestone_1_count": 1,
         "milestone_1_label": "{count} geuren",
-        "milestone_1_price": "€27,95",
+        "milestone_1_price": "€29,95",
         "milestone_1_text": "Add [count] more scents for FREE diffuser",
         "milestone_2_count": 3,
         "milestone_2_label": "{count} geuren",
-        "milestone_2_price": "€25,95",
+        "milestone_2_price": "€26,95",
         "milestone_2_text": "Keep going! Add [count] more scents to unlock the next reward!",
         "milestone_3_count": 5,
         "milestone_3_label": "{count} geuren",
-        "milestone_3_price": "€22,95",
+        "milestone_3_price": "€24,95",
         "milestone_3_text": "Almost there! Add [count] more scents to unlock the next reward!",
-        "milestone_4_count": 9,
+        "milestone_4_count": 7,
         "milestone_4_label": "{count} geuren",
-        "milestone_4_price": "€19,95",
+        "milestone_4_price": "€22,95",
         "milestone_4_text": "Almost there! Add [count] more scents to unlock the Pro Diffuser!"
       }
     }

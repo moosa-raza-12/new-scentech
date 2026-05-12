@@ -191,8 +191,12 @@
 
       function updateCollectionPadding() {
         if (!bundleCollectionEl) return;
+
+        const isMobile = window.innerWidth < 768; // adjust breakpoint if needed
+        const paddingValue = isMobile ? '250px' : '400px';
+
         if (heroSection && heroSection.classList.contains('sticky')) {
-          bundleCollectionEl.style.paddingTop = '400px';
+          bundleCollectionEl.style.paddingTop = paddingValue;
         } else {
           bundleCollectionEl.style.paddingTop = '';
         }

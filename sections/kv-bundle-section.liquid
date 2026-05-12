@@ -4387,12 +4387,16 @@
       line-height: 1.1;
   }
 
-  .kv-bundle-interrupter-text {
-      color: var(--kv-interrupter-text-color, #160000);
-      font-size: var(--kv-interrupter-text-size, 16px);
-      font-weight: 400;
-      line-height: normal;
-  }
+.kv-bundle-interrupter-text {
+    color: var(--kv-interrupter-text-color, #160000);
+    font-size: var(--kv-interrupter-text-size, 16px);
+    font-weight: 400;
+    line-height: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+}
 
   .kv-bundle-interrupter-text p {
       margin: 0;
@@ -5763,4 +5767,40 @@ background: white;
   
   }
   
+    .shopify-section-group-footer-group { display: none !important; }
+  body { padding-bottom: var(--kv-sticky-height, 0px); }
   </style>
+
+
+<script>
+  (function () {
+    function updateStickyHeight() {
+      var sticky = document.querySelector('.kv-bundle-items-sticky');
+      if (!sticky) {
+        document.documentElement.style.setProperty('--kv-sticky-height', '0px');
+        return;
+      }
+      var h = sticky.offsetHeight || 0;
+      document.documentElement.style.setProperty('--kv-sticky-height', h + 'px');
+    }
+    function attachObserver() {
+      var sticky = document.querySelector('.kv-bundle-items-sticky');
+      if (!sticky) { return setTimeout(attachObserver, 250); }
+      updateStickyHeight();
+      if ('ResizeObserver' in window) {
+        new ResizeObserver(updateStickyHeight).observe(sticky);
+      }
+      if ('MutationObserver' in window) {
+        new MutationObserver(updateStickyHeight).observe(sticky, { childList: true, subtree: true, characterData: true });
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', attachObserver);
+    } else {
+      attachObserver();
+    }
+    window.addEventListener('load', updateStickyHeight);
+    window.addEventListener('resize', updateStickyHeight);
+    window.addEventListener('orientationchange', updateStickyHeight);
+  })();
+</script>

@@ -171,6 +171,14 @@ NOTE TO DEVELOPERS: welcome to Impact theme! We hope that you will enjoy editing
           body: JSON.stringify({ attributes: { 'scent': 'true' } })
         }).catch(function(e) { console.error('Error setting scent attribute:', e); });
       </script>
+      <style>
+        @media (max-width: 768px) {
+        .intercom-lightweight-app-launcher,
+        .intercom-launcher {
+          display:none !important;
+        }
+      }
+      </style>
     {%- elsif __remove_scent -%}
       <script>
         fetch('/cart/update.js', {
@@ -216,24 +224,7 @@ NOTE TO DEVELOPERS: welcome to Impact theme! We hope that you will enjoy editing
       added into the main element to ensure that dynamic sections added into the footer group are properly laid out.
       {%- endcomment -%}
       {%- if request.page_type != 'password' -%}
-        {%- unless (template.name == 'collection' and template.suffix == 'returning-customer')
-          or (template.name == 'page' and template.suffix == 'diffuser-overflow-v1')
-          or (template.name == 'page' and template.suffix == 'v2-diffuser-overflow') -%}
-          {%- sections 'footer-group' -%}
-        {%- endunless -%}
-      {%- endif -%}
-
-      {%- if (template.name == 'page' and template.suffix == 'diffuser-overflow-v1')
-          or (template.name == 'page' and template.suffix == 'v2-diffuser-overflow') -%}
-        {% comment %} <style>
-          .shopify-section-group--footer-group,
-          footer,
-          #footer,
-          [id*="footer"],
-          [class*="footer"] {
-            display: none !important;
-          }
-        </style> {% endcomment %}
+        {%- sections 'footer-group' -%}
       {%- endif -%}
 
          {% if template contains 'blog' or template contains 'article' %}
@@ -280,6 +271,6 @@ body.diffuser .product-info__block-item .promo-banner  svg, .product-quick-add .
         SufioVAT.onCart();
     };
 </script> 
-  
+ 
   </body>
 </html>

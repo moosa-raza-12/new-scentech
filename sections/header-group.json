@@ -72,7 +72,7 @@
           "type": "countdown",
           "settings": {
             "text": "MONTHERSDAY SALE ENDS IN:",
-            "end_date": "2026-05-07T23:59:00",
+            "end_date": "2026-05-11T23:59:00",
             "show_labels": true,
             "url": "shopify://collections/fall-sale"
           }

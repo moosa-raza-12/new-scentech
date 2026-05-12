@@ -152,6 +152,12 @@
         });
       })();
 
+      // Diffuser cards stay selectable from page load; the kv-bundle-continue-btn
+      // is the only thing gated by the 2-scent minimum.
+      document.querySelectorAll('.cds-cards.cds-locked').forEach(function(c) {
+        c.classList.remove('cds-locked');
+      });
+
       // Update total count - count of all products across all tabs
       const totalCountElement = document.getElementById('kv-total-count');
       if (totalCountElement) {
@@ -193,8 +199,12 @@
 
       function updateCollectionPadding() {
         if (!bundleCollectionEl) return;
+
+        const isMobile = window.innerWidth < 768; // adjust breakpoint if needed
+        const paddingValue = isMobile ? '250px' : '400px';
+
         if (heroSection && heroSection.classList.contains('sticky')) {
-          bundleCollectionEl.style.paddingTop = '400px';
+          bundleCollectionEl.style.paddingTop = paddingValue;
         } else {
           bundleCollectionEl.style.paddingTop = '';
         }
@@ -296,16 +306,11 @@
       document.addEventListener('kv:selector-product-selected', function(e) {
         const data = e.detail || {};
         if (!data.productId || !data.variantId) return;
-  
-        const nonSelectorItemCount = selectedProducts
-          .filter(product => product.selectionSource !== 'cds-selector')
-          .reduce((sum, product) => sum + (product.quantity || 0), 0);
-  
-        // Selector product is eligible only after 2 other bundle items are selected
-        if (nonSelectorItemCount < 2) {
-          return;
-        }
-  
+
+        // Diffuser can be selected at any time. The "Add at least 2 Scents" gating
+        // is enforced separately on the kv-bundle-continue-btn inside
+        // updateThumbnailCarousel().
+
         const selectorProduct = {
           productId: data.productId,
           productHandle: data.productHandle || '',
@@ -332,19 +337,6 @@
         if (document.getElementById('kv-minicart').classList.contains('active')) {
           updateMiniCart();
         }
-        // In the kv:selector-product-selected handler
-  if (nonSelectorItemCount < 2) {
-  // Show a message that they need more items first
-  const discMsg = document.querySelector(`.disc-active-msg`);
-  if (discMsg) {
-    discMsg.style.display = 'block';
-    discMsg.textContent = `Add ${2 - nonSelectorItemCount} more items first!`;
-    setTimeout(() => {
-      discMsg.style.display = 'none';
-    }, 3000);
-  }
-  return;
-  } 
       });
   
       // Handle Add button click - show quantity controls
@@ -645,12 +637,18 @@
                 syncProductState(product.productId, 'remove');
               });
               selectedProducts = [];
+              resetInterrupterBundleUI();
               updateThumbnailCarousel();
 
-              triggerBtn.disabled = false;
-              setTimeout(() => {
-                triggerBtn.innerHTML = originalButtonHTML;
-              }, 1500);
+              // Mini-cart checkout only: restore label/HTML after success.
+              // Continue button (#kv-open-minicart) must stay managed by updateThumbnailCarousel
+              // (disabled until 2+ scents again — same as initial load).
+              if (triggerBtn.id === 'kv-checkout-btn') {
+                triggerBtn.disabled = false;
+                setTimeout(() => {
+                  triggerBtn.innerHTML = originalButtonHTML;
+                }, 1500);
+              }
             })
             .catch(error => {
               console.error('Error updating cart drawer:', error);
@@ -1004,6 +1002,27 @@
       });
     }
 
+    // After bundle checkout: restore interrupter buttons (same “fresh” state as product cards)
+    function resetInterrupterBundleUI() {
+      document.querySelectorAll('.kv-interrupter-qty-wrapper').forEach(function(w) {
+        w.remove();
+      });
+      var intrData = window.__kvInterrupterProducts || {};
+      document.querySelectorAll('.kv-interrupter-add-to-cart').forEach(function(btn) {
+        var blockId = btn.getAttribute('data-block-id');
+        var products = intrData[blockId] || [];
+        if (products.length === 0) {
+          btn.style.display = 'none';
+          return;
+        }
+        btn.style.display = '';
+        btn.disabled = false;
+        btn.classList.remove('loading', 'kv-interrupter-added');
+        var orig = btn.getAttribute('data-original-label');
+        if (orig) btn.textContent = orig;
+      });
+    }
+
     // Remove product from selected products
     function removeSelectedProduct(productId) {
       selectedProducts = selectedProducts.filter(p => p.productId !== productId);
@@ -1034,9 +1053,11 @@
         .filter(product => product.selectionSource !== 'cds-selector')
         .reduce((sum, product) => sum + (product.quantity || 0), 0);
   
-      // Enforce selector eligibility continuously as quantities change
+      // Below the 2-scent threshold, just update messaging. The diffuser stays
+      // selected and the cds-cards remain unlocked so the customer can pick a
+      // diffuser at any time; the kv-bundle-continue-btn gating below handles
+      // the actual lock.
       if (nonSelectorItemCount < 2) {
-        const removedSelectorProducts = selectedProducts.filter(product => product.selectionSource === 'cds-selector');
         const badgeText=document.querySelector('.text-update')
         const badgeTextEmpty=document.getElementById('kv-progress-footer-message-empty')
         if (badgeTextEmpty) {
@@ -1044,20 +1065,6 @@
         }
         if (badgeText) {
           badgeText.textContent = 'Choose at least 2 scents';
-        }
-        removedSelectorProducts.forEach(product => {
-          syncProductState(product.productId, 'remove');
-          syncProductQuantity(product.productId, 1);
-        });
-        selectedProducts = selectedProducts.filter(product => product.selectionSource !== 'cds-selector');
-
-        if (isOverflowV1) {
-          document.querySelectorAll('.cds-cards').forEach(c => {
-            c.classList.add('cds-locked');
-            c.classList.remove('active');
-            const hl = c.querySelector('.cds-highlight');
-            if (hl) hl.style.display = 'none';
-          });
         }
       }
 
@@ -1158,19 +1165,20 @@
       const savingsFormatted = formatMoney(savings * 100);
       const badgeText=document.querySelector('.kv-progress-footer-message-empty')  
   
-      // Update continue button state and text (enable only when at least 2 items are selected)
-      if (totalSelectedCount < 2) {
+      // Update continue button state and text. Gate strictly on scent count so a
+      // diffuser-only or single-scent + diffuser selection keeps the CTA disabled.
+      if (scentCount < 2) {
         continueBtn.disabled = true;
-        continueBtn.textContent = totalSelectedCount === 1 ? 'Add 1 more item' : textLabels.addScents;
-        
-        // Hide mini trigger until minimum item count is reached
+        continueBtn.textContent = scentCount === 1 ? 'Add 1 more scent' : textLabels.addScents;
+
+        // Hide mini trigger until minimum scent count is reached
         if (miniTrigger) {
           miniTrigger.style.display = 'none';
         }
       } else {
         continueBtn.disabled = false;
         continueBtn.innerHTML = `${textLabels.addToCart}<span style="margin:0 8px;">·</span>${totalFormatted}`;
-        // Show mini trigger when minimum item count is reached
+        // Show mini trigger when minimum scent count is reached
         if (miniTrigger) {
           miniTrigger.style.display = 'flex';
         }
@@ -1313,10 +1321,12 @@
       
       if (!progressFill) return;
       
-      // Calculate current product count (total quantity across all products)
+      // Calculate current product count (scents only, exclude diffuser / cds-cards)
       let currentCount = 0;
       selectedProducts.forEach(product => {
-        currentCount += product.quantity;
+        if (product.selectionSource !== 'cds-selector') {
+          currentCount += product.quantity;
+        }
       });
       
       // Toggle footer visibility based on product selection
