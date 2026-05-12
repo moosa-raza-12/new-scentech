@@ -1,1 +1,192 @@
-{"sections":{"banner":{"type":"collection-banner","settings":{"full_width":true,"allow_transparent_header":false,"enable_parallax":false,"show_collection_title":true,"show_collection_description":false,"show_collection_image":true,"collection_title_size":"h3","image_size":"auto","mobile_text_position":"place-self-center text-center","desktop_text_position":"sm:place-self-center sm:text-center","featured_product":"","featured_product_heading":"Featured product","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":20}},"image_link_blocks_yQVkQF":{"type":"image-link-blocks","blocks":{"item_8VxV4i":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/4_335ee863-1629-450c-87af-4e7ee9844c45.png","stretch_image":true,"link_text":"Floral & Serene","link_url":"shopify:\/\/collections\/floral-romantic-scents","background":"rgba(0,0,0,0)","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"item_WTF3cR":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/2_00bc159b-0bbf-465c-a370-2f20142aaa37.png","stretch_image":true,"link_text":"Fresh & Vital","link_url":"shopify:\/\/collections\/fresh-energizing-scents","background":"","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"item_wgjpMy":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/woody.png","stretch_image":true,"link_text":"Woody & Warm","link_url":"shopify:\/\/collections\/warm-indulgent-scents","background":"","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"item_aHrrbJ":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/amber_ea161761-bfca-40a4-8407-e9fbb5db1467.png","stretch_image":true,"link_text":"Amber & Aura","link_url":"shopify:\/\/collections\/calming-serene-scents","background":"","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}}},"block_order":["item_8VxV4i","item_WTF3cR","item_wgjpMy","item_aHrrbJ"],"custom_css":["h2 {font-size: 23px;}"],"settings":{"full_width":false,"block_size":"small","subheading":"","title":"","content":"","link_url":"","link_text":"","background":"rgba(0,0,0,0)","background_gradient":"","text_color":"","heading_color":"","heading_gradient":""}},"main":{"type":"main-collection","settings":{"products_per_page":24,"products_per_row_mobile":"2","products_per_row_desktop":4,"filter_layout":"horizontal","show_sort_by":false,"show_filters":false,"show_filter_group_name":false,"show_filter_values_count":false,"open_first_filter_group":false}},"image_with_text_overlay_th3iAp":{"type":"image-with-text-overlay","blocks":{"heading_CK8Xa8":{"type":"heading","settings":{"text":"Find a scent that fits your personality.","heading_tag":"h3"}},"richtext_89zAQR":{"type":"richtext","settings":{"content":"<p>Discover a fragrance crafted to match your unique essence and elevate your space.<\/p>"}},"button_JNchaE":{"type":"button","settings":{"style":"fill","size":"xl","text":"Take the quiz","url":"#open-quiz-tools\/perfect-product-finder\/find-a-fragrance-that-fits-your-personality","background":"#ffffff","text_color":"#160000"}}},"block_order":["heading_CK8Xa8","richtext_89zAQR","button_JNchaE"],"settings":{"full_width":true,"allow_transparent_header":false,"enable_parallax":false,"image_size":"sm","image":"shopify:\/\/shop_images\/All_Scents.png","mobile_image":"shopify:\/\/shop_images\/Ontwerp_zonder_titel_75.png","mobile_text_position":"place-self-end-start text-start","desktop_text_position":"sm:place-self-end-start sm:text-start","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"176313057081e46d12":{"type":"apps","settings":{"full_width":true,"remove_vertical_spacing":false,"remove_horizontal_spacing":false,"background":"","background_gradient":"","text_color":""}}},"order":["banner","image_link_blocks_yQVkQF","main","image_with_text_overlay_th3iAp","176313057081e46d12"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "collection-banner",
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": false,
+        "enable_parallax": false,
+        "show_collection_title": true,
+        "show_collection_description": false,
+        "show_collection_image": true,
+        "collection_title_size": "h3",
+        "image_size": "auto",
+        "mobile_text_position": "place-self-center text-center",
+        "desktop_text_position": "sm:place-self-center sm:text-center",
+        "featured_product": "",
+        "featured_product_heading": "Featured product",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 20
+      }
+    },
+    "image_link_blocks_yQVkQF": {
+      "type": "image-link-blocks",
+      "blocks": {
+        "item_8VxV4i": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/4_335ee863-1629-450c-87af-4e7ee9844c45.png",
+            "stretch_image": true,
+            "link_text": "Floral & Serene",
+            "link_url": "shopify://collections/floral-romantic-scents",
+            "background": "rgba(0,0,0,0)",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "item_WTF3cR": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/2_00bc159b-0bbf-465c-a370-2f20142aaa37.png",
+            "stretch_image": true,
+            "link_text": "Fresh & Vital",
+            "link_url": "shopify://collections/fresh-energizing-scents",
+            "background": "",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "item_wgjpMy": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/woody.png",
+            "stretch_image": true,
+            "link_text": "Woody & Warm",
+            "link_url": "shopify://collections/warm-indulgent-scents",
+            "background": "",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "item_aHrrbJ": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/amber_ea161761-bfca-40a4-8407-e9fbb5db1467.png",
+            "stretch_image": true,
+            "link_text": "Amber & Aura",
+            "link_url": "shopify://collections/calming-serene-scents",
+            "background": "",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        }
+      },
+      "block_order": [
+        "item_8VxV4i",
+        "item_WTF3cR",
+        "item_wgjpMy",
+        "item_aHrrbJ"
+      ],
+      "custom_css": [
+        "h2 {font-size: 23px;}"
+      ],
+      "settings": {
+        "full_width": false,
+        "block_size": "small",
+        "subheading": "",
+        "title": "",
+        "content": "",
+        "link_url": "",
+        "link_text": "",
+        "background": "rgba(0,0,0,0)",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": ""
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "products_per_page": 24,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "filter_layout": "horizontal",
+        "show_sort_by": false,
+        "show_filters": false,
+        "show_filter_group_name": false,
+        "show_filter_values_count": false,
+        "open_first_filter_group": false
+      }
+    },
+    "image_with_text_overlay_th3iAp": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_CK8Xa8": {
+          "type": "heading",
+          "settings": {
+            "text": "Find a scent that fits your personality.",
+            "heading_tag": "h3"
+          }
+        },
+        "richtext_89zAQR": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Discover a fragrance crafted to match your unique essence and elevate your space.</p>"
+          }
+        },
+        "button_JNchaE": {
+          "type": "button",
+          "settings": {
+            "style": "fill",
+            "size": "xl",
+            "text": "Take the quiz",
+            "url": "#open-quiz-tools/perfect-product-finder/find-a-fragrance-that-fits-your-personality",
+            "background": "#ffffff",
+            "text_color": "#160000"
+          }
+        }
+      },
+      "block_order": [
+        "heading_CK8Xa8",
+        "richtext_89zAQR",
+        "button_JNchaE"
+      ],
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": false,
+        "enable_parallax": false,
+        "image_size": "sm",
+        "image": "shopify://shop_images/All_Scents.png",
+        "mobile_image": "shopify://shop_images/Ontwerp_zonder_titel_75.png",
+        "mobile_text_position": "place-self-end-start text-start",
+        "desktop_text_position": "sm:place-self-end-start sm:text-start",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
+    "176313057081e46d12": {
+      "type": "apps",
+      "settings": {
+        "full_width": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false,
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "image_link_blocks_yQVkQF",
+    "main",
+    "image_with_text_overlay_th3iAp",
+    "176313057081e46d12"
+  ]
+}

@@ -1,0 +1,47 @@
+{%- comment -%}
+  Renders a "Part of <Bundle Name>" tag at the bottom of a product card
+  if the current product is included in any enabled interrupter block that has
+  2 or more products selected (i.e. a bundle interrupter).
+
+  Required context:
+    - product: the current product object
+    - section: the parent section (used for blocks + section.settings.text_part_of_bundle)
+
+  Notes:
+    - Single-product interrupters are intentionally ignored, since those products
+      are already excluded from the grid.
+    - The bundle name comes from the interrupter block's heading setting.
+    - The "Part of" prefix text comes from section.settings.text_part_of_bundle
+      (falls back to "Part of").
+{%- endcomment -%}
+
+{%- assign kv_part_of_bundle_name = '' -%}
+{%- for kv_intr_block in section.blocks -%}
+  {%- if kv_intr_block.type == 'interrupter' and kv_intr_block.settings.enabled -%}
+    {%- assign kv_intr_count = 0 -%}
+    {%- if kv_intr_block.settings.cta_product_1 != blank %}{% assign kv_intr_count = kv_intr_count | plus: 1 %}{% endif -%}
+    {%- if kv_intr_block.settings.cta_product_2 != blank %}{% assign kv_intr_count = kv_intr_count | plus: 1 %}{% endif -%}
+    {%- if kv_intr_block.settings.cta_product_3 != blank %}{% assign kv_intr_count = kv_intr_count | plus: 1 %}{% endif -%}
+    {%- if kv_intr_block.settings.cta_product_4 != blank %}{% assign kv_intr_count = kv_intr_count | plus: 1 %}{% endif -%}
+    {%- if kv_intr_block.settings.cta_product_5 != blank %}{% assign kv_intr_count = kv_intr_count | plus: 1 %}{% endif -%}
+    {%- if kv_intr_block.settings.cta_product_6 != blank %}{% assign kv_intr_count = kv_intr_count | plus: 1 %}{% endif -%}
+
+    {%- if kv_intr_count >= 2 and kv_part_of_bundle_name == '' -%}
+      {%- if kv_intr_block.settings.cta_product_1 == product.handle
+        or kv_intr_block.settings.cta_product_2 == product.handle
+        or kv_intr_block.settings.cta_product_3 == product.handle
+        or kv_intr_block.settings.cta_product_4 == product.handle
+        or kv_intr_block.settings.cta_product_5 == product.handle
+        or kv_intr_block.settings.cta_product_6 == product.handle -%}
+        {%- assign kv_part_of_bundle_name = kv_intr_block.settings.heading -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if kv_part_of_bundle_name != blank -%}
+  <div class="kv-bundle-product-bundle-tag">
+    <span class="kv-bundle-product-bundle-tag__prefix">{{ section.settings.text_part_of_bundle | default: 'Part of' }}</span>
+    <span class="kv-bundle-product-bundle-tag__name">{{ kv_part_of_bundle_name }}</span>
+  </div>
+{%- endif -%}

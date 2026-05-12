@@ -247,7 +247,14 @@
                           <span class="kv-cart__line-item-worth">({{ section.settings.worth_text }} {{ line_item.original_price | money }})</span>
                         {%- endif -%}
                       {%- else -%}
-                        <span class="kv-cart__line-item-price">{{ line_item.final_price | money }}</span>
+                         {%- if line_item.original_price > line_item.final_price -%}
+                          <span class="kv-cart__line-item-price">
+                            <s class="kv-cart__line-item-original-price">{{ line_item.original_price | money }}</s>
+                            {{ line_item.final_price | money }}
+                          </span>
+                        {%- else -%}
+                          <span class="kv-cart__line-item-price">{{ line_item.final_price | money }}</span>
+                        {%- endif -%}
                       {%- endif -%}
 
                       {%- unless line_item.product.has_only_default_variant or line_item.gift_card -%}

@@ -45,150 +45,6 @@
         "open_first_filter_group": false
       }
     },
-    "kv_bundle_section_Tm6Nbx": {
-      "type": "kv-bundle-section",
-      "blocks": {
-        "collection_zLG3AQ": {
-          "type": "collection",
-          "settings": {
-            "collection": "all",
-            "products_limit": 50,
-            "badge_text": ""
-          }
-        },
-        "interrupter_xyffiw": {
-          "type": "interrupter",
-          "settings": {
-            "enabled": true,
-            "show_on_desktop": true,
-            "position_desktop": 4,
-            "show_on_mobile": true,
-            "position_mobile": 2,
-            "badge_text": "",
-            "heading": "All our Smart Diffusers",
-            "description": "<p>Our diffusers deliver hotel-level fragrance by leveraging premium Cold-Air Diffusion Technology. Luxury scent at the press of a button.</p>",
-            "show_cta": true,
-            "cta_label": "Compare Diffusers",
-            "cta_link": "#open-comparison-popup",
-            "cta_new_tab": false,
-            "image": "shopify://shop_images/diffuser_collection_render_1.0_6059d591-892b-4361-8287-74e8bafd1ed1.png",
-            "image_position": "left",
-            "desktop_layout": "stacked",
-            "mobile_layout": "side",
-            "image_width_percent": 39,
-            "image_height_mobile": 140,
-            "image_height_desktop": 210,
-            "image_fit": "cover",
-            "background_color": "#f1efe8",
-            "border_color": "#d9d4c5",
-            "title_color": "#160000",
-            "title_size": 16,
-            "text_color": "#160000",
-            "text_size": 12,
-            "badge_bg": "#ffffff",
-            "badge_text_color": "#160000",
-            "cta_bg": "#dbd9c8",
-            "cta_text_color": "#162518",
-            "cta_border_color": "#dbd9c8"
-          }
-        },
-        "collection_AgjMeE": {
-          "type": "collection",
-          "settings": {
-            "collection": "calming-serene-scents",
-            "products_limit": 12,
-            "badge_text": "Early Black Friday"
-          }
-        },
-        "collection_P7nqnb": {
-          "type": "collection",
-          "settings": {
-            "collection": "floral-romantic-scents",
-            "products_limit": 12,
-            "badge_text": ""
-          }
-        },
-        "collection_6adWza": {
-          "type": "collection",
-          "settings": {
-            "collection": "fresh-energizing-scents",
-            "products_limit": 12,
-            "badge_text": ""
-          }
-        },
-        "collection_Jr4c77": {
-          "type": "collection",
-          "settings": {
-            "collection": "warm-indulgent-scents",
-            "products_limit": 12,
-            "badge_text": ""
-          }
-        }
-      },
-      "block_order": [
-        "collection_zLG3AQ",
-        "interrupter_xyffiw",
-        "collection_AgjMeE",
-        "collection_P7nqnb",
-        "collection_6adWza",
-        "collection_Jr4c77"
-      ],
-      "disabled": true,
-      "name": "kv Collection Tabs",
-      "settings": {
-        "hero_background_image": "shopify://shop_images/2_63515f2d-489c-4e5b-b14b-a9dfb9fafb58.png",
-        "hero_background_image_mobile": "shopify://shop_images/2_2a9e96fe-c273-4d46-945c-69d87f693429.png",
-        "hero_title": "SPRING SALE",
-        "hero_description": "Shop now before stock runs out.",
-        "promo_banner_enabled": true,
-        "promo_banner_image": "shopify://shop_images/1_1f26b9bd-6a6d-4e1f-84b8-ac3677658315.png",
-        "promo_banner_bold_text": "Spring Sale:",
-        "promo_banner_text": "All scents priced at €27,95",
-        "progress_empty_text": "<strong>Learn more</strong> about our diffusers",
-        "info_popup_image": "shopify://shop_images/Comparison.png",
-        "progress_start_text": "Start building your bundle!",
-        "progress_complete_text": "Congratulations! All rewards unlocked!",
-        "text_free": "FREE",
-        "text_free_gift": "Free Gift",
-        "text_add_scents": "Add Scents",
-        "text_continue": "Continue",
-        "text_add_to_cart": "Add to Cart",
-        "text_no_items": "No items selected",
-        "text_save": "SAVE",
-        "text_add_button": "+ Add",
-        "text_sold_out": "Sold Out",
-        "text_preorder_ships": "Pre-Order: Ships by",
-        "text_gift_preorder_prefix": "The",
-        "text_gift_preorder_suffix": "is on Pre-Order. Delivers on",
-        "text_expected_delivery": "Expected delivery:",
-        "text_preorder_collapsed": "There are pre-order items in the cart.",
-        "text_preorder_expanded": "There are pre-order items in the cart. Due to this your order will be sent out slightly later, when the scents have reached our warehouse.",
-        "text_preorder_affected_label": "The affected products in your cart are:",
-        "text_preorder_contact": "For any questions or concerns please reach out to our team.",
-        "text_instock_collapsed": "Your order ships out today from the Netherlands.",
-        "text_instock_expanded": "Your order ships out today from the Netherlands. These items are in stock at our warehouse in Gorinchem and are shipped by our reliable delivery partners.",
-        "milestone_1_count": 3,
-        "milestone_1_label": "{count} scents",
-        "gift_1_product": "christmas-dream-copy",
-        "gift_1_custom_text": "FREE <br> Mystery Scent",
-        "milestone_1_text": "Add [count] more scents for FREE <strong>Mystery Scent</strong>",
-        "milestone_2_count": 5,
-        "milestone_2_label": "{count} scents",
-        "gift_2_product": "smart-aroma-diffuser",
-        "gift_2_custom_text": "FREE <br> Diffuser Lite",
-        "milestone_2_text": "Add [count] more scents for <strong>FREE diffuser</strong>",
-        "milestone_3_count": 7,
-        "milestone_3_label": "{count} scents",
-        "gift_3_product": "smart-aroma-diffuser-2",
-        "gift_3_custom_text": "FREE <br> Diffuser 2",
-        "milestone_3_text": "Add [count] more scents to upgrade to <strong>diffuser Pro</strong>",
-        "milestone_4_count": 9,
-        "milestone_4_label": "{count} Scents",
-        "gift_4_product": "smart-aroma-diffuser-pro",
-        "gift_4_custom_text": "FREE <br> Pro Diffuser",
-        "milestone_4_text": "Almost there! Add [count] more scents to unlock the Pro Diffuser!"
-      }
-    },
     "new_kv_bundle_section_KpDCVe": {
       "type": "new-kv-bundle-section",
       "blocks": {
@@ -197,21 +53,25 @@
           "settings": {
             "enabled": true,
             "show_on_desktop": true,
-            "position_desktop": 4,
+            "position_desktop": 0,
             "show_on_mobile": true,
-            "position_mobile": 4,
+            "position_mobile": 0,
             "badge_text": "",
-            "heading": "Spring Bundle",
-            "description": "<p>Smell spring at home, this bundle contains our 3 Limited Edition Spring scents.</p>",
+            "heading": "Mother's Day Bundle",
+            "description": "<p>Celebrate your mom with these 3 beautiful scents.</p>",
             "show_cta": true,
             "cta_label": "+ Add 3 Scents",
-            "cta_product": "classic-charm",
-            "cta_default_quantity": 3,
-            "image": "shopify://shop_images/d3f7110df2ea05ce12ba94d0b80d01cc55c55d17.png",
+            "cta_product_1": "classic-charm",
+            "cta_product_2": "dark-elixir",
+            "cta_product_3": "endless-path",
+            "cta_product_4": "",
+            "cta_product_5": "",
+            "cta_product_6": "",
+            "image": "shopify://shop_images/Angle1.png",
             "image_position": "left",
             "desktop_layout": "stacked",
             "mobile_layout": "side",
-            "image_width_percent": 38,
+            "image_width_percent": 46,
             "image_height_mobile": 180,
             "image_height_desktop": 180,
             "image_fit": "cover",
@@ -223,7 +83,7 @@
             "text_size": 16,
             "badge_bg": "#ffffff",
             "badge_text_color": "#160000",
-            "cta_bg": "#495222",
+            "cta_bg": "#5c220a",
             "cta_text_color": "#ffffff",
             "cta_border_color": "#495222"
           }
@@ -231,7 +91,7 @@
         "collection_zWaJM3": {
           "type": "collection",
           "settings": {
-            "collection": "fragrances",
+            "collection": "all",
             "products_limit": 12,
             "badge_text": ""
           }
@@ -273,22 +133,26 @@
           "settings": {
             "enabled": true,
             "show_on_desktop": true,
-            "position_desktop": 0,
+            "position_desktop": 4,
             "show_on_mobile": true,
-            "position_mobile": 0,
+            "position_mobile": 4,
             "badge_text": "New",
-            "heading": "Wild Blossom",
-            "description": "<p>A soft, dewy floral that feels fresh, clean, and quietly uplifting, bringing a light, elegant scent into any space without ever feeling heavy.</p>",
+            "heading": "Ocean Drift",
+            "description": "<p>Ocean Drift blends bergamot, marine, and jasmine over a warm amber base for a fresh, aquatic scent with quiet depth. Open, calm, and effortlessly refined.</p>",
             "show_cta": true,
             "cta_label": "+Add",
-            "cta_product": "wild-blossom",
-            "cta_default_quantity": 1,
-            "image": "shopify://shop_images/d3f7110df2ea05ce12ba94d0b80d01cc55c55d17.png",
+            "cta_product_1": "wild-blossom-copy",
+            "cta_product_2": "",
+            "cta_product_3": "",
+            "cta_product_4": "",
+            "cta_product_5": "",
+            "cta_product_6": "",
+            "image": "shopify://shop_images/Angle1.png",
             "image_position": "left",
             "desktop_layout": "stacked",
             "mobile_layout": "side",
-            "image_width_percent": 38,
-            "image_height_mobile": 140,
+            "image_width_percent": 46,
+            "image_height_mobile": 180,
             "image_height_desktop": 180,
             "image_fit": "cover",
             "background_color": "#ececec",
@@ -299,7 +163,7 @@
             "text_size": 16,
             "badge_bg": "#051a5d",
             "badge_text_color": "#ffffff",
-            "cta_bg": "#051a5d",
+            "cta_bg": "#5c220a",
             "cta_text_color": "#ffffff",
             "cta_border_color": "#051a5d"
           }
@@ -316,16 +180,17 @@
       ],
       "name": "new kv Collection Tabs",
       "settings": {
-        "hero_background_image": "shopify://shop_images/d097dad076b02775ed8da909844030247e7d8dc4.png",
-        "hero_background_image_mobile": "shopify://shop_images/d097dad076b02775ed8da909844030247e7d8dc4.png",
-        "hero_title": "SPRING SALE",
-        "hero_description": "Shop now, before stock runs out.",
+        "hero_background_image": "shopify://shop_images/sale-bg-mothersday-1.png",
+        "hero_background_image_mobile": "shopify://shop_images/Ontwerp_zonder_titel_7.png",
+        "hero_title": "MOTHERSDAY SALE",
+        "hero_description": "Buy more, save more. For a limited time only!",
         "promo_banner_enabled": false,
-        "promo_banner_bold_text": "Winter Sale:",
+        "promo_banner_bold_text": "Mothersday Sale:",
         "promo_banner_text": "All scents priced at €27,95",
         "progress_empty_text": "Learn more about our diffusers",
         "progress_start_text": "Start adding scents to unlock rewards!",
         "progress_complete_text": "🎉 Amazing! All gifts unlocked!",
+        "button_bg_color": "#5c220a",
         "text_free": "FREE",
         "text_free_gift": "Free Gift",
         "text_add_scents": "Add Scents",
@@ -347,19 +212,19 @@
         "text_instock_expanded": "Your order ships out today from the Netherlands. These items are in stock at our warehouse in Gorinchem and are shipped by our reliable delivery partners.",
         "milestone_1_count": 1,
         "milestone_1_label": "{count} scent",
-        "milestone_1_price": "€27,95",
+        "milestone_1_price": "€29,95",
         "milestone_1_text": "Add [count] more scents for FREE diffuser",
-        "milestone_2_count": 5,
+        "milestone_2_count": 3,
         "milestone_2_label": "{count} scents",
-        "milestone_2_price": "€25,95",
+        "milestone_2_price": "€26,95",
         "milestone_2_text": "Keep going! Add [count] more scents to unlock the next reward!",
-        "milestone_3_count": 7,
+        "milestone_3_count": 5,
         "milestone_3_label": "{count}  scents",
-        "milestone_3_price": "€23,95",
+        "milestone_3_price": "€24,95",
         "milestone_3_text": "Almost there! Add [count] more scents to unlock the next reward!",
-        "milestone_4_count": 9,
+        "milestone_4_count": 7,
         "milestone_4_label": "{count}  scents",
-        "milestone_4_price": "€19,95",
+        "milestone_4_price": "€22,95",
         "milestone_4_text": "Almost there! Add [count] more scents to unlock the Pro Diffuser!"
       }
     }
@@ -367,7 +232,6 @@
   "order": [
     "banner",
     "main",
-    "kv_bundle_section_Tm6Nbx",
     "new_kv_bundle_section_KpDCVe"
   ]
 }
