@@ -1,6 +1,7 @@
 {% render 'new-kv-bundle-css' %}
 {% render 'diffuser-kv-bundle-css' %}
   <style>
+    
     .kv-bundle-continue-btn {
   width: 420px !important;
   }
@@ -56,7 +57,7 @@
   data-text-add-more-order="{{ section.settings.text_add_more_order | escape }}">
        
  {% render 'df-overflow-step1' %}
- {% render 'df-limited-offer-component' %}
+ 
   {%- comment -%} Progress Banner {%- endcomment -%}
   <div class="kv-bundle-hero-section" style="background-image: url({{ section.settings.hero_background_image | image_url: width: 1920 }}); background-size: cover; background-position: center;">
     <div class="kv-bundle-hero-container">
