@@ -14,9 +14,11 @@
 .kv-bundle-dynamic-image{
   display:block !important;
   width: 720px;
+    /* flex default stretch makes this column as tall as .low-class, which breaks sticky */
+    align-self: flex-start;
     position: sticky;
-    top: 0;
-    height: 100vh;
+    top: var(--kv-hero-offset, 0px);
+    height: calc(100vh - var(--kv-hero-offset, 0px));
 }
 
 .kv-bundle-dynamic-image img{

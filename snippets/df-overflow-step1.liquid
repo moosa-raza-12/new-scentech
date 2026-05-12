@@ -344,7 +344,7 @@
         {% if img_url == blank and product_obj != blank and product_obj.featured_image != blank %}
           {% assign img_url = product_obj.featured_image %}
         {% endif %}
-
+        {% assign img_url-1 = product_obj.featured_image %}
         {% if product_obj != blank %}
           {% assign original_price_cents = product_obj.price %}
 
@@ -376,6 +376,7 @@
             {% assign card_variant_price = selected_variant.price %}
             {% assign card_variant_compare_at_price = selected_variant.compare_at_price | default: 0 %}
           {% endif %}
+          {% assign card_image = img_url | image_url: width: 600 %}
           {% if product_obj.featured_image != blank %}
             {% assign card_image = product_obj.featured_image | image_url: width: 600 %}
           {% elsif img_url != blank %}
@@ -409,9 +410,9 @@
           data-cds-desktop-hero-image="{{ desktop_hero_url | escape }}"
           {{ block.shopify_attributes }}>
           <div class="cds-card-innerss">
-            {% if img_url %}
+            {% if img_url-1 %}
               <div class="cds-image">
-                {{ img_url | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}
+                {{ img_url-1 | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}
               </div>
             {% endif %}
 
