@@ -158,7 +158,7 @@
         "cds_highlight_overflow_text": "<strong>Mothersday Sale:</strong> Pay only <strong>[price]</strong> after adding 2 scents!",
         "cds_highlight_default_text": "<strong>Mothersday Sale:</strong> Pay only <strong>[price]</strong> for your diffuser!",
         "closed_heading": "Add a second diffuser for limited time",
-        "open_heading": "Second diffuser added",
+        "open_heading": "Second Diffuser:",
         "closed_subtext": "",
         "open_subtext": "Limited-time promotional offer",
         "content": "<p>Add another diffuser and save more on your order.</p>",
