@@ -33,7 +33,9 @@
         %}
         {% for block in section.blocks %}
           {% if cds_list_block_types contains block.type %}
-            {% render 'df-limited-offer-cds-card', block: block, section: section %}
+            {% render 'df-limited-offer-cds-card'
+              , block: block
+              , section: section %}
           {% endif %}
         {% endfor %}
       </div>
@@ -72,7 +74,10 @@
     cursor: pointer;
     transition: all 0.3s ease;
   }
-
+  .cds-card-innerss {
+    background-color: #F8F7F4;
+    backdrop-filter: blur(2px);
+  }
   .lp-diffuser-accordion__trigger:hover {
     background: {{ section.settings.hover_background_color }};
   }
