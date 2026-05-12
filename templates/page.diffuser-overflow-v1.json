@@ -26,6 +26,15 @@
     "diffuser_kv_bundle_LqGpYW": {
       "type": "diffuser-kv-bundle",
       "blocks": {
+        "diffuser_limited_time_JXLGRK": {
+          "type": "diffuser_limited_time",
+          "settings": {
+            "selector_product": "calming-lavender",
+            "selector_title": "Diffuser Name",
+            "selector_description": "Describe the diffuser here.",
+            "selector_discount_percent": 50
+          }
+        },
         "interrupter_p7EVEY": {
           "type": "interrupter",
           "settings": {
@@ -137,6 +146,7 @@
         }
       },
       "block_order": [
+        "diffuser_limited_time_JXLGRK",
         "interrupter_p7EVEY",
         "diffuser_TfKVLj",
         "diffuser_JKTBEi",
