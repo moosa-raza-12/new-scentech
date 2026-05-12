@@ -29,7 +29,7 @@
     <div class="lp-diffuser-accordion__inner">
       <div class="cds-list">
         {% liquid
-          assign cds_list_block_types = 'diffuser|diffuser_offer' | split: '|'
+          assign cds_list_block_types = 'diffuser_limited_time' | split: '|'
         %}
         {% for block in section.blocks %}
           {% if cds_list_block_types contains block.type %}
