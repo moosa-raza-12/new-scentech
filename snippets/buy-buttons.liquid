@@ -45,7 +45,7 @@ Supported variables
     {%- if product.template_suffix contains 'pre-order' -%}
       {%- capture button_content -%}{{ 'product.general.pre_order_button' | t }}{%- endcapture -%}
     {%- else -%}
-      {%- capture button_content -%}<span style="display:inline-flex;align-items:center;gap:12px;">{{ 'product.general.add_to_cart_button' | t }} <svg xmlns="http://www.w3.org/2000/svg" width="3" height="3" viewBox="0 0 3 3" fill="none" style="width:3px;height:3px;flex-shrink:0;"><path d="M0 3V0H3V3H0Z" fill="white"/></svg> {{ product.selected_or_first_available_variant.price | money }}</span>{%- endcapture -%}
+      {%- capture button_content -%}<span style="display:inline-flex;align-items:center;gap:12px;">{{ 'product.general.add_to_cart_button' | t }} <svg xmlns="http://www.w3.org/2000/svg" width="3" height="3" viewBox="0 0 3 3" fill="none" style="width:3px;height:3px;flex-shrink:0;"><path d="M0 3V0H3V3H0Z" fill="white"/></svg> <span id="atc-price">{{ product.selected_or_first_available_variant.price | money }}</span></span>{%- endcapture -%}
     {%- endif -%}
   {%- else -%}
     {%- capture button_content -%}{{ 'product.general.sold_out_button' | t }}{%- endcapture -%}

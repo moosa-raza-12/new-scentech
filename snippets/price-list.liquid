@@ -40,7 +40,7 @@ Supported variables
   endcase
 -%}
 
-<price-list class="price-list {% if size == 'lg' %}price-list--lg{% endif %} {% if text_alignment == 'center' %}justify-center{% endif %}">
+<price-list class="price-list {% if size == 'lg' %}price-list--lg{% endif %} {% if text_alignment == 'center' %}justify-center{% endif %}"{% if size == 'lg' and variant != blank %} data-price="{{ variant.price }}"{% endif %}>
   {%- if variant != blank -%}
     {%- comment -%}
     --------------------------------------------------------------------------------------------------------------------

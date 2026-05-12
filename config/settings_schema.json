@@ -1060,5 +1060,34 @@
         "default": 10
       }
     ]
+  },
+  {
+    "name": "Korting campagne",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "discount_campaign_active",
+        "label": "Campagne actief",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "discount_campaign_code",
+        "label": "Kortingscode",
+        "info": "Bijv. KONINGSDAG27"
+      },
+      {
+        "type": "text",
+        "id": "discount_campaign_expiry",
+        "label": "Vervaldatum",
+        "info": "Formaat: YYYY-MM-DDTHH:MM:SS — bijv. 2026-04-27T23:59:59"
+      },
+      {
+        "type": "text",
+        "id": "discount_campaign_collections",
+        "label": "Collecties (komma-gescheiden handles)",
+        "info": "Leeg = alle producten. Bijv: diffusers,diffusers-bundles"
+      }
+    ]
   }
 ]
