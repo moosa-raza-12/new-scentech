@@ -26,16 +26,6 @@
     "diffuser_kv_bundle_LqGpYW": {
       "type": "diffuser-kv-bundle",
       "blocks": {
-        "diffuser_JaDBfe": {
-          "type": "diffuser",
-          "settings": {
-            "selector_product": "calming-lavender",
-            "selector_image": "shopify://shop_images/1_1b5f96e4-4fbb-444b-8ad0-86b87b1bc83b.png",
-            "selector_title": "Diffuser Name",
-            "selector_description": "Describe the diffuser here.",
-            "selector_discount_percent": 50
-          }
-        },
         "interrupter_p7EVEY": {
           "type": "interrupter",
           "settings": {
@@ -147,7 +137,6 @@
         }
       },
       "block_order": [
-        "diffuser_JaDBfe",
         "interrupter_p7EVEY",
         "diffuser_TfKVLj",
         "diffuser_JKTBEi",
