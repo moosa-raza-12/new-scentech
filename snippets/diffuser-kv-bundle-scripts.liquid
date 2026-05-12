@@ -578,13 +578,8 @@
         })
         .then(response => response.json())
         .then(data => {
-<<<<<<< HEAD
-          checkoutBtn.innerHTML = 'Added to Cart!';
-  
-=======
           triggerBtn.innerHTML = '✓ Added to Cart!';
 
->>>>>>> f62b84cafa0b6cb7d8b20e20f574ea64af8da7ea
           const cartPromises = [
             fetch('/cart.js').then(resp => {
               if (!resp.ok) throw new Error('Failed to fetch cart data');

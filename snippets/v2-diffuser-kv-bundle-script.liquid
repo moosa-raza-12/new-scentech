@@ -1644,11 +1644,7 @@
         const baseCompareAt = (compareAtTotal > total) ? compareAtTotal : total;
         const compareAtWithGifts = baseCompareAt + giftTotal;
         const compareAtFormatted = formatMoney(compareAtWithGifts * 100);
-<<<<<<< HEAD
-        checkoutBtn.innerHTML = `${textLabels.addToCart}<span class="kv-compare-at-price">${compareAtFormatted}</span> <span class="kv-normal-price" data-price-multiplier="${totalCount}">${totalFormatted}</span>`;
-=======
         checkoutBtn.innerHTML = `${textLabels.addToCart} <span class="kv-compare-at-price">${compareAtFormatted}</span> <span class="kv-normal-price" data-price-multiplier="${totalCount}">${totalFormatted}</span>`;
->>>>>>> f62b84cafa0b6cb7d8b20e20f574ea64af8da7ea
       } else {
         checkoutBtn.innerHTML = `${textLabels.addToCart} <span class="kv-normal-price" data-price-multiplier="${totalCount}">${totalFormatted}</span>`;
       }
