@@ -19,18 +19,24 @@
       </span>
     </div>
     <div class="lp-diffuser-accordion__icon">
-      <span
-        class="accordion__icon"
-        data-open-icon='{{ section.settings.open_icon_svg | escape }}'
-        data-close-icon='{{ section.settings.close_icon_svg | escape }}'>
-        {{ section.settings.close_icon_svg }}
-      </span>
+      <span class="accordion__icon-close">{{ section.settings.close_icon_svg }}</span>
+      <span class="accordion__icon-open" style="display: none;">{{ section.settings.open_icon_svg }}</span>
+
     </div>
   </button>
 
   <div id="{{ accordion_id }}" class="lp-diffuser-accordion__content">
     <div class="lp-diffuser-accordion__inner">
-      {{ section.settings.content }}
+      <div class="cds-list">
+        {% liquid
+          assign cds_list_block_types = 'diffuser|diffuser_offer' | split: '|'
+        %}
+        {% for block in section.blocks %}
+          {% if cds_list_block_types contains block.type %}
+            {% render 'df-limited-offer-cds-card', block: block, section: section %}
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>
@@ -78,6 +84,10 @@
     /* gap: 4px; */
     text-align: left;
   }
+  .accordion__icon-open,
+  .accordion__icon-close {
+    line-height: 0;
+  }
   .icon-wraper {
     display: flex;
     width: 28px;
@@ -91,9 +101,9 @@
   }
   .lp-diffuser-accordion__heading {
     color: {{ section.settings.heading_color-id }};
-    font-size: {{ section.settings.heading_size }}px;
+    font-size: 12px;
     font-weight: {{ section.settings.heading_weight }};
-    line-height: 1.3;
+    line-height: 1;
   }
 
   .lp-diffuser-accordion__subtext {
@@ -117,10 +127,17 @@
   }
 
   .lp-diffuser-accordion__content {
+    display: none;
     max-height: 0;
     overflow: hidden;
-
+    padding: 4px 4px 4px 20px;
     transition: max-height 0.35s ease;
+    border-radius: 8px;
+    background: #FFF;
+    border: 1px solid rgba(22, 0, 0, 0.10);
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
 
   .lp-diffuser-accordion__inner {
@@ -133,6 +150,9 @@
 
   .lp-diffuser-accordion.active .lp-diffuser-accordion__trigger {
     border-style: solid;
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 </style>
 
@@ -141,6 +161,9 @@
     const accordion = document.querySelector('.lp-diffuser-accordion');
   
     if (!accordion) return;
+    const closeIcon = accordion.querySelector('.accordion__icon-close');
+  const openIcon = accordion.querySelector('.accordion__icon-open');
+  
   
     const trigger = accordion.querySelector('.lp-diffuser-accordion__trigger');
     const content = accordion.querySelector('.lp-diffuser-accordion__content');
@@ -158,25 +181,34 @@
       const isOpen = accordion.classList.contains('active');
   
       accordion.classList.toggle('active');
-  
+      
       if (isOpen) {
         content.style.maxHeight = null;
-  
+        content.style.display = 'none';
         trigger.setAttribute('aria-expanded', 'false');
   
         heading.textContent = closedHeading;
         subtext.textContent = closedSubtext;
   
-        icon.innerHTML = icon.dataset.closeIcon;
+        
       } else {
-        content.style.maxHeight = content.scrollHeight + 'px';
+        content.style.maxHeight = 'fit-content';
+        content.style.display = 'block';
   
         trigger.setAttribute('aria-expanded', 'true');
   
         heading.textContent = openHeading;
         subtext.textContent = openSubtext;
-        icon.innerHTML = icon.dataset.openIcon;
       }
+      if (isOpen) {
+  closeIcon.style.display = 'block';
+  openIcon.style.display = 'none';
+  
+  } else {
+  closeIcon.style.display = 'none';
+  openIcon.style.display = 'block';
+  
+  }
     });
   });
 </script>

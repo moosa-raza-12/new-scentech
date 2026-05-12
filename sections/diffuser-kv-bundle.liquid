@@ -2974,6 +2974,44 @@ window.__kvInterrupterProducts = {};
   ]
      },
   {
+    "type": "diffuser_offer",
+    "name": "Diffuser (limited offer)",
+    "settings": [
+      {
+        "type": "product",
+        "id": "selector_product",
+        "label": "Select product (optional)"
+      },
+      {
+        "type": "image_picker",
+        "id": "selector_image",
+        "label": "Diffuser Image"
+      },
+      {
+        "type": "text",
+        "id": "selector_title",
+        "label": "Title",
+        "default": "Diffuser Name"
+      },
+      {
+        "type": "textarea",
+        "id": "selector_description",
+        "label": "Description",
+        "default": "Describe the diffuser here."
+      },
+      {
+        "type": "range",
+        "id": "selector_discount_percent",
+        "min": 0,
+        "max": 90,
+        "step": 5,
+        "label": "Discount Percentage",
+        "default": 50,
+        "info": "Percentage discount off the product price. 0 = no discount."
+      }
+    ]
+  },
+  {
     "type": "collection",
     "name": "Collection",
     "settings": [
