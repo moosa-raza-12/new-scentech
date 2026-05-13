@@ -400,6 +400,34 @@
           updateMiniCart();
         }
       });
+
+      // Second diffuser selection (from accordion)
+      document.addEventListener('kv:second-selector-product-selected', function(e) {
+        const data = e.detail || {};
+        if (!data.productId || !data.variantId) return;
+
+        const selectorProduct = {
+          productId: data.productId + '-second',
+          productHandle: data.productHandle || '',
+          variantId: data.variantId,
+          quantity: 1,
+          image: data.image || '',
+          title: data.title || '',
+          price: parseInt(data.variantPrice, 10) || 0,
+          compareAtPrice: parseInt(data.variantCompareAtPrice, 10) || 0,
+          inventoryDate: '',
+          inventoryQuantity: 0,
+          selectionSource: 'cds-selector-2'
+        };
+
+        selectedProducts = selectedProducts.filter(product => product.selectionSource !== 'cds-selector-2');
+        selectedProducts.push(selectorProduct);
+
+        updateThumbnailCarousel();
+        if (document.getElementById('kv-minicart').classList.contains('active')) {
+          updateMiniCart();
+        }
+      });
   
       // Handle Add button click - show quantity controls
       document.addEventListener('click', function(e) {
@@ -1094,23 +1122,30 @@
   
       // Build CTA pricing using milestone-based per-scent pricing
       const scentCount = selectedProducts
-        .filter(product => product.selectionSource !== 'cds-selector')
+        .filter(product => product.selectionSource !== 'cds-selector' && product.selectionSource !== 'cds-selector-2')
         .reduce((sum, product) => sum + (product.quantity || 0), 0);
 
       const pricePerScent = getMilestonePricePerScent(scentCount);
       let runningTotal = (scentCount * pricePerScent) / 100;
 
-      // Add diffuser at 50% price when present
+      // Add primary diffuser at 50% price when present
       const diffuserProduct = selectedProducts.find(p => p.selectionSource === 'cds-selector');
       if (diffuserProduct) {
         const diffuserPrice = (diffuserProduct.price || 0) / 100;
         runningTotal += diffuserPrice * 0.5;
       }
 
+      // Add second diffuser at 50% price when present
+      const secondDiffuserProduct = selectedProducts.find(p => p.selectionSource === 'cds-selector-2');
+      if (secondDiffuserProduct) {
+        const secondDiffuserPrice = (secondDiffuserProduct.price || 0) / 100;
+        runningTotal += secondDiffuserPrice * 0.5;
+      }
+
       // Calculate original total for compare-at / savings display
       let runningCompareAtTotal = 0;
       selectedProducts.forEach(product => {
-        if (product.selectionSource === 'cds-selector') {
+        if (product.selectionSource === 'cds-selector' || product.selectionSource === 'cds-selector-2') {
           runningCompareAtTotal += ((product.price || 0) / 100) * (product.quantity || 0);
         } else if (product.compareAtPrice && product.compareAtPrice > product.price) {
           runningCompareAtTotal += ((product.compareAtPrice || 0) / 100) * (product.quantity || 0);
@@ -1299,7 +1334,7 @@
       // Calculate current product count (scents only, exclude diffuser)
       let currentCount = 0;
       selectedProducts.forEach(product => {
-        if (product.selectionSource !== 'cds-selector') {
+        if (product.selectionSource !== 'cds-selector' && product.selectionSource !== 'cds-selector-2') {
           currentCount += product.quantity;
         }
       });
@@ -1539,7 +1574,7 @@
   
       // Compute scent count for milestone tier pricing
       const miniCartScentCount = selectedProducts
-        .filter(product => product.selectionSource !== 'cds-selector')
+        .filter(product => product.selectionSource !== 'cds-selector' && product.selectionSource !== 'cds-selector-2')
         .reduce((sum, product) => sum + (product.quantity || 0), 0);
       const miniCartPricePerScent = getMilestonePricePerScent(miniCartScentCount);
 
@@ -1551,7 +1586,7 @@
 
         let itemPrice, itemSubtotal, priceDisplay;
 
-        if (product.selectionSource === 'cds-selector') {
+        if (product.selectionSource === 'cds-selector' || product.selectionSource === 'cds-selector-2') {
           itemPrice = ((product.price || 0) / 100) * 0.5;
           itemSubtotal = itemPrice * product.quantity;
           total += itemSubtotal;

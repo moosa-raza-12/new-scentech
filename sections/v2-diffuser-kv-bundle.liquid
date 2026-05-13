@@ -1,6 +1,32 @@
 {% render 'new-kv-bundle-css' %}
 {% render 'diffuser-kv-bundle-css' %}
 <style>
+@media screen and (min-width: 768px) {
+  .high-class{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+  }
+  .kv-bundle-dynamic-image{
+    display:block !important;
+    width: 720px;
+    align-self: flex-start;
+    position: sticky;
+    top: var(--kv-hero-offset, 0px);
+  }
+  .kv-bundle-dynamic-image img{
+    width: 100%;
+    object-fit: fill;
+    transition: opacity 0.3s ease;
+  }
+  .low-class{
+    width:500px;
+  }
+}
+.kv-bundle-dynamic-image{
+  display:none;
+}
    .kv-bundle-continue-btn {
   width: 420px !important;
   font-family: "Bai Jamjuree";
@@ -79,9 +105,36 @@ opacity: 0.6;
 <div class="kv-page-preloader" id="kv-page-preloader">
   <div class="kv-preloader-spinner"></div>
 </div>
+{% liquid
+  assign kv_default_desktop_hero_url = blank
+  for block in section.blocks
+    if block.type == 'diffuser'
+      assign _hero = block.settings.cds_desktop_hero_image
+      assign _sel = block.settings.selector_image
+      assign _prod = block.settings.selector_product
+      if _hero != blank
+        assign kv_default_desktop_hero_url = _hero | image_url: width: 1200
+      elsif _sel != blank
+        assign kv_default_desktop_hero_url = _sel | image_url: width: 1200
+      elsif _prod != blank and _prod.featured_image != blank
+        assign kv_default_desktop_hero_url = _prod.featured_image | image_url: width: 1200
+      endif
+      break
+    endif
+  endfor
+%}
 <div class="kv-bundle-section">
-     
+  <div class="high-class">
+    <div class="kv-bundle-dynamic-image" id="dynamic-image-container">
+      <img
+        id="kv-bundle-dynamic-image-img"
+        src="{% if kv_default_desktop_hero_url != blank %}{{ kv_default_desktop_hero_url }}{% else %}{{ 'image-1.png' | asset_img_url: '1200x' }}{% endif %}"
+        alt="">
+    </div>
+    <div class="low-class">
  {% render 'df-overflow-step1' %}
+    </div>
+  </div>
 
   {%- comment -%} Progress Banner {%- endcomment -%}
   <div class="kv-bundle-hero-section" style="background-image: url({{ section.settings.hero_background_image | image_url: width: 1920 }}); background-size: cover; background-position: center;">
@@ -2249,69 +2302,6 @@ opacity: 0.6;
 }
    </style>
 
-   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const cardSelector = '.cds-cards';
-    const activeClass = 'active';
-    const highlightSelector = '.cds-highlight';
-  
-    function hideAllHighlights() {
-      document.querySelectorAll(highlightSelector).forEach(hl => {
-        hl.style.display = 'none';
-      });
-    }
-  
-    function resetActiveCards() {
-      document.querySelectorAll(cardSelector).forEach(card => {
-        card.classList.remove(activeClass);
-      });
-    }
-  
-    function showHighlightForCard(card) {
-      const highlight = card.querySelector(highlightSelector);
-      if (highlight) {
-        highlight.style.display = ''; // revert to CSS default (e.g., block or flex)
-      }
-    }
-  
-    // Initially hide all highlights (if they are not already hidden by CSS)
-    hideAllHighlights();
-  
-    // Delegate click event to handle dynamically added cards
-    document.body.addEventListener('click', function(e) {
-      // Find the closest .cds-cards element (allows clicking on inner elements)
-      const card = e.target.closest(cardSelector);
-      if (!card) return;
-  
-      // If this card is already active, do nothing (or optionally unselect – decide)
-      if (card.classList.contains(activeClass)) {
-        return; // already active, ignore
-      }
-  
-      // Remove active class from all cards and hide all highlights
-      resetActiveCards();
-      hideAllHighlights();
-  
-      // Activate the clicked card
-      card.classList.add(activeClass);
-      showHighlightForCard(card);
-  
-      const selectedProduct = {
-        productId: card.getAttribute('data-product-id'),
-        productHandle: card.getAttribute('data-product-handle'),
-        variantId: card.getAttribute('data-variant-id'),
-        variantPrice: parseInt(card.getAttribute('data-variant-price') || '0', 10),
-        variantCompareAtPrice: parseInt(card.getAttribute('data-variant-compare-at-price') || '0', 10),
-        title: card.getAttribute('data-product-title') || '',
-        image: card.getAttribute('data-product-image') || ''
-      };
-  
-      document.dispatchEvent(new CustomEvent('kv:selector-product-selected', {
-        detail: selectedProduct
-      }));
-    });
-  });
-</script>
 
  {%- comment -%} Info Popup Modal - disabled {%- endcomment -%}
  {% comment %}
@@ -2386,7 +2376,35 @@ window.__kvInterrupterProducts = {};
 </script>
 
  {% render 'v2-diffuser-kv-bundle-script' %}
-   
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const desktopMq = window.matchMedia('(min-width: 768px)');
+
+    function syncKvBundleDesktopHeroImage() {
+      if (!desktopMq.matches) return;
+      var dynImg = document.getElementById('kv-bundle-dynamic-image-img');
+      if (!dynImg) return;
+      var active = document.querySelector('.cds-cards[data-diffuser-group="primary"].active');
+      var card = active || document.querySelector('.cds-cards[data-diffuser-group="primary"]');
+      if (!card) return;
+      var url = card.getAttribute('data-cds-desktop-hero-image') || card.getAttribute('data-product-image');
+      if (url) dynImg.src = url;
+    }
+
+    syncKvBundleDesktopHeroImage();
+    window.addEventListener('resize', syncKvBundleDesktopHeroImage);
+
+    document.addEventListener('kv:selector-product-selected', function() {
+      syncKvBundleDesktopHeroImage();
+    });
+
+    document.addEventListener('kv:second-selector-product-selected', function() {
+      syncKvBundleDesktopHeroImage();
+    });
+  });
+</script>
+
    {% schema %}
    {
      "name": "kv Collection Tabs",
@@ -2453,6 +2471,38 @@ window.__kvInterrupterProducts = {};
   "label": "Lock Overlay Text",
   "info": "Shown over diffuser cards on the diffuser-overflow-v1 template until 2 scents are added.",
   "default": "Add at least 2 scents to select a diffuser"
+     },
+     {
+  "type": "header",
+  "content": "Second Diffuser Accordion"
+     },
+     {
+  "type": "checkbox",
+  "id": "enable_second_diffuser",
+  "label": "Enable second diffuser accordion",
+  "default": false
+     },
+     {
+  "type": "text",
+  "id": "closed_heading",
+  "label": "Closed Heading",
+  "default": "Add a second diffuser for limited time"
+     },
+     {
+  "type": "text",
+  "id": "open_heading",
+  "label": "Open Heading",
+  "default": "Second Diffuser:"
+     },
+     {
+  "type": "html",
+  "id": "close_icon_svg",
+  "label": "Closed Icon SVG (+ icon)"
+     },
+     {
+  "type": "html",
+  "id": "open_icon_svg",
+  "label": "Open Icon SVG (x icon)"
      },
      {
   "type": "color",

@@ -157,6 +157,7 @@
         "selector_banner_text": "<p><strong>Mothersday Sale:</strong> Get 50% off the diffuser when you add 2 scents</p>",
         "cds_highlight_overflow_text": "<strong>Mothersday Sale:</strong> Pay only <strong>[price]</strong> after adding 2 scents!",
         "cds_highlight_default_text": "<strong>Mothersday Sale:</strong> Pay only <strong>[price]</strong> for your diffuser!",
+        "enable_second_diffuser": true,
         "closed_heading": "Add a second diffuser for limited time",
         "open_heading": "Second Diffuser:",
         "closed_subtext": "",

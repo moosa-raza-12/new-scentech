@@ -2369,6 +2369,7 @@ window.__kvInterrupterProducts = {};
       if (url) dynImg.src = url;
     }
 
+    syncKvBundleDesktopHeroImage();
     window.addEventListener('resize', syncKvBundleDesktopHeroImage);
 
     // Listen for primary diffuser selections
@@ -2458,6 +2459,12 @@ window.__kvInterrupterProducts = {};
   "default": "<b>Spring Sale:</b> Pay only <b>[price]</b> for your diffuser!"
      },
      {
+        "type": "checkbox",
+        "id": "enable_second_diffuser",
+        "label": "Enable second diffuser accordion",
+        "default": false
+      },
+      {
         "type": "text",
         "id": "closed_heading",
         "label": "Closed Heading",
