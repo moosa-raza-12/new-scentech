@@ -284,7 +284,7 @@
     font-size: 12px;
   }
   .cds-highlight-text {
-    color: {{highlight_text_color}};
+    color: {{ section.settings.highlight_text_color | default: '#5c220a' }};
     font-size: 12px;
     font-weight: 400;
   }
@@ -488,6 +488,7 @@
           elsif product_obj != blank and product_obj.featured_image != blank
             assign desktop_hero_url = product_obj.featured_image | image_url: width: 1200
           endif
+          assign desktop_hero_video = block.settings.selector_video_url
         %}
 
         <div
@@ -501,6 +502,7 @@
           data-product-title="{{ card_title | escape }}"
           data-product-image="{{ card_image | escape }}"
           data-cds-desktop-hero-image="{{ desktop_hero_url | escape }}"
+          data-cds-desktop-hero-video="{{ desktop_hero_video | escape }}"
           {{ block.shopify_attributes }}>
           <div class="cds-card-innerss">
             {% if img_url-1 %}
@@ -585,7 +587,7 @@
               {% assign cds_highlight_default_text = section.settings.cds_highlight_default_text | default: '<b>Spring:</b> Pay only <b>[price]</b> for your diffuser!' %}
               {% assign cds_highlight_default_text = cds_highlight_default_text | replace: '[price]', new_price_display %}
               <div class="cds-highlight">
-                <p class="cds-highlight-text" style="color:{{highlight_text_color}};">{{ cds_highlight_default_text }}</p>
+                <p class="cds-highlight-text">{{ cds_highlight_default_text }}</p>
               </div>
             {% endif %}
 
@@ -610,7 +612,7 @@
       aria-expanded="false"
       aria-controls="{{ accordion_id }}">
       <div class="lp-diffuser-accordion__heading-wrap">
-        <span class="lp-diffuser-accordion__heading">
+        <span class="lp-diffuser-accordion__heading" data-closed-heading="{{ section.settings.closed_heading | escape }}">
           {{ section.settings.closed_heading }}
         </span>
       </div>
@@ -684,6 +686,7 @@
                 elsif product_obj != blank and product_obj.featured_image != blank
                   assign desktop_hero_url = product_obj.featured_image | image_url: width: 1200
                 endif
+                assign desktop_hero_video = block.settings.selector_video_url
               %}
 
               <div
@@ -697,6 +700,7 @@
                 data-product-title="{{ card_title | escape }}"
                 data-product-image="{{ card_image | escape }}"
                 data-cds-desktop-hero-image="{{ desktop_hero_url | escape }}"
+                data-cds-desktop-hero-video="{{ desktop_hero_video | escape }}"
                 {{ block.shopify_attributes }}>
                 <div class="cds-card-innerss">
                   {% if img_url-1 %}

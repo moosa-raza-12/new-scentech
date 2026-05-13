@@ -662,6 +662,27 @@
               resetInterrupterBundleUI();
               updateThumbnailCarousel();
 
+              // Reset second diffuser: deselect card and close accordion
+              document.querySelectorAll('.cds-cards[data-diffuser-group="second"]').forEach(function(c) {
+                c.classList.remove('active');
+                var hl = c.querySelector('.cds-highlight');
+                if (hl) hl.style.display = 'none';
+              });
+              var secondAccordion = document.querySelector('.lp-diffuser-accordion');
+              if (secondAccordion && secondAccordion.classList.contains('active')) {
+                secondAccordion.classList.remove('active');
+                var accContent = secondAccordion.querySelector('.lp-diffuser-accordion__content');
+                var accHeading = secondAccordion.querySelector('.lp-diffuser-accordion__heading');
+                var accClose = secondAccordion.querySelector('.accordion__icon-close');
+                var accOpen = secondAccordion.querySelector('.accordion__icon-open');
+                var accTrigger = secondAccordion.querySelector('.lp-diffuser-accordion__trigger');
+                if (accContent) { accContent.style.maxHeight = null; accContent.style.display = 'none'; }
+                if (accTrigger) accTrigger.setAttribute('aria-expanded', 'false');
+                if (accHeading) accHeading.textContent = accHeading.getAttribute('data-closed-heading') || accHeading.textContent;
+                if (accClose) accClose.style.display = 'block';
+                if (accOpen) accOpen.style.display = 'none';
+              }
+
               // Mini-cart checkout only: restore label/HTML after success.
               // Continue button (#kv-open-minicart) must stay managed by updateThumbnailCarousel
               // (disabled until 2+ scents again — same as initial load).

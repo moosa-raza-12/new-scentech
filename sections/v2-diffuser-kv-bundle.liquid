@@ -15,7 +15,8 @@
     position: sticky;
     top: var(--kv-hero-offset, 0px);
   }
-  .kv-bundle-dynamic-image img{
+  .kv-bundle-dynamic-image img,
+  .kv-bundle-dynamic-image video{
     width: 100%;
     object-fit: fill;
     transition: opacity 0.3s ease;
@@ -107,6 +108,7 @@ opacity: 0.6;
 </div>
 {% liquid
   assign kv_default_desktop_hero_url = blank
+  assign kv_default_desktop_hero_video = blank
   for block in section.blocks
     if block.type == 'diffuser'
       assign _hero = block.settings.cds_desktop_hero_image
@@ -119,6 +121,9 @@ opacity: 0.6;
       elsif _prod != blank and _prod.featured_image != blank
         assign kv_default_desktop_hero_url = _prod.featured_image | image_url: width: 1200
       endif
+      if block.settings.selector_video_url != blank
+        assign kv_default_desktop_hero_video = block.settings.selector_video_url
+      endif
       break
     endif
   endfor
@@ -129,7 +134,17 @@ opacity: 0.6;
       <img
         id="kv-bundle-dynamic-image-img"
         src="{% if kv_default_desktop_hero_url != blank %}{{ kv_default_desktop_hero_url }}{% else %}{{ 'image-1.png' | asset_img_url: '1200x' }}{% endif %}"
-        alt="">
+        alt=""
+        {% if kv_default_desktop_hero_video != blank %}style="display:none"{% endif %}>
+      <video
+        id="kv-bundle-dynamic-image-video"
+        src="{{ kv_default_desktop_hero_video }}"
+        autoplay
+        loop
+        muted
+        playsinline
+        {% if kv_default_desktop_hero_video == blank %}style="display:none"{% endif %}>
+      </video>
     </div>
     <div class="low-class">
  {% render 'df-overflow-step1' %}
@@ -2384,12 +2399,27 @@ window.__kvInterrupterProducts = {};
     function syncKvBundleDesktopHeroImage() {
       if (!desktopMq.matches) return;
       var dynImg = document.getElementById('kv-bundle-dynamic-image-img');
+      var dynVideo = document.getElementById('kv-bundle-dynamic-image-video');
       if (!dynImg) return;
       var active = document.querySelector('.cds-cards[data-diffuser-group="primary"].active');
       var card = active || document.querySelector('.cds-cards[data-diffuser-group="primary"]');
       if (!card) return;
-      var url = card.getAttribute('data-cds-desktop-hero-image') || card.getAttribute('data-product-image');
-      if (url) dynImg.src = url;
+      var videoUrl = card.getAttribute('data-cds-desktop-hero-video');
+      var imgUrl = card.getAttribute('data-cds-desktop-hero-image') || card.getAttribute('data-product-image');
+
+      if (videoUrl && dynVideo) {
+        dynImg.style.display = 'none';
+        dynVideo.src = videoUrl;
+        dynVideo.style.display = '';
+        dynVideo.play().catch(function() {});
+      } else {
+        if (dynVideo) {
+          dynVideo.style.display = 'none';
+          dynVideo.pause();
+        }
+        dynImg.style.display = '';
+        if (imgUrl) dynImg.src = imgUrl;
+      }
     }
 
     syncKvBundleDesktopHeroImage();
@@ -2964,6 +2994,18 @@ window.__kvInterrupterProducts = {};
       "type": "image_picker",
       "id": "selector_image",
       "label": "Diffuser Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "cds_desktop_hero_image",
+      "label": "Desktop sticky panel image",
+      "info": "Large image shown left of the bundle on desktop. If empty, the diffuser image or product photo is used."
+    },
+    {
+      "type": "text",
+      "id": "selector_video_url",
+      "label": "Desktop hero video URL",
+      "info": "Paste a Shopify CDN video URL (e.g. .mp4). When set, the video plays instead of the hero image."
     },
     {
       "type": "text",
