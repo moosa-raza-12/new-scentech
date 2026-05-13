@@ -1,6 +1,11 @@
 {% render 'new-kv-bundle-css' %}
 {% render 'diffuser-kv-bundle-css' %}
   <style>
+    .cds-highlight-text {
+    color: {{ section.settings.highlight_text_color }};
+    font-size: 12px;
+    font-weight: 400;
+  }
  @media screen and (min-width: 768px) {
   .cds-left {
     gap: 8px;
