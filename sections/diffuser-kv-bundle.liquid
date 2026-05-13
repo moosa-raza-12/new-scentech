@@ -16,10 +16,10 @@
     left: 0px;
   }
 .high-class{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding-right: 200px;
+  width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 50px;
     }
 .kv-bundle-dynamic-image{
   display:block !important;
@@ -38,7 +38,7 @@
     transition: opacity 0.3s ease;
 }
 .low-class{
-  width:430px;
+  width:500px;
 }
 
 }
@@ -110,23 +110,6 @@
       break
     endif
   endfor
-  if kv_default_desktop_hero_url == blank
-    for block in section.blocks
-      if block.type == 'diffuser_limited_time'
-        assign _hero = block.settings.cds_desktop_hero_image
-        assign _sel = block.settings.selector_image
-        assign _prod = block.settings.selector_product
-        if _hero != blank
-          assign kv_default_desktop_hero_url = _hero | image_url: width: 1200
-        elsif _sel != blank
-          assign kv_default_desktop_hero_url = _sel | image_url: width: 1200
-        elsif _prod != blank and _prod.featured_image != blank
-          assign kv_default_desktop_hero_url = _prod.featured_image | image_url: width: 1200
-        endif
-        break
-      endif
-    endfor
-  endif
 %}
 <div class="kv-bundle-section"
   data-text-discount-prefix="{{ section.settings.text_discount_prefix | escape }}"
@@ -2379,8 +2362,8 @@ window.__kvInterrupterProducts = {};
       if (!desktopMq.matches) return;
       var dynImg = document.getElementById('kv-bundle-dynamic-image-img');
       if (!dynImg) return;
-      var active = document.querySelector('.cds-cards.active');
-      var card = active || document.querySelector('.cds-cards');
+      var active = document.querySelector('.cds-cards[data-diffuser-group="primary"].active');
+      var card = active || document.querySelector('.cds-cards[data-diffuser-group="primary"]');
       if (!card) return;
       var url = card.getAttribute('data-cds-desktop-hero-image') || card.getAttribute('data-product-image');
       if (url) dynImg.src = url;
@@ -2388,12 +2371,10 @@ window.__kvInterrupterProducts = {};
 
     window.addEventListener('resize', syncKvBundleDesktopHeroImage);
 
-    // Listen for selections from the snippet
+    // Listen for primary diffuser selections
     document.addEventListener('kv:selector-product-selected', function(event) {
       const product = event.detail;
 
-      // Price is already calculated in the snippet as 50% off
-      // You can either recalculate or trust the snippet's calculation
       if (priceDisplay && product.variantPrice) {
         const discountedPrice = (product.variantPrice * 0.5) / 100;
         priceDisplay.innerHTML = `€${discountedPrice.toFixed(2).replace('.', ',')}`;
@@ -2407,6 +2388,11 @@ window.__kvInterrupterProducts = {};
         `;
       }
 
+      syncKvBundleDesktopHeroImage();
+    });
+
+    // Listen for second diffuser selections (hero image stays on primary)
+    document.addEventListener('kv:second-selector-product-selected', function(event) {
       syncKvBundleDesktopHeroImage();
     });
   });
@@ -2482,12 +2468,6 @@ window.__kvInterrupterProducts = {};
         "id": "open_heading",
         "label": "Open Heading",
         "default": "Second diffuser added"
-      },
-      {
-        "type": "text",
-        "id": "closed_subtext",
-        "label": "Closed Subtext",
-        "default": "Click to view details"
       },
       {
         "type": "text",
@@ -3083,50 +3063,6 @@ window.__kvInterrupterProducts = {};
     }
   ]
      },
-  {
-    "type": "diffuser_limited_time",
-    "name": "Diffuser (limited offer)",
-    "settings": [
-      {
-        "type": "product",
-        "id": "selector_product",
-        "label": "Select product (optional)"
-      },
-      {
-        "type": "image_picker",
-        "id": "selector_image",
-        "label": "Diffuser Image"
-      },
-      {
-        "type": "image_picker",
-        "id": "cds_desktop_hero_image",
-        "label": "Desktop sticky panel image",
-        "info": "Large image shown left of the bundle on desktop. If empty, the diffuser image or product photo is used."
-      },
-      {
-        "type": "text",
-        "id": "selector_title",
-        "label": "Title",
-        "default": "Diffuser Name"
-      },
-      {
-        "type": "textarea",
-        "id": "selector_description",
-        "label": "Description",
-        "default": "Describe the diffuser here."
-      },
-      {
-        "type": "range",
-        "id": "selector_discount_percent",
-        "min": 0,
-        "max": 90,
-        "step": 5,
-        "label": "Discount Percentage",
-        "default": 50,
-        "info": "Percentage discount off the product price. 0 = no discount."
-      }
-    ]
-  },
   {
     "type": "collection",
     "name": "Collection",

@@ -143,7 +143,7 @@
 
   .cds-cards {
     border: 1px solid #ddd;
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
   }
 
@@ -211,7 +211,7 @@
   .cds-desc {
     margin: 5px 0 0;
     color: #160000;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     letter-spacing: 0;
     line-height: normal;
@@ -287,6 +287,98 @@
     color: #5c220a;
     font-size: 12px;
     font-weight: 400;
+  }
+
+  /* Second diffuser accordion */
+  .lp-diffuser-accordion {
+    width: 100%;
+    max-width: 960px;
+    margin-top: 12px;
+  }
+  .lp-diffuser-accordion__trigger {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px dashed rgba(22, 0, 0, 0.10);
+    background: {{ section.settings.background_color | default: '#fff' }};
+    padding: 4px 4px 4px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  @media (max-width: 748px) {
+    .lp-diffuser-accordion__trigger {
+      border-radius: 12px;
+    }
+  }
+  .lp-diffuser-accordion__heading-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .accordion__icon-open,
+  .accordion__icon-close {
+    line-height: 0;
+  }
+  .lp-diffuser-accordion__heading {
+    color: #160000;
+    font-family: "Bai Jamjuree";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .lp-diffuser-accordion.active .lp-diffuser-accordion__heading {
+    color: #222222;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .lp-diffuser-accordion__icon {
+    display: flex;
+    width: 28px;
+    height: 28px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    background: {{ section.settings.icon_background | default: '#f0f0f0' }};
+    color: {{ section.settings.icon_color | default: '#160000' }};
+    font-size: {{ section.settings.icon_font_size | default: 16 }}px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .lp-diffuser-accordion__content {
+    display: none;
+    max-height: 0;
+    overflow: hidden;
+    padding: 6px;
+    transition: max-height 0.35s ease;
+    border-radius: 8px;
+    background: #FFF;
+    border: 1px solid rgba(22, 0, 0, 0.10);
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .lp-diffuser-accordion__inner {
+    padding-top: 16px;
+    color: {{ section.settings.content_color | default: '#160000' }};
+    font-size: {{ section.settings.content_size | default: 14 }}px;
+    line-height: 1.6;
+  }
+  .lp-diffuser-accordion.active .lp-diffuser-accordion__trigger {
+    border-style: solid;
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    padding: 12px 16px 0;
+  }
+  .lp-diffuser-accordion__content .cds-card-innerss {
+    background-color: #F8F7F4;
+    backdrop-filter: blur(2px);
   }
 </style>
 
@@ -400,6 +492,7 @@
 
         <div
           class="cds-cards{% if template.suffix == 'diffuser-overflow-v1' %} cds-locked{% endif %}"
+          data-diffuser-group="primary"
           data-product-id="{{ card_product_id }}"
           data-product-handle="{{ card_product_handle }}"
           data-variant-id="{{ card_variant_id }}"
@@ -506,59 +599,227 @@
     {% endfor %}
   </div>
 
-  {% render 'df-limited-offer-component' %}
+  {% liquid
+    assign accordion_id = 'lp-diffuser-accordion-' | append: section.id
+  %}
+  <div class="lp-diffuser-accordion">
+    <button
+      class="lp-diffuser-accordion__trigger"
+      type="button"
+      aria-expanded="false"
+      aria-controls="{{ accordion_id }}">
+      <div class="lp-diffuser-accordion__heading-wrap">
+        <span class="lp-diffuser-accordion__heading">
+          {{ section.settings.closed_heading }}
+        </span>
+      </div>
+      <div class="lp-diffuser-accordion__icon">
+        <span class="accordion__icon-close">{{ section.settings.close_icon_svg }}</span>
+        <span class="accordion__icon-open" style="display: none;">{{ section.settings.open_icon_svg }}</span>
+      </div>
+    </button>
+
+    <div id="{{ accordion_id }}" class="lp-diffuser-accordion__content">
+      <div class="lp-diffuser-accordion__inner">
+        <div class="cds-list">
+          {% for block in section.blocks %}
+            {% if block.type == "diffuser" %}
+              {% assign product_obj = block.settings.selector_product %}
+              {% assign new_price_display = nil %}
+              {% assign old_price_display = nil %}
+              {% assign discount_percent = block.settings.selector_discount_percent | default: 0 %}
+
+              {% assign img_url = block.settings.selector_image %}
+              {% if img_url == blank and product_obj != blank and product_obj.featured_image != blank %}
+                {% assign img_url = product_obj.featured_image %}
+              {% endif %}
+              {% assign img_url-1 = product_obj.featured_image %}
+              {% if product_obj != blank %}
+                {% assign original_price_cents = product_obj.price %}
+                {% if discount_percent > 0 %}
+                  {% assign discount_multiplier = 100 | minus: discount_percent %}
+                  {% assign discounted_price_cents = original_price_cents | times: discount_multiplier | divided_by: 100 %}
+                  {% assign old_price_display = original_price_cents | money %}
+                  {% assign new_price_display = discounted_price_cents | money %}
+                {% else %}
+                  {% assign new_price_display = original_price_cents | money %}
+                {% endif %}
+              {% endif %}
+
+              {% assign selected_variant = product_obj.selected_or_first_available_variant %}
+              {% assign card_product_id = '' %}
+              {% assign card_product_handle = '' %}
+              {% assign card_variant_id = '' %}
+              {% assign card_variant_price = 0 %}
+              {% assign card_variant_compare_at_price = 0 %}
+              {% assign card_title = block.settings.selector_title %}
+              {% assign card_image = '' %}
+
+              {% if product_obj != blank %}
+                {% assign card_product_id = product_obj.id %}
+                {% assign card_product_handle = product_obj.handle %}
+                {% assign card_title = product_obj.title %}
+                {% if selected_variant != blank %}
+                  {% assign card_variant_id = selected_variant.id %}
+                  {% assign card_variant_price = selected_variant.price %}
+                  {% assign card_variant_compare_at_price = selected_variant.compare_at_price | default: 0 %}
+                {% endif %}
+                {% if product_obj.featured_image != blank %}
+                  {% assign card_image = product_obj.featured_image | image_url: width: 600 %}
+                {% elsif img_url != blank %}
+                  {% assign card_image = img_url | image_url: width: 600 %}
+                {% endif %}
+              {% elsif img_url != blank %}
+                {% assign card_image = img_url | image_url: width: 600 %}
+              {% endif %}
+
+              {% liquid
+                assign desktop_hero_url = blank
+                assign _cds_hero = block.settings.cds_desktop_hero_image
+                if _cds_hero != blank
+                  assign desktop_hero_url = _cds_hero | image_url: width: 1200
+                elsif img_url != blank
+                  assign desktop_hero_url = img_url | image_url: width: 1200
+                elsif product_obj != blank and product_obj.featured_image != blank
+                  assign desktop_hero_url = product_obj.featured_image | image_url: width: 1200
+                endif
+              %}
+
+              <div
+                class="cds-cards{% if template.suffix == 'diffuser-overflow-v1' %} cds-locked{% endif %}"
+                data-diffuser-group="second"
+                data-product-id="{{ card_product_id }}"
+                data-product-handle="{{ card_product_handle }}"
+                data-variant-id="{{ card_variant_id }}"
+                data-variant-price="{{ card_variant_price }}"
+                data-variant-compare-at-price="{{ card_variant_compare_at_price }}"
+                data-product-title="{{ card_title | escape }}"
+                data-product-image="{{ card_image | escape }}"
+                data-cds-desktop-hero-image="{{ desktop_hero_url | escape }}"
+                {{ block.shopify_attributes }}>
+                <div class="cds-card-innerss">
+                  {% if img_url-1 %}
+                    <div class="cds-image">
+                      {{ img_url-1 | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}
+                    </div>
+                  {% endif %}
+
+                  <div class="cds-content">
+                    <div class="cds-header-content">
+                      <p class="cds-name">
+                        {% if block.settings.selector_title != blank %}
+                          {{ block.settings.selector_title }}
+                        {% elsif product_obj != blank %}
+                          {{ product_obj.title }}
+                        {% endif %}
+                        <button
+                          class="kv-bundle-product-info-icon kv-scent-info-btn cds-info-btn"
+                          type="button"
+                          aria-label="View details"
+                          data-product-id="{{ card_product_id }}"
+                          data-product-title="{{ card_title | escape }}"
+                          data-product-description="{{ product_obj.metafields.custom.scent_popup_description | default: product_obj.description | strip_html | strip | escape }}"
+                          data-product-details="{{ product_obj.metafields.custom.scent_details | escape }}"
+                          data-product-image="{% if product_obj.metafields.custom.scent_image %}{{ product_obj.metafields.custom.scent_image | image_url: width: 1200 }}{% elsif product_obj.featured_image %}{{ product_obj.featured_image | image_url: width: 1200 }}{% endif %}"
+                          data-product-variant="{{ product_obj.metafields.custom.quantity_value | default: product_obj.variants.first.title | escape }}"
+                          data-product-badge="{{ product_obj.metafields.custom.collection_card_badge | escape }}">
+                          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 13.125C10.3827 13.125 13.125 10.3827 13.125 7C13.125 3.61726 10.3827 0.875 7 0.875C3.61726 0.875 0.875 3.61726 0.875 7C0.875 10.3827 3.61726 13.125 7 13.125Z" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                          </svg>
+                        </button>
+                      </p>
+
+                      <div class="cds-price">
+                        {% if old_price_display != nil and old_price_display != blank %}
+                          <span class="old">{{ old_price_display }}</span>
+                        {% else %}
+                          <span class="old">{{ new_price_display }}</span>
+                        {% endif %}
+                        <span class="new">{{ new_price_display }}</span>
+                      </div>
+                    </div>
+                    <p class="cds-desc">{{ block.settings.selector_description }}</p>
+                  </div>
+                </div>
+
+                {% if discount_percent > 0 and new_price_display != blank %}
+                  {% if template.suffix == "diffuser-overflow-v1" or template.name == "diffuser-overflow-v1" %}
+                    {% assign cds_highlight_overflow_text = section.settings.cds_highlight_overflow_text | default: '<b>Spring:</b> Pay only <b>[price]</b> after adding 2 scents!' %}
+                    {% assign cds_highlight_overflow_text = cds_highlight_overflow_text | replace: '[price]', new_price_display %}
+                    <div class="cds-highlight">
+                      <p class="cds-highlight-text">{{ cds_highlight_overflow_text }}</p>
+                    </div>
+                  {% else %}
+                    {% assign cds_highlight_default_text = section.settings.cds_highlight_default_text | default: '<b>Spring:</b> Pay only <b>[price]</b> for your diffuser!' %}
+                    {% assign cds_highlight_default_text = cds_highlight_default_text | replace: '[price]', new_price_display %}
+                    <div class="cds-highlight">
+                      <p class="cds-highlight-text">{{ cds_highlight_default_text }}</p>
+                    </div>
+                  {% endif %}
+                {% endif %}
+                {% if template.suffix == 'diffuser-overflow-v1' %}
+                  <div class="cds-lock-overlay">{{ section.settings.cds_lock_overlay_text | default: 'Add at least 2 scents to select a diffuser' }}</div>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const cardSelector = '.cds-cards';
     const activeClass = 'active';
     const highlightSelector = '.cds-highlight';
-  
-    function hideAllHighlights() {
-      document.querySelectorAll(highlightSelector).forEach(hl => {
+
+    function hideHighlightsInGroup(group) {
+      document.querySelectorAll('.cds-cards[data-diffuser-group="' + group + '"] ' + highlightSelector).forEach(function(hl) {
         hl.style.display = 'none';
       });
     }
-  
-    function resetActiveCards() {
-      document.querySelectorAll(cardSelector).forEach(card => {
+
+    function resetCardsInGroup(group) {
+      document.querySelectorAll('.cds-cards[data-diffuser-group="' + group + '"]').forEach(function(card) {
         card.classList.remove(activeClass);
       });
     }
-  
+
     function showHighlightForCard(card) {
-      const highlight = card.querySelector(highlightSelector);
+      var highlight = card.querySelector(highlightSelector);
       if (highlight) {
-        highlight.style.display = ''; // revert to CSS default (e.g., block or flex)
+        highlight.style.display = '';
       }
     }
-  
-    // Initially hide all highlights (if they are not already hidden by CSS)
-    hideAllHighlights();
-  
+
+    hideHighlightsInGroup('primary');
+    hideHighlightsInGroup('second');
+
     // Handle info icon clicks on diffuser cards
     document.addEventListener('click', function(e) {
-      const infoBtn = e.target.closest('.cds-info-btn');
+      var infoBtn = e.target.closest('.cds-info-btn');
       if (!infoBtn) return;
       e.preventDefault();
       e.stopPropagation();
-  
-      const scentModal = document.getElementById('kv-scent-modal');
-      const scentModalOverlay = document.getElementById('kv-scent-modal-overlay');
+
+      var scentModal = document.getElementById('kv-scent-modal');
+      var scentModalOverlay = document.getElementById('kv-scent-modal-overlay');
       if (!scentModal || !scentModalOverlay) return;
-  
-      const modalImg = document.getElementById('kv-scent-modal-img');
-      const modalTitle = document.getElementById('kv-scent-modal-title');
-      const modalDescription = document.getElementById('kv-scent-modal-description');
-      const modalDetails = document.getElementById('kv-scent-modal-details');
-      const modalVariant = document.getElementById('kv-scent-modal-variant');
-      const modalBadge = document.getElementById('kv-scent-modal-badge');
-  
+
+      var modalImg = document.getElementById('kv-scent-modal-img');
+      var modalTitle = document.getElementById('kv-scent-modal-title');
+      var modalDescription = document.getElementById('kv-scent-modal-description');
+      var modalDetails = document.getElementById('kv-scent-modal-details');
+      var modalVariant = document.getElementById('kv-scent-modal-variant');
+      var modalBadge = document.getElementById('kv-scent-modal-badge');
+
       if (modalTitle) modalTitle.textContent = infoBtn.getAttribute('data-product-title') || '';
       if (modalDescription) modalDescription.textContent = infoBtn.getAttribute('data-product-description') || '';
       if (modalVariant) modalVariant.textContent = infoBtn.getAttribute('data-product-variant') || '';
-  
-      const badge = infoBtn.getAttribute('data-product-badge');
+
+      var badge = infoBtn.getAttribute('data-product-badge');
       if (modalBadge) {
         if (badge) {
           modalBadge.textContent = badge;
@@ -567,8 +828,8 @@
           modalBadge.style.display = 'none';
         }
       }
-  
-      const image = infoBtn.getAttribute('data-product-image');
+
+      var image = infoBtn.getAttribute('data-product-image');
       if (modalImg) {
         if (image) {
           modalImg.src = image;
@@ -578,41 +839,38 @@
           scentModal.querySelector('.kv-scent-modal-image').style.display = 'none';
         }
       }
-  
-      const details = infoBtn.getAttribute('data-product-details');
+
+      var details = infoBtn.getAttribute('data-product-details');
       if (modalDetails) {
         modalDetails.innerHTML = details ? details.replace(/\n/g, '<br>') : '';
       }
-  
+
       scentModalOverlay.classList.add('active');
       scentModal.classList.add('active');
       document.body.style.overflow = 'hidden';
     }, true);
-  
-    // Delegate click event to handle dynamically added cards
+
+    // Delegate click for diffuser card selection — scoped per group
     document.body.addEventListener('click', function(e) {
       if (e.target.closest('.cds-info-btn')) return;
-  
-      // Find the closest .cds-cards element (allows clicking on inner elements)
-      const card = e.target.closest(cardSelector);
+
+      var card = e.target.closest('.cds-cards');
       if (!card) return;
-  
+
       if (card.classList.contains('cds-locked')) return;
-  
-      // If this card is already active, do nothing (or optionally unselect – decide)
-      if (card.classList.contains(activeClass)) {
-        return; // already active, ignore
-      }
-  
-      // Remove active class from all cards and hide all highlights
-      resetActiveCards();
-      hideAllHighlights();
-  
-      // Activate the clicked card
+
+      var group = card.getAttribute('data-diffuser-group');
+      if (!group) return;
+
+      if (card.classList.contains(activeClass)) return;
+
+      resetCardsInGroup(group);
+      hideHighlightsInGroup(group);
+
       card.classList.add(activeClass);
       showHighlightForCard(card);
-  
-      const selectedProduct = {
+
+      var selectedProduct = {
         productId: card.getAttribute('data-product-id'),
         productHandle: card.getAttribute('data-product-handle'),
         variantId: card.getAttribute('data-variant-id'),
@@ -621,21 +879,48 @@
         title: card.getAttribute('data-product-title') || '',
         image: card.getAttribute('data-product-image') || ''
       };
-  
-      document.dispatchEvent(new CustomEvent('kv:selector-product-selected', {
+
+      var eventName = (group === 'second')
+        ? 'kv:second-selector-product-selected'
+        : 'kv:selector-product-selected';
+
+      document.dispatchEvent(new CustomEvent(eventName, {
         detail: selectedProduct
       }));
     });
-  
-    // Auto-click the first card after ALL DOMContentLoaded handlers have run (v2-diffuser-overflow only)
-    // setTimeout(0) defers the click until the v2 script's kv:selector-product-selected listener is registered
-    // {% if template == 'page.v2-diffuser-overflow' %}
-    // setTimeout(function() {
-    //   const firstCard = document.querySelector(cardSelector);
-    //   if (firstCard) {
-    //     firstCard.click();
-    //   }
-    // }, 0);
-    // {% endif %}
+
+    // Accordion toggle for second diffuser
+    var accordion = document.querySelector('.lp-diffuser-accordion');
+    if (accordion) {
+      var trigger = accordion.querySelector('.lp-diffuser-accordion__trigger');
+      var content = accordion.querySelector('.lp-diffuser-accordion__content');
+      var heading = accordion.querySelector('.lp-diffuser-accordion__heading');
+      var closeIcon = accordion.querySelector('.accordion__icon-close');
+      var openIcon = accordion.querySelector('.accordion__icon-open');
+
+      var closedHeading = `{{ section.settings.closed_heading | escape }}`;
+      var openHeading = `{{ section.settings.open_heading | escape }}`;
+
+      trigger.addEventListener('click', function() {
+        var isOpen = accordion.classList.contains('active');
+        accordion.classList.toggle('active');
+
+        if (isOpen) {
+          content.style.maxHeight = null;
+          content.style.display = 'none';
+          trigger.setAttribute('aria-expanded', 'false');
+          heading.textContent = closedHeading;
+          closeIcon.style.display = 'block';
+          openIcon.style.display = 'none';
+        } else {
+          content.style.maxHeight = 'fit-content';
+          content.style.display = 'block';
+          trigger.setAttribute('aria-expanded', 'true');
+          heading.textContent = openHeading;
+          closeIcon.style.display = 'none';
+          openIcon.style.display = 'block';
+        }
+      });
+    }
   });
 </script>

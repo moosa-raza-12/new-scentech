@@ -307,10 +307,6 @@
         const data = e.detail || {};
         if (!data.productId || !data.variantId) return;
 
-        // Diffuser can be selected at any time. The "Add at least 2 Scents" gating
-        // is enforced separately on the kv-bundle-continue-btn inside
-        // updateThumbnailCarousel().
-
         const selectorProduct = {
           productId: data.productId,
           productHandle: data.productHandle || '',
@@ -324,15 +320,41 @@
           inventoryQuantity: 0,
           selectionSource: 'cds-selector'
         };
-  
-        // Keep only one active diffuser selector card product at a time
+
         selectedProducts = selectedProducts.filter(product => product.selectionSource !== 'cds-selector');
         selectedProducts.push(selectorProduct);
-  
-        // If this product also exists in product grids, mirror its selected state there
+
         syncProductState(selectorProduct.productId, 'add');
         syncProductQuantity(selectorProduct.productId, 1);
-  
+
+        updateThumbnailCarousel();
+        if (document.getElementById('kv-minicart').classList.contains('active')) {
+          updateMiniCart();
+        }
+      });
+
+      // Second diffuser selection (from accordion)
+      document.addEventListener('kv:second-selector-product-selected', function(e) {
+        const data = e.detail || {};
+        if (!data.productId || !data.variantId) return;
+
+        const selectorProduct = {
+          productId: data.productId + '-second',
+          productHandle: data.productHandle || '',
+          variantId: data.variantId,
+          quantity: 1,
+          image: data.image || '',
+          title: data.title || '',
+          price: parseInt(data.variantPrice, 10) || 0,
+          compareAtPrice: parseInt(data.variantCompareAtPrice, 10) || 0,
+          inventoryDate: '',
+          inventoryQuantity: 0,
+          selectionSource: 'cds-selector-2'
+        };
+
+        selectedProducts = selectedProducts.filter(product => product.selectionSource !== 'cds-selector-2');
+        selectedProducts.push(selectorProduct);
+
         updateThumbnailCarousel();
         if (document.getElementById('kv-minicart').classList.contains('active')) {
           updateMiniCart();
@@ -1050,7 +1072,7 @@
       const skeletons = Array.from(carousel.querySelectorAll('.kv-skeleton-placeholder'));
   
       const nonSelectorItemCount = selectedProducts
-        .filter(product => product.selectionSource !== 'cds-selector')
+        .filter(product => product.selectionSource !== 'cds-selector' && product.selectionSource !== 'cds-selector-2')
         .reduce((sum, product) => sum + (product.quantity || 0), 0);
   
       // Below the 2-scent threshold, just update messaging. The diffuser stays
@@ -1085,10 +1107,9 @@
         }
         const hasSelectorProduct = selectedProducts.some(p => p.selectionSource === 'cds-selector');
         if (!hasSelectorProduct) {
-          const firstCard = document.querySelector('.cds-cards');
+          const firstCard = document.querySelector('.cds-cards[data-diffuser-group="primary"]');
           if (firstCard && firstCard.getAttribute('data-product-id')) {
-            // Visually activate the first card
-            document.querySelectorAll('.cds-cards').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.cds-cards[data-diffuser-group="primary"]').forEach(c => c.classList.remove('active'));
             firstCard.classList.add('active');
             const highlight = firstCard.querySelector('.cds-highlight');
             if (highlight) highlight.style.display = '';
@@ -1118,23 +1139,30 @@
   
       // Build CTA pricing using milestone-based per-scent pricing
       const scentCount = selectedProducts
-        .filter(product => product.selectionSource !== 'cds-selector')
+        .filter(product => product.selectionSource !== 'cds-selector' && product.selectionSource !== 'cds-selector-2')
         .reduce((sum, product) => sum + (product.quantity || 0), 0);
 
       const pricePerScent = getMilestonePricePerScent(scentCount);
       let runningTotal = (scentCount * pricePerScent) / 100;
 
-      // Add diffuser at 50% price when 2+ scents are selected
+      // Add primary diffuser at 50% price when 2+ scents are selected
       const diffuserProduct = selectedProducts.find(p => p.selectionSource === 'cds-selector');
       if (diffuserProduct && scentCount >= 2) {
         const diffuserPrice = (diffuserProduct.price || 0) / 100;
         runningTotal += diffuserPrice * 0.5;
       }
 
+      // Add second diffuser at 50% price when 2+ scents are selected
+      const secondDiffuserProduct = selectedProducts.find(p => p.selectionSource === 'cds-selector-2');
+      if (secondDiffuserProduct && scentCount >= 2) {
+        const secondDiffuserPrice = (secondDiffuserProduct.price || 0) / 100;
+        runningTotal += secondDiffuserPrice * 0.5;
+      }
+
       // Calculate original total for compare-at / savings display
       let runningCompareAtTotal = 0;
       selectedProducts.forEach(product => {
-        if (product.selectionSource === 'cds-selector') {
+        if (product.selectionSource === 'cds-selector' || product.selectionSource === 'cds-selector-2') {
           runningCompareAtTotal += ((product.price || 0) / 100) * (product.quantity || 0);
         } else if (product.compareAtPrice && product.compareAtPrice > product.price) {
           runningCompareAtTotal += ((product.compareAtPrice || 0) / 100) * (product.quantity || 0);
@@ -1324,7 +1352,7 @@
       // Calculate current product count (scents only, exclude diffuser / cds-cards)
       let currentCount = 0;
       selectedProducts.forEach(product => {
-        if (product.selectionSource !== 'cds-selector') {
+        if (product.selectionSource !== 'cds-selector' && product.selectionSource !== 'cds-selector-2') {
           currentCount += product.quantity;
         }
       });
@@ -1564,7 +1592,7 @@
   
       // Compute scent count for milestone tier pricing
       const miniCartScentCount = selectedProducts
-        .filter(product => product.selectionSource !== 'cds-selector')
+        .filter(product => product.selectionSource !== 'cds-selector' && product.selectionSource !== 'cds-selector-2')
         .reduce((sum, product) => sum + (product.quantity || 0), 0);
       const miniCartPricePerScent = getMilestonePricePerScent(miniCartScentCount);
 
@@ -1576,7 +1604,7 @@
 
         let itemPrice, itemSubtotal, priceDisplay;
 
-        if (product.selectionSource === 'cds-selector') {
+        if (product.selectionSource === 'cds-selector' || product.selectionSource === 'cds-selector-2') {
           itemPrice = ((product.price || 0) / 100) * 0.5;
           itemSubtotal = itemPrice * product.quantity;
           total += itemSubtotal;
