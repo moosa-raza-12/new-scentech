@@ -6,6 +6,19 @@
     font-size: 12px;
     font-weight: 400;
   }
+
+
+  .kv-progress-banner {
+    background: #e5e5e5;
+}
+
+
+
+
+
+
+
+
  @media screen and (min-width: 768px) {
   .cds-left {
     gap: 8px;
@@ -17,47 +30,12 @@
 .cds-title{
   font-size:16px;
 }
-  .kv-bundle-hero-section.sticky {
-    left: 0px;
-  }
-.high-class{
-  width: 100%;
-      display: flex;
-      justify-content: center;
-      gap: 50px;
-    }
-.kv-bundle-dynamic-image{
-  display:block !important;
-  width: 720px;
-    /* flex default stretch makes this column as tall as .low-class, which breaks sticky */
-    align-self: flex-start;
-    position: sticky;
-    top: var(--kv-hero-offset, 0px);
-    /* height: calc(100vh - var(--kv-hero-offset, 0px)); */
-}
-
-.kv-bundle-dynamic-image img,
-.kv-bundle-dynamic-image video{
-  width: 100%;
-    /* height: 100%; */
-    object-fit: fill;
-    transition: opacity 0.3s ease;
-}
-.low-class{
-  width:500px;
-}
-
-}
-.kv-bundle-dynamic-image{
-  display:none;
-}  
+ 
 .kv-bundle-continue-btn {
   width: 420px !important;
   }
 
-.kv-progress-banner {
-    background: #e5e5e5;
-}
+ }
   :root {
     --cds-banner-bg: {{ section.settings.cds_banner_bg | default: '#938E70' }};
   }
