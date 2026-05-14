@@ -107,24 +107,35 @@
     padding: 30px 0 0 0;
 }
 
-  @media screen and (max-width: 991px) {
-    .high-class {
-      display: block;
-    }
 
-    .kv-bundle-dynamic-image {
-      position: relative;
-      top: auto;
-      height: auto;
-      max-height: 60vh;
-    }
+@media screen and (max-width: 1598.98px) {
+  .high-class {
+    gap: 60px;
+}
+}
 
-    .kv-bundle-dynamic-image img,
-    .kv-bundle-dynamic-image video {
-      max-height: 60vh;
-      object-fit: cover;
-    }
-  }
+@media screen and (max-width: 1398.98px) {
+  .high-class {
+    gap: 40px;
+}
+}
+
+
+@media screen and (max-width: 1198.98px) {
+  .kv-bundle-dynamic-image {
+    display: none;
+}
+
+.low-class {
+    max-width: 100%;
+}
+
+.high-class {
+    display: block;
+}
+}
+
+
   </style>
 <script>
   (function () {
