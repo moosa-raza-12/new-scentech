@@ -22,18 +22,19 @@
   }
 .high-class{
   width: 100%;
-      display: flex;
+      display: grid;
       justify-content: center;
       gap: 50px;
+      max-width: 1200px;
+      padding: 0 20px;
+      margin: auto;
     }
 .kv-bundle-dynamic-image{
   display:block !important;
-  width: 720px;
-    /* flex default stretch makes this column as tall as .low-class, which breaks sticky */
+  width: 50%;
     align-self: flex-start;
     position: sticky;
     top: var(--kv-hero-offset, 0px);
-    /* height: calc(100vh - var(--kv-hero-offset, 0px)); */
 }
 
 .kv-bundle-dynamic-image img,
@@ -44,7 +45,7 @@
     transition: opacity 0.3s ease;
 }
 .low-class{
-  width:500px;
+  width: 50%;
 }
 
 }
