@@ -2,6 +2,9 @@
 {% render 'diffuser-kv-bundle-css' %}
 <style>
 
+.kv-bundle-dynamic-image{
+  display:none;
+}
    .kv-bundle-continue-btn {
   width: 420px !important;
   font-family: "Bai Jamjuree";
@@ -43,99 +46,6 @@ opacity: 0.6;
   }
   .shopify-section-group-footer-group { display: none !important; }
   body { padding-bottom: var(--kv-sticky-height, 0px); }
-
-
-  body .kv-bundle-hero-section.sticky {
-    position: unset;
-  }
-
-  .kv-bundle-section { width: 100%; }
-
-  .high-class {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: flex-start;
-    gap: 90px;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .kv-bundle-hero-section.sticky {
-    position: fixed;
-    left: 0;
-  }
-
-  .kv-bundle-dynamic-image {
-    position: sticky;
-    top: 0;
-    align-self: start;
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
-    background: #f5f1ea;
-    overflow: hidden;
-  }
-
-  .kv-bundle-dynamic-image img,
-  .kv-bundle-dynamic-image video {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .low-class {
-    width: 100%;
-    max-width: 600px;
-    margin-right: auto;
-  }
-
-  .scent-selector .scent-subtext {
-    font-size: 12px;
-    padding: 8px 0 0 0;
-  }
-
-  .kv-bundle-hero-section {
-    padding: 30px 0 0 0;
-  }
-
-  @media screen and (max-width: 1598.98px) {
-    .high-class {
-      gap: 60px;
-    }
-  }
-
-  @media screen and (max-width: 1398.98px) {
-    .high-class {
-      gap: 40px;
-    }
-  }
-
-  @media screen and (max-width: 1198.98px) {
-    .kv-bundle-dynamic-image {
-      display: none;
-    }
-
-    .low-class {
-      max-width: 1080px;
-      padding: 0;
-      margin: auto;
-    }
-
-    .high-class {
-      display: block;
-    }
-
-    body .kv-bundle-hero-section.sticky {
-      position: fixed;
-      left: 0;
-    }
-
-    body .kv-bundle-collection {
-      padding: 24px 0;
-    }
-  }
 </style>
 <script>
   (function () {
