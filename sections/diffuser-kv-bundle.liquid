@@ -36,13 +36,27 @@
   }
 
  }
+
+
+
+
+
+
   :root {
     --cds-banner-bg: {{ section.settings.cds_banner_bg | default: '#938E70' }};
   }
   .shopify-section-group-footer-group { display: none !important; }
   body { padding-bottom: var(--kv-sticky-height, 0px); }
 
-  /* Two-column sticky layout: media on the left, steps on the right */
+
+  body .kv-bundle-hero-section.sticky {
+    position: unset;
+  }
+
+  body .kv-bundle-collection {
+    padding: 24px 0 !important;
+}
+  
   .kv-bundle-section { width: 100%; }
 
   .high-class {
