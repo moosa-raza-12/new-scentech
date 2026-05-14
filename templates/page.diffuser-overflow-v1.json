@@ -70,7 +70,8 @@
           "type": "diffuser",
           "settings": {
             "selector_product": "smart-aroma-diffuser",
-            "selector_image": "shopify://shop_images/Images_Info_0e95c5fb-3eb6-456d-8fc6-b8a227c0183c.png",
+            "selector_image": "shopify://shop_images/white_diffuser_perspective_render_1.0_6b146288-8a0f-4049-9e56-2bd4b3cb5959.png",
+            "selector_video_url": "",
             "selector_title": "Diffuser Lite",
             "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
             "highlight_text_color": "#5c220a",
@@ -82,6 +83,7 @@
           "settings": {
             "selector_product": "smart-aroma-diffuser-2",
             "selector_image": "shopify://shop_images/image_1_a2ebe478-eaf2-4545-b8fb-09c50848c735.png",
+            "selector_video_url": "",
             "selector_title": "Diffuser 2",
             "selector_description": "More consistent and noticeable scenting, designed for daily use. A strong balance between performance and control.",
             "highlight_text_color": "#5c220a",
@@ -92,6 +94,7 @@
           "type": "diffuser",
           "settings": {
             "selector_product": "smart-aroma-diffuser-pro",
+            "selector_video_url": "",
             "selector_title": "Diffuser Pro",
             "selector_description": "High-performance scenting with maximum coverage and intensity. Built for a stronger, more immersive experience.",
             "highlight_text_color": "#5c220a",
