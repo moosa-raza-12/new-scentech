@@ -46,17 +46,26 @@
   .kv-bundle-section { width: 100%; }
 
   .high-class {
-    display: block;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: flex-start;
+    gap: 0;
     width: 100%;
+    max-width: 100%;
   }
 
   .kv-bundle-hero-section.sticky {
     position: fixed;
     left: 0;
-}
+  }
 
   .kv-bundle-dynamic-image {
+    position: sticky;
+    top: 0;
+    align-self: start;
     width: 100%;
+    max-width: 100%;
+    height: 100%;
     background: #f5f1ea;
     overflow: hidden;
   }
@@ -65,47 +74,24 @@
   .kv-bundle-dynamic-image video {
     display: block;
     width: 100%;
+    max-width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
   .low-class {
     width: 100%;
-    min-width: 0;
-  }
-
-  @media screen and (min-width: 992px) {
-    .high-class {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: flex-start;
-      gap: 0;
-    }
-
-    .kv-bundle-dynamic-image {
-    position: sticky;
-    top: 0;
-    align-self: start;
-    height: 100%;
-    width: 100%;
-}
-
-    .kv-bundle-dynamic-image img,
-    .kv-bundle-dynamic-image video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .low-class {
-      width: 100%;
-      min-width: 0;
-    }
+    max-width: 100%;
   }
 
   @media screen and (max-width: 991px) {
+    .high-class {
+      display: block;
+    }
+
     .kv-bundle-dynamic-image {
       position: relative;
+      top: auto;
       height: auto;
       max-height: 60vh;
     }
