@@ -71,7 +71,7 @@
           "settings": {
             "selector_product": "smart-aroma-diffuser",
             "selector_image": "shopify://shop_images/white_diffuser_perspective_render_1.0_6b146288-8a0f-4049-9e56-2bd4b3cb5959.png",
-            "selector_video_url": "",
+            "selector_video_url": "https://cdn.shopify.com/videos/c/o/v/ff49e260443c4be4b1212e82278a7eb5.mp4",
             "selector_title": "Diffuser Lite",
             "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
             "highlight_text_color": "#5c220a",
