@@ -47,7 +47,7 @@
             "cta_product_6": "",
             "image": "shopify://shop_images/c8b404391788a94577d2407aad919b3c_exif.jpg",
             "image_position": "left",
-            "desktop_layout": "stacked",
+            "desktop_layout": "side",
             "mobile_layout": "side",
             "image_width_percent": 38,
             "image_height_mobile": 180,
@@ -63,47 +63,6 @@
             "badge_text_color": "#160000",
             "cta_bg": "#5c220a",
             "cta_text_color": "#ffffff",
-            "cta_border_color": "#ded9c5"
-          }
-        },
-        "interrupter_VRhqXc": {
-          "type": "interrupter",
-          "disabled": true,
-          "settings": {
-            "enabled": true,
-            "show_on_desktop": true,
-            "position_desktop": 0,
-            "show_on_mobile": true,
-            "position_mobile": 0,
-            "badge_text": "New",
-            "heading": "Bundle Test",
-            "description": "<p>Woody blend with leather, sandalwood, amber, and musk.</p>",
-            "show_cta": true,
-            "cta_label": "+ Add",
-            "cta_product_1": "classic-charm",
-            "cta_product_2": "tea-whisper",
-            "cta_product_3": "",
-            "cta_product_4": "",
-            "cta_product_5": "",
-            "cta_product_6": "",
-            "image": "shopify://shop_images/c8b404391788a94577d2407aad919b3c_exif.jpg",
-            "image_position": "right",
-            "desktop_layout": "stacked",
-            "mobile_layout": "side",
-            "image_width_percent": 38,
-            "image_height_mobile": 180,
-            "image_height_desktop": 180,
-            "image_fit": "cover",
-            "background_color": "#f1efe8",
-            "border_color": "#d9d4c5",
-            "title_color": "#160000",
-            "title_size": 28,
-            "text_color": "#160000",
-            "text_size": 16,
-            "badge_bg": "#ffffff",
-            "badge_text_color": "#160000",
-            "cta_bg": "#ded9c5",
-            "cta_text_color": "#6a3b1e",
             "cta_border_color": "#ded9c5"
           }
         },
@@ -151,6 +110,7 @@
           "type": "diffuser",
           "settings": {
             "selector_product": "smart-aroma-diffuser",
+            "selector_video_url": "",
             "selector_title": "Diffuser Lite",
             "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
             "selector_discount_percent": 50
@@ -160,6 +120,7 @@
           "type": "diffuser",
           "settings": {
             "selector_product": "smart-aroma-diffuser-2",
+            "selector_video_url": "",
             "selector_title": "Diffuser 2",
             "selector_description": "More consistent and noticeable scenting, designed for daily use. A strong balance between performance and control.",
             "selector_discount_percent": 50
@@ -169,6 +130,7 @@
           "type": "diffuser",
           "settings": {
             "selector_product": "smart-aroma-diffuser-pro",
+            "selector_video_url": "",
             "selector_title": "Diffuser Pro",
             "selector_description": "High-performance scenting with maximum coverage and intensity. Built for a stronger, more immersive experience.",
             "selector_discount_percent": 50
@@ -177,7 +139,6 @@
       },
       "block_order": [
         "interrupter_dPr84A",
-        "interrupter_VRhqXc",
         "collection_P9aJaF",
         "collection_RKkGgt",
         "collection_cbyaEX",
