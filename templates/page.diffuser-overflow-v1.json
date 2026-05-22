@@ -47,7 +47,7 @@
             "cta_product_6": "",
             "image": "shopify://shop_images/c8b404391788a94577d2407aad919b3c_exif.jpg",
             "image_position": "left",
-            "desktop_layout": "stacked",
+            "desktop_layout": "side",
             "mobile_layout": "side",
             "image_width_percent": 38,
             "image_height_mobile": 180,
