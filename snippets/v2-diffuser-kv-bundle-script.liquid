@@ -1,6 +1,4 @@
 <script>
-    const isOverflowV1 = {{ template.suffix | json }} === 'diffuser-overflow-v1';
-
     function getAmsterdamToday() {
       const now = new Date();
       const ams = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' }));
@@ -152,12 +150,6 @@
         });
       })();
 
-      // Diffuser cards stay selectable from page load; the kv-bundle-continue-btn
-      // is the only thing gated by the 2-scent minimum.
-      document.querySelectorAll('.cds-cards.cds-locked').forEach(function(c) {
-        c.classList.remove('cds-locked');
-      });
-
       // Update total count - count of all products across all tabs
       const totalCountElement = document.getElementById('kv-total-count');
       if (totalCountElement) {
@@ -209,7 +201,7 @@
           bundleCollectionEl.style.paddingTop = '';
         }
       }
-  
+
       const step1Section = document.querySelector('.custom-diffuser-selector');
       const scentHeader = document.querySelector('.scent-header');
       let stickyTriggerPoint = 0;
@@ -224,7 +216,6 @@
 
       function handleHeroSticky() {
         const scentSelector = document.querySelector('.scent-selector');
-        const progresFooter = document.querySelector('.kv-progress-footer2');
         if (!heroSection) return;
         const scrollY = window.pageYOffset || document.documentElement.scrollTop;
         const wasSticky = heroSection.classList.contains('sticky');
@@ -234,11 +225,9 @@
           if (shouldBeSticky) {
             heroSection.classList.add('sticky');
             if (scentSelector) scentSelector.style.display = 'none';
-            if (progresFooter) progresFooter.style.display = 'block';
           } else {
             heroSection.classList.remove('sticky');
             if (scentSelector) scentSelector.style.display = 'block';
-            if (progresFooter) progresFooter.style.display = 'none';
           }
           updateCollectionPadding();
         }
@@ -328,12 +317,78 @@
         const firstTabContent = document.querySelector(`[data-content="${firstTabId}"]`);
         if (firstTabContent) firstTabContent.classList.add('active');
       }
+      
+      function displayDiscountMessage(product) {
+  // Only proceed if this is a diffuser product
+  // You can check by product type, tags, handle, or title
   
+  // Example: Check if product title contains "diffuser"
+  if (!product.title || !product.title.toLowerCase().includes('diffuser')) {
+    return;
+  }
+  
+  // Alternative: Check by product handle
+  // if (!product.productHandle || !product.productHandle.toLowerCase().includes('diffuser')) {
+  //   return;
+  // }
+  
+  // Alternative: If you have a custom flag for diffusers
+  // if (!product.isDiffuser) {
+  //   return;
+  // }
+  
+  const discountMsgDiv = document.querySelector('.disc-active-msg');
+  const dicountText=document.querySelector('.disc-text')
+  if (!discountMsgDiv) return;
+  
+  // Calculate 50% discount
+  const originalPriceCents = product.price;
+  const discountedPriceCents = originalPriceCents / 2;
+  const savingsCents = originalPriceCents - discountedPriceCents;
+  
+  // Format prices
+  const formattedOriginalPrice = formatMoney(originalPriceCents);
+  const formattedDiscountedPrice = formatMoney(discountedPriceCents);
+  const formattedSavings = formatMoney(savingsCents);
+  
+  // Update and show the message
+  dicountText.innerText = `
+    <div class="discount-banner" style="background: #f0f7f0; border: 2px solid #4caf50; border-radius: 8px; padding: 12px 16px; margin: 10px 0;">
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <span style="background: #4caf50; color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold;">50% OFF</span>
+        <span style="color: #333;">
+          Your diffuser: 
+          <span style="text-decoration: line-through; color: #999;">${formattedOriginalPrice}</span>
+          → 
+          <span style="color: #4caf50; font-weight: bold;">${formattedDiscountedPrice}</span>
+          <span style="margin-left: 12px; color: #ff6b6b;">Save ${formattedSavings}! 🎉</span>
+        </span>
+      </div>
+    </div>
+  `;
+  
+  discountMsgDiv.style.display = 'block';
+  
+  // Optional: Auto-hide after 8 seconds
+  setTimeout(() => {
+    discountMsgDiv.style.opacity = '0';
+    discountMsgDiv.style.transform = 'translateY(-10px)';
+    setTimeout(() => {
+      if (discountMsgDiv.style.opacity === '0') {
+        discountMsgDiv.style.display = 'none';
+        discountMsgDiv.style.opacity = '';
+        discountMsgDiv.style.transform = '';
+      }
+    }, 300);
+  }, 8000);
+  
+  discountMsgDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
       // Handle diffuser selector cards (cds-cards) as selected bundle products
       document.addEventListener('kv:selector-product-selected', function(e) {
         const data = e.detail || {};
         if (!data.productId || !data.variantId) return;
-
+  
         const selectorProduct = {
           productId: data.productId,
           productHandle: data.productHandle || '',
@@ -347,12 +402,25 @@
           inventoryQuantity: 0,
           selectionSource: 'cds-selector'
         };
-
+  
+        // Keep only one active diffuser selector card product at a time
         selectedProducts = selectedProducts.filter(product => product.selectionSource !== 'cds-selector');
         selectedProducts.push(selectorProduct);
-
+  
+        // If this product also exists in product grids, mirror its selected state there
         syncProductState(selectorProduct.productId, 'add');
         syncProductQuantity(selectorProduct.productId, 1);
+  
+        // Show the cds-highlights banner and update savings amount (50% of full price)
+        const cdsHighlights = document.querySelector('.cds-highlights');
+        if (cdsHighlights) {
+          const savings = Math.round(selectorProduct.price * 0.5);
+          const priceDisplay = document.getElementById('selected-price-display');
+          if (priceDisplay) {
+            priceDisplay.textContent = formatMoney(savings);
+          }
+          cdsHighlights.style.display = '';
+        }
 
         updateThumbnailCarousel();
         if (document.getElementById('kv-minicart').classList.contains('active')) {
@@ -686,7 +754,6 @@
                 syncProductState(product.productId, 'remove');
               });
               selectedProducts = [];
-              resetInterrupterBundleUI();
               updateThumbnailCarousel();
 
               // Reset second diffuser: deselect card and close accordion
@@ -710,9 +777,6 @@
                 if (accOpen) accOpen.style.display = 'none';
               }
 
-              // Mini-cart checkout only: restore label/HTML after success.
-              // Continue button (#kv-open-minicart) must stay managed by updateThumbnailCarousel
-              // (disabled until 2+ scents again — same as initial load).
               if (triggerBtn.id === 'kv-checkout-btn') {
                 triggerBtn.disabled = false;
                 setTimeout(() => {
@@ -1072,27 +1136,6 @@
       });
     }
 
-    // After bundle checkout: restore interrupter buttons (same “fresh” state as product cards)
-    function resetInterrupterBundleUI() {
-      document.querySelectorAll('.kv-interrupter-qty-wrapper').forEach(function(w) {
-        w.remove();
-      });
-      var intrData = window.__kvInterrupterProducts || {};
-      document.querySelectorAll('.kv-interrupter-add-to-cart').forEach(function(btn) {
-        var blockId = btn.getAttribute('data-block-id');
-        var products = intrData[blockId] || [];
-        if (products.length === 0) {
-          btn.style.display = 'none';
-          return;
-        }
-        btn.style.display = '';
-        btn.disabled = false;
-        btn.classList.remove('loading', 'kv-interrupter-added');
-        var orig = btn.getAttribute('data-original-label');
-        if (orig) btn.textContent = orig;
-      });
-    }
-
     // Remove product from selected products
     function removeSelectedProduct(productId) {
       selectedProducts = selectedProducts.filter(p => p.productId !== productId);
@@ -1119,64 +1162,6 @@
       const miniTrigger = document.querySelector('.kv-bundle-items-mini-trigger');
       const skeletons = Array.from(carousel.querySelectorAll('.kv-skeleton-placeholder'));
   
-      const nonSelectorItemCount = selectedProducts
-        .filter(product => product.selectionSource !== 'cds-selector' && product.selectionSource !== 'cds-selector-2')
-        .reduce((sum, product) => sum + (product.quantity || 0), 0);
-  
-      // Below the 2-scent threshold, just update messaging. The diffuser stays
-      // selected and the cds-cards remain unlocked so the customer can pick a
-      // diffuser at any time; the kv-bundle-continue-btn gating below handles
-      // the actual lock.
-      if (nonSelectorItemCount < 2) {
-        const badgeText=document.querySelector('.text-update')
-        const badgeTextEmpty=document.getElementById('kv-progress-footer-message-empty')
-        if (badgeTextEmpty) {
-          badgeTextEmpty.textContent = 'Choose at least 2 scents';
-        }
-        if (badgeText) {
-          badgeText.textContent = 'Choose at least 2 scents';
-        }
-      }
-
-      // Auto-select the first diffuser card when 2 scents are reached and none is selected yet
-      if (nonSelectorItemCount >= 2) {
-
-        document.querySelectorAll('.cds-cards').forEach(c => c.classList.remove('cds-locked'));
-        
-        const badgeText=document.querySelector('.text-update')
-        const badgeTextEmpty=document.getElementById('kv-progress-footer-message-empty')
-        const sectionEl = document.querySelector('.kv-bundle-section');
-        const addMoreOrderText = sectionEl?.dataset.textAddMoreOrder || 'Add more or place your order!';
-        if (badgeTextEmpty) {
-          badgeTextEmpty.textContent = addMoreOrderText;
-        }
-        if (badgeText) {
-          badgeText.textContent = addMoreOrderText;
-        }
-        const hasSelectorProduct = selectedProducts.some(p => p.selectionSource === 'cds-selector');
-        if (!hasSelectorProduct) {
-          const firstCard = document.querySelector('.cds-cards[data-diffuser-group="primary"]');
-          if (firstCard && firstCard.getAttribute('data-product-id')) {
-            document.querySelectorAll('.cds-cards[data-diffuser-group="primary"]').forEach(c => c.classList.remove('active'));
-            firstCard.classList.add('active');
-            const highlight = firstCard.querySelector('.cds-highlight');
-            if (highlight) highlight.style.display = '';
-
-            // Dispatch selection event so the diffuser gets added to selectedProducts
-            const autoSelected = {
-              productId: firstCard.getAttribute('data-product-id'),
-              productHandle: firstCard.getAttribute('data-product-handle'),
-              variantId: firstCard.getAttribute('data-variant-id'),
-              variantPrice: parseInt(firstCard.getAttribute('data-variant-price') || '0', 10),
-              variantCompareAtPrice: parseInt(firstCard.getAttribute('data-variant-compare-at-price') || '0', 10),
-              title: firstCard.getAttribute('data-product-title') || '',
-              image: firstCard.getAttribute('data-product-image') || ''
-            };
-            document.dispatchEvent(new CustomEvent('kv:selector-product-selected', { detail: autoSelected }));
-          }
-        }
-      }
-      
       // Remove existing product thumbnails (keep skeleton placeholders)
       const existingProducts = carousel.querySelectorAll('.kv-bundle-thumbnail-wrapper:not(.kv-skeleton-placeholder)');
       existingProducts.forEach(el => el.remove());
@@ -1193,16 +1178,16 @@
       const pricePerScent = getMilestonePricePerScent(scentCount);
       let runningTotal = (scentCount * pricePerScent) / 100;
 
-      // Add primary diffuser at 50% price when 2+ scents are selected
+      // Add primary diffuser at 50% price when present
       const diffuserProduct = selectedProducts.find(p => p.selectionSource === 'cds-selector');
-      if (diffuserProduct && scentCount >= 2) {
+      if (diffuserProduct) {
         const diffuserPrice = (diffuserProduct.price || 0) / 100;
         runningTotal += diffuserPrice * 0.5;
       }
 
-      // Add second diffuser at 50% price when 2+ scents are selected
+      // Add second diffuser at 50% price when present
       const secondDiffuserProduct = selectedProducts.find(p => p.selectionSource === 'cds-selector-2');
-      if (secondDiffuserProduct && scentCount >= 2) {
+      if (secondDiffuserProduct) {
         const secondDiffuserPrice = (secondDiffuserProduct.price || 0) / 100;
         runningTotal += secondDiffuserPrice * 0.5;
       }
@@ -1240,21 +1225,20 @@
       const totalFormatted = formatMoney(runningTotal * 100);
       const savingsFormatted = formatMoney(savings * 100);
       const badgeText=document.querySelector('.kv-progress-footer-message-empty')  
-  
-      // Update continue button state and text. Gate strictly on scent count so a
-      // diffuser-only or single-scent + diffuser selection keeps the CTA disabled.
-      if (scentCount < 2) {
-        continueBtn.disabled = true;
-        continueBtn.textContent = scentCount === 1 ? 'Add 1 more scent' : textLabels.addScents;
 
-        // Hide mini trigger until minimum scent count is reached
+      // Update continue button state and text
+      if (totalSelectedCount < 1) {
+        continueBtn.disabled = true;
+        continueBtn.textContent = textLabels.addScents;
+        
+        // Hide mini trigger until at least one item is selected
         if (miniTrigger) {
           miniTrigger.style.display = 'none';
         }
       } else {
         continueBtn.disabled = false;
         continueBtn.innerHTML = `${textLabels.addToCart}<span style="margin:0 8px;">·</span>${totalFormatted}`;
-        // Show mini trigger when minimum scent count is reached
+        // Show mini trigger when at least one item is selected
         if (miniTrigger) {
           miniTrigger.style.display = 'flex';
         }
@@ -1397,7 +1381,7 @@
       
       if (!progressFill) return;
       
-      // Calculate current product count (scents only, exclude diffuser / cds-cards)
+      // Calculate current product count (scents only, exclude diffuser)
       let currentCount = 0;
       selectedProducts.forEach(product => {
         if (product.selectionSource !== 'cds-selector' && product.selectionSource !== 'cds-selector-2') {
@@ -1710,7 +1694,7 @@
             ${inventoryDateDisplay}
           </div>
           <div class="kv-mini-cart-item-qty-controls">
-              <button class="kv-mini-cart-qty-btn kv-mini-cart-qty-decrease" data-index="${index}" type="button" aria-label="Decrease quantity">−</button>
+              <button class="kv-mini-cart-qty-btn kv-mini-cart-qty-decrease" data-index="${index}" type="button" aria-label="Decrease quantity">-</button>
               <span class="kv-mini-cart-qty-value">${product.quantity}</span>
               <button class="kv-mini-cart-qty-btn kv-mini-cart-qty-increase" data-index="${index}" type="button" aria-label="Increase quantity">+</button>
             </div>
