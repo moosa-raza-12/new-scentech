@@ -246,6 +246,33 @@
   
       handleHeroSticky();
       window.addEventListener('scroll', handleHeroSticky, { passive: true });
+
+      // Recalculate the sticky trigger whenever the step1 section height
+      // changes (e.g. when the .lp-diffuser-accordion opens/closes). Without
+      // this, stickyTriggerPoint stays at the original closed-accordion Y and
+      // the hero would turn sticky too early once the accordion expands.
+      if (window.ResizeObserver) {
+        const stickyTriggerObserver = new ResizeObserver(() => {
+          calcStickyTrigger();
+          handleHeroSticky();
+        });
+        if (step1Section) stickyTriggerObserver.observe(step1Section);
+        if (scentHeader) stickyTriggerObserver.observe(scentHeader);
+      }
+
+      // Extra safety: also recalc immediately on accordion toggle clicks in
+      // case ResizeObserver fires after layout has already shifted.
+      document.addEventListener('click', function (ev) {
+        const trg = ev.target && ev.target.closest
+          ? ev.target.closest('.lp-diffuser-accordion__trigger')
+          : null;
+        if (!trg) return;
+        // Defer until the accordion's open/close styles have been applied.
+        requestAnimationFrame(() => {
+          calcStickyTrigger();
+          handleHeroSticky();
+        });
+      });
   
       function updateProgressFooterScrollVisibility() {
         const progressFooter = document.getElementById('kv-progress-footer-empty');
