@@ -318,22 +318,8 @@ body .kv-bundle-collection {
         </div>
       </div>
       
-  </div>
- 
-  {%- comment -%} Promotional Banner {%- endcomment -%}
-  {% if section.settings.promo_banner_enabled %}
-  <div class="kv-promo-banner" {% if section.settings.promo_banner_image %}style="background-image: url({{ section.settings.promo_banner_image | image_url: width: 1920 }});"{% endif %}>
-    <div class="kv-promo-banner-inner">
-      <p class="kv-promo-banner-text">
-        {% if section.settings.promo_banner_bold_text != blank %}
-          <strong>{{ section.settings.promo_banner_bold_text }}</strong>
-        {% endif %}
-      {{ section.settings.promo_banner_text }}
-     </p>
-   </div>
  </div>
- {% endif %}
- 
+
  <div class="kv-bundle-collection">
      <div class="kv-bundle-collection-inner">
       {% if section.blocks.size > 0 %}
@@ -2345,6 +2331,20 @@ body .kv-bundle-collection {
      </div>
  </div>
   </div>
+
+ {%- comment -%} Promotional Banner {%- endcomment -%}
+ {% if section.settings.promo_banner_enabled %}
+ <div class="kv-promo-banner" {% if section.settings.promo_banner_image %}style="background-image: url({{ section.settings.promo_banner_image | image_url: width: 1920 }});"{% endif %}>
+   <div class="kv-promo-banner-inner">
+     <p class="kv-promo-banner-text">
+       {% if section.settings.promo_banner_bold_text != blank %}
+         <strong>{{ section.settings.promo_banner_bold_text }}</strong>
+       {% endif %}
+      {{ section.settings.promo_banner_text }}
+     </p>
+   </div>
+ </div>
+ {% endif %}
   </div>
   
   {%- comment -%} Scent Details Modal {%- endcomment -%}
