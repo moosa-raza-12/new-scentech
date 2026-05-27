@@ -2169,41 +2169,185 @@ body .kv-cart__protection {
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
-  /* Quantity +/- button handler for kv-cart (event-delegated so it survives AJAX DOM replacement) */
+  /* Quantity +/- handler for kv-cart — surgical AJAX update.
+     Instead of letting Impact's <quantity-input> dispatch a `change` event
+     (which causes <cart-drawer> to replace `cart-drawer__inner` wholesale and
+     produces a one-frame flash of the line item disappearing), we:
+       1. Stop the click from reaching Impact's flow.
+       2. Optimistically update the qty input value.
+       3. Hit /cart/change.js with `sections=cart-drawer` to get the rendered HTML.
+       4. Surgically patch ONLY the bits that change: each line's price/discounts,
+          the shipping bar, the extras slider, the footer (totals/protection/
+          preorder notices), and cart counts. The <line-item> rows themselves
+          are never re-rendered, so there is no flash.
+       5. Fall back to a full refresh only if the cart hits 0 items or the
+          request fails. */
   (function() {
     var drawer = document.getElementById('cart-drawer');
     if (!drawer) return;
+
+    function cssEscape(s) {
+      if (window.CSS && CSS.escape) return CSS.escape(s);
+      return String(s).replace(/(["\\])/g, '\\$1');
+    }
+
+    function fullRefresh() {
+      document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+    }
+
+    function swapInner(src, selector) {
+      var s = src.querySelector(selector);
+      var d = drawer.querySelector(selector);
+      if (s && d && s.innerHTML !== d.innerHTML) d.innerHTML = s.innerHTML;
+    }
+
+    function syncBlock(src, selector, parentSelector) {
+      var s = src.querySelector(selector);
+      var d = drawer.querySelector(selector);
+      if (s && d) {
+        if (s.innerHTML !== d.innerHTML) d.innerHTML = s.innerHTML;
+      } else if (s && !d) {
+        var parent = drawer.querySelector(parentSelector);
+        if (parent) parent.appendChild(s.cloneNode(true));
+      } else if (!s && d) {
+        d.remove();
+      }
+    }
+
+    function applySurgicalUpdate(srcRoot, cartData) {
+      /* 1. Each line's price/discounts/qty (totals can shift across all lines
+            when a discount allocation changes, so iterate every line). */
+      Array.prototype.forEach.call(
+        srcRoot.querySelectorAll('input[data-line-key]'),
+        function(srcInput) {
+          var key = srcInput.getAttribute('data-line-key');
+          var dstInput = drawer.querySelector('input[data-line-key="' + cssEscape(key) + '"]');
+          if (!dstInput) return;
+
+          var srcLine = srcInput.closest('line-item, .kv-cart__line-item');
+          var dstLine = dstInput.closest('line-item, .kv-cart__line-item');
+          if (!srcLine || !dstLine) return;
+
+          /* Server may clamp to inventory — sync the authoritative value. */
+          if (dstInput.value !== srcInput.value) dstInput.value = srcInput.value;
+
+          var sPrice = srcLine.querySelector('.kv-cart__line-item-price');
+          var dPrice = dstLine.querySelector('.kv-cart__line-item-price');
+          if (sPrice && dPrice && sPrice.innerHTML !== dPrice.innerHTML) {
+            dPrice.innerHTML = sPrice.innerHTML;
+          }
+
+          var sDisc = srcLine.querySelector('.kv-cart__line-item-discounts');
+          var dDisc = dstLine.querySelector('.kv-cart__line-item-discounts');
+          if (sDisc && dDisc) {
+            if (sDisc.innerHTML !== dDisc.innerHTML) dDisc.innerHTML = sDisc.innerHTML;
+          } else if (sDisc && !dDisc) {
+            var info = dstLine.querySelector('.kv-cart__line-item-info');
+            if (info) info.appendChild(sDisc.cloneNode(true));
+          } else if (!sDisc && dDisc) {
+            dDisc.remove();
+          }
+        }
+      );
+
+      /* 2. Shipping bar (free-shipping threshold progress). */
+      swapInner(srcRoot, '.kv-cart__shipping-bar');
+
+      /* 3. Cart count badges (inside the drawer + anywhere else on the page). */
+      Array.prototype.forEach.call(document.querySelectorAll('cart-count'), function(el) {
+        el.textContent = cartData.item_count;
+      });
+
+      /* 4. Extras swiper section — may grow/shrink as products move in/out. */
+      syncBlock(srcRoot, '.kv-extra', '.kv-cart__items');
+
+      /* 5. Footer slot (totals, protection toggle, preorder notice, etc.). */
+      swapInner(srcRoot, '[slot="footer"]');
+
+      /* 6. Let the rest of the page (swiper init, protection display, dates,
+            free-shipping bar JS) know the cart changed — without a hard refresh. */
+      if (typeof scheduleEnsure === 'function') scheduleEnsure();
+      fullRefresh();
+    }
+
+    function surgicalCartUpdate(lineKey, newQty, wrap, input) {
+      wrap.dataset.kvUpdating = '1';
+      wrap.classList.add('is-updating');
+      var btns = wrap.querySelectorAll('button');
+      Array.prototype.forEach.call(btns, function(b) { b.disabled = true; });
+      var prevValue = input.value;
+      input.value = String(newQty); /* optimistic */
+
+      fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ id: lineKey, quantity: newQty, sections: 'cart-drawer' })
+      })
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function(data) {
+          if (data.item_count === 0) { fullRefresh(); return; }
+
+          var html = data.sections && data.sections['cart-drawer'];
+          if (!html) { fullRefresh(); return; }
+
+          var doc = new DOMParser().parseFromString(html, 'text/html');
+          var src = doc.querySelector('#cart-drawer, cart-drawer');
+          if (!src) { fullRefresh(); return; }
+
+          applySurgicalUpdate(src, data);
+        })
+        .catch(function(err) {
+          console.error('Surgical cart update failed:', err);
+          input.value = prevValue;
+          fullRefresh();
+        })
+        .then(function() {
+          wrap.classList.remove('is-updating');
+          delete wrap.dataset.kvUpdating;
+          Array.prototype.forEach.call(btns, function(b) { b.disabled = false; });
+        });
+    }
+
     drawer.addEventListener('click', function(e) {
       var btn = e.target.closest('[data-kv-qty-action]');
       if (!btn) return;
+
+      /* Take control before Impact's <quantity-input> change handler can fire. */
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
       var wrap = btn.closest('.kv-cart__qty-wrap');
       if (!wrap) return;
       var input = wrap.querySelector('input[is="quantity-input"]');
       if (!input) return;
-      var current = parseInt(input.value) || 1;
-      if (btn.getAttribute('data-kv-qty-action') === 'decrease') {
-        if (current <= 1) {
-          /* Remove item from cart when quantity goes to 0 */
-          var lineKey = input.getAttribute('data-line-key');
-          if (lineKey) {
-            fetch('/cart/change.js', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-              body: JSON.stringify({ id: lineKey, quantity: 0 })
-            })
-            .then(function(r) { return r.json(); })
-            .then(function() {
-              document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
-            });
-          }
-          return;
-        }
-        input.quantity = current - 1;
-      } else {
-        input.quantity = current + 1;
+      var lineKey = input.getAttribute('data-line-key');
+      if (!lineKey) return;
+
+      if (wrap.dataset.kvUpdating === '1') return;
+
+      var current = parseInt(input.value, 10) || 1;
+      var action = btn.getAttribute('data-kv-qty-action');
+      var newQty = action === 'decrease' ? current - 1 : current + 1;
+
+      if (newQty <= 0) {
+        /* Removing the line affects category accordions etc. — keep the full refresh path. */
+        wrap.dataset.kvUpdating = '1';
+        Array.prototype.forEach.call(wrap.querySelectorAll('button'), function(b) { b.disabled = true; });
+        fetch('/cart/change.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ id: lineKey, quantity: 0 })
+        })
+          .then(function() { fullRefresh(); })
+          .catch(function() { delete wrap.dataset.kvUpdating; });
+        return;
       }
-      input.dispatchEvent(new Event('change', { bubbles: true }));
-    });
+
+      surgicalCartUpdate(lineKey, newQty, wrap, input);
+    }, true);
 
     /* AJAX add-to-cart for "Add Something Extra" cards */
     drawer.addEventListener('submit', function(e) {
@@ -2236,118 +2380,120 @@ body .kv-cart__protection {
       });
     });
 
-    /* ---- Swiper slider for "Add Something Extra" ---- */
-    var swiperInstance = null;
-    var isInitializing = false;
+    /* ---- Swiper slider for "Add Something Extra" ----
+       Robust version: the cart-drawer's inner HTML is replaced wholesale on every
+       AJAX cart update (qty +/-, add, remove, etc.), so we cannot rely on a closure
+       reference to the previous Swiper instance — that element is detached.
 
-    function initSwiperSlider() {
-      /* Prevent multiple simultaneous initializations */
-      if (isInitializing) return;
-      
-      var swiperContainer = drawer.querySelector('.kv-extra__swiper');
-      if (!swiperContainer) return;
-      
-      /* Check if Swiper is already initialized on this container */
-      if (swiperContainer.swiper) {
-        /* Swiper already exists, just update it */
-        swiperContainer.swiper.update();
+       Strategy:
+         1. Use the live `.kv-extra__swiper` element's own state (`.swiper` property +
+            `swiper-initialized` class) as the source of truth.
+         2. Re-init whenever a NEW `.kv-extra__swiper` element appears in the drawer
+            (via mutation `addedNodes`) — this ignores Swiper's own internal mutations.
+         3. Also re-check on `cart:refresh`, on qty button clicks, and on native
+            `quantity-input` `change` events so every cart update is covered.
+    */
+    var SWIPER_OPTS = {
+      slidesPerView: 'auto',
+      spaceBetween: 10,
+      grabCursor: true,
+      slideClass: 'kv-extra__card',
+      wrapperClass: 'kv-extra__track',
+      resistance: true,
+      resistanceRatio: 0.85,
+      observer: false,
+      observeParents: false,
+      observeSlideChildren: false,
+      slidesPerGroup: 1,
+      speed: 400,
+      touchRatio: 1,
+      threshold: 5
+    };
+
+    function ensureSwiper() {
+      var container = drawer.querySelector('.kv-extra__swiper');
+      if (!container) return;
+
+      /* If this exact element already has a live Swiper, nothing to do. */
+      if (container.swiper && container.classList.contains('swiper-initialized')) {
+        try { container.swiper.update(); } catch (e) {}
         return;
       }
 
-      isInitializing = true;
-      
-      /* Destroy old instance if any */
-      if (swiperInstance) {
-        try {
-          swiperInstance.destroy(true, true);
-        } catch (e) {
-          /* Ignore errors during destruction */
-        }
-        swiperInstance = null;
+      /* Defensively kill a stale instance attached to a detached element. */
+      if (container.swiper) {
+        try { container.swiper.destroy(true, true); } catch (e) {}
       }
 
-      /* Small delay to ensure DOM is stable */
-      setTimeout(function() {
-        try {
-          /* Initialize Swiper */
-          swiperInstance = new Swiper(swiperContainer, {
-            slidesPerView: 'auto',
-            spaceBetween: 10,
-            grabCursor: true,
-            slideClass: 'kv-extra__card',
-            wrapperClass: 'kv-extra__track',
-            resistance: true,
-            resistanceRatio: 0.85,
-            observer: false,
-            observeParents: false,
-            observeSlideChildren: false,
-            slidesPerGroup: 1,
-            speed: 400,
-            touchRatio: 1,
-            threshold: 5,
-          });
-        } catch (e) {
-          console.error('Swiper initialization error:', e);
-        }
-        isInitializing = false;
-      }, 50);
-    }
-
-    /* Track last initialization time to debounce */
-    var lastInitTime = 0;
-    var initDebounceDelay = 500; /* ms */
-
-    function initAllSliders() {
-      var now = Date.now();
-      if (now - lastInitTime < initDebounceDelay) {
-        /* Too soon after last init, skip */
-        return;
+      try {
+        new Swiper(container, SWIPER_OPTS);
+      } catch (e) {
+        console.error('kv-extra swiper init error:', e);
       }
-      lastInitTime = now;
-      initSwiperSlider();
     }
 
-    /* Run immediately */
-    initAllSliders();
+    /* Defer to next frame so the new DOM has finished being inserted/laid out. */
+    var pendingFrame = null;
+    function scheduleEnsure() {
+      if (pendingFrame) return;
+      pendingFrame = requestAnimationFrame(function() {
+        pendingFrame = null;
+        ensureSwiper();
+      });
+    }
 
-    /* Watch for cart content changes with debouncing */
-    var mutationTimeout;
+    scheduleEnsure();
+
+    /* Re-init only when a fresh `.kv-extra__swiper` element is INSERTED.
+       This ignores attribute/class/style mutations that Swiper makes to itself,
+       so the observer never re-triggers itself in a loop. */
     var drawerObserver = new MutationObserver(function(mutations) {
-      /* Check if mutation is related to cart content, not Swiper classes */
-      var shouldReinit = false;
       for (var i = 0; i < mutations.length; i++) {
-        var mutation = mutations[i];
-        /* Only reinit if cart content actually changed (not just class changes) */
-        if (mutation.type === 'childList' && 
-            mutation.target.classList && 
-            !mutation.target.classList.contains('swiper-wrapper') &&
-            !mutation.target.classList.contains('kv-extra__swiper')) {
-          shouldReinit = true;
-          break;
+        var added = mutations[i].addedNodes;
+        for (var j = 0; j < added.length; j++) {
+          var node = added[j];
+          if (node.nodeType !== 1) continue;
+          if (
+            (node.classList && node.classList.contains('kv-extra__swiper')) ||
+            (node.querySelector && node.querySelector('.kv-extra__swiper'))
+          ) {
+            scheduleEnsure();
+            return;
+          }
         }
-      }
-      
-      if (shouldReinit) {
-        clearTimeout(mutationTimeout);
-        mutationTimeout = setTimeout(initAllSliders, 300);
       }
     });
     drawerObserver.observe(drawer, { childList: true, subtree: true });
 
-    /* Also re-init when the drawer becomes visible (attribute change or class) */
+    /* Re-check whenever the drawer is opened. */
     var attrObserver = new MutationObserver(function() {
       if (drawer.hasAttribute('open') || drawer.classList.contains('is-open')) {
-        setTimeout(initAllSliders, 200);
+        scheduleEnsure();
       }
     });
     attrObserver.observe(drawer, { attributes: true, attributeFilter: ['open', 'class', 'aria-hidden'] });
 
-    /* Fallback: listen for theme cart events */
-    document.addEventListener('cart:refresh', function() {
-      setTimeout(initAllSliders, 500);
+    /* Manual cart:refresh events dispatched by our own handlers above. */
+    document.addEventListener('cart:refresh', scheduleEnsure);
+    document.documentElement.addEventListener('cart:refresh', scheduleEnsure);
+
+    /* The standard Impact qty +/- flow does NOT emit cart:refresh — it just lets
+       <quantity-input> hit /cart/change.js and then <cart-drawer> swaps its inner
+       HTML. Hook into the events that lead to that swap so we re-init on the next
+       tick after the new HTML is in place. */
+    drawer.addEventListener('click', function(e) {
+      if (e.target.closest('[data-kv-qty-action]')) {
+        /* The DOM swap happens after the network round-trip; poll a few times. */
+        setTimeout(scheduleEnsure, 250);
+        setTimeout(scheduleEnsure, 800);
+      }
     });
-    document.documentElement.addEventListener('cart:refresh', function() {
-      setTimeout(initAllSliders, 500);
+    drawer.addEventListener('change', function(e) {
+      var t = e.target;
+      if (t && t.matches && t.matches('input[is="quantity-input"]')) {
+        setTimeout(scheduleEnsure, 250);
+        setTimeout(scheduleEnsure, 800);
+      }
     });
 
   })();
