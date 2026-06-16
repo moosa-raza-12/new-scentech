@@ -384,6 +384,14 @@
     "v3_diffuser_kv_bundle_PctHWM": {
       "type": "v3-diffuser-kv-bundle",
       "blocks": {
+        "collection_WcqVm3": {
+          "type": "collection",
+          "settings": {
+            "collection": "all",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
         "interrupter_Y4N6XD": {
           "type": "interrupter",
           "settings": {
@@ -456,23 +464,15 @@
             "products_limit": 12,
             "badge_text": ""
           }
-        },
-        "collection_WcqVm3": {
-          "type": "collection",
-          "settings": {
-            "collection": "all",
-            "products_limit": 12,
-            "badge_text": ""
-          }
         }
       },
       "block_order": [
+        "collection_WcqVm3",
         "interrupter_Y4N6XD",
         "collection_7hcyrj",
         "collection_87Ud3P",
         "collection_6FFUMA",
-        "collection_mAcGH9",
-        "collection_WcqVm3"
+        "collection_mAcGH9"
       ],
       "name": "V3 Diffuser Bundle section",
       "settings": {
