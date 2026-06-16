@@ -384,16 +384,94 @@
     "v3_diffuser_kv_bundle_PctHWM": {
       "type": "v3-diffuser-kv-bundle",
       "blocks": {
+        "interrupter_Y4N6XD": {
+          "type": "interrupter",
+          "settings": {
+            "enabled": true,
+            "show_info_icon": true,
+            "show_on_desktop": true,
+            "position_desktop": 0,
+            "show_on_mobile": true,
+            "position_mobile": 0,
+            "badge_text": "New",
+            "heading": "Summer Bundle",
+            "description": "<p>Our most-loved summer scents, bundled together to make your space feel fresh and inviting</p>",
+            "show_cta": true,
+            "cta_label": "+ Add",
+            "cta_product_1": "wild-blossom-copy",
+            "cta_product_2": "wild-blossom",
+            "cta_product_3": "tea-whisper",
+            "cta_product_4": "",
+            "cta_product_5": "",
+            "cta_product_6": "",
+            "image": "shopify://shop_images/Gemini_Generated_Image_3aqtdr3aqtdr3aqt_1.png",
+            "image_position": "left",
+            "desktop_layout": "side",
+            "mobile_layout": "side",
+            "image_width_percent": 38,
+            "image_height_mobile": 180,
+            "image_height_desktop": 180,
+            "image_fit": "cover",
+            "background_color": "#f1efe8",
+            "border_color": "#d9d4c5",
+            "title_color": "#160000",
+            "title_size": 28,
+            "text_color": "#160000",
+            "text_size": 16,
+            "badge_bg": "#ffffff",
+            "badge_text_color": "#160000",
+            "cta_bg": "#162518",
+            "cta_text_color": "#FFFFFF",
+            "cta_border_color": "#162518"
+          }
+        },
+        "collection_7hcyrj": {
+          "type": "collection",
+          "settings": {
+            "collection": "warm-indulgent-scents",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
+        "collection_87Ud3P": {
+          "type": "collection",
+          "settings": {
+            "collection": "calming-serene-scents",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
+        "collection_6FFUMA": {
+          "type": "collection",
+          "settings": {
+            "collection": "fresh-energizing-scents",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
+        "collection_mAcGH9": {
+          "type": "collection",
+          "settings": {
+            "collection": "floral-romantic-scents",
+            "products_limit": 12,
+            "badge_text": ""
+          }
+        },
         "collection_WcqVm3": {
           "type": "collection",
           "settings": {
-            "collection": "",
+            "collection": "all",
             "products_limit": 12,
             "badge_text": ""
           }
         }
       },
       "block_order": [
+        "interrupter_Y4N6XD",
+        "collection_7hcyrj",
+        "collection_87Ud3P",
+        "collection_6FFUMA",
+        "collection_mAcGH9",
         "collection_WcqVm3"
       ],
       "name": "V3 Diffuser Bundle section",
