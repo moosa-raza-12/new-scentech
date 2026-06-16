@@ -27,7 +27,12 @@ NOTE TO DEVELOPERS: welcome to Impact theme! We hope that you will enjoy editing
       <meta name="description" content="{{ page_description | escape }}">
     {%- endif -%}
 
-    <link rel="canonical" href="{{ canonical_url }}">
+    {%- if collection.handle == 'diffusers-starter-kits' or collection.handle == 'diffusers-all' or collection.handle == 'diffusers-no-bundles' -%}
+      <link rel="canonical" href="{{ shop.url }}/{{ request.locale.iso_code }}/collections/diffusers-bundles">
+      <meta name="robots" content="noindex, nofollow">
+    {%- else -%}
+      <link rel="canonical" href="{{ canonical_url }}">
+    {%- endif -%}
 
     {%- if settings.favicon -%}
       <link rel="shortcut icon" href="{{ settings.favicon | image_url: width: 96 }}">

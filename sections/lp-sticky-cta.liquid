@@ -125,7 +125,8 @@
   (function() {
     document.addEventListener("DOMContentLoaded", function() {
       var stickyCta = document.getElementById("stickyCta-{{ section.id }}");
-      var hero = document.querySelector(".lp-hero-section");
+      // article-hero section: ID pattern is 'article-hero-template--{section_id}__article-hero'
+      var hero = document.querySelector("[id^='article-hero-template']");
       var HIDE_NEAR_BOTTOM = 300;
 
       if (!stickyCta) return;

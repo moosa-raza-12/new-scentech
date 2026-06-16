@@ -9,7 +9,7 @@
 
 
   .kv-progress-banner {
-    background: #e5e5e5;
+    background: {{ section.settings.color_diffuser_progress_banner_bg | default: '#e5e5e5' }};
 }
 
 
@@ -71,9 +71,9 @@
     width: 100%;
     max-width: 100%;
     height: 100%;
-    background: #f5f1ea;
+    background: {{ section.settings.color_diffuser_dynamic_image_bg | default: '#f5f1ea' }};
     overflow: hidden;
-    height: 65vh;
+    height: 85vh;
 }
 
   .kv-bundle-dynamic-image img,
@@ -222,7 +222,7 @@ body .kv-bundle-collection {
    </video>
   </div>
   <div class="low-class">  
- {% render 'df-overflow-step1' %}
+ {% render 'df-overflow-step1', block: block %}
  
   {%- comment -%} Progress Banner {%- endcomment -%}
   <div class="kv-bundle-hero-section" style="background-image: url({{ section.settings.hero_background_image | image_url: width: 1920 }}); background-size: cover; background-position: center;">
@@ -404,7 +404,7 @@ body .kv-bundle-collection {
            {% assign intr_atc_product = all_products[intr.settings.cta_product_1] %}
            <div class="kv-bundle-interrupter-content">
              {% if intr.settings.heading != blank %}
-               <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}  <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+               <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %}  <button class="kv-bundle-product-info-icon kv-scent-info-btn"
                type="button"
                aria-label="View details"
                data-product-id="{{ intr_atc_product.id }}"
@@ -419,7 +419,7 @@ body .kv-bundle-collection {
                  <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                  <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                  </svg>
-             </button> </div>
+             </button>{% endif %} </div>
              {% endif %}
              {% if intr.settings.description != blank %}
                <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -474,7 +474,7 @@ body .kv-bundle-collection {
            {% assign intr_atc_product = all_products[intr.settings.cta_product_1] %}
            <div class="kv-bundle-interrupter-content">
              {% if intr.settings.heading != blank %}
-               <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}  
+               <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %}  
                  <button class="kv-bundle-product-info-icon kv-scent-info-btn"
                type="button"
                aria-label="View details"
@@ -490,7 +490,7 @@ body .kv-bundle-collection {
                  <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                  <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                  </svg>
-             </button></div>
+             </button>{% endif %}</div>
              {% endif %}
              {% if intr.settings.description != blank %}
                <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -559,7 +559,7 @@ body .kv-bundle-collection {
                </div>
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
-                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}<button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %}<button class="kv-bundle-product-info-icon kv-scent-info-btn"
                    type="button"
                    aria-label="View details"
                    data-product-id="{{ intr_atc_product.id }}"
@@ -574,7 +574,7 @@ body .kv-bundle-collection {
                      <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      </svg>
-                 </button></div>
+                 </button>{% endif %}</div>
                  {% endif %}
                  {% if intr.settings.description != blank %}
                    <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -629,7 +629,7 @@ body .kv-bundle-collection {
                </div>
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
-                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }} <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %} <button class="kv-bundle-product-info-icon kv-scent-info-btn"
                    type="button"
                    aria-label="View details"
                    data-product-id="{{ intr_atc_product.id }}"
@@ -644,7 +644,7 @@ body .kv-bundle-collection {
                      <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      </svg>
-                 </button></div>
+                 </button>{% endif %}</div>
                  {% endif %}
                  {% if intr.settings.description != blank %}
                    <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -703,8 +703,8 @@ body .kv-bundle-collection {
                width="600"
                height="600">
            {% else %}
-           <div class="kv-bundle-product-image" style="background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
-               <span style="color: #999;">No image</span>
+           <div class="kv-bundle-product-image" style="background: var(--kv-color-image-placeholder-bg); display: flex; align-items: center; justify-content: center;">
+               <span style="color: var(--kv-color-image-placeholder-text);">No image</span>
            </div>
            {% endif %}
    
@@ -859,7 +859,7 @@ body .kv-bundle-collection {
                </div>
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
-                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}<button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %}<button class="kv-bundle-product-info-icon kv-scent-info-btn"
                    type="button"
                    aria-label="View details"
                    data-product-id="{{ intr_atc_product.id }}"
@@ -874,7 +874,7 @@ body .kv-bundle-collection {
                      <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      </svg>
-                 </button></div>
+                 </button>{% endif %}</div>
                  {% endif %}
                  {% if intr.settings.description != blank %}
                    <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -990,7 +990,7 @@ body .kv-bundle-collection {
                </div>
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
-                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }} <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %} <button class="kv-bundle-product-info-icon kv-scent-info-btn"
                    type="button"
                    aria-label="View details"
                    data-product-id="{{ intr_atc_product.id }}"
@@ -1005,7 +1005,7 @@ body .kv-bundle-collection {
                      <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      </svg>
-                 </button> </div>
+                 </button>{% endif %} </div>
                  {% endif %}
                  {% if intr.settings.description != blank %}
                    <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1063,8 +1063,8 @@ body .kv-bundle-collection {
              width="600"
              height="600">
          {% else %}
-         <div class="kv-bundle-product-image" style="background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
-             <span style="color: #999;">No image</span>
+         <div class="kv-bundle-product-image" style="background: var(--kv-color-image-placeholder-bg); display: flex; align-items: center; justify-content: center;">
+             <span style="color: var(--kv-color-image-placeholder-text);">No image</span>
          </div>
          {% endif %}
  
@@ -1213,7 +1213,7 @@ body .kv-bundle-collection {
            </div>
            <div class="kv-bundle-interrupter-content">
              {% if intr.settings.heading != blank %}
-               <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}<button class="kv-bundle-product-info-icon kv-scent-info-btn"
+               <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %}<button class="kv-bundle-product-info-icon kv-scent-info-btn"
                type="button"
                aria-label="View details"
                data-product-id="{{ intr_atc_product.id }}"
@@ -1228,7 +1228,7 @@ body .kv-bundle-collection {
                  <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                  <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                  </svg>
-             </button></div>
+             </button>{% endif %}</div>
              {% endif %}
              {% if intr.settings.description != blank %}
                <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1283,7 +1283,7 @@ body .kv-bundle-collection {
            </div>
            <div class="kv-bundle-interrupter-content">
              {% if intr.settings.heading != blank %}
-               <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}<button class="kv-bundle-product-info-icon kv-scent-info-btn"
+               <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %}<button class="kv-bundle-product-info-icon kv-scent-info-btn"
                type="button"
                aria-label="View details"
                data-product-id="{{ intr_atc_product.id }}"
@@ -1298,7 +1298,7 @@ body .kv-bundle-collection {
                  <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                  <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                  </svg>
-             </button></div>
+             </button>{% endif %}</div>
              {% endif %}
              {% if intr.settings.description != blank %}
                <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1373,7 +1373,7 @@ body .kv-bundle-collection {
                </div>
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
-                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }} <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %} <button class="kv-bundle-product-info-icon kv-scent-info-btn"
                    type="button"
                    aria-label="View details"
                    data-product-id="{{ intr_atc_product.id }}"
@@ -1388,7 +1388,7 @@ body .kv-bundle-collection {
                      <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      </svg>
-                 </button></div>
+                 </button>{% endif %}</div>
                  {% endif %}
                  {% if intr.settings.description != blank %}
                    <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1444,7 +1444,7 @@ body .kv-bundle-collection {
                {% assign intr_atc_product = all_products[intr.settings.cta_product_1] %}
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
-                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
                    type="button"
                    aria-label="View details"
                    data-product-id="{{ intr_atc_product.id }}"
@@ -1459,7 +1459,7 @@ body .kv-bundle-collection {
                      <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      </svg>
-                 </button></div>
+                 </button>{% endif %}</div>
                  {% endif %}
                  {% if intr.settings.description != blank %}
                    <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1526,7 +1526,7 @@ body .kv-bundle-collection {
                {% assign intr_atc_product = all_products[intr.settings.cta_product_1] %}
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
-                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
                    type="button"
                    aria-label="View details"
                    data-product-id="{{ intr_atc_product.id }}"
@@ -1541,7 +1541,7 @@ body .kv-bundle-collection {
                      <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      </svg>
-                 </button></div>
+                 </button>{% endif %}</div>
                  {% endif %}
                  {% if intr.settings.description != blank %}
                    <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1596,7 +1596,7 @@ body .kv-bundle-collection {
                {% assign intr_atc_product = all_products[intr.settings.cta_product_1] %}
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
-                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
                    type="button"
                    aria-label="View details"
                    data-product-id="{{ intr_atc_product.id }}"
@@ -1611,7 +1611,7 @@ body .kv-bundle-collection {
                      <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      </svg>
-                 </button></div>
+                 </button>{% endif %}</div>
                  {% endif %}
                  {% if intr.settings.description != blank %}
                    <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1666,8 +1666,8 @@ body .kv-bundle-collection {
                width="600"
                height="600">
            {% else %}
-           <div class="kv-bundle-product-image" style="background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
-               <span style="color: #999;">No image</span>
+           <div class="kv-bundle-product-image" style="background: var(--kv-color-image-placeholder-bg); display: flex; align-items: center; justify-content: center;">
+               <span style="color: var(--kv-color-image-placeholder-text);">No image</span>
            </div>
            {% endif %}
    
@@ -1818,7 +1818,7 @@ body .kv-bundle-collection {
                {% assign intr_atc_product = all_products[intr.settings.cta_product_1] %}
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
-                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
                    type="button"
                    aria-label="View details"
                    data-product-id="{{ intr_atc_product.id }}"
@@ -1833,7 +1833,7 @@ body .kv-bundle-collection {
                      <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      </svg>
-                 </button></div>
+                 </button>{% endif %}</div>
                  {% endif %}
                  {% if intr.settings.description != blank %}
                    <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1888,7 +1888,7 @@ body .kv-bundle-collection {
                {% assign intr_atc_product = all_products[intr.settings.cta_product_1] %}
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
-                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
                    type="button"
                    aria-label="View details"
                    data-product-id="{{ intr_atc_product.id }}"
@@ -1903,7 +1903,7 @@ body .kv-bundle-collection {
                      <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      </svg>
-                 </button></div>
+                 </button>{% endif %}</div>
                  {% endif %}
                  {% if intr.settings.description != blank %}
                    <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -1958,8 +1958,8 @@ body .kv-bundle-collection {
              width="600"
              height="600">
          {% else %}
-         <div class="kv-bundle-product-image" style="background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
-             <span style="color: #999;">No image</span>
+         <div class="kv-bundle-product-image" style="background: var(--kv-color-image-placeholder-bg); display: flex; align-items: center; justify-content: center;">
+             <span style="color: var(--kv-color-image-placeholder-text);">No image</span>
          </div>
          {% endif %}
  
@@ -2105,7 +2105,7 @@ body .kv-bundle-collection {
                {% assign intr_atc_product = all_products[intr.settings.cta_product_1] %}
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
-                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
                    type="button"
                    aria-label="View details"
                    data-product-id="{{ intr_atc_product.id }}"
@@ -2120,7 +2120,7 @@ body .kv-bundle-collection {
                      <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      </svg>
-                 </button></div>
+                 </button>{% endif %}</div>
                  {% endif %}
                  {% if intr.settings.description != blank %}
                    <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -2175,7 +2175,7 @@ body .kv-bundle-collection {
                {% assign intr_atc_product = all_products[intr.settings.cta_product_1] %}
                <div class="kv-bundle-interrupter-content">
                  {% if intr.settings.heading != blank %}
-                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
+                   <div class="kv-bundle-interrupter-title">{{ intr.settings.heading }}{% if intr.settings.show_info_icon %}   <button class="kv-bundle-product-info-icon kv-scent-info-btn"
                    type="button"
                    aria-label="View details"
                    data-product-id="{{ intr_atc_product.id }}"
@@ -2190,7 +2190,7 @@ body .kv-bundle-collection {
                      <path d="M6.99121 4.375C6.99121 4.375 6.99317 4.375 6.99559 4.375C6.998 4.375 6.99996 4.375 6.99996 4.375" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      <path d="M7 6.125V9.625" stroke="#160000" stroke-width="0.875" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                      </svg>
-                 </button></div>
+                 </button>{% endif %}</div>
                  {% endif %}
                  {% if intr.settings.description != blank %}
                    <div class="kv-bundle-interrupter-text">{{ intr.settings.description }}</div>
@@ -2444,6 +2444,84 @@ window.__kvInterrupterProducts = {};
     })();
   {% endif %}
 {% endfor %}
+
+// --- Bundle "Part of" tag visibility sync ---
+// Show .kv-bundle-product-bundle-tag on a product card only while at least
+// one bundle interrupter containing that product currently has qty > 0 in
+// the in-page cart. Hides the tag again when the bundle is removed.
+(function () {
+  function readInterrupterQty(blockId) {
+    var wrapper = document.querySelector('.kv-interrupter-qty-wrapper[data-block-id="' + blockId + '"]');
+    if (!wrapper) return 0;
+    if (wrapper.style.display === 'none') return 0;
+    var input = wrapper.querySelector('.kv-bundle-qty-input');
+    if (!input) return 0;
+    var q = parseInt(input.value, 10);
+    return isNaN(q) ? 0 : q;
+  }
+
+  function kvSyncAllBundleTags() {
+    var intrData = window.__kvInterrupterProducts || {};
+    var activeProductIds = Object.create(null);
+    Object.keys(intrData).forEach(function (blockId) {
+      var products = intrData[blockId] || [];
+      if (products.length < 2) return; // only bundle interrupters (>= 2 products) drive the tag
+      var qty = readInterrupterQty(blockId);
+      if (qty > 0) {
+        products.forEach(function (p) { activeProductIds[String(p.id)] = true; });
+      }
+    });
+    document.querySelectorAll('.kv-bundle-product-card[data-product-id]').forEach(function (card) {
+      var pid = card.getAttribute('data-product-id');
+      if (activeProductIds[pid]) {
+        card.classList.add('kv-bundle-active');
+      } else {
+        card.classList.remove('kv-bundle-active');
+      }
+    });
+  }
+
+  window.kvSyncAllBundleTags = kvSyncAllBundleTags;
+
+  var syncScheduled = false;
+  function scheduleSync() {
+    if (syncScheduled) return;
+    syncScheduled = true;
+    requestAnimationFrame(function () {
+      syncScheduled = false;
+      kvSyncAllBundleTags();
+    });
+  }
+
+  function attach() {
+    kvSyncAllBundleTags();
+    var root = document.querySelector('.kv-bundle-collection') || document.body;
+    if ('MutationObserver' in window) {
+      // The interrupter scripts mutate the qty wrapper's display style and
+      // re-render the thumbnail carousel whenever bundle qty changes; both
+      // surface here as childList / attribute mutations.
+      new MutationObserver(scheduleSync).observe(root, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['style', 'class']
+      });
+    }
+    // Catch direct clicks on the bundle qty buttons (covers the input.value
+    // assignments that don't trigger mutation observers).
+    document.addEventListener('click', function (e) {
+      if (!e.target) return;
+      var btn = e.target.closest && e.target.closest('.kv-interrupter-add-to-cart, .kv-intr-qty-increase, .kv-intr-qty-decrease, .kv-bundle-thumbnail-remove');
+      if (btn) scheduleSync();
+    }, true);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attach);
+  } else {
+    attach();
+  }
+})();
 </script>
  {% render 'diffuser-kv-bundle-scripts' %}
 
@@ -2619,38 +2697,45 @@ window.__kvInterrupterProducts = {};
         "type": "color",
         "id": "background_color",
         "label": "Background",
-        "default": "#F8F7F4"
+        "default": "#F8F7F4",
+        "info": "Outer background color of the diffuser section wrapper."
       },
       {
         "type": "color",
         "id": "border_color",
         "label": "Border Color",
-        "default": "#D7D7D7"
+        "default": "#D7D7D7",
+        "info": "Outer border color of the diffuser section wrapper."
       }, {
         "type": "color",
         "id": "heading_color",
         "label": "Heading Color",
-        "default": "#2F2F2F"
+        "default": "#2F2F2F",
+        "info": "Heading text color used in the diffuser section copy (outer card)."
       }, {
         "type": "color",
         "id": "subtext_color",
         "label": "Subtext Color",
-        "default": "#777777"
+        "default": "#777777",
+        "info": "Subtext / supporting text color in the diffuser section copy (outer card)."
       }, {
         "type": "color",
         "id": "content_color",
         "label": "Content Color",
-        "default": "#444444"
+        "default": "#444444",
+        "info": "Body / paragraph text color used in the diffuser section copy."
       }, {
         "type": "color",
         "id": "icon_background",
         "label": "Icon Background",
-        "default": "#E2E2DC"
+        "default": "#E2E2DC",
+        "info": "Background fill of small feature icons in the diffuser hero / highlights row."
       }, {
         "type": "color",
         "id": "icon_color",
         "label": "Icon Color",
-        "default": "#1F1F1F"
+        "default": "#1F1F1F",
+        "info": "Glyph color of small feature icons in the diffuser hero / highlights row."
       },
      {
   "type": "text",
@@ -2723,45 +2808,52 @@ window.__kvInterrupterProducts = {};
   "type": "color",
   "id": "bg_color",
   "label": "Background Color",
-  "default": "#f7f7f7"
+  "default": "#f7f7f7",
+  "info": "Background color of the secondary content card / box inside the diffuser section."
      },
      {
   "type": "color",
   "id": "heading_color-id",
   "label": "Heading Color",
-  "default": "#222222"
+  "default": "#222222",
+  "info": "Heading text color of the secondary content card / box (alternate setting)."
      },
      {
   "type": "color",
   "id": "subtext_color-id",
   "label": "Subtext Color",
-  "default": "#666666"
+  "default": "#666666",
+  "info": "Subtext color of the secondary content card / box (alternate setting)."
      },
  
      {
   "type": "color",
   "id": "circle_bg",
   "label": "Circle Background",
-  "default": "#1f3d2b"
+  "default": "#1f3d2b",
+  "info": "Fallback background color of the step circles (used when the dynamic --cds-banner-bg variable is not set)."
      },
      {
   "type": "color",
   "id": "circle_text",
   "label": "Circle Text Color",
-  "default": "#ffffff"
+  "default": "#ffffff",
+  "info": "Text color shown inside each step number circle (e.g. \"1\", \"2\", \"3\")."
      },
  
      {
   "type": "color",
   "id": "badge_bg",
   "label": "Badge Background",
-  "default": "#e5e5e5"
+  "default": "#e5e5e5",
+  "info": "Section-level scent badge background (used by .scent-badge in the diffuser hero)."
      },
      {
   "type": "color",
   "id": "badge_text_color",
   "label": "Badge Text Color",
-  "default": "#333333"
+  "default": "#333333",
+  "info": "Section-level scent badge text color (used by .scent-badge in the diffuser hero)."
      },
      {
   "type": "header",
@@ -2774,7 +2866,840 @@ window.__kvInterrupterProducts = {};
   "default": "#5c220a",
   "info": "Applies to: active tab, Continue button, and mini cart qty buttons"
      },
- 
+     {
+  "type": "color",
+  "id": "color_tab_active_text",
+  "label": "Active Tab Text Color",
+  "default": "#FFFFFF",
+  "info": "Text color shown on the currently selected product tab (e.g. Body Care / Home Fragrance switcher)."
+     },
+     {
+  "type": "color",
+  "id": "color_atc_text",
+  "label": "Add-to-Cart Button Text",
+  "default": "#FFFFFF",
+  "info": "Text color inside each product card's \"Add to Cart\" button."
+     },
+     {
+  "type": "color",
+  "id": "color_atc_disabled_bg",
+  "label": "Add-to-Cart Disabled Background",
+  "default": "#cccccc",
+  "info": "Background color of a product card's \"Add to Cart\" button when it is disabled (e.g. variant unavailable or sold out)."
+     },
+     {
+  "type": "color",
+  "id": "color_continue_btn_text",
+  "label": "Continue Button Text",
+  "default": "#FFFFFF",
+  "info": "Text color of the main Continue / Add Bundle button in the sticky bottom bar."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_qty_text",
+  "label": "Mini Cart Qty Button Text",
+  "default": "#FFFFFF",
+  "info": "Text/symbol color of the + and - quantity buttons inside the mini-cart line items."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_checkout_text",
+  "label": "Mini Cart Checkout Button Text",
+  "default": "#FFFFFF",
+  "info": "Text color of the main Checkout button at the bottom of the mini-cart drawer."
+     },
+     {
+  "type": "color",
+  "id": "color_cta_added_bg",
+  "label": "CTA 'Added' State Background",
+  "default": "#4a7c59",
+  "info": "Background of a product card's \"Add to Cart\" button after the item has been added (success state)."
+     },
+     {
+  "type": "color",
+  "id": "color_cta_added_text",
+  "label": "CTA 'Added' State Text",
+  "default": "#FFFFFF",
+  "info": "Text color of a product card's \"Add to Cart\" button in the post-add success state."
+     },
+     {
+  "type": "color",
+  "id": "color_qty_btn_icon",
+  "label": "Qty Button Icon (+ / -)",
+  "default": "#FFFFFF",
+  "info": "Fill color of the + and - SVG icons inside the bundle quantity selector buttons. Set a color that contrasts with the Button Background Color above."
+     },
+
+     {
+  "type": "header",
+  "content": "Diffuser-Specific Colors"
+     },
+     {
+  "type": "color",
+  "id": "color_diffuser_progress_banner_bg",
+  "label": "Diffuser Progress Banner Background",
+  "default": "#e5e5e5",
+  "info": "Diffuser sections only: background of the secondary progress banner shown above the diffuser bundle grid."
+     },
+     {
+  "type": "color",
+  "id": "color_diffuser_dynamic_image_bg",
+  "label": "Diffuser Dynamic Image Background",
+  "default": "#f5f1ea",
+  "info": "Diffuser sections only: background behind the sticky bundle preview image on the left side."
+     },
+     {
+  "type": "color",
+  "id": "color_diffuser_progress_footer2_bg",
+  "label": "Diffuser Progress Footer 2 Background (alpha 10%)",
+  "default": "#000000",
+  "info": "Diffuser sections only: background of the secondary progress footer (rendered at 10% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_diffuser_scent_badge_text",
+  "label": "Diffuser Scent Badge Text",
+  "default": "#160000",
+  "info": "Diffuser sections only: text color of scent badges shown on diffuser product cards."
+     },
+     {
+  "type": "color",
+  "id": "color_diffuser_highlight_text",
+  "label": "Diffuser Highlight / Price Text",
+  "default": "#17561F",
+  "info": "Diffuser sections only: green highlight color used for cds-highlights and inline price highlights."
+     },
+
+     {
+  "type": "header",
+  "content": "Section / General Colors"
+     },
+     {
+  "type": "color",
+  "id": "color_section_bg",
+  "label": "Section Background",
+  "default": "#F8F7F4",
+  "info": "Background color filling the entire bundle section wrapper behind all content."
+     },
+
+     {
+  "type": "header",
+  "content": "Hero Colors"
+     },
+     {
+  "type": "color",
+  "id": "color_hero_text",
+  "label": "Hero Text Color",
+  "default": "#FFFFFF",
+  "info": "Default text color used for headings and copy in the hero area at the top of the section."
+     },
+     {
+  "type": "color",
+  "id": "color_hero_sticky_bg",
+  "label": "Sticky Hero Background",
+  "default": "#F1EFE8",
+  "info": "Background of the hero strip once it sticks to the top of the page on scroll."
+     },
+     {
+  "type": "color",
+  "id": "color_hero_sticky_border",
+  "label": "Sticky Hero Border (alpha 10%)",
+  "default": "#160000",
+  "info": "Bottom border color of the sticky hero strip (rendered at 10% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_progress_banner_bg",
+  "label": "Progress Banner Background (alpha 80%)",
+  "default": "#FFFFFF",
+  "info": "Background of the rewards progress banner sitting just below the hero (rendered at 80% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_progress_sticky_footer_bg",
+  "label": "Sticky Progress Footer Background (alpha 10%)",
+  "default": "#000000",
+  "info": "Background of the small progress footer that appears in sticky mode (rendered at 10% opacity)."
+     },
+
+     {
+  "type": "header",
+  "content": "Promo Banner Colors"
+     },
+     {
+  "type": "color",
+  "id": "color_promo_bg",
+  "label": "Promo Banner Background",
+  "default": "#2F3E2F",
+  "info": "Background color of the promotional / interrupter banner shown above the product tabs."
+     },
+     {
+  "type": "color",
+  "id": "color_promo_text",
+  "label": "Promo Banner Text",
+  "default": "#FFFFFF",
+  "info": "Text color of the promotional / interrupter banner shown above the product tabs."
+     },
+
+     {
+  "type": "header",
+  "content": "Progress Bar Colors"
+     },
+     {
+  "type": "color",
+  "id": "color_progress_track",
+  "label": "Progress Bar Track (alpha 10%)",
+  "default": "#162518",
+  "info": "Empty (unfilled) portion of the rewards progress bar (rendered at 10% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_progress_fill_start",
+  "label": "Progress Fill Start (gradient & shadow)",
+  "default": "#162518",
+  "info": "Start color of the progress bar fill gradient. Also used for the soft glow/shadow under the fill."
+     },
+     {
+  "type": "color",
+  "id": "color_progress_fill_end",
+  "label": "Progress Fill End (gradient)",
+  "default": "#455046",
+  "info": "End color of the progress bar fill gradient."
+     },
+     {
+  "type": "color",
+  "id": "color_milestone_border",
+  "label": "Milestone Marker Border",
+  "default": "#C5C1BB",
+  "info": "Border color of milestone markers (gift dots) along the progress bar before they are unlocked."
+     },
+     {
+  "type": "color",
+  "id": "color_milestone_bg",
+  "label": "Milestone Marker Background",
+  "default": "#FFFFFF",
+  "info": "Background fill color of milestone markers (gift dots) before they are unlocked."
+     },
+     {
+  "type": "color",
+  "id": "color_milestone_unlocked",
+  "label": "Milestone Unlocked Marker",
+  "default": "#162518",
+  "info": "Color of milestone markers once they have been reached (filled state)."
+     },
+     {
+  "type": "color",
+  "id": "color_milestone_label",
+  "label": "Milestone Label Text",
+  "default": "#162518",
+  "info": "Label text under each milestone marker (e.g. \"Free Sample\")."
+     },
+     {
+  "type": "color",
+  "id": "color_milestone_price",
+  "label": "Milestone Price Text (alpha 60%)",
+  "default": "#162518",
+  "info": "Price/value line under each milestone label (rendered at 60% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_progress_footer_bg",
+  "label": "Progress Footer Background (alpha 8%)",
+  "default": "#750505",
+  "info": "Background of the progress footer shown below the bar when the bundle is still empty (rendered at 8% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_progress_footer_text",
+  "label": "Progress Footer Text",
+  "default": "#162518",
+  "info": "Text color inside the empty-bundle progress footer (the call to action message)."
+     },
+
+     {
+  "type": "header",
+  "content": "Tabs Colors"
+     },
+     {
+  "type": "color",
+  "id": "color_tab_text",
+  "label": "Tab Text",
+  "default": "#160000",
+  "info": "Text color of inactive product tabs in the tab switcher."
+     },
+     {
+  "type": "color",
+  "id": "color_tab_border",
+  "label": "Tab Border (alpha 10%)",
+  "default": "#160000",
+  "info": "Bottom border under the tab bar separating tabs from the product grid (rendered at 10% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_tab_hover_bg",
+  "label": "Tab Hover Background",
+  "default": "#f5f5f5",
+  "info": "Background color of a tab when hovered with the cursor."
+     },
+     {
+  "type": "color",
+  "id": "color_tab_count_bg",
+  "label": "Tab Count Badge Background (alpha 10%)",
+  "default": "#160000",
+  "info": "Background of the small count badge displayed on inactive tabs (rendered at 10% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_tab_active_count_bg",
+  "label": "Active Tab Count Badge Background (alpha 20%)",
+  "default": "#FFFFFF",
+  "info": "Background of the count badge on the currently active tab (rendered at 20% opacity over the active button)."
+     },
+
+     {
+  "type": "header",
+  "content": "Product Card Colors"
+     },
+     {
+  "type": "color",
+  "id": "color_product_card_bg",
+  "label": "Product Card Background",
+  "default": "#FFFFFF",
+  "info": "Background color of every product card in the bundle grid."
+     },
+     {
+  "type": "color",
+  "id": "color_product_card_border",
+  "label": "Product Card Border (alpha 10%)",
+  "default": "#160000",
+  "info": "Border color drawn around each product card (rendered at 10% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_product_title",
+  "label": "Product Title",
+  "default": "#160000",
+  "info": "Product name text color shown inside each product card."
+     },
+     {
+  "type": "color",
+  "id": "color_product_description",
+  "label": "Product Description",
+  "default": "#160000",
+  "info": "Description / scent-notes text color shown inside each product card."
+     },
+     {
+  "type": "color",
+  "id": "color_bundle_tag_bg",
+  "label": "Bundle Tag Background (alpha 6%)",
+  "default": "#160000",
+  "info": "Background of the \"Part of bundle\" tag shown on selected products (rendered at 6% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_bundle_tag_text",
+  "label": "Bundle Tag Text",
+  "default": "#160000",
+  "info": "Main text color of the \"Part of bundle\" tag."
+     },
+     {
+  "type": "color",
+  "id": "color_bundle_tag_prefix",
+  "label": "Bundle Tag Prefix Text (alpha 70%)",
+  "default": "#160000",
+  "info": "Color of the bundle-name prefix inside the \"Part of bundle\" tag (rendered at 70% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_product_badge_text",
+  "label": "Product Badge Text",
+  "default": "#FFFFFF",
+  "info": "Text color of merchandising badges shown on product cards (e.g. Bestseller / New)."
+     },
+     {
+  "type": "color",
+  "id": "color_preorder_badge_bg",
+  "label": "Pre-Order Badge Background",
+  "default": "#6A0F0F",
+  "info": "Background color of the \"Pre-order\" badge shown on product cards."
+     },
+     {
+  "type": "color",
+  "id": "color_image_placeholder_bg",
+  "label": "Image Placeholder Background",
+  "default": "#f5f5f5",
+  "info": "Background shown in place of a product image when the image is missing."
+     },
+     {
+  "type": "color",
+  "id": "color_image_placeholder_text",
+  "label": "Image Placeholder Text",
+  "default": "#999999",
+  "info": "Color of the \"No image\" text shown when a product image is missing."
+     },
+
+     {
+  "type": "header",
+  "content": "Variant & Quantity Colors"
+     },
+     {
+  "type": "color",
+  "id": "color_variant_active_border",
+  "label": "Active Variant Border",
+  "default": "#1a1a1a",
+  "info": "Border color drawn around the currently selected variant swatch / chip."
+     },
+     {
+  "type": "color",
+  "id": "color_qty_input_border",
+  "label": "Qty Input Border (alpha 15%)",
+  "default": "#160000",
+  "info": "Border color around the interrupter quantity input (rendered at 15% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_qty_input_bg",
+  "label": "Qty Input Background",
+  "default": "#FFFFFF",
+  "info": "Background of the interrupter quantity input."
+     },
+     {
+  "type": "color",
+  "id": "color_qty_input_text",
+  "label": "Interrupter Qty Input Text",
+  "default": "#162518",
+  "info": "Text color of the quantity number in interrupter (top-of-section) quantity selectors."
+     },
+     {
+  "type": "color",
+  "id": "color_bundle_qty_input_text",
+  "label": "Bundle Qty Input Text",
+  "default": "#34393D",
+  "info": "Text color of the quantity number in product-card quantity selectors (in-card +/- inputs)."
+     },
+
+     {
+  "type": "header",
+  "content": "Sticky Continue Bar Colors"
+     },
+     {
+  "type": "color",
+  "id": "color_sticky_bg",
+  "label": "Sticky Bar Background",
+  "default": "#FFFFFF",
+  "info": "Background color of the sticky bottom bar that holds the Continue / Add to Cart button."
+     },
+     {
+  "type": "color",
+  "id": "color_sticky_shadow",
+  "label": "Sticky Bar Shadow (alpha 20%)",
+  "default": "#34393D",
+  "info": "Drop-shadow color cast by the sticky bottom bar (rendered at 20% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_disc_active_msg",
+  "label": "Discount Active Message Text",
+  "default": "#17561F",
+  "info": "Text color of the \"Discount applied\" confirmation message shown above the sticky bar."
+     },
+
+     {
+  "type": "header",
+  "content": "Thumbnail Colors"
+     },
+     {
+  "type": "color",
+  "id": "color_thumbnail_border",
+  "label": "Thumbnail Border (alpha 10%)",
+  "default": "#160000",
+  "info": "Border color around each selected-product thumbnail in the sticky bar (rendered at 10% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_thumbnail_skeleton_border",
+  "label": "Thumbnail Skeleton Border (alpha 10%)",
+  "default": "#160000",
+  "info": "Border around empty thumbnail placeholders shown before any scents have been picked (rendered at 10% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_thumbnail_remove_bg",
+  "label": "Thumbnail Remove Button Background",
+  "default": "#E8E5E5",
+  "info": "Background of the small Ã— button used to remove a scent thumbnail from the bundle."
+     },
+     {
+  "type": "color",
+  "id": "color_thumbnail_qty_bg",
+  "label": "Thumbnail Qty Badge Background",
+  "default": "#162518",
+  "info": "Background of the qty badge sitting on top of each thumbnail."
+     },
+     {
+  "type": "color",
+  "id": "color_thumbnail_qty_text",
+  "label": "Thumbnail Qty Badge Text",
+  "default": "#FFFFFF",
+  "info": "Text color inside the qty badge on each thumbnail."
+     },
+     {
+  "type": "color",
+  "id": "color_thumbnail_qty_border",
+  "label": "Thumbnail Qty Badge Border",
+  "default": "#FFFFFF",
+  "info": "Border color around the qty badge on each thumbnail."
+     },
+     {
+  "type": "color",
+  "id": "color_thumbnail_free_badge_bg",
+  "label": "Thumbnail FREE Badge Background",
+  "default": "#ae4e42",
+  "info": "Background of the \"FREE\" badge displayed on free-gift thumbnails."
+     },
+     {
+  "type": "color",
+  "id": "color_thumbnail_free_badge_text",
+  "label": "Thumbnail FREE Badge Text",
+  "default": "#FFFFFF",
+  "info": "Text color of the \"FREE\" badge displayed on free-gift thumbnails."
+     },
+     {
+  "type": "color",
+  "id": "color_thumbnail_gift_text",
+  "label": "Thumbnail Gift Text",
+  "default": "#162518",
+  "info": "Color of the \"Free gift\" label that appears next to gift thumbnails in the sticky bar."
+     },
+     {
+  "type": "color",
+  "id": "color_thumbnail_gift_image_border",
+  "label": "Thumbnail Gift Image Border",
+  "default": "#160000",
+  "info": "Border color around free-gift thumbnail images."
+     },
+
+     {
+  "type": "header",
+  "content": "Modal Overlay & Info Icon"
+     },
+     {
+  "type": "color",
+  "id": "color_modal_overlay",
+  "label": "Modal Overlay (alpha 50%)",
+  "default": "#000000",
+  "info": "Background overlay color shown behind any modal (scent modal, info popup, mini cart) (rendered at 50% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_info_icon_stroke",
+  "label": "Info (i) Icon Stroke Color",
+  "default": "#160000",
+  "info": "Outline (stroke) color of the small (i) info icons on product cards and scent modal triggers."
+     },
+
+     {
+  "type": "header",
+  "content": "Scent Modal Colors"
+     },
+     {
+  "type": "color",
+  "id": "color_scent_modal_bg",
+  "label": "Scent Modal Background",
+  "default": "#FFFFFF",
+  "info": "Background color of the scent details modal panel."
+     },
+     {
+  "type": "color",
+  "id": "color_scent_modal_header_bg",
+  "label": "Scent Modal Header Background",
+  "default": "#F1EFE8",
+  "info": "Background of the scent modal header strip (title + close button row)."
+     },
+     {
+  "type": "color",
+  "id": "color_scent_modal_header_border",
+  "label": "Scent Modal Header Border (alpha 10%)",
+  "default": "#160000",
+  "info": "Bottom border color separating the scent modal header from its content (rendered at 10% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_scent_modal_close_bg",
+  "label": "Scent Modal Close Button Background",
+  "default": "#160000",
+  "info": "Background of the Ã— close button in the scent modal header."
+     },
+     {
+  "type": "color",
+  "id": "color_scent_modal_content_bg",
+  "label": "Scent Modal Content Background",
+  "default": "#DED9C5",
+  "info": "Background of the inner content card inside the scent modal (around scent notes)."
+     },
+     {
+  "type": "color",
+  "id": "color_scent_modal_title",
+  "label": "Scent Modal Title",
+  "default": "#160000",
+  "info": "Title text color inside the scent details modal."
+     },
+     {
+  "type": "color",
+  "id": "color_scent_modal_description",
+  "label": "Scent Modal Description",
+  "default": "#160000",
+  "info": "Description / intro paragraph text color inside the scent modal."
+     },
+     {
+  "type": "color",
+  "id": "color_scent_modal_details_title",
+  "label": "Scent Modal Details Title",
+  "default": "#160000",
+  "info": "Section title color inside the scent modal (e.g. \"Top Notes\", \"Heart Notes\")."
+     },
+     {
+  "type": "color",
+  "id": "color_scent_modal_details_text",
+  "label": "Scent Modal Details Text",
+  "default": "#160000",
+  "info": "Body text color for the notes / details list inside the scent modal."
+     },
+     {
+  "type": "color",
+  "id": "color_scent_modal_add_bg",
+  "label": "Scent Modal Add Button Background",
+  "default": "#162518",
+  "info": "Background of the \"Add\" button at the bottom of the scent details modal."
+     },
+     {
+  "type": "color",
+  "id": "color_scent_modal_add_text",
+  "label": "Scent Modal Add Button Text",
+  "default": "#FFFFFF",
+  "info": "Text color of the \"Add\" button at the bottom of the scent details modal."
+     },
+
+     {
+  "type": "header",
+  "content": "Info Modal Colors"
+     },
+     {
+  "type": "color",
+  "id": "color_info_modal_bg",
+  "label": "Info Modal Background",
+  "default": "#f0efe9",
+  "info": "Background of the info popup modal (opens when tapping the empty progress footer)."
+     },
+     {
+  "type": "color",
+  "id": "color_info_modal_close_bg",
+  "label": "Info Modal Close Background (alpha 90% / 100% on hover)",
+  "default": "#FFFFFF",
+  "info": "Background of the close button in the info popup modal (rendered at 90% opacity, 100% on hover)."
+     },
+     {
+  "type": "color",
+  "id": "color_info_modal_placeholder_bg",
+  "label": "Info Modal Placeholder Background",
+  "default": "#F8F7F4",
+  "info": "Background shown inside the info popup when no image is configured."
+     },
+     {
+  "type": "color",
+  "id": "color_info_modal_placeholder_text",
+  "label": "Info Modal Placeholder Text",
+  "default": "#160000",
+  "info": "Text color of the missing-image placeholder inside the info popup."
+     },
+
+     {
+  "type": "header",
+  "content": "Mini Cart Colors"
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_bg",
+  "label": "Mini Cart Background",
+  "default": "#FFFFFF",
+  "info": "Background color of the mini-cart drawer panel."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_close",
+  "label": "Mini Cart Close Button",
+  "default": "#666666",
+  "info": "Color of the Ã— close button at the top of the mini-cart drawer."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_gift_placeholder_bg",
+  "label": "Mini Cart Gift Placeholder Background (alpha 8%)",
+  "default": "#162518",
+  "info": "Background of the placeholder shown above the next-free-gift line in the mini cart (rendered at 8% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_gift_placeholder_text",
+  "label": "Mini Cart Gift Placeholder Text",
+  "default": "#162518",
+  "info": "Text color of the \"Add X more to unlock\" placeholder message in the mini cart."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_gift_label",
+  "label": "Mini Cart Gift Label",
+  "default": "#1a2a49",
+  "info": "Color of the \"Free gift\" label shown next to gift line items in the mini cart."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_gift_price",
+  "label": "Mini Cart Gift Price",
+  "default": "#1a2a49",
+  "info": "Price text color for free-gift line items in the mini cart."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_gift_strikethrough",
+  "label": "Mini Cart Gift Strikethrough (border, text, badge bg)",
+  "default": "#AE4E42",
+  "info": "Color used for the slash-through line, original price text and the \"Free\" badge over free-gift items."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_strikethrough_middle",
+  "label": "Mini Cart Strikethrough Middle Text",
+  "default": "#000000",
+  "info": "Text color of the original (struck-through) price displayed beside discounted items in the mini cart."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_strikethrough_badge_bg",
+  "label": "Mini Cart Strikethrough Badge Background",
+  "default": "#AE4E42",
+  "info": "Background of the small discount badge shown next to struck-through prices in the mini cart."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_strikethrough_badge_text",
+  "label": "Mini Cart Strikethrough Badge Text",
+  "default": "#FFFFFF",
+  "info": "Text color of the small discount badge shown next to struck-through prices in the mini cart."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_item_border",
+  "label": "Mini Cart Item Image Border (alpha 10%)",
+  "default": "#160000",
+  "info": "Border around each line-item image inside the mini cart (rendered at 10% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_item_title",
+  "label": "Mini Cart Item Title",
+  "default": "#160000",
+  "info": "Title text color for paid line items in the mini cart."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_item_price",
+  "label": "Mini Cart Item Price",
+  "default": "#162518",
+  "info": "Price text color for paid line items in the mini cart."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_gift_text",
+  "label": "Mini Cart Gift Description Text",
+  "default": "#5c5c5c",
+  "info": "Description text color used for free-gift line items in the mini cart."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_gift_inventory_bg",
+  "label": "Mini Cart Gift Inventory Background (alpha 5%)",
+  "default": "#252116",
+  "info": "Background of the inventory-status pill shown on free-gift items in the mini cart (rendered at 5% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_gift_inventory_border",
+  "label": "Mini Cart Gift Inventory Border (alpha 10%)",
+  "default": "#162518",
+  "info": "Border of the inventory-status pill shown on free-gift items in the mini cart (rendered at 10% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_gift_inventory_text",
+  "label": "Mini Cart Gift Inventory Text",
+  "default": "#162518",
+  "info": "Text color of the inventory-status pill shown on free-gift items in the mini cart."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_qty_value",
+  "label": "Mini Cart Qty Value Text",
+  "default": "#160100",
+  "info": "Text color of the quantity number displayed between the + and - buttons in the mini cart."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_subtotal",
+  "label": "Mini Cart Item Subtotal",
+  "default": "#666666",
+  "info": "Text color of the per-line subtotal shown under each mini-cart item."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_preorder_bg",
+  "label": "Mini Cart Pre-Order Notice Background (alpha 5%)",
+  "default": "#252116",
+  "info": "Background of the pre-order notice block inside the mini cart (rendered at 5% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_preorder_label",
+  "label": "Mini Cart Pre-Order Label",
+  "default": "#162518",
+  "info": "Color of the \"Pre-order\" label inside the mini-cart pre-order notice."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_preorder_dates",
+  "label": "Mini Cart Pre-Order Dates",
+  "default": "#162518",
+  "info": "Color of the expected-delivery dates inside the pre-order notice."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_preorder_dates_bg",
+  "label": "Mini Cart Pre-Order Dates Background",
+  "default": "#FFFFFF",
+  "info": "Background of the date chip inside the pre-order notice."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_preorder_info",
+  "label": "Mini Cart Pre-Order Info Text",
+  "default": "#162518",
+  "info": "Color of the explanation / info paragraph inside the pre-order notice."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_preorder_toggle",
+  "label": "Mini Cart Pre-Order Toggle (alpha 50%)",
+  "default": "#160000",
+  "info": "Color of the pre-order details expand/collapse toggle (rendered at 50% opacity)."
+     },
+     {
+  "type": "color",
+  "id": "color_mini_cart_empty",
+  "label": "Mini Cart Empty State Text",
+  "default": "#999999",
+  "info": "Text color of the \"Your cart is empty\" message in the mini cart."
+     },
+
      {
   "type": "range",
   "id": "heading_size",
@@ -3175,11 +4100,13 @@ window.__kvInterrupterProducts = {};
       "id": "selector_description",
       "label": "Description",
       "default": "Describe the diffuser here."
-    },{
+    },
+    {
       "type": "color",
       "id": "highlight_text_color",
       "label": "Highlight Text Color",
-      "default": "#5c220a"
+      "default": "#5c220a",
+      "info": "Color of highlighted accent text inside the Diffuser block (e.g. the .cds-highlight-text line)."
     },
     {
       "type": "range",
@@ -3228,6 +4155,13 @@ window.__kvInterrupterProducts = {};
         "id": "enabled",
         "label": "Enable",
         "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_info_icon",
+        "label": "Show info (i) icon next to heading",
+        "default": true,
+        "info": "Toggles the small (i) info button shown next to the interrupter heading."
       },
       {
         "type": "header",
@@ -3417,19 +4351,22 @@ window.__kvInterrupterProducts = {};
         "type": "color",
         "id": "background_color",
         "label": "Background color",
-        "default": "#F1EFE8"
+        "default": "#F1EFE8",
+        "info": "Background color of the Interrupter card block."
       },
       {
         "type": "color",
         "id": "border_color",
         "label": "Border color",
-        "default": "#D9D4C5"
+        "default": "#D9D4C5",
+        "info": "Border color around the Interrupter card block."
       },
       {
         "type": "color",
         "id": "title_color",
         "label": "Heading color",
-        "default": "#160000"
+        "default": "#160000",
+        "info": "Title text color inside the Interrupter card block."
       },
       {
         "type": "range",
@@ -3444,7 +4381,8 @@ window.__kvInterrupterProducts = {};
         "type": "color",
         "id": "text_color",
         "label": "Text color",
-        "default": "#160000"
+        "default": "#160000",
+        "info": "Body text color inside the Interrupter card block."
       },
       {
         "type": "range",
@@ -3459,31 +4397,36 @@ window.__kvInterrupterProducts = {};
         "type": "color",
         "id": "badge_bg",
         "label": "Badge background",
-        "default": "#FFFFFF"
+        "default": "#FFFFFF",
+        "info": "Background color of the badge displayed on the Interrupter card block."
       },
       {
         "type": "color",
         "id": "badge_text_color",
         "label": "Badge text color",
-        "default": "#160000"
+        "default": "#160000",
+        "info": "Text color of the badge displayed on the Interrupter card block."
       },
       {
         "type": "color",
         "id": "cta_bg",
         "label": "CTA background",
-        "default": "#DED9C5"
+        "default": "#DED9C5",
+        "info": "Background color of the CTA button inside the Interrupter card block."
       },
       {
         "type": "color",
         "id": "cta_text_color",
         "label": "CTA text color",
-        "default": "#6A3B1E"
+        "default": "#6A3B1E",
+        "info": "Text color of the CTA button inside the Interrupter card block."
       },
       {
         "type": "color",
         "id": "cta_border_color",
         "label": "CTA border color",
-        "default": "#DED9C5"
+        "default": "#DED9C5",
+        "info": "Border color around the CTA button inside the Interrupter card block."
       }
     ]
   }

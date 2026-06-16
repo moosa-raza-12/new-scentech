@@ -1,3 +1,4 @@
+{%- assign _cid = campaign_id | default: 1 -%}
 <style>
   .discount-callout {
     display: none;
@@ -67,23 +68,25 @@
   }
 </style>
 
-<div class="discount-callout" id="discount-callout">
+<div class="discount-callout" id="discount-callout-{{ _cid }}">
   <div class="discount-callout__icon">
     <svg viewBox="0 0 12 12"><path d="M10.3 2.3L4.5 8.1 1.7 5.3.3 6.7l4.2 4.2 7.2-7.2z"/></svg>
   </div>
   <div class="discount-callout__text">
-    {{ 'discount_banner.code_before' | t }} <strong id="discount-callout-code"></strong> {{ 'discount_banner.code_after' | t }}
+    {{ 'discount_banner.code_before' | t }} <strong id="discount-callout-code-{{ _cid }}"></strong> {{ 'discount_banner.code_after' | t }}
   </div>
 </div>
 
 <script>
   (function() {
+    var CAMPAIGN_ID = {{ _cid | json }};
+    var SC_KEY = 'sc_discount_' + CAMPAIGN_ID;
     var CAMPAIGN_CODE = {{ campaign_code | upcase | json }};
     var CAMPAIGN_EXPIRY = {{ campaign_expiry | default: '' | json }};
 
     // Expiry check — wis en stop als de sale voorbij is
     if (CAMPAIGN_EXPIRY && new Date() > new Date(CAMPAIGN_EXPIRY)) {
-      sessionStorage.removeItem('sc_discount');
+      sessionStorage.removeItem(SC_KEY);
       document.cookie = 'discount_code=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
       return;
     }
@@ -102,26 +105,30 @@
     function init(code) {
 
     // Show callout box
-    var callout = document.getElementById('discount-callout');
-    var codeEl = document.getElementById('discount-callout-code');
+    var callout = document.getElementById('discount-callout-' + CAMPAIGN_ID);
+    var codeEl = document.getElementById('discount-callout-code-' + CAMPAIGN_ID);
     if (callout && codeEl) {
       codeEl.textContent = code.toUpperCase();
       callout.style.display = 'flex';
     }
 
     // Show badge
-    var badge = document.getElementById('discount-price-badge');
-    var badgeCode = document.getElementById('discount-price-badge-code');
+    var badge = document.getElementById('discount-price-badge-' + CAMPAIGN_ID);
+    var badgeCode = document.getElementById('discount-price-badge-code-' + CAMPAIGN_ID);
     if (badge && badgeCode) {
       badgeCode.textContent = code.toUpperCase();
       badge.style.display = 'inline-flex';
     }
 
-    // Extract discount percentage from code name (e.g. KONINGSDAG27 → 27)
-    var pctMatch = code.match(/(\d+)$/);
-    if (!pctMatch) return;
-    var pct = parseInt(pctMatch[1]);
-    if (pct <= 0 || pct >= 100) return;
+    // Kortingstype — percentage of vast bedrag, ingesteld via theme settings
+    var CAMPAIGN_PCT_SETTING = {{ campaign_pct | default: 0 | json }};
+    var CAMPAIGN_AMOUNT_SETTING = {{ campaign_amount | default: 0 | json }};
+    var useAmount = CAMPAIGN_AMOUNT_SETTING > 0;
+    var usePct = CAMPAIGN_PCT_SETTING > 0 && CAMPAIGN_PCT_SETTING < 100;
+    // Als beide ingevuld: amount heeft prioriteit boven pct
+    if (!useAmount && !usePct) return;
+    var pct = usePct ? CAMPAIGN_PCT_SETTING : 0;
+    var amountCents = useAmount ? Math.round(CAMPAIGN_AMOUNT_SETTING * 100) : 0;
 
     function formatMoney(cents) {
       return '\u20ac' + (cents / 100).toFixed(2).replace('.', ',');
@@ -131,7 +138,10 @@
       var priceInCents = parseInt(priceList.dataset.price);
       if (!priceInCents) return;
 
-      var discounted = Math.round(priceInCents * (1 - pct / 100));
+      var discounted = useAmount
+        ? priceInCents - amountCents
+        : Math.round(priceInCents * (1 - pct / 100));
+      if (discounted <= 0) return;
 
       // Update sale-price
       var saleEl = priceList.querySelector('sale-price');
@@ -163,7 +173,14 @@
         pctBadge = document.createElement('span');
         pctBadge.className = 'discount-pct-badge';
         pctBadge.style.cssText = 'background:rgb(var(--announcement-bar-background,198 94 44));color:rgb(var(--announcement-bar-text-color,255 255 255));font-size:12px;font-weight:700;padding:2px 7px;border-radius:4px;white-space:nowrap;';
-        pctBadge.textContent = '-' + pct + '%';
+        if (useAmount) {
+          var amountDisplay = amountCents % 100 === 0
+            ? String(amountCents / 100)
+            : (amountCents / 100).toFixed(2).replace('.', ',');
+          pctBadge.textContent = '-\u20ac' + amountDisplay;
+        } else {
+          pctBadge.textContent = '-' + pct + '%';
+        }
         var origEl = priceList.querySelector('.discount-original-price');
         if (origEl) origEl.after(pctBadge);
       }
@@ -206,10 +223,10 @@
 
     var code = new URLSearchParams(window.location.search).get('discount');
     if (matchesCampaign(code)) {
-      sessionStorage.setItem('sc_discount', code);
+      sessionStorage.setItem(SC_KEY, code);
       init(code);
     } else {
-      code = sessionStorage.getItem('sc_discount');
+      code = sessionStorage.getItem(SC_KEY);
       if (matchesCampaign(code)) {
         init(code);
       } else {
@@ -220,7 +237,7 @@
             if (codes.length > 0) {
               var c = codes[0].code;
               if (matchesCampaign(c)) {
-                sessionStorage.setItem('sc_discount', c);
+                sessionStorage.setItem(SC_KEY, c);
                 init(c);
               }
             }

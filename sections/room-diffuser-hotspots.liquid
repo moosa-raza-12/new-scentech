@@ -1,0 +1,489 @@
+{%- comment -%}
+  Room Diffuser Hotspots
+  Spec: docs/superpowers/specs/2026-05-17-room-diffuser-hotspots-design.md
+{%- endcomment -%}
+
+<script src="{{ 'room-diffuser-hotspots.js' | asset_url }}" defer></script>
+
+{%- render 'room-diffuser-modal-styles',
+  section_id: section.id,
+  hotspot_color: section.settings.hotspot_color,
+  room_label_color: section.settings.room_label_color,
+  modal_backdrop_color: section.settings.modal_backdrop_color,
+  modal_backdrop_opacity: section.settings.modal_backdrop_opacity,
+  modal_panel_background: section.settings.modal_panel_background,
+  modal_title_color: section.settings.modal_title_color,
+  modal_text_color: section.settings.modal_text_color,
+  modal_tag_background: section.settings.modal_tag_background,
+  modal_tag_text_color: section.settings.modal_tag_text_color,
+  modal_room_context_background: section.settings.modal_room_context_background,
+  modal_room_context_text_color: section.settings.modal_room_context_text_color,
+  modal_cta_background: section.settings.modal_cta_background,
+  modal_cta_text_color: section.settings.modal_cta_text_color,
+  modal_spinner_color: section.settings.modal_spinner_color,
+  hotspot_pulse_enabled: section.settings.hotspot_pulse_enabled,
+  pill_room_size: section.settings.pill_room_size,
+  pill_product_size: section.settings.pill_product_size
+-%}
+
+<section
+  class="rdh-section"
+  style="background:{{ section.settings.section_background_color }};padding:{{ section.settings.section_padding_top }}px 0 {{ section.settings.section_padding_bottom }}px;"
+  data-section-id="{{ section.id }}">
+  <div class="rdh-section__inner">
+    <div class="rdh-section__layout">
+      <div class="rdh-section__intro">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="rdh-section__heading" style="font-size:{{ section.settings.heading_size | default: 32 }}px;">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <div class="rdh-section__subheading">{{ section.settings.subheading }}</div>
+        {%- endif -%}
+        {%- if section.settings.show_compare_link -%}
+          <div class="rdh-section__compare rdh-section__compare--desktop">
+            <button type="button" class="rdh-compare-link" data-rdh-compare>
+              {{ section.settings.compare_link_text }}
+              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                <path d="M3 7 H11 M8 4 L11 7 L8 10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.show_get_started -%}
+          <div class="rdh-section__getstarted rdh-section__getstarted--desktop">
+            <a href="{{ section.settings.get_started_link | default: '#' }}" class="rdh-get-started">
+              {{ section.settings.get_started_text }}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+      <div class="rdh-section__stage" style="max-width:{{ section.settings.max_image_width }}px;">
+      {%- if section.settings.background_image != blank -%}
+        {{ section.settings.background_image | image_url: width: 1600 | image_tag:
+          loading: 'lazy',
+          widths: '600,900,1200,1600',
+          sizes: '(max-width: 900px) 100vw, 1200px',
+          class: 'rdh-section__bg',
+          alt: section.settings.heading | default: 'Diffusers in elke kamer'
+        }}
+      {%- endif -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'room' -%}
+          {%- assign has_hotspot_image = false -%}
+          {%- if block.settings.hotspot_image != blank -%}{%- assign has_hotspot_image = true -%}{%- endif -%}
+          {%- assign hs_size = block.settings.hotspot_size | default: 60 -%}
+          {%- if has_hotspot_image -%}
+            {%- assign sizes_attr = hs_size | append: 'px' -%}
+            {%- assign pill_default = '' -%}
+            {%- if block.settings.product != blank -%}{%- assign pill_default = block.settings.product.title -%}{%- endif -%}
+            {%- assign pill_product = block.settings.pill_product_name | default: pill_default -%}
+            <button
+              type="button"
+              class="rdh-hotspot rdh-hotspot--pill"
+              style="left:{{ block.settings.hotspot_x }}%;top:{{ block.settings.hotspot_y }}%;--rdh-hotspot-size:{{ hs_size }}px;"
+              data-block-id="{{ block.id }}"
+              aria-label="Diffuser in {{ block.settings.room_label | escape }} — open detail"
+              {{ block.shopify_attributes }}>
+              <span class="rdh-hotspot__media" aria-hidden="true">
+                {{ block.settings.hotspot_image | image_url: width: 320 | image_tag:
+                  class: 'rdh-hotspot__image',
+                  loading: 'lazy',
+                  widths: '120,180,240,320',
+                  sizes: sizes_attr,
+                  alt: ''
+                }}
+              </span>
+              <span class="rdh-hotspot__text">
+                <span class="rdh-hotspot__pill-room">{{ block.settings.room_label }}</span>
+                {%- if pill_product != blank -%}
+                  <span class="rdh-hotspot__pill-product">{{ pill_product }}</span>
+                {%- endif -%}
+              </span>
+            </button>
+          {%- else -%}
+            <button
+              type="button"
+              class="rdh-hotspot rdh-hotspot--{{ block.settings.hotspot_icon_style }}"
+              style="left:{{ block.settings.hotspot_x }}%;top:{{ block.settings.hotspot_y }}%;"
+              data-block-id="{{ block.id }}"
+              aria-label="Diffuser in {{ block.settings.room_label | escape }} — open detail"
+              {{ block.shopify_attributes }}>
+              <span class="rdh-hotspot__inner" aria-hidden="true"></span>
+              {%- if section.settings.room_label_show -%}
+                <span class="rdh-hotspot__label">{{ block.settings.room_label }}</span>
+              {%- endif -%}
+            </button>
+          {%- endif -%}
+          {%- if block.settings.product != blank -%}
+            {%- assign product = block.settings.product -%}
+            {%- assign override_headline = block.settings.modal_headline_override -%}
+            {%- assign override_blurb = block.settings.modal_blurb_override -%}
+            {%- assign override_cta_text = block.settings.cta_text_override -%}
+            {%- assign override_cta_link = block.settings.cta_link_override -%}
+            {%- assign override_primary_cta_text = block.settings.primary_cta_text_override -%}
+            {%- assign override_primary_cta_link = block.settings.primary_cta_link_override -%}
+            {%- assign override_notice = block.settings.notice_text_override -%}
+            {%- assign override_context = block.settings.room_context_label_override -%}
+
+            {%- capture room_context -%}
+              {%- if override_context != blank -%}
+                {{ override_context | replace: '%room_label%', block.settings.room_label }}
+              {%- else -%}
+                Perfect voor de {{ block.settings.room_label }}
+              {%- endif -%}
+            {%- endcapture -%}
+
+            {%- capture details_bullets_json -%}
+              [
+              {%- assign emitted = false -%}
+              {%- for i in (1..5) -%}
+                {%- assign field_name = 'main_product_benefit_' | append: i -%}
+                {%- assign benefit = product.metafields.custom[field_name] -%}
+                {%- if benefit != blank -%}
+                  {%- if emitted -%},{%- endif -%}
+                  {{ benefit | json }}
+                  {%- assign emitted = true -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- unless emitted -%}
+                {%- assign sd = product.metafields.custom.scent_details -%}
+                {%- if sd != blank -%}
+                  {%- assign parts = sd | replace: '<br>', '|||' | strip_html | split: '|||' -%}
+                  {%- for part in parts -%}
+                    {%- assign trimmed = part | strip -%}
+                    {%- if trimmed != blank -%}
+                      {%- if emitted -%},{%- endif -%}
+                      {{ trimmed | json }}
+                      {%- assign emitted = true -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+              {%- endunless -%}
+              ]
+            {%- endcapture -%}
+
+            {%- capture images_json -%}
+              [
+              {%- assign img_emitted = false -%}
+              {%- if product.featured_image != blank -%}
+                {{ product.featured_image | image_url: width: 1200 | json }}
+                {%- assign img_emitted = true -%}
+              {%- endif -%}
+              {%- for img in product.images -%}
+                {%- unless img == product.featured_image -%}
+                  {%- if img_emitted -%},{%- endif -%}
+                  {{ img | image_url: width: 1200 | json }}
+                  {%- assign img_emitted = true -%}
+                {%- endunless -%}
+              {%- endfor -%}
+              {%- assign extra_keys = 'modal_extra_image_1,modal_extra_image_2,modal_extra_image_3' | split: ',' -%}
+    {%- for extra_key in extra_keys -%}
+                {%- assign extra = block.settings[extra_key] -%}
+                {%- if extra != blank -%}
+                  {%- if img_emitted -%},{%- endif -%}
+                  {{ extra | image_url: width: 1200 | json }}
+                  {%- assign img_emitted = true -%}
+                {%- endif -%}
+              {%- endfor -%}
+              ]
+            {%- endcapture -%}
+
+          <script type="application/json" id="rdh-block-{{ block.id }}">
+            {
+              "roomContext": {{ room_context | strip | json }},
+              "title": {%- if override_headline != blank -%}{{ override_headline | json }}{%- else -%}{{ product.title | json }}{%- endif -%},
+              "tags": [
+                {%- assign tags_str = block.settings.modal_tags | default: '' -%}
+                {%- if tags_str != '' -%}
+                  {%- assign tag_emitted = false -%}
+                  {%- assign tag_list = tags_str | split: ',' -%}
+                  {%- for t in tag_list -%}
+                    {%- assign tt = t | strip -%}
+                    {%- if tt != '' -%}
+                      {%- if tag_emitted -%},{%- endif -%}
+                      {{ tt | json }}
+                      {%- assign tag_emitted = true -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+              ],
+              "blurb": {%- if override_blurb != blank -%}{{ override_blurb | strip_html | json }}{%- else -%}{{ product.metafields.custom.scent_popup_description | default: '' | strip_html | json }}{%- endif -%},
+              "details": {{ details_bullets_json | strip }},
+              "images": {{ images_json | strip }},
+              "price": {{ product.price | money | json }},
+              "notice": {%- if override_notice != blank -%}{{ override_notice | json }}{%- else -%}{{ section.settings.notice_text | json }}{%- endif -%},
+              "noticeShow": {{ section.settings.notice_show | json }},
+              "primaryCtaText": {%- if override_primary_cta_text != blank -%}{{ override_primary_cta_text | json }}{%- else -%}{{ section.settings.primary_cta_text | default: 'Krijg GRATIS bij 5 geuren' | json }}{%- endif -%},
+              "primaryCtaLink": {%- if override_primary_cta_link != blank -%}{{ override_primary_cta_link | json }}{%- elsif section.settings.primary_cta_link != blank -%}{{ section.settings.primary_cta_link | json }}{%- else -%}{{ product.url | json }}{%- endif -%},
+              "ctaText": {%- if override_cta_text != blank -%}{{ override_cta_text | json }}{%- else -%}{{ section.settings.secondary_cta_text | default: 'Bekijk diffuser' | json }}{%- endif -%},
+              "ctaLink": {%- if override_cta_link != blank -%}{{ override_cta_link | json }}{%- else -%}{{ product.url | json }}{%- endif -%}
+            }
+          </script>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    </div>
+    {%- if section.settings.show_compare_link -%}
+      <div class="rdh-section__compare rdh-section__compare--mobile">
+        <button type="button" class="rdh-compare-link" data-rdh-compare>
+          {{ section.settings.compare_link_text }}
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+            <path d="M3 7 H11 M8 4 L11 7 L8 10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    {%- endif -%}
+    {%- if section.settings.show_get_started -%}
+      <div class="rdh-section__getstarted rdh-section__getstarted--mobile">
+        <a href="{{ section.settings.get_started_link | default: '#' }}" class="rdh-get-started">
+          {{ section.settings.get_started_text }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+<style>
+  .rdh-section__inner { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+  .rdh-section__layout {
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .rdh-section__intro {
+    display: flex; flex-direction: column; gap: 18px;
+    text-align: center; align-items: center;
+  }
+  .rdh-section__heading { margin: 0; font-family: "{{ section.settings.heading_font | default: 'Kento-Bold' }}", sans-serif; font-weight: normal; line-height: 1.1; }
+  .rdh-section__subheading { margin: 0; max-width: 460px; font-family: "{{ section.settings.subheading_font | default: 'BaiJamjuree-Regular' }}", sans-serif; }
+  .rdh-section__stage { position: relative; margin: 0; width: 100%; }
+  .rdh-section__bg { display: block; width: 100%; height: auto; }
+  .rdh-section__compare--desktop { display: none; }
+  .rdh-section__compare--mobile { display: block; margin-top: 24px; text-align: center; }
+
+  .rdh-section__getstarted--desktop { display: none; }
+  .rdh-section__getstarted--mobile { display: block; margin-top: 12px; text-align: center; }
+  .rdh-get-started {
+    display: inline-block;
+    background: #160000;
+    color: #ffffff;
+    padding: 14px 28px;
+    border-radius: var(--rounded-button);
+    text-decoration: none;
+    font-family: "BaiJamjuree-Regular", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: opacity 0.15s ease;
+  }
+  .rdh-get-started:hover,
+  .rdh-get-started:focus-visible { opacity: 0.85; }
+
+  @media (min-width: 900px) {
+    .rdh-section__layout {
+      display: grid;
+      grid-template-columns: minmax(320px, 1fr) minmax(0, 0.7fr);
+      column-gap: 64px;
+      align-items: center;
+    }
+    .rdh-section__intro {
+      text-align: left;
+      align-items: flex-start;
+      padding-left: 64px;
+      gap: 24px;
+    }
+    .rdh-section__stage { max-width: 640px; }
+    .rdh-section__subheading { max-width: 380px; }
+    .rdh-section__compare--desktop { display: block; margin-top: 6px; }
+    .rdh-section__compare--mobile { display: none; }
+    .rdh-section__getstarted--desktop { display: block; margin-top: 12px; }
+    .rdh-section__getstarted--mobile { display: none; }
+  }
+</style>
+</section>
+
+<div
+  class="rdh-modal"
+  id="rdh-modal-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-rdh-modal
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="rdh-modal-title-{{ section.id }}"
+  aria-hidden="true">
+  <div class="rdh-modal__backdrop" data-rdh-close></div>
+  <div class="rdh-modal__panel">
+    <button class="rdh-modal__close" type="button" data-rdh-close aria-label="Sluit">
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+        <path d="M1 1 L13 13 M13 1 L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div class="rdh-modal__scroll">
+      <div class="rdh-modal__loader" data-rdh-loader aria-live="polite">
+        <span class="rdh-modal__spinner" aria-hidden="true"></span>
+        <span class="rdh-modal__loader-text">Laden…</span>
+      </div>
+      <div class="rdh-modal__content" data-rdh-content hidden>
+        <div class="rdh-modal__media" data-rdh-media>
+          <div class="rdh-modal__hero-wrap">
+            <img class="rdh-modal__hero" data-rdh-hero alt="" />
+            <button class="rdh-modal__arrow rdh-modal__arrow--prev" type="button" data-rdh-prev aria-label="Vorige afbeelding">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6 L9 12 L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="rdh-modal__arrow rdh-modal__arrow--next" type="button" data-rdh-next aria-label="Volgende afbeelding">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6 L15 12 L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <div class="rdh-modal__thumbs" data-rdh-thumbs></div>
+        </div>
+        <div class="rdh-modal__body" data-rdh-body>
+          <div class="rdh-modal__body-inner">
+            <span class="rdh-modal__room-context" data-rdh-room-context></span>
+            <h2 class="rdh-modal__title" id="rdh-modal-title-{{ section.id }}" data-rdh-title></h2>
+            <div class="rdh-modal__price-row">
+              <span class="rdh-modal__price" data-rdh-price></span>
+            </div>
+            <div class="rdh-modal__tags" data-rdh-tags></div>
+            <div class="rdh-modal__blurb" data-rdh-blurb></div>
+            <ul class="rdh-modal__details" data-rdh-details></ul>
+            <div class="rdh-modal__ctas">
+              <a class="rdh-modal__cta rdh-modal__cta--primary" data-rdh-cta-primary href="#"></a>
+              <a class="rdh-modal__cta rdh-modal__cta--secondary" data-rdh-cta-secondary href="#"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Room diffuser hotspots",
+  "tag": "section",
+  "class": "rdh",
+  "enabled_on": {
+    "templates": ["index", "page", "collection", "product"]
+  },
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Diffusers voor elke kamer" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (px)", "min": 18, "max": 72, "step": 1, "default": 32, "unit": "px" },
+    { "type": "select", "id": "heading_font", "label": "Heading font", "options": [
+      { "value": "Kento-Bold", "label": "Kento Bold" },
+      { "value": "Kento-Regular", "label": "Kento Regular" },
+      { "value": "Kento-Light", "label": "Kento Light" },
+      { "value": "BaiJamjuree-Bold", "label": "Bai Jamjuree Bold" },
+      { "value": "BaiJamjuree-SemiBold", "label": "Bai Jamjuree SemiBold" },
+      { "value": "BaiJamjuree-Medium", "label": "Bai Jamjuree Medium" },
+      { "value": "BaiJamjuree-Regular", "label": "Bai Jamjuree Regular" },
+      { "value": "BaiJamjuree-Light", "label": "Bai Jamjuree Light" },
+      { "value": "BaiJamjuree-ExtraLight", "label": "Bai Jamjuree ExtraLight" }
+    ], "default": "Kento-Bold" },
+    { "type": "richtext", "id": "subheading", "label": "Subheading", "default": "<p>Elke ruimte verdient zijn eigen geur.</p>" },
+    { "type": "select", "id": "subheading_font", "label": "Subheading font", "options": [
+      { "value": "BaiJamjuree-Bold", "label": "Bai Jamjuree Bold" },
+      { "value": "BaiJamjuree-SemiBold", "label": "Bai Jamjuree SemiBold" },
+      { "value": "BaiJamjuree-Medium", "label": "Bai Jamjuree Medium" },
+      { "value": "BaiJamjuree-Regular", "label": "Bai Jamjuree Regular" },
+      { "value": "BaiJamjuree-Light", "label": "Bai Jamjuree Light" },
+      { "value": "BaiJamjuree-ExtraLight", "label": "Bai Jamjuree ExtraLight" }
+    ], "default": "BaiJamjuree-Regular" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image (sliced home)" },
+    { "type": "range", "id": "max_image_width", "label": "Max image width (px)", "min": 600, "max": 1400, "step": 50, "default": 1200, "unit": "px" },
+
+    { "type": "header", "content": "Section styling" },
+    { "type": "color", "id": "section_background_color", "label": "Section background", "default": "#ffffff" },
+    { "type": "range", "id": "section_padding_top", "label": "Padding top", "min": 0, "max": 120, "step": 4, "default": 64, "unit": "px" },
+    { "type": "range", "id": "section_padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "default": 64, "unit": "px" },
+
+    { "type": "header", "content": "Hotspot styling" },
+    { "type": "color", "id": "hotspot_color", "label": "Hotspot color", "default": "#160000" },
+    { "type": "checkbox", "id": "hotspot_pulse_enabled", "label": "Animated pulse", "default": true },
+    { "type": "color", "id": "room_label_color", "label": "Room label color", "default": "#160000" },
+    { "type": "checkbox", "id": "room_label_show", "label": "Show room labels", "default": true },
+    { "type": "range", "id": "pill_room_size", "label": "Pill room label size (px)", "min": 9, "max": 22, "step": 1, "default": 13, "unit": "px" },
+    { "type": "range", "id": "pill_product_size", "label": "Pill product name size (px)", "min": 7, "max": 18, "step": 1, "default": 11, "unit": "px", "info": "Mobile auto-scales to ~85%." },
+
+    { "type": "header", "content": "Modal styling" },
+    { "type": "color", "id": "modal_backdrop_color", "label": "Backdrop color", "default": "#160000" },
+    { "type": "range", "id": "modal_backdrop_opacity", "label": "Backdrop opacity (%)", "min": 30, "max": 100, "step": 5, "default": 70, "unit": "%" },
+    { "type": "color", "id": "modal_panel_background", "label": "Panel background", "default": "#fcfbf4" },
+    { "type": "color", "id": "modal_title_color", "label": "Title color", "default": "#160000" },
+    { "type": "color", "id": "modal_text_color", "label": "Body text color", "default": "#162518" },
+    { "type": "color", "id": "modal_tag_background", "label": "Tag background", "default": "#F1EFE8" },
+    { "type": "color", "id": "modal_tag_text_color", "label": "Tag text", "default": "#162518" },
+    { "type": "color", "id": "modal_room_context_background", "label": "Room badge background (above title)", "default": "#162518" },
+    { "type": "color", "id": "modal_room_context_text_color", "label": "Room badge text", "default": "#fcfbf4" },
+    { "type": "color", "id": "modal_cta_background", "label": "CTA background", "default": "#160000" },
+    { "type": "color", "id": "modal_cta_text_color", "label": "CTA text", "default": "#fcfbf4" },
+    { "type": "color", "id": "modal_spinner_color", "label": "Spinner color", "default": "#162518" },
+
+    { "type": "header", "content": "Footer notice (in modal)" },
+    { "type": "text", "id": "notice_text", "label": "Notice text", "default": "Gratis bij aankoop van 5 geuren" },
+    { "type": "checkbox", "id": "notice_show", "label": "Show notice", "default": true },
+
+    { "type": "header", "content": "Modal buttons" },
+    { "type": "text", "id": "primary_cta_text", "label": "Primary button text", "default": "Krijg GRATIS bij 5 geuren" },
+    { "type": "url", "id": "primary_cta_link", "label": "Primary button link (optional)", "info": "Leave blank to fall back to the product URL of the hotspot." },
+    { "type": "text", "id": "secondary_cta_text", "label": "Secondary button text", "default": "Bekijk diffuser" },
+
+    { "type": "header", "content": "Compare link" },
+    { "type": "checkbox", "id": "show_compare_link", "label": "Show 'Compare all' link", "default": true },
+    { "type": "text", "id": "compare_link_text", "label": "Link text", "default": "Vergelijk alle 3 modellen" },
+
+    { "type": "header", "content": "Get started button" },
+    { "type": "checkbox", "id": "show_get_started", "label": "Show 'Get started' button", "default": true },
+    { "type": "text", "id": "get_started_text", "label": "Button text", "default": "Get started" },
+    { "type": "url", "id": "get_started_link", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "room",
+      "name": "Room hotspot",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "room_label", "label": "Room label", "default": "Slaapkamer" },
+        { "type": "product", "id": "product", "label": "Diffuser product" },
+        { "type": "range", "id": "hotspot_x", "label": "Hotspot X position (%)", "min": 0, "max": 100, "step": 1, "default": 50 },
+        { "type": "range", "id": "hotspot_y", "label": "Hotspot Y position (%)", "min": 0, "max": 100, "step": 1, "default": 50 },
+        {
+          "type": "select",
+          "id": "hotspot_icon_style",
+          "label": "Hotspot icon style",
+          "options": [
+            { "value": "pulse", "label": "Pulse circle" },
+            { "value": "diffuser-thumbnail", "label": "Diffuser thumbnail" },
+            { "value": "plus", "label": "Plus icon" }
+          ],
+          "default": "pulse"
+        },
+        { "type": "image_picker", "id": "hotspot_image", "label": "Hotspot image (transparent PNG)", "info": "Optional. When set, the hotspot renders as a horizontal pill with the PNG overflowing on the left. Upload PNGs under Settings → Files first." },
+        { "type": "range", "id": "hotspot_size", "label": "Diffuser height on desktop (px)", "min": 22, "max": 200, "step": 2, "default": 60, "unit": "px", "info": "Image height. Small values fit inside the pill (good for square diffusers). Larger values overflow above the pill while pill height stays fixed (good for tall tower diffusers). Mobile auto-scales to ~62%." },
+        { "type": "text", "id": "pill_product_name", "label": "Pill product name (short)", "info": "Short name shown inside the pill (e.g. 'Diffuser Pro'). Defaults to full product title." },
+        { "type": "header", "content": "Modal overrides (optional)" },
+        { "type": "text", "id": "modal_tags", "label": "Modal tags (comma-separated)", "info": "e.g., '50m², Stille werking'. Shown as pills in modal header." },
+        { "type": "text", "id": "modal_headline_override", "label": "Headline override" },
+        { "type": "richtext", "id": "modal_blurb_override", "label": "Blurb override" },
+        { "type": "image_picker", "id": "modal_extra_image_1", "label": "Modal extra image 1" },
+        { "type": "image_picker", "id": "modal_extra_image_2", "label": "Modal extra image 2" },
+        { "type": "image_picker", "id": "modal_extra_image_3", "label": "Modal extra image 3" },
+        { "type": "text", "id": "primary_cta_text_override", "label": "Primary button text override" },
+        { "type": "url", "id": "primary_cta_link_override", "label": "Primary button link override" },
+        { "type": "text", "id": "cta_text_override", "label": "Secondary button text override" },
+        { "type": "url", "id": "cta_link_override", "label": "Secondary button link override" },
+        { "type": "text", "id": "notice_text_override", "label": "Notice override" },
+        { "type": "text", "id": "room_context_label_override", "label": "Room context label override", "info": "Use %room_label% to insert the room name. Defaults to 'Perfect voor de %room_label%'." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Room diffuser hotspots",
+      "category": "Custom",
+      "blocks": [
+        { "type": "room", "settings": { "room_label": "Badkamer", "hotspot_x": 22, "hotspot_y": 32 } },
+        { "type": "room", "settings": { "room_label": "Slaapkamer", "hotspot_x": 60, "hotspot_y": 36 } },
+        { "type": "room", "settings": { "room_label": "Woonkamer", "hotspot_x": 72, "hotspot_y": 75 } }
+      ]
+    }
+  ]
+}
+{% endschema %}

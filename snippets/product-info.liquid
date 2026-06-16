@@ -134,7 +134,41 @@ Supported variables
               {%- if in_discount_collection -%}
                 {%- render 'discount-code-banner',
                   campaign_code: settings.discount_campaign_code,
-                  campaign_expiry: settings.discount_campaign_expiry -%}
+                  campaign_expiry: settings.discount_campaign_expiry,
+                  campaign_id: 1,
+                  campaign_pct: settings.discount_campaign_pct,
+                  campaign_amount: settings.discount_campaign_amount -%}
+              {%- endif -%}
+            {%- endif -%}
+            {%- if context == 'main_product' and settings.discount_campaign_2_active and settings.discount_campaign_2_code != blank -%}
+              {%- assign show_banner_2 = false -%}
+              {%- if settings.discount_campaign_2_products != blank -%}
+                {%- assign campaign_prods_2 = settings.discount_campaign_2_products | split: ',' -%}
+                {%- for pd in campaign_prods_2 -%}
+                  {%- assign pd_clean = pd | strip -%}
+                  {%- if product.handle == pd_clean -%}
+                    {%- assign show_banner_2 = true -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- elsif settings.discount_campaign_2_collections == blank -%}
+                {%- assign show_banner_2 = true -%}
+              {%- else -%}
+                {%- assign campaign_cols_2 = settings.discount_campaign_2_collections | split: ',' -%}
+                {%- for col in product.collections -%}
+                  {%- for dc in campaign_cols_2 -%}
+                    {%- if col.handle == dc -%}
+                      {%- assign show_banner_2 = true -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endfor -%}
+              {%- endif -%}
+              {%- if show_banner_2 -%}
+                {%- render 'discount-code-banner',
+                  campaign_code: settings.discount_campaign_2_code,
+                  campaign_expiry: settings.discount_campaign_2_expiry,
+                  campaign_id: 2,
+                  campaign_pct: settings.discount_campaign_2_pct,
+                  campaign_amount: settings.discount_campaign_2_amount -%}
               {%- endif -%}
             {%- endif -%}
             <div class="product-info__price" data-product-id="{{ product.id }}">

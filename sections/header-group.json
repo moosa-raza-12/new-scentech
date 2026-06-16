@@ -64,15 +64,15 @@
           "type": "message",
           "disabled": true,
           "settings": {
-            "text": "MOTHERSDAY SALE: CLICK HERE TO CLAIM YOUR FREE DIFFUSER",
+            "text": "Fathers Day Sale: CLICK HERE for a free diffuser",
             "url": "shopify://collections/fall-sale"
           }
         },
         "countdown_dHRd7E": {
           "type": "countdown",
           "settings": {
-            "text": "MONTHERSDAY SALE ENDS IN:",
-            "end_date": "2026-05-11T23:59:00",
+            "text": "FATHERS DAY SALE ENDS IN:",
+            "end_date": "2026-06-21T23:59:00",
             "show_labels": true,
             "url": "shopify://collections/fall-sale"
           }
@@ -89,7 +89,7 @@
         "text_size": "text-xs",
         "navigation_mode": "arrows",
         "scrolling_speed": 10,
-        "background": "#5c220a",
+        "background": "#162518",
         "background_gradient": "",
         "text_color": "#ffffff"
       }
@@ -102,7 +102,7 @@
         "logo": "shopify://shop_images/logo_NEW_black.png",
         "logo_max_width": 120,
         "logo_mobile_max_width": 105,
-        "menu": "main-menu-mothersday-sale",
+        "menu": "main-menu-cyber-sale",
         "sidebar_menu": "",
         "secondary_menu": "sub-navigation",
         "menu_open_trigger": "hover",

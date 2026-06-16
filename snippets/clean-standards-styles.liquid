@@ -1,0 +1,336 @@
+{%- comment -%}
+  Parameters (all expected from `render`):
+    section_id,
+    section_bg_color, heading_color, body_color,
+    button_bg_color, button_text_color,
+    padding_top, padding_bottom, seal_max_width,
+    modal_bg_color, modal_text_color,
+    check_icon_color, exclude_panel_bg, exclude_icon_color,
+    heading_size
+{%- endcomment -%}
+
+<style>
+  {{ settings.text_font | font_face: font_display: 'swap' }}
+  {%- if settings.text_font.bold_variant -%}
+    {{ settings.text_font.bold_variant | font_face: font_display: 'swap' }}
+  {%- endif -%}
+
+  [data-section-id="{{ section_id }}"].cs-section,
+  .cs-modal[data-section-id="{{ section_id }}"] {
+    --cs-heading: {{ heading_color }};
+    --cs-body: {{ body_color }};
+    --cs-btn-bg: {{ button_bg_color }};
+    --cs-btn-text: {{ button_text_color }};
+    --cs-modal-bg: {{ modal_bg_color }};
+    --cs-modal-text: {{ modal_text_color }};
+    --cs-check-icon: {{ check_icon_color }};
+    --cs-exclude-bg: {{ exclude_panel_bg }};
+    --cs-exclude-icon: {{ exclude_icon_color }};
+    --cs-seal-max: {{ seal_max_width }}px;
+    --cs-card-bg: {{ card_bg_color | default: '#F1EFE8' }};
+    --cs-card-radius: {{ card_radius | default: 8 }}px;
+    font-family: "{{ body_font | default: 'BaiJamjuree-Regular' }}", sans-serif;
+  }
+
+  /* Zero out Shopify wrapper padding injected by theme .section rules.
+     Works even if schema "class" reverts to "section" mid-session. */
+  .shopify-section:has(> [data-section-id="{{ section_id }}"]) {
+    padding: 0 !important;
+  }
+
+  /* ===== Section (front) ===== */
+  [data-section-id="{{ section_id }}"].cs-section {
+    box-sizing: border-box;
+    padding-block-start: var(--cs-pad-top, 96px);
+    padding-block-end: var(--cs-pad-bot, 96px);
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    margin: 0;
+  }
+  @media (max-width: 767px) {
+    [data-section-id="{{ section_id }}"].cs-section {
+      padding-block-start: calc(var(--cs-pad-top, 96px) * 0.4);
+      padding-block-end: calc(var(--cs-pad-bot, 96px) * 0.4);
+    }
+  }
+  [data-section-id="{{ section_id }}"] .cs-section__inner {
+    max-width: 1100px;
+    margin: 0 20px;
+    padding: 56px 40px;
+    text-align: center;
+    color: var(--cs-body);
+    background: var(--cs-card-bg);
+    border-radius: var(--cs-card-radius);
+    box-sizing: border-box;
+  }
+  @media (min-width: 1140px) {
+    [data-section-id="{{ section_id }}"] .cs-section__inner {
+      margin: 0 auto;
+    }
+  }
+  @media (max-width: 767px) {
+    [data-section-id="{{ section_id }}"] .cs-section__inner {
+      margin: 0 16px;
+      padding: 36px 20px;
+    }
+  }
+  [data-section-id="{{ section_id }}"] .cs-section__header {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  [data-section-id="{{ section_id }}"] .cs-section__seal {
+    order: -1;
+    justify-self: end;
+    margin: 0;
+  }
+  @media (max-width: 767px) {
+    [data-section-id="{{ section_id }}"] .cs-section__header {
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    [data-section-id="{{ section_id }}"] .cs-section__seal {
+      width: clamp(80px, 22vw, 110px);
+    }
+  }
+  [data-section-id="{{ section_id }}"] .cs-section__heading {
+    font-family: "{{ heading_font | default: 'Kento-Bold' }}", sans-serif !important;
+    color: var(--cs-heading);
+    font-size: {{ heading_size | default: 56 }}px;
+    line-height: 1.05;
+    margin: 0;
+    font-weight: 400;
+  }
+  @media (max-width: 767px) {
+    [data-section-id="{{ section_id }}"] .cs-section__heading {
+      font-size: calc({{ heading_size | default: 56 }}px * 0.7);
+    }
+  }
+  [data-section-id="{{ section_id }}"] .cs-section__seal {
+    width: var(--cs-seal-max);
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  /* override placement to top-right above heading (handled in .cs-section__header rules above) */
+  [data-section-id="{{ section_id }}"] .cs-section__body {
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 540px;
+    margin: 0 auto 28px;
+    color: var(--cs-body);
+  }
+  [data-section-id="{{ section_id }}"] .cs-section__body p { margin: 0; }
+  [data-section-id="{{ section_id }}"] .cs-section__cta {
+    display: inline-block;
+    background: var(--cs-btn-bg);
+    color: var(--cs-btn-text);
+    border: 0;
+    padding: 16px 32px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    transition: opacity 0.15s ease;
+  }
+  [data-section-id="{{ section_id }}"] .cs-section__cta:hover,
+  [data-section-id="{{ section_id }}"] .cs-section__cta:focus-visible {
+    opacity: 0.85;
+  }
+
+  /* ===== Modal ===== */
+  .cs-modal[data-section-id="{{ section_id }}"] {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    font-family: "{{ body_font | default: 'BaiJamjuree-Regular' }}", sans-serif;
+    color: var(--cs-modal-text);
+  }
+  .cs-modal[data-section-id="{{ section_id }}"].is-open { display: flex; }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+  }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__panel {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    max-height: calc(100vh - 48px);
+    background: var(--cs-modal-bg);
+    box-sizing: border-box;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
+    padding: 48px 48px 40px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+    animation: cs-modal-in 200ms ease-out;
+  }
+  @keyframes cs-modal-in {
+    from { transform: scale(0.96); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__panel { animation: none; }
+  }
+  /* Mobile: bottom-sheet with slide-up/down */
+  @media (max-width: 767px) {
+    .cs-modal[data-section-id="{{ section_id }}"] {
+      padding: max(72px, calc(env(safe-area-inset-top) + 60px)) 0 0 0;
+      align-items: flex-end;
+    }
+    .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__panel {
+      max-width: 100%;
+      max-height: 100%;
+      height: 100%;
+      border-radius: 20px 20px 0 0;
+      padding: 36px 24px 32px;
+      animation: cs-modal-slide-up 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    @keyframes cs-modal-slide-up {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    /* Keep modal visible while playing the closing animation */
+    .cs-modal[data-section-id="{{ section_id }}"][data-cs-closing="true"] {
+      display: flex !important;
+    }
+    .cs-modal[data-section-id="{{ section_id }}"][data-cs-closing="true"] .cs-modal__panel {
+      animation: cs-modal-slide-down 240ms cubic-bezier(0.4, 0, 1, 1) forwards;
+    }
+    @keyframes cs-modal-slide-down {
+      from { transform: translateY(0); }
+      to { transform: translateY(100%); }
+    }
+  }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    background: #160000;
+    color: #ffffff;
+    border: 0;
+    border-radius: 99px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    z-index: 10;
+    transition: opacity 0.2s ease;
+  }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__close:hover,
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__close:focus-visible {
+    opacity: 0.75;
+  }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__heading {
+    font-family: "{{ modal_heading_font | default: 'BaiJamjuree-SemiBold' }}", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 0 0 16px;
+  }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__intro {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 0 24px;
+  }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__intro p { margin: 0 0 12px; }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__intro p:last-child { margin: 0; }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__checks {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-check__icon {
+    flex: 0 0 22px;
+    color: var(--cs-check-icon);
+    line-height: 0;
+    margin-top: 1px;
+  }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-check__text p { margin: 0; }
+
+  /* Exclude panel */
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__exclude {
+    background: var(--cs-exclude-bg);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__exclude-heading {
+    font-family: "{{ modal_heading_font | default: 'BaiJamjuree-SemiBold' }}", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 16px;
+  }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__exclude-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+    row-gap: 10px;
+  }
+  @media (min-width: 768px) {
+    .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__exclude-list {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-exclude {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    line-height: 1.3;
+  }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-exclude__icon {
+    flex: 0 0 18px;
+    color: var(--cs-exclude-icon);
+    line-height: 0;
+  }
+
+  /* Force Bai Jamjuree on all descendants except the section heading (Kento-Bold) */
+  [data-section-id="{{ section_id }}"].cs-section,
+  [data-section-id="{{ section_id }}"].cs-section *,
+  .cs-modal[data-section-id="{{ section_id }}"],
+  .cs-modal[data-section-id="{{ section_id }}"] * {
+    font-family: "{{ body_font | default: 'BaiJamjuree-Regular' }}", sans-serif;
+  }
+  [data-section-id="{{ section_id }}"] .cs-section__heading {
+    font-family: "{{ heading_font | default: 'Kento-Bold' }}", sans-serif !important;
+  }
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__heading,
+  .cs-modal[data-section-id="{{ section_id }}"] .cs-modal__exclude-heading {
+    font-family: "{{ modal_heading_font | default: 'BaiJamjuree-SemiBold' }}", sans-serif;
+  }
+
+  /* Hide Intercom chat launcher while our modal is open */
+  body.cs-modal-open .intercom-lightweight-app,
+  body.cs-modal-open .intercom-lightweight-app-launcher,
+  body.cs-modal-open #intercom-container,
+  body.cs-modal-open .intercom-launcher,
+  body.cs-modal-open .intercom-launcher-frame,
+  body.cs-modal-open iframe[name="intercom-launcher-frame"],
+  body.cs-modal-open iframe[name="intercom-frame"],
+  body.cs-modal-open .intercom-namespace { display: none !important; }
+</style>

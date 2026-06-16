@@ -56,6 +56,7 @@
           "type": "product",
           "settings": {
             "image": "shopify://shop_images/Frame_2_1_605b7743-af8c-43b7-a1b8-f237b8014c02.png",
+            "image_position": "center center",
             "rank": 1,
             "title": "Scentech Cold Air Diffuser",
             "badge_text": "Beste keuze",
@@ -86,6 +87,7 @@
           "type": "product",
           "settings": {
             "image": "shopify://shop_images/1_1b5f96e4-4fbb-444b-8ad0-86b87b1bc83b.png",
+            "image_position": "center center",
             "rank": 2,
             "title": "Professioneel HVAC-geursysteem",
             "badge_text": "",
@@ -116,6 +118,7 @@
           "type": "product",
           "settings": {
             "image": "shopify://shop_images/2_6bf0832c-a368-4872-8a80-7a7612885776.png",
+            "image_position": "center center",
             "rank": 3,
             "title": "Ultrasone diffuser",
             "badge_text": "",
@@ -146,6 +149,7 @@
           "type": "product",
           "settings": {
             "image": "shopify://shop_images/3_f50a8c06-0d07-4dec-b7e1-fa67709331a7.png",
+            "image_position": "center center",
             "rank": 4,
             "title": "Kleine plug-in diffusers",
             "badge_text": "",
@@ -181,7 +185,8 @@
       ],
       "settings": {
         "heading": "",
-        "intro": "Als echte hotelliefhebber geniet ik enorm van de luxe en sfeer van een mooi hotel. Tijdens mijn vele verblijven viel me telkens weer op hoe aangenaam het daar rook — een subtiele, luxe geur die direct een gevoel van rust en comfort oproept. Thuis lukte het me maar niet om datzelfde gevoel echt te creëren.Die nieuwsgierigheid groeide uit tot een zoektocht. Ik ben me gaan verdiepen in de verschillende manieren waarop je een huis langdurig en gelijkmatig lekker kunt laten ruiken. Daarbij heb ik uitgebreid onderzoek gedaan en allerlei systemen getest: van eenvoudige plug-in diffusers tot ultrasone diffusers en professionele geurverspreiding via HVAC-systemen.Uiteindelijk ontdekte ik dat vooral cold-air diffusion technologie het meest effectief is. Dit is dezelfde techniek die veel luxe hotels gebruiken om geur op een subtiele en constante manier door een ruimte of ventilatiesysteem te verspreiden.Op deze vergelijkingpagina bekijken we de belangrijkste verschillen tussen cold-air diffusion HVAC-systemen, ultrasone diffusers en warmtegestuurde plug-in diffusers.",
+        "intro": "",
+        "body_text": "<p>Als echte hotelliefhebber geniet ik enorm van de luxe en sfeer van een mooi hotel. Tijdens mijn vele verblijven viel me telkens weer op hoe aangenaam het daar rook — een subtiele, luxe geur die direct een gevoel van rust en comfort oproept. Thuis lukte het me maar niet om datzelfde gevoel echt te creëren.Die nieuwsgierigheid groeide uit tot een zoektocht. Ik ben me gaan verdiepen in de verschillende manieren waarop je een huis langdurig en gelijkmatig lekker kunt laten ruiken. Daarbij heb ik uitgebreid onderzoek gedaan en allerlei systemen getest: van eenvoudige plug-in diffusers tot ultrasone diffusers en professionele geurverspreiding via HVAC-systemen.Uiteindelijk ontdekte ik dat vooral cold-air diffusion technologie het meest effectief is. Dit is dezelfde techniek die veel luxe hotels gebruiken om geur op een subtiele en constante manier door een ruimte of ventilatiesysteem te verspreiden.Op deze vergelijkingpagina bekijken we de belangrijkste verschillen tussen cold-air diffusion HVAC-systemen, ultrasone diffusers en warmtegestuurde plug-in diffusers.</p>",
         "color_bg": "#ffffff",
         "color_text": "#231f20",
         "color_accent": "#ffb74a",

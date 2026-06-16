@@ -1,0 +1,212 @@
+{%- comment -%}
+  Getting Started styles
+  Params: section_id, background_color, text_color, arrow_color,
+          cta_bg_color, cta_text_color, padding_top, padding_bottom,
+          heading_size, step_heading_size, step_desc_size,
+          heading_font, step_heading_font, step_desc_font,
+          image_size_mobile, image_size_desktop, image_radius,
+          arrow_size_mobile, arrow_size_desktop
+{%- endcomment -%}
+
+{%- assign arrow_mobile_h = arrow_size_mobile | default: 45 -%}
+{%- assign arrow_mobile_w = arrow_mobile_h | times: 0.4 -%}
+{%- assign arrow_desktop_w = arrow_size_desktop | default: 64 -%}
+{%- assign arrow_desktop_h = arrow_desktop_w | times: 0.375 -%}
+{%- assign arrow_desktop_half_h = arrow_desktop_h | divided_by: 2.0 -%}
+
+<style>
+  {{ settings.text_font | font_face: font_display: 'swap' }}
+  {%- if settings.text_font.bold_variant -%}
+    {{ settings.text_font.bold_variant | font_face: font_display: 'swap' }}
+  {%- endif -%}
+
+  /* Zero out Shopify wrapper padding injected by theme .section rules.
+     Works even if schema "class" reverts to "section" mid-session. */
+  .shopify-section:has(> [data-section-id="{{ section_id }}"]) {
+    padding: 0 !important;
+  }
+
+  /* Mobile defaults: full-bleed background on the section itself */
+  [data-section-id="{{ section_id }}"].gs-section {
+    padding-top: var(--gs-pad-top, {{ padding_top | default: 24 }}px);
+    padding-bottom: var(--gs-pad-bot, {{ padding_bottom | default: 24 }}px);
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    background: {{ background_color | default: '#fcfbf4' }};
+    color: {{ text_color | default: '#160000' }};
+  }
+
+  [data-section-id="{{ section_id }}"] .gs-section__inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 16px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  [data-section-id="{{ section_id }}"].is-visible .gs-section__inner {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  [data-section-id="{{ section_id }}"] .gs-section__heading {
+    font-family: "{{ heading_font | default: 'Kento-Bold' }}", sans-serif !important;
+    font-weight: 400;
+    color: {{ text_color | default: '#160000' }};
+    font-size: calc({{ heading_size | default: 48 }}px * 0.7);
+    line-height: 1.1;
+    margin: 0 0 32px;
+    text-align: center;
+  }
+
+  /* ===== Steps container ===== */
+  [data-section-id="{{ section_id }}"] .gs-steps {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* ===== Single step (mobile: image-left + text-right) ===== */
+  [data-section-id="{{ section_id }}"] .gs-step {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+  [data-section-id="{{ section_id }}"] .gs-step__media {
+    flex: 0 0 28%;
+    max-width: {{ image_size_mobile | default: 140 }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  [data-section-id="{{ section_id }}"] .gs-step__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: {{ image_radius | default: 0 }}px;
+  }
+  [data-section-id="{{ section_id }}"] .gs-step__body {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  [data-section-id="{{ section_id }}"] .gs-step__heading {
+    font-family: "{{ step_heading_font | default: 'BaiJamjuree-SemiBold' }}", sans-serif !important;
+    font-weight: 600;
+    color: {{ text_color | default: '#160000' }};
+    font-size: {{ step_heading_size | default: 20 }}px;
+    line-height: 1.2;
+    margin: 0 0 8px;
+  }
+  [data-section-id="{{ section_id }}"] .gs-step__desc {
+    font-family: "{{ step_desc_font | default: 'BaiJamjuree-Regular' }}", sans-serif;
+    color: {{ text_color | default: '#160000' }};
+    opacity: 0.85;
+    font-size: {{ step_desc_size | default: 15 }}px;
+    line-height: 1.5;
+  }
+  [data-section-id="{{ section_id }}"] .gs-step__desc p { margin: 0; }
+  [data-section-id="{{ section_id }}"] .gs-step__desc p + p { margin-top: 8px; }
+
+  /* ===== Arrow between steps ===== */
+  [data-section-id="{{ section_id }}"] .gs-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: {{ arrow_color | default: '#160000' }};
+    padding: 8px 0 8px 6%;
+  }
+  [data-section-id="{{ section_id }}"] .gs-arrow__svg { display: block; }
+  [data-section-id="{{ section_id }}"] .gs-arrow__svg--desktop { display: none; }
+  [data-section-id="{{ section_id }}"] .gs-arrow__svg--mobile {
+    width: {{ arrow_mobile_w }}px;
+    height: {{ arrow_mobile_h }}px;
+  }
+
+  /* ===== CTA ===== */
+  [data-section-id="{{ section_id }}"] .gs-cta-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+  }
+  [data-section-id="{{ section_id }}"] .gs-cta {
+    display: inline-block;
+    background: {{ cta_bg_color | default: '#160000' }};
+    color: {{ cta_text_color | default: '#ffffff' }};
+    padding: 14px 36px;
+    border-radius: var(--rounded-button);
+    text-decoration: none;
+    font-family: "BaiJamjuree-Regular", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: opacity 0.15s ease;
+  }
+  [data-section-id="{{ section_id }}"] .gs-cta:hover,
+  [data-section-id="{{ section_id }}"] .gs-cta:focus-visible { opacity: 0.85; }
+
+  /* ===== Desktop: section is transparent, inner becomes a contained card ===== */
+  @media (min-width: 750px) {
+    [data-section-id="{{ section_id }}"].gs-section {
+      background: transparent;
+      padding-inline-start: 32px;
+      padding-inline-end: 32px;
+    }
+
+    [data-section-id="{{ section_id }}"] .gs-section__inner {
+      background: {{ background_color | default: '#fcfbf4' }};
+      border-radius: var(--rounded-lg);
+      max-width: 1280px;
+      padding: 56px 48px;
+    }
+
+    [data-section-id="{{ section_id }}"] .gs-section__heading {
+      font-size: {{ heading_size | default: 48 }}px;
+      margin: 0 0 48px;
+    }
+
+    [data-section-id="{{ section_id }}"] .gs-steps {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 16px;
+    }
+    [data-section-id="{{ section_id }}"] .gs-step {
+      flex: 1 1 0;
+      max-width: 320px;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 24px;
+    }
+    [data-section-id="{{ section_id }}"] .gs-step__media {
+      flex: 0 0 auto;
+      max-width: {{ image_size_desktop | default: 200 }}px;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+    }
+    [data-section-id="{{ section_id }}"] .gs-step__body { width: 100%; }
+
+    [data-section-id="{{ section_id }}"] .gs-arrow {
+      flex: 0 0 auto;
+      padding: 0;
+      align-self: flex-start;
+      margin-top: calc({{ image_size_desktop | default: 200 }}px / 2 - {{ arrow_desktop_half_h }}px);
+    }
+    [data-section-id="{{ section_id }}"] .gs-arrow__svg--mobile { display: none; }
+    [data-section-id="{{ section_id }}"] .gs-arrow__svg--desktop {
+      display: block;
+      width: {{ arrow_desktop_w }}px;
+      height: {{ arrow_desktop_h }}px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-section-id="{{ section_id }}"] .gs-section__inner {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

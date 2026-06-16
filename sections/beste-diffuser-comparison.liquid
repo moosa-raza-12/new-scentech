@@ -15,12 +15,12 @@
 
   #bdc-{{ section.id }} .bdc-wrapper {
     background: var(--color-bg);
-    padding: clamp(48px, 7vw, 96px) 24px;
+    padding: clamp(20px, 3vw, 40px) 24px;
     font-family: var(--font-body);
   }
 
   #bdc-{{ section.id }} .bdc-inner {
-    max-width: 860px;
+    max-width: 1020px;
     margin: 0 auto;
   }
 
@@ -46,14 +46,32 @@
     max-width: 640px;
   }
 
+  #bdc-{{ section.id }} .bdc-body-text {
+    font-size: 15px;
+    color: var(--color-text);
+    opacity: 0.75;
+    line-height: 1.7;
+    margin: 0 auto 40px;
+    max-width: 720px;
+  }
+
+  #bdc-{{ section.id }} .bdc-body-text p {
+    margin: 0 0 16px 0;
+  }
+
+  #bdc-{{ section.id }} .bdc-body-text p:last-child {
+    margin-bottom: 0;
+  }
+
   /* Item card */
   #bdc-{{ section.id }} .bdc-item {
     background: #ffffff;
     border: 1px solid rgba(35, 31, 32, 0.10);
     border-radius: 8px;
-    padding: 28px 28px 24px;
+    padding: 0;
     margin-bottom: 20px;
     box-shadow: 0 2px 8px rgba(35, 31, 32, 0.04);
+    overflow: hidden;
   }
 
   #bdc-{{ section.id }} .bdc-item--winner {
@@ -64,30 +82,30 @@
 
   #bdc-{{ section.id }} .bdc-item__inner {
     display: flex;
-    gap: 28px;
+    gap: 0;
     align-items: stretch;
   }
 
   #bdc-{{ section.id }} .bdc-item__image {
-    flex: 0 0 200px;
-    width: 200px;
-    min-height: 100%;
+    flex: 0 0 460px;
+    width: 460px;
+    aspect-ratio: 1 / 1;
+    align-self: flex-start;
+    overflow: hidden;
   }
 
   #bdc-{{ section.id }} .bdc-item__image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 6px;
     display: block;
   }
 
   #bdc-{{ section.id }} .bdc-item__image-placeholder {
     width: 100%;
     height: 100%;
-    min-height: 200px;
+    min-height: 320px;
     background: linear-gradient(160deg, #F5EFE8 0%, #EAE0D4 100%);
-    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -100,6 +118,8 @@
   #bdc-{{ section.id }} .bdc-item__content {
     flex: 1;
     min-width: 0;
+    padding: 24px 28px;
+    border-left: 1px solid rgba(35, 31, 32, 0.08);
   }
 
   /* Rank row */
@@ -176,6 +196,10 @@
     opacity: 0.65;
     line-height: 1.65;
     margin: 0 0 20px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   /* Criteria */
@@ -241,20 +265,26 @@
     #bdc-{{ section.id }} .bdc-wrapper {
       padding: 40px 16px;
     }
-    #bdc-{{ section.id }} .bdc-item {
-      padding: 20px 16px;
-    }
     #bdc-{{ section.id }} .bdc-item__inner {
       flex-direction: column;
     }
     #bdc-{{ section.id }} .bdc-item__image {
       flex: none;
       width: 100%;
+      aspect-ratio: 16 / 9;
+      align-self: auto;
     }
     #bdc-{{ section.id }} .bdc-item__image img,
     #bdc-{{ section.id }} .bdc-item__image-placeholder {
       width: 100%;
+      height: auto;
       aspect-ratio: 16 / 9;
+      min-height: unset;
+    }
+    #bdc-{{ section.id }} .bdc-item__content {
+      padding: 20px 16px;
+      border-left: none;
+      border-top: 1px solid rgba(35, 31, 32, 0.08);
     }
     #bdc-{{ section.id }} .bdc-criteria__note {
       display: none;
@@ -285,24 +315,21 @@
         </div>
       {%- endif -%}
 
+      {%- if section.settings.body_text != blank -%}
+        <div class="bdc-body-text">{{ section.settings.body_text }}</div>
+      {%- endif -%}
+
       {%- for block in section.blocks -%}
         {%- assign rank = block.settings.rank -%}
         <div class="bdc-item {% if rank == 1 %}bdc-item--winner{% endif %}" {{ block.shopify_attributes }}>
-
-          <!-- Rang + badge (boven de image+content rij) -->
-          <div class="bdc-item__top">
-            <span class="bdc-rank">#{{ rank }}</span>
-            {%- if block.settings.badge_text != blank -%}
-              <span class="bdc-badge">{{ block.settings.badge_text }}</span>
-            {%- endif -%}
-          </div>
 
           <div class="bdc-item__inner">
 
           <!-- Afbeelding -->
           <div class="bdc-item__image">
             {%- if block.settings.image != blank -%}
-              {{ block.settings.image | image_url: width: 400 | image_tag: alt: block.settings.title, loading: 'lazy' }}
+              {%- assign img_position_style = 'object-position: ' | append: block.settings.image_position -%}
+              {{ block.settings.image | image_url: width: 640 | image_tag: alt: block.settings.title, loading: 'lazy', style: img_position_style }}
             {%- else -%}
               <div class="bdc-item__image-placeholder">Geen foto</div>
             {%- endif -%}
@@ -310,6 +337,14 @@
 
           <!-- Content -->
           <div class="bdc-item__content">
+
+          <!-- Rang + badge -->
+          <div class="bdc-item__top">
+            <span class="bdc-rank">#{{ rank }}</span>
+            {%- if block.settings.badge_text != blank -%}
+              <span class="bdc-badge">{{ block.settings.badge_text }}</span>
+            {%- endif -%}
+          </div>
 
           <!-- Titel + eindscore -->
           <div class="bdc-item__title-row">
@@ -388,6 +423,11 @@
       "default": "We hebben de vier populairste typen aroma diffusers gerangschikt op vijf criteria die er voor thuisgebruik écht toe doen."
     },
     {
+      "type": "richtext",
+      "id": "body_text",
+      "label": "Introductietekst (uitgebreid)"
+    },
+    {
       "type": "header",
       "content": "Kleuren"
     },
@@ -425,6 +465,23 @@
           "type": "image_picker",
           "id": "image",
           "label": "Productafbeelding"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Afbeelding positie",
+          "default": "center center",
+          "options": [
+            { "value": "center center", "label": "Midden" },
+            { "value": "center top", "label": "Boven" },
+            { "value": "center bottom", "label": "Onder" },
+            { "value": "left center", "label": "Links" },
+            { "value": "right center", "label": "Rechts" },
+            { "value": "left top", "label": "Links boven" },
+            { "value": "right top", "label": "Rechts boven" },
+            { "value": "left bottom", "label": "Links onder" },
+            { "value": "right bottom", "label": "Rechts onder" }
+          ]
         },
         {
           "type": "header",

@@ -26,7 +26,7 @@
 }
 
   .kv-progress-footer2 {
-    background: rgba(0, 0, 0, 0.10);
+    background: {{ section.settings.color_diffuser_progress_footer2_bg | default: '#000000' | color_modify: 'alpha', 0.10 }};
     padding: 10px 12px;
     text-align: center;
     /* margin: 8px -16px -12px; */
@@ -50,7 +50,7 @@
       left: 0;
     }
 
-    .kv-bundle-product-card:has(.kv-bundle-product-bundle-tag) {
+    .kv-bundle-product-card.kv-bundle-active {
       padding-bottom: 42px;
     }
 
@@ -179,7 +179,7 @@
 
   .scent-badge {
     background: {{ section.settings.badge_bg }};
-    color: #160000;
+    color: {{ section.settings.color_diffuser_scent_badge_text | default: '#160000' }};
     padding: 6px 12px;
     border-radius: 10px;
     font-size: 14px;
@@ -196,14 +196,14 @@
   }
 
   .cds-highlights p {
-    color: #17561F;
+    color: {{ section.settings.color_diffuser_highlight_text | default: '#17561F' }};
     font-size: 12px;
     font-weight: 600;
     font-family: "Bai Jamjuree";
   }
 
   price-value {
-    color: #17561F;
+    color: {{ section.settings.color_diffuser_highlight_text | default: '#17561F' }};
     font-size: 12px;
     font-weight: 600;
   }

@@ -117,7 +117,7 @@ the underlying logic of the menu.
 
                   <li>
                     {%- if link.levels == 0 and mega_menu_block == '' -%}
-                      <a href="{{ link.url }}" class="bold link-faded-reverse" {% if link.current %}aria-current="page"{% endif %} id="{% if link.title == 'MOTHERSDAY SALE' %}Highlight-Menu-Link{% elsif link.title == 'MOEDERDAG SALE' %}Second-Highlight-Menu-Link{% endif %}">{{- link.title -}}</a>
+                      <a href="{{ link.url }}" class="bold link-faded-reverse" {% if link.current %}aria-current="page"{% endif %} id="{% if link.title == 'FATHERS DAY SALE' %}Highlight-Menu-Link{% elsif link.title == 'VADERDAG SALE' %}Second-Highlight-Menu-Link{% endif %}">{{- link.title -}}</a>
 
                     {%- else -%}
                       {%- if mega_menu_block != '' -%}

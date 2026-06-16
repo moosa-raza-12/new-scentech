@@ -284,7 +284,6 @@
     font-size: 12px;
   }
   .cds-highlight-text {
-    color: {{ section.settings.highlight_text_color | default: '#5c220a' }};
     font-size: 12px;
     font-weight: 400;
   }
@@ -581,13 +580,13 @@
               {% assign cds_highlight_overflow_text = section.settings.cds_highlight_overflow_text | default: '<b>Spring:</b> Pay only <b>[price]</b> after adding 2 scents!' %}
               {% assign cds_highlight_overflow_text = cds_highlight_overflow_text | replace: '[price]', new_price_display %}
               <div class="cds-highlight">
-                <p class="cds-highlight-text">{{ cds_highlight_overflow_text }}</p>
+                <p class="cds-highlight-text" style="color: {{ block.settings.highlight_text_color | default: '#5c220a' }};">{{ cds_highlight_overflow_text }}</p>
               </div>
             {% else %}
               {% assign cds_highlight_default_text = section.settings.cds_highlight_default_text | default: '<b>Spring:</b> Pay only <b>[price]</b> for your diffuser!' %}
               {% assign cds_highlight_default_text = cds_highlight_default_text | replace: '[price]', new_price_display %}
               <div class="cds-highlight">
-                <p class="cds-highlight-text">{{ cds_highlight_default_text }}</p>
+                <p class="cds-highlight-text" style="color: {{ block.settings.highlight_text_color | default: '#5c220a' }};">{{ cds_highlight_default_text }}</p>
               </div>
             {% endif %}
 
@@ -754,13 +753,13 @@
                     {% assign cds_highlight_overflow_text = section.settings.cds_highlight_overflow_text | default: '<b>Spring:</b> Pay only <b>[price]</b> after adding 2 scents!' %}
                     {% assign cds_highlight_overflow_text = cds_highlight_overflow_text | replace: '[price]', new_price_display %}
                     <div class="cds-highlight">
-                      <p class="cds-highlight-text">{{ cds_highlight_overflow_text }}</p>
+                      <p class="cds-highlight-text" style="color: {{ block.settings.highlight_text_color | default: '#5c220a' }};">{{ cds_highlight_overflow_text }}</p>
                     </div>
                   {% else %}
                     {% assign cds_highlight_default_text = section.settings.cds_highlight_default_text | default: '<b>Spring:</b> Pay only <b>[price]</b> for your diffuser!' %}
                     {% assign cds_highlight_default_text = cds_highlight_default_text | replace: '[price]', new_price_display %}
                     <div class="cds-highlight">
-                      <p class="cds-highlight-text">{{ cds_highlight_default_text }}</p>
+                      <p class="cds-highlight-text" style="color: {{ block.settings.highlight_text_color | default: '#5c220a' }};">{{ cds_highlight_default_text }}</p>
                     </div>
                   {% endif %}
                 {% endif %}
@@ -916,7 +915,7 @@
           content.style.display = 'none';
           trigger.setAttribute('aria-expanded', 'false');
           heading.textContent = closedHeading;
-          closeIcon.style.display = 'block';
+          closeIcon.style.display = 'flex';
           openIcon.style.display = 'none';
         } else {
           content.style.maxHeight = 'fit-content';
@@ -924,7 +923,7 @@
           trigger.setAttribute('aria-expanded', 'true');
           heading.textContent = openHeading;
           closeIcon.style.display = 'none';
-          openIcon.style.display = 'block';
+          openIcon.style.display = 'flex';
         }
       });
     }

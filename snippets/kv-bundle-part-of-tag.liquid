@@ -15,9 +15,17 @@
       (falls back to "Part of").
 {%- endcomment -%}
 
+{%- comment -%}
+  Note: 'interrupter' is the bundle interrupter type in new-/v2-/diffuser-kv-bundle
+  sections; 'interrupter_bundle' is the equivalent type in kv-bundle-section.liquid.
+{%- endcomment -%}
 {%- assign kv_part_of_bundle_name = '' -%}
 {%- for kv_intr_block in section.blocks -%}
-  {%- if kv_intr_block.type == 'interrupter' and kv_intr_block.settings.enabled -%}
+  {%- assign kv_intr_is_bundle = false -%}
+  {%- if kv_intr_block.type == 'interrupter' or kv_intr_block.type == 'interrupter_bundle' -%}
+    {%- assign kv_intr_is_bundle = true -%}
+  {%- endif -%}
+  {%- if kv_intr_is_bundle and kv_intr_block.settings.enabled -%}
     {%- assign kv_intr_count = 0 -%}
     {%- if kv_intr_block.settings.cta_product_1 != blank %}{% assign kv_intr_count = kv_intr_count | plus: 1 %}{% endif -%}
     {%- if kv_intr_block.settings.cta_product_2 != blank %}{% assign kv_intr_count = kv_intr_count | plus: 1 %}{% endif -%}

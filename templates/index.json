@@ -15,14 +15,14 @@
         "heading_7CgTq9": {
           "type": "heading",
           "settings": {
-            "text": "MOTHERSDAY SALE",
+            "text": "FATHERS DAY SALE",
             "heading_tag": "h3"
           }
         },
         "richtext_fRxG3D": {
           "type": "richtext",
           "settings": {
-            "content": "<p>Get <strong>free gifts </strong>at 3, 5 and 9 scents to celebrate the woman who has given you the gift of  life.</p>"
+            "content": "<p>Get <strong>free gifts </strong>at 3, 5 and 9 scents to make your father feel special this summer.</p>"
           }
         },
         "button_b4TieR": {
@@ -56,48 +56,377 @@
         "overlay_opacity": 0
       }
     },
-    "featured_collection_ErViJa": {
-      "type": "featured-collection",
-      "custom_css": [
-        ".product-card__quick-buy {display: none !important;}"
+    "clean_standards_9HBLWE": {
+      "type": "clean-standards",
+      "blocks": {
+        "check_item_yeEmxG": {
+          "type": "check_item",
+          "settings": {
+            "text": "<p>Safe for everyday use when used as directed</p>"
+          }
+        },
+        "check_item_JLTGQa": {
+          "type": "check_item",
+          "settings": {
+            "text": "<p>Cats and dogs: designed for homes and pets</p>"
+          }
+        },
+        "check_item_V7a7Rf": {
+          "type": "check_item",
+          "settings": {
+            "text": "<p>Homes with kids: evaluated for shared family spaces</p>"
+          }
+        },
+        "check_item_rUAYwR": {
+          "type": "check_item",
+          "settings": {
+            "text": "<p>Cruelty-free: no animal testing</p>"
+          }
+        },
+        "exclude_item_zMzikE": {
+          "type": "exclude_item",
+          "settings": {
+            "text": "Parabens"
+          }
+        },
+        "exclude_item_6VgWp9": {
+          "type": "exclude_item",
+          "settings": {
+            "text": "Acetaldehyde"
+          }
+        },
+        "exclude_item_3wzYkz": {
+          "type": "exclude_item",
+          "settings": {
+            "text": "Diclorobenzene"
+          }
+        },
+        "exclude_item_QfYCGL": {
+          "type": "exclude_item",
+          "settings": {
+            "text": "Formaldehyde"
+          }
+        },
+        "exclude_item_z6pNKA": {
+          "type": "exclude_item",
+          "settings": {
+            "text": "Ethylhexanol"
+          }
+        },
+        "exclude_item_z8wiNF": {
+          "type": "exclude_item",
+          "settings": {
+            "text": "Methyl Pyrrolidone"
+          }
+        },
+        "exclude_item_z9CmdK": {
+          "type": "exclude_item",
+          "settings": {
+            "text": "Phthalates"
+          }
+        },
+        "exclude_item_T3REmn": {
+          "type": "exclude_item",
+          "settings": {
+            "text": "Propylene Glycol"
+          }
+        },
+        "exclude_item_Dwzqcj": {
+          "type": "exclude_item",
+          "settings": {
+            "text": "Styrene"
+          }
+        },
+        "exclude_item_kVWrND": {
+          "type": "exclude_item",
+          "settings": {
+            "text": "Animal Testing"
+          }
+        },
+        "exclude_item_zJDwye": {
+          "type": "exclude_item",
+          "settings": {
+            "text": "Dyes"
+          }
+        },
+        "exclude_item_NqT6Yz": {
+          "type": "exclude_item",
+          "settings": {
+            "text": "Gluten"
+          }
+        }
+      },
+      "block_order": [
+        "check_item_yeEmxG",
+        "check_item_JLTGQa",
+        "check_item_V7a7Rf",
+        "check_item_rUAYwR",
+        "exclude_item_zMzikE",
+        "exclude_item_6VgWp9",
+        "exclude_item_3wzYkz",
+        "exclude_item_QfYCGL",
+        "exclude_item_z6pNKA",
+        "exclude_item_z8wiNF",
+        "exclude_item_z9CmdK",
+        "exclude_item_T3REmn",
+        "exclude_item_Dwzqcj",
+        "exclude_item_kVWrND",
+        "exclude_item_zJDwye",
+        "exclude_item_NqT6Yz"
       ],
+      "name": "Clean standards",
       "settings": {
-        "collection": "",
-        "products": [
-          "smart-aroma-diffuser-2",
-          "smart-aroma-diffuser-pro",
-          "smart-aroma-diffuser",
-          "classic-charm",
-          "calming-lavender",
-          "dark-elixir",
-          "wild-blossom",
-          "pure-blossom",
-          "pure-nirvana",
-          "tea-whisper",
-          "garden-mist",
-          "endless-path",
-          "energize",
-          "winter-breeze",
-          "winter-breeze-copy"
-        ],
-        "full_width": true,
-        "stack_products": false,
-        "show_progress_bar": false,
-        "products_count": 50,
-        "products_per_row_mobile": "2",
-        "products_per_row_desktop": 4,
-        "subheading": "",
-        "title": "",
-        "content": "",
-        "link_url": "",
-        "link_text": "",
-        "background": "",
-        "background_gradient": "",
-        "text_color": "",
-        "heading_color": "",
-        "heading_gradient": "",
-        "product_card_background": "",
-        "product_card_text_color": ""
+        "heading": "Our clean standards",
+        "heading_size": 40,
+        "heading_font": "Kento-Regular",
+        "body": "<p>Our fragrance oils are IFRA-compliant and crafted from refined ingredients. Safe for you and your pets.</p>",
+        "body_font": "BaiJamjuree-Regular",
+        "button_text": "Our safety standards",
+        "seal_image": "shopify://shop_images/safebadge.webp",
+        "seal_max_width": 60,
+        "section_bg_color": "#ffffff",
+        "card_bg_color": "#ffffff",
+        "card_radius": 8,
+        "heading_color": "#160000",
+        "body_color": "#160000",
+        "button_bg_color": "#160000",
+        "button_text_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "modal_heading": "Clean and safe fragrances",
+        "modal_heading_font": "BaiJamjuree-SemiBold",
+        "modal_intro": "<p>Our commitment is to create clean, safe fragrances. ScenTech follows the strict safety standards set by the International Fragrance Association (IFRA), based on toxicological research and real-world exposure.</p>",
+        "modal_bg_color": "#ffffff",
+        "modal_text_color": "#160000",
+        "check_icon_color": "#928d6f",
+        "exclude_heading": "Our products don't include:",
+        "exclude_panel_bg": "#f1efe8",
+        "exclude_icon_color": "#160000"
+      }
+    },
+    "getting_started_Ldgn8a": {
+      "type": "getting-started",
+      "blocks": {
+        "step_RYrwjT": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/smart_diffuser_1_perspective_render_1.0.png",
+            "heading": "Select diffuser",
+            "description": "<p>From a cozy nook to your morning commute, we've got a diffuser for it.</p>"
+          }
+        },
+        "step_MxdBfy": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_h85ibqh85ibqh85i_1.png",
+            "heading": "Choose fragrances",
+            "description": "<p>Find your favorites with over 300 premium scents in the Marketplace.</p>"
+          }
+        },
+        "step_zfMg88": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_6102pf6102pf6102_1.png",
+            "heading": "Download the app",
+            "description": "<p>Customize intensity, switch between fragrances, and set schedules and timers.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "step_RYrwjT",
+        "step_MxdBfy",
+        "step_zfMg88"
+      ],
+      "name": "Getting started steps",
+      "settings": {
+        "heading": "What you'll need",
+        "background_color": "#f1efe8",
+        "text_color": "#160000",
+        "arrow_color": "#160000",
+        "padding_top": 44,
+        "padding_bottom": 44,
+        "heading_size": 32,
+        "heading_font": "Kento-Regular",
+        "step_heading_size": 15,
+        "step_heading_font": "BaiJamjuree-SemiBold",
+        "step_desc_size": 15,
+        "step_desc_font": "BaiJamjuree-Regular",
+        "image_size_mobile": 140,
+        "image_size_desktop": 200,
+        "image_radius": 4,
+        "show_cta": true,
+        "cta_text": "Get started",
+        "cta_link": "shopify://collections/diffusers-bundles",
+        "cta_bg_color": "#160000",
+        "cta_text_color": "#ffffff"
+      }
+    },
+    "room_diffuser_hotspots_zzRdDJ": {
+      "type": "room-diffuser-hotspots",
+      "blocks": {
+        "room_bQXM48": {
+          "type": "room",
+          "settings": {
+            "room_label": "Small rooms",
+            "product": "smart-aroma-diffuser",
+            "hotspot_x": 22,
+            "hotspot_y": 32,
+            "hotspot_icon_style": "pulse",
+            "hotspot_image": "shopify://shop_images/diffuser_image_no_bg_1.png",
+            "hotspot_size": 56,
+            "pill_product_name": "Smart Diffuser",
+            "modal_tags": "",
+            "modal_headline_override": "",
+            "modal_blurb_override": "",
+            "primary_cta_text_override": "Get it free with 5 scents",
+            "primary_cta_link_override": "shopify://collections/fall-sale",
+            "cta_text_override": "Learn more",
+            "cta_link_override": "shopify://products/smart-aroma-diffuser",
+            "notice_text_override": "",
+            "room_context_label_override": "Perfect for %room_label%"
+          }
+        },
+        "room_JL7w3e": {
+          "type": "room",
+          "settings": {
+            "room_label": "Medium spaces",
+            "product": "smart-aroma-diffuser-2",
+            "hotspot_x": 77,
+            "hotspot_y": 21,
+            "hotspot_icon_style": "pulse",
+            "hotspot_image": "shopify://shop_images/diffuser_image_no_bg_3.png",
+            "hotspot_size": 110,
+            "pill_product_name": "Smart Diffuser 2",
+            "modal_tags": "",
+            "modal_headline_override": "",
+            "modal_blurb_override": "",
+            "primary_cta_text_override": "Get it free with 7 scents",
+            "primary_cta_link_override": "shopify://collections/fall-sale",
+            "cta_text_override": "Learn more",
+            "cta_link_override": "shopify://products/smart-aroma-diffuser-2",
+            "notice_text_override": "",
+            "room_context_label_override": "Perfect for %room_label%"
+          }
+        },
+        "room_HxGYKL": {
+          "type": "room",
+          "settings": {
+            "room_label": "Large open spaces",
+            "product": "smart-aroma-diffuser-pro",
+            "hotspot_x": 72,
+            "hotspot_y": 75,
+            "hotspot_icon_style": "pulse",
+            "hotspot_image": "shopify://shop_images/diffuser_image_no_bg_2.png",
+            "hotspot_size": 136,
+            "pill_product_name": "Smart Diffuser Pro",
+            "modal_tags": "",
+            "modal_headline_override": "",
+            "modal_blurb_override": "",
+            "primary_cta_text_override": "Get it free with 9 scents",
+            "primary_cta_link_override": "shopify://collections/fall-sale",
+            "cta_text_override": "Learn more",
+            "cta_link_override": "shopify://products/smart-aroma-diffuser-pro",
+            "notice_text_override": "",
+            "room_context_label_override": "Perfect for %room_label%"
+          }
+        }
+      },
+      "block_order": [
+        "room_bQXM48",
+        "room_JL7w3e",
+        "room_HxGYKL"
+      ],
+      "name": "Room diffuser hotspots",
+      "settings": {
+        "heading": "Diffusers for every room",
+        "heading_size": 26,
+        "heading_font": "Kento-Bold",
+        "subheading": "<p>Every room deserves to smell amazing.</p>",
+        "subheading_font": "BaiJamjuree-Regular",
+        "background_image": "shopify://shop_images/scentech-home-sliced.jpg",
+        "max_image_width": 1200,
+        "section_background_color": "#ffffff",
+        "section_padding_top": 64,
+        "section_padding_bottom": 64,
+        "hotspot_color": "#160000",
+        "hotspot_pulse_enabled": true,
+        "room_label_color": "#160000",
+        "room_label_show": true,
+        "pill_room_size": 14,
+        "pill_product_size": 14,
+        "modal_backdrop_color": "#160000",
+        "modal_backdrop_opacity": 70,
+        "modal_panel_background": "#fcfbf4",
+        "modal_title_color": "#160000",
+        "modal_text_color": "#162518",
+        "modal_tag_background": "#f1efe8",
+        "modal_tag_text_color": "#162518",
+        "modal_room_context_background": "#162518",
+        "modal_room_context_text_color": "#fcfbf4",
+        "modal_cta_background": "#160000",
+        "modal_cta_text_color": "#fcfbf4",
+        "modal_spinner_color": "#162518",
+        "notice_text": "Gratis bij aankoop van 5 geuren",
+        "notice_show": true,
+        "primary_cta_text": "Krijg GRATIS bij 5 geuren",
+        "primary_cta_link": "",
+        "secondary_cta_text": "Bekijk diffuser",
+        "show_compare_link": true,
+        "compare_link_text": "Compare all 3 models",
+        "show_get_started": true,
+        "get_started_text": "Get started",
+        "get_started_link": "shopify://collections/diffusers-bundles"
+      }
+    },
+    "why_scentech_ckYUAJ": {
+      "type": "why-scentech",
+      "blocks": {
+        "card_UqDrXq": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/safe-for-pets-scentech.png",
+            "heading": "Non-toxic fragrances",
+            "description": "<p>Clean, premium ingredients crafted to be safe for the whole family—including pets.</p>"
+          }
+        },
+        "card_HdHKRR": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Email2_1_0b1cbeb1-9eb8-4d6c-8805-fa1debc6ded6.png",
+            "heading": "Smart scent control",
+            "description": "<p>Schedule and automate your scent experience without wasting fragrance.</p>"
+          }
+        },
+        "card_wzmCtG": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Frame_2_1_605b7743-af8c-43b7-a1b8-f237b8014c02.png",
+            "heading": "Hotel-quality scent",
+            "description": "<p>Powered by the same technology luxury hotels use — Scentech turn every room into a five-star escape.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_UqDrXq",
+        "card_HdHKRR",
+        "card_wzmCtG"
+      ],
+      "name": "Why ScenTech",
+      "settings": {
+        "heading": "Why thousands love ScenTech",
+        "heading_alignment": "center",
+        "section_bg_color": "#ffffff",
+        "card_bg_color": "#f1efe8",
+        "heading_color": "#160000",
+        "body_color": "#162518",
+        "padding_top": 52,
+        "padding_bottom": 52,
+        "heading_size": 30,
+        "heading_font": "Kento-Bold",
+        "card_heading_size": 15,
+        "card_heading_font": "Kento-Bold",
+        "card_desc_size": 15,
+        "card_desc_font": "BaiJamjuree-Regular"
       }
     },
     "image_link_blocks_Q9GR7j": {
@@ -238,6 +567,7 @@
         "richtext_WWRQkr",
         "button_hymkRy"
       ],
+      "disabled": true,
       "settings": {
         "full_width": true,
         "allow_transparent_header": false,
@@ -250,75 +580,6 @@
         "text_color": "#ffffff",
         "overlay_color": "#000000",
         "overlay_opacity": 30
-      }
-    },
-    "featured_collection_U7NKBw": {
-      "type": "featured-collection",
-      "custom_css": [
-        ".product-card__quick-buy {display: none !important;}"
-      ],
-      "settings": {
-        "collection": "",
-        "products": [
-          "smart-aroma-diffuser-pro",
-          "smart-aroma-diffuser"
-        ],
-        "full_width": true,
-        "stack_products": true,
-        "show_progress_bar": false,
-        "products_count": 3,
-        "products_per_row_mobile": "1",
-        "products_per_row_desktop": 2,
-        "subheading": "",
-        "title": "Get started",
-        "content": "",
-        "link_url": "",
-        "link_text": "",
-        "background": "",
-        "background_gradient": "",
-        "text_color": "",
-        "heading_color": "",
-        "heading_gradient": "",
-        "product_card_background": "",
-        "product_card_text_color": ""
-      }
-    },
-    "impact_text_iV39xg": {
-      "type": "impact-text",
-      "blocks": {
-        "item_pryRMt": {
-          "type": "item",
-          "settings": {
-            "title": "85%",
-            "subheading": "Of people are unhappy about the smell of their home. Let us help.",
-            "content": "<p>*The other 15% probably learned about diffusion technology.</p>",
-            "button_text": "Learn more about us",
-            "button_url": "shopify://pages/why-scentech",
-            "animate_impact_text": false,
-            "animate_impact_text_duration": 2
-          }
-        }
-      },
-      "block_order": [
-        "item_pryRMt"
-      ],
-      "custom_css": [
-        "h3 {font-size: 18px;}"
-      ],
-      "settings": {
-        "full_width": true,
-        "stack_mobile": true,
-        "text_alignment": "center",
-        "impact_text_style": "fill",
-        "text_divider": "none",
-        "impact_text_size_ratio": 1.5,
-        "background": "",
-        "background_gradient": "",
-        "heading_text_color": "#928d6f",
-        "heading_gradient": "",
-        "text_color": "",
-        "button_background": "",
-        "button_text_color": ""
       }
     },
     "testimonials_ridneC": {
@@ -457,6 +718,7 @@
         "testimonial_xbwwFT",
         "testimonial_wMbcKm"
       ],
+      "disabled": true,
       "custom_css": [
         "h2 {font-size: 25px;}"
       ],
@@ -476,40 +738,17 @@
         "testimonial_card_background": "",
         "testimonial_card_text_color": ""
       }
-    },
-    "177263733627857915": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_eac2cdb_qC7NHq": {
-          "type": "ai_gen_block_eac2cdb",
-          "settings": {
-            "button_text": "Shop now",
-            "button_link": "",
-            "button_background": "#160000",
-            "button_text_color": "#ffffff",
-            "button_hover_background": "#000000",
-            "button_hover_text_color": "#ffffff",
-            "button_border_radius": 4,
-            "desktop_width_percent": 100
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_eac2cdb_qC7NHq"
-      ],
-      "settings": {}
     }
   },
   "order": [
     "image_with_text_overlay_TN7NVh",
-    "featured_collection_ErViJa",
+    "clean_standards_9HBLWE",
+    "getting_started_Ldgn8a",
+    "room_diffuser_hotspots_zzRdDJ",
+    "why_scentech_ckYUAJ",
     "image_link_blocks_Q9GR7j",
     "featured_collection_4xxckr",
     "image_with_text_overlay_WeFc3J",
-    "featured_collection_U7NKBw",
-    "impact_text_iV39xg",
-    "testimonials_ridneC",
-    "177263733627857915"
+    "testimonials_ridneC"
   ]
 }
