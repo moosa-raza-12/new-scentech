@@ -499,6 +499,7 @@
           data-variant-price="{{ card_variant_price }}"
           data-variant-compare-at-price="{{ card_variant_compare_at_price }}"
           data-product-title="{{ card_title | escape }}"
+          data-minimum-scents="{{ block.settings.minimum_scents | default: 1 }}"
           data-product-image="{{ card_image | escape }}"
           data-cds-desktop-hero-image="{{ desktop_hero_url | escape }}"
           data-cds-desktop-hero-video="{{ desktop_hero_video | escape }}"
@@ -697,6 +698,7 @@
                 data-variant-price="{{ card_variant_price }}"
                 data-variant-compare-at-price="{{ card_variant_compare_at_price }}"
                 data-product-title="{{ card_title | escape }}"
+                data-minimum-scents="{{ block.settings.minimum_scents | default: 1 }}"
                 data-product-image="{{ card_image | escape }}"
                 data-cds-desktop-hero-image="{{ desktop_hero_url | escape }}"
                 data-cds-desktop-hero-video="{{ desktop_hero_video | escape }}"
@@ -882,7 +884,8 @@
         variantPrice: parseInt(card.getAttribute('data-variant-price') || '0', 10),
         variantCompareAtPrice: parseInt(card.getAttribute('data-variant-compare-at-price') || '0', 10),
         title: card.getAttribute('data-product-title') || '',
-        image: card.getAttribute('data-product-image') || ''
+        image: card.getAttribute('data-product-image') || '',
+        minimumScents: parseInt(card.getAttribute('data-minimum-scents') || '1', 10)
       };
 
       var eventName = (group === 'second')

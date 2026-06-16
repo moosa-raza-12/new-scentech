@@ -29,6 +29,7 @@
 
 .kv-progress-banner {
     background: {{ section.settings.color_diffuser_progress_banner_bg | default: '#e5e5e5' }};
+    display: none;
 }
     .opt-text{
         color: {{ section.settings.color_diffuser_opt_text | default: '#160000' }};
@@ -2532,7 +2533,7 @@ window.__kvInterrupterProducts = {};
 })();
 </script>
 
-{% render 'v2-diffuser-kv-bundle-script' %}
+{% render 'v3-diffuser-kv-bundle-script' %}
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -4024,6 +4025,16 @@ window.__kvInterrupterProducts = {};
       "label": "Discount Percentage",
       "default": 50,
       "info": "Set to 0 to show original price only. E.g. 50 = show 50% off."
+    },
+    {
+      "type": "range",
+      "id": "minimum_scents",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "label": "Minimum quantity to enable continue",
+      "default": 1,
+      "info": "How many scents must be selected before the Continue button is enabled for this diffuser."
     }
   ]
     },
