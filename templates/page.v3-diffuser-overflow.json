@@ -26,6 +26,17 @@
     "v3_diffuser_kv_bundle_PctHWM": {
       "type": "v3-diffuser-kv-bundle",
       "blocks": {
+        "diffuser_YmbULA": {
+          "type": "diffuser",
+          "settings": {
+            "selector_product": "smart-aroma-diffuser-pro",
+            "selector_video_url": "",
+            "selector_title": "Diffuser Pro",
+            "selector_description": "High-performance scenting with maximum coverage and intensity. Built for a stronger, more immersive experience.",
+            "highlight_text_color": "#162518",
+            "selector_discount_percent": 50
+          }
+        },
         "diffuser_Ym37iV": {
           "type": "diffuser",
           "settings": {
@@ -35,6 +46,17 @@
             "selector_description": "Compact and easy to use, with a light, clean scent output. A great starting point for a simple setup.",
             "highlight_text_color": "#162518",
             "selector_discount_percent": 90
+          }
+        },
+        "diffuser_ChgaLM": {
+          "type": "diffuser",
+          "settings": {
+            "selector_product": "smart-aroma-diffuser-2",
+            "selector_video_url": "",
+            "selector_title": "Diffuser 2",
+            "selector_description": "More consistent and noticeable scenting, designed for daily use. A strong balance between performance and control.",
+            "highlight_text_color": "#162518",
+            "selector_discount_percent": 50
           }
         },
         "collection_WcqVm3": {
@@ -120,7 +142,9 @@
         }
       },
       "block_order": [
+        "diffuser_YmbULA",
         "diffuser_Ym37iV",
+        "diffuser_ChgaLM",
         "collection_WcqVm3",
         "interrupter_Y4N6XD",
         "collection_7hcyrj",
