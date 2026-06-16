@@ -134,38 +134,6 @@
       }
     }
   </style>
-  <script>
-    (function () {
-      function updateStickyHeight() {
-        var sticky = document.querySelector('.kv-bundle-items-sticky');
-        if (!sticky) {
-          document.documentElement.style.setProperty('--kv-sticky-height', '0px');
-          return;
-        }
-        var h = sticky.offsetHeight || 0;
-        document.documentElement.style.setProperty('--kv-sticky-height', h + 'px');
-      }
-      function attachObserver() {
-        var sticky = document.querySelector('.kv-bundle-items-sticky');
-        if (!sticky) { return setTimeout(attachObserver, 250); }
-        updateStickyHeight();
-        if ('ResizeObserver' in window) {
-          new ResizeObserver(updateStickyHeight).observe(sticky);
-        }
-        if ('MutationObserver' in window) {
-          new MutationObserver(updateStickyHeight).observe(sticky, { childList: true, subtree: true, characterData: true });
-        }
-      }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', attachObserver);
-      } else {
-        attachObserver();
-      }
-      window.addEventListener('load', updateStickyHeight);
-      window.addEventListener('resize', updateStickyHeight);
-      window.addEventListener('orientationchange', updateStickyHeight);
-    })();
-  </script>
         
   <div class="kv-page-preloader" id="kv-page-preloader">
     <div class="kv-preloader-spinner"></div>
@@ -2380,6 +2348,38 @@
     }
   }
     </style>
+ <script>
+  (function () {
+    function updateStickyHeight() {
+      var sticky = document.querySelector('.kv-bundle-items-sticky');
+      if (!sticky) {
+        document.documentElement.style.setProperty('--kv-sticky-height', '0px');
+        return;
+      }
+      var h = sticky.offsetHeight || 0;
+      document.documentElement.style.setProperty('--kv-sticky-height', h + 'px');
+    }
+    function attachObserver() {
+      var sticky = document.querySelector('.kv-bundle-items-sticky');
+      if (!sticky) { return setTimeout(attachObserver, 250); }
+      updateStickyHeight();
+      if ('ResizeObserver' in window) {
+        new ResizeObserver(updateStickyHeight).observe(sticky);
+      }
+      if ('MutationObserver' in window) {
+        new MutationObserver(updateStickyHeight).observe(sticky, { childList: true, subtree: true, characterData: true });
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', attachObserver);
+    } else {
+      attachObserver();
+    }
+    window.addEventListener('load', updateStickyHeight);
+    window.addEventListener('resize', updateStickyHeight);
+    window.addEventListener('orientationchange', updateStickyHeight);
+  })();
+</script>
 
 
   {%- comment -%} Info Popup Modal - disabled {%- endcomment -%}
