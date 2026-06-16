@@ -195,6 +195,7 @@
         "diffuser_BGpK3B",
         "diffuser_YtKKHF"
       ],
+      "disabled": true,
       "name": "V2 Diffuser Bundle section",
       "settings": {
         "selector_step": "1",
