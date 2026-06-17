@@ -17,7 +17,7 @@
     gap:16px
     }
     .scent-header{
-        flex-direction: column;
+        /* flex-direction: column; */
         align-items: start;
     }
     .step-2-heading-content{
@@ -197,12 +197,12 @@ opacity: 0.6;
 <div class="step-2-heading-content"> 
     <h2 class="scent-title">{{ section.settings.heading }}</h2> <span class="opt-text"></span></div>
     </div>
-{%if badge_text!= blank%}
+
     <div class="scent-badge">
       {{ section.settings.badge_text }}
     </div>
   </div>
-{%endif%}
+
 
   <div class="scent-title-wrapper">
       
@@ -263,6 +263,9 @@ opacity: 0.6;
             {% endif %}
         </div>
     </div>
+    <div class="kv-progress-footer-message" id="kv-progress-footer-message">
+          {{ section.settings.badge_text }}
+        </div>
     {% comment %} <div class="kv-progress-footer2" id="kv-progress-footer-normal" style="display: block;">
         <div class="kv-progress-footer-message" id="kv-progress-footer-message">
           {{ section.settings.badge_text }}
@@ -4020,7 +4023,7 @@ window.__kvInterrupterProducts = {};
       "type": "range",
       "id": "selector_discount_percent",
       "min": 0,
-      "max": 90,
+      "max": 100,
       "step": 5,
       "label": "Discount Percentage",
       "default": 50,

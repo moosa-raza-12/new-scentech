@@ -564,12 +564,12 @@
                 <div class="cds-price">
 
                   {% if old_price_display != nil and old_price_display != blank %}
-                    <span class="old">{{ old_price_display }}</span>
+                    <span class="new">{{ old_price_display }}</span>
                   {% else %}
-                    <span class="old">{{ new_price_display }}</span>
+                    <span class="new">{{ new_price_display }}</span>
                   {% endif %}
 
-                  <span class="new">{{ new_price_display }}</span>
+                  {% comment %} <span class="new">{{ new_price_display }}</span> {% endcomment %}
                 </div>
               </div>
               <p class="cds-desc">{{ block.settings.selector_description }}</p>

@@ -1184,6 +1184,7 @@ console.log('selectedProducts', selectedProducts);
         }
       }
     }
+const badgeText2=document.querySelector('.scent-badge')
   
     // Update thumbnail carousel with selected products
     function updateThumbnailCarousel() {
@@ -1259,16 +1260,19 @@ console.log('selectedProducts', selectedProducts);
       // Update continue button state and text (minimum scents driven by selected diffuser)
       const minScentsRequired = getSelectedDiffuserMinScents();
       const scentsBelowMinimum = scentCount < minScentsRequired;
-
       if (scentsBelowMinimum) {
         continueBtn.disabled = true;
         const remainingScents = minScentsRequired - scentCount;
+        
         if (scentCount === 0) {
           continueBtn.textContent = textLabels.addScents;
+          if (badgeText2) badgeText2.innerHTML = textLabels.addScents;
         } else if (remainingScents === 1) {
           continueBtn.textContent = 'Add 1 more scent';
+          if (badgeText2) badgeText2.innerHTML = 'Add 1 more scent';
         } else {
           continueBtn.textContent = `Add ${remainingScents} more scents`;
+          badgeText2.innerHTML = `Add ${remainingScents} more scents`;
         }
 
         // Hide mini trigger until minimum scent count is reached
@@ -1278,6 +1282,7 @@ console.log('selectedProducts', selectedProducts);
       } else {
         continueBtn.disabled = false;
         continueBtn.innerHTML = `${textLabels.addToCart}<span style="margin:0 8px;">·</span>${totalFormatted}`;
+        if (badgeText2) badgeText2.innerHTML = textLabels.continue || "Continue";
         // Show mini trigger when minimum scent count is reached
         if (miniTrigger) {
           miniTrigger.style.display = 'flex';
