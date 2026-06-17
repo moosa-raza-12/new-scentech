@@ -444,7 +444,7 @@
         // Show the cds-highlights banner and update savings amount (50% of full price)
         const cdsHighlights = document.querySelector('.cds-highlights');
         if (cdsHighlights) {
-          const savings = Math.round(selectorProduct.price * 0.5);
+          const savings = Math.round(selectorProduct.price * 1);
           const priceDisplay = document.getElementById('selected-price-display');
           if (priceDisplay) {
             priceDisplay.textContent = formatMoney(savings);
