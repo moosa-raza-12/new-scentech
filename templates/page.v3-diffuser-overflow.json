@@ -46,7 +46,7 @@
             "selector_title": "Diffuser 2",
             "selector_description": "More consistent and noticeable scenting, designed for daily use. A strong balance between performance and control.",
             "highlight_text_color": "#162518",
-            "selector_discount_percent": 50,
+            "selector_discount_percent": 100,
             "minimum_scents": 8
           }
         },
@@ -58,7 +58,7 @@
             "selector_title": "Diffuser Pro",
             "selector_description": "High-performance scenting with maximum coverage and intensity. Built for a stronger, more immersive experience.",
             "highlight_text_color": "#162518",
-            "selector_discount_percent": 50,
+            "selector_discount_percent": 100,
             "minimum_scents": 9
           }
         },
