@@ -428,6 +428,7 @@
         {% assign product_obj = block.settings.selector_product %}
         {% assign new_price_display = nil %}
         {% assign old_price_display = nil %}
+        
         {% assign discount_percent = block.settings.selector_discount_percent | default: 0 %}
 
         {% comment %} Get image {% endcomment %}
@@ -585,7 +586,9 @@
               </div>
             {% else %}
               {% assign cds_highlight_default_text = section.settings.cds_highlight_default_text | default: '<b>Spring:</b> Pay only <b>[price]</b> for your diffuser!' %}
-              {% assign cds_highlight_default_text = cds_highlight_default_text | replace: '[price]', new_price_display %}
+              {% assign minimum_count = block.settings.minimum_scents | default: 0 %}
+              {% assign cds_highlight_default_text = cds_highlight_default_text | replace: '[count]', minimum_count %}
+               {% comment %} this is the one{% endcomment %}
               <div class="cds-highlight">
                 <p class="cds-highlight-text" style="color: {{ block.settings.highlight_text_color | default: '#5c220a' }};">{{ cds_highlight_default_text }}</p>
               </div>
@@ -758,10 +761,12 @@
                       <p class="cds-highlight-text" style="color: {{ block.settings.highlight_text_color | default: '#5c220a' }};">{{ cds_highlight_overflow_text }}</p>
                     </div>
                   {% else %}
+                  {% assign minimum_count = block.settings.minimum_scents | default: 0 %}
                     {% assign cds_highlight_default_text = section.settings.cds_highlight_default_text | default: '<b>Spring:</b> Pay only <b>[price]</b> for your diffuser!' %}
-                    {% assign cds_highlight_default_text = cds_highlight_default_text | replace: '[price]', new_price_display %}
+                    {% assign cds_highlight_default_text = cds_highlight_default_text | replace: '[count]', minimum_count %}
+                 
                     <div class="cds-highlight">
-                      <p class="cds-highlight-text" style="color: {{ block.settings.highlight_text_color | default: '#5c220a' }};">{{ cds_highlight_default_text }}</p>
+                      <p class="cds-highlight-text" style="color: {{ block.settings.highlight_text_color | default: '#5c220a' }};"> {{ cds_highlight_default_text }}</p>
                     </div>
                   {% endif %}
                 {% endif %}

@@ -85,7 +85,8 @@
       save: '{{ section.settings.text_save | default: "SAVE" }}',
       preOrderShips: '{{ section.settings.text_preorder_ships | default: "Pre-Order: Ships by" }}',
       giftPreOrderPrefix: '{{ section.settings.text_gift_preorder_prefix | default: "The" }}',
-      giftPreOrderSuffix: '{{ section.settings.text_gift_preorder_suffix | default: "is on Pre-Order. Delivers on" }}'
+      giftPreOrderSuffix: '{{ section.settings.text_gift_preorder_suffix | default: "is on Pre-Order. Delivers on" }}',
+      continueText: "Add more scents or place your order!"
     };
   
     function parseMilestonePrice(priceStr) {
@@ -1282,7 +1283,7 @@ const badgeText2=document.querySelector('.scent-badge')
       } else {
         continueBtn.disabled = false;
         continueBtn.innerHTML = `${textLabels.addToCart}<span style="margin:0 8px;">·</span>${totalFormatted}`;
-        if (badgeText2) badgeText2.innerHTML = textLabels.continue || "Continue";
+        if (badgeText2) badgeText2.innerHTML = textLabels.continueText;
         // Show mini trigger when minimum scent count is reached
         if (miniTrigger) {
           miniTrigger.style.display = 'flex';
