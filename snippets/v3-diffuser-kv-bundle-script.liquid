@@ -726,6 +726,13 @@
         })
         .then(response => response.json())
         .then(data => {
+          return fetch('/cart/update.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ attributes: { 'vthree': 'true' } })
+          }).then(() => data);
+        })
+        .then(data => {
           triggerBtn.innerHTML = '✓ Added to Cart!';
 
           const cartPromises = [
