@@ -1,7 +1,9 @@
 {% render 'new-kv-bundle-css' %}
 {% render 'diffuser-kv-bundle-css' %}
 <style>
-
+.kv-progress-footer-message{
+  display: none;
+}
   .kv-bundle-continue-btn {
   width: 420px !important;
   font-family: "Bai Jamjuree";
@@ -28,8 +30,9 @@
     }
 
 .kv-progress-banner {
+  padding: 0;
     background: {{ section.settings.color_diffuser_progress_banner_bg | default: '#e5e5e5' }};
-    display: none;
+    /* display: none; */
 }
     .opt-text{
         color: {{ section.settings.color_diffuser_opt_text | default: '#160000' }};
@@ -61,7 +64,179 @@ opacity: 0.6;
     position: fixed;
     left: 0;
   }
+  .kv-progress-container.sticky {
+    background: none;
+    padding: 0px 20px 20px 20px;
+    box-shadow: none;
+    
+  }
+/* Progress Container */
+.kv-progress-container {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 20px;
+  border-radius: 12px;
+background: rgba(255, 255, 255, 0.80);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
 
+/* Progress Bar Wrapper */
+.kv-progress-bar-wrapper {
+  flex: 1;
+  min-width: 0; /* Allows bar to shrink */
+}
+
+/* Progress Bar Background */
+.kv-progress-bar {
+  width: 100%;
+  height: 6px;
+  border-radius: 99px;
+background: rgba(22, 37, 24, 0.10);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Progress Bar Fill */
+.kv-progress-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: #162518;
+  width: 0%;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+/* Optional: Add shine effect to fill */
+.kv-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+ 
+  animation: progressShine 2s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Count Display */
+.kv-progress-count {
+  flex-shrink: 0;
+  min-width: 80px;
+  text-align: right;
+}
+
+.kv-progress-count span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  color: #162518;
+text-align: center;
+font-family: "Bai Jamjuree";
+letter-spacing:0px;
+font-weight: 500;
+line-height: normal;
+}
+.complete-icon{
+  display: none;
+  position: absolute;
+}
+/* When requirement is met */
+.complete-icon.complete {
+  /* background-color: #162518;
+  border-color: #162518; */
+  display: block;
+}
+
+/* Progress Footer */
+.kv-progress-footer {
+  padding: 12px 20px;
+  text-align: center;
+}
+
+.kv-progress-footer-message {
+  cursor: default;
+}
+
+.kv-progress-footer-message span {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.kv-progress-footer-message.clickable {
+  cursor: pointer;
+}
+
+.kv-progress-footer-message.clickable span {
+  color: #4CAF50;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.kv-progress-footer-message-empty span {
+  font-size: 14px;
+  color: #999;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .kv-progress-container {
+    padding: 12px 16px;
+    gap: 16px;
+  }
+
+  .kv-progress-bar {
+    height: 3px;
+  }
+
+  .kv-progress-count span {
+    font-size: 12px;
+  }
+
+  .kv-progress-count {
+    min-width: 70px;
+  }
+}
+
+/* Animation for count change */
+@keyframes countPop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.kv-milestone-marker{
+  display: flex;
+    position: absolute;
+    top: 42%;
+    transform: translate(10%, -50%);
+    align-items: center;
+    justify-content: center;
+    border-color: #E7E8E6;
+    right: 0;
+}
+.kv-progress-bar-wrapper{
+  position: relative;
+}
+.kv-progress-count span.updated {
+  animation: countPop 0.3s ease-out;
+}
   .kv-bundle-dynamic-image {
     height: 85vh;
     position: sticky;
@@ -131,7 +306,7 @@ opacity: 0.6;
     }
 
     body .kv-bundle-collection {
-      padding: 24px 0;
+      padding: 20px 0;
     }
   }
 </style>
@@ -216,53 +391,36 @@ opacity: 0.6;
         </div> {% endcomment %}
         <div class="kv-progress-banner">
 <div class="kv-progress-banner-inner">
-    <div class="kv-progress-bar-container">
-        <div class="kv-progress-bar">
-            <div class="kv-progress-bar-fill" id="kv-progress-fill"></div>
-        </div>
-        <div class="kv-progress-milestones">
-            {% if section.settings.milestone_1_count > 0 %}
-            {% assign milestone_1_label_text = section.settings.milestone_1_label | default: '{count} geuren' | replace: '{count}', section.settings.milestone_1_count %}
-            <div class="kv-progress-milestone" data-milestone="1" data-count="{{ section.settings.milestone_1_count }}" style="left: 0%;">
-                <div class="kv-milestone-marker"></div>
-                <div class="kv-milestone-label">{{ milestone_1_label_text }}</div>
-                {% if section.settings.milestone_1_price != blank %}
-                <div class="kv-milestone-price-display">{{ section.settings.milestone_1_price }}</div>
-                {% endif %}
-            </div>
-            {% endif %}
-            {% if section.settings.milestone_2_count > 0 %}
-            {% assign milestone_2_label_text = section.settings.milestone_2_label | default: '{count} geuren' | replace: '{count}', section.settings.milestone_2_count %}
-            <div class="kv-progress-milestone" data-milestone="2" data-count="{{ section.settings.milestone_2_count }}" style="left: 33.33%;">
-                <div class="kv-milestone-marker"></div>
-                <div class="kv-milestone-label">{{ milestone_2_label_text }}</div>
-                {% if section.settings.milestone_2_price != blank %}
-                <div class="kv-milestone-price-display">{{ section.settings.milestone_2_price }}</div>
-                {% endif %}
-            </div>
-            {% endif %}
-            {% if section.settings.milestone_3_count > 0 %}
-            {% assign milestone_3_label_text = section.settings.milestone_3_label | default: '{count} geuren' | replace: '{count}', section.settings.milestone_3_count %}
-            <div class="kv-progress-milestone" data-milestone="3" data-count="{{ section.settings.milestone_3_count }}" style="left: 66.66%;">
-                <div class="kv-milestone-marker"></div>
-                <div class="kv-milestone-label">{{ milestone_3_label_text }}</div>
-                {% if section.settings.milestone_3_price != blank %}
-                <div class="kv-milestone-price-display">{{ section.settings.milestone_3_price }}</div>
-                {% endif %}
-            </div>
-            {% endif %}
-            {% if section.settings.milestone_4_count > 0 %}
-            {% assign milestone_4_label_text = section.settings.milestone_4_label | default: '{count} geuren' | replace: '{count}', section.settings.milestone_4_count %}
-            <div class="kv-progress-milestone" data-milestone="4" data-count="{{ section.settings.milestone_4_count }}" style="left: 100%;">
-                <div class="kv-milestone-marker"></div>
-                <div class="kv-milestone-label">{{ milestone_4_label_text }}</div>
-                {% if section.settings.milestone_4_price != blank %}
-                <div class="kv-milestone-price-display">{{ section.settings.milestone_4_price }}</div>
-                {% endif %}
-            </div>
-            {% endif %}
-        </div>
-    </div>
+    <!-- Progress Bar Section -->
+<div class="kv-progress-container">
+  <!-- Progress Bar -->
+  <div class="kv-progress-bar-wrapper">
+    <div class="kv-progress-bar">
+      <div class="kv-progress-fill" id="kv-progress-fill"></div>
+    </div><div class="kv-milestone-marker"><svg class="complete-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <path d="M9 18C7.75882 18 6.59412 17.7647 5.50588 17.2941C4.41765 16.8294 3.46177 16.1853 2.63824 15.3618C1.81471 14.5324 1.16765 13.5765 0.697059 12.4941C0.232353 11.4059 0 10.2412 0 9C0 7.75882 0.232353 6.59412 0.697059 5.50588C1.16765 4.41765 1.81471 3.46177 2.63824 2.63824C3.46177 1.81471 4.41765 1.17059 5.50588 0.705882C6.59412 0.235294 7.75882 0 9 0C10.2412 0 11.4059 0.235294 12.4941 0.705882C13.5824 1.17059 14.5382 1.81471 15.3618 2.63824C16.1853 3.46177 16.8294 4.41765 17.2941 5.50588C17.7647 6.59412 18 7.75882 18 9C18 10.2412 17.7647 11.4059 17.2941 12.4941C16.8294 13.5765 16.1853 14.5324 15.3618 15.3618C14.5382 16.1853 13.5824 16.8294 12.4941 17.2941C11.4059 17.7647 10.2412 18 9 18ZM8.01177 13.3059C8.16471 13.3059 8.30294 13.2706 8.42647 13.2C8.55 13.1294 8.65882 13.0235 8.75294 12.8824L12.9 6.34412C12.9529 6.25588 13.0029 6.16177 13.05 6.06177C13.0971 5.96176 13.1206 5.86176 13.1206 5.76176C13.1206 5.55588 13.0441 5.39412 12.8912 5.27647C12.7382 5.15294 12.5676 5.09118 12.3794 5.09118C12.1206 5.09118 11.9088 5.22647 11.7441 5.49706L7.97647 11.55L6.18529 9.23824C6.07353 9.09118 5.96471 8.99118 5.85882 8.93824C5.75882 8.88529 5.64412 8.85882 5.51471 8.85882C5.31471 8.85882 5.14706 8.93235 5.01177 9.07941C4.87647 9.22059 4.80882 9.39118 4.80882 9.59118C4.80882 9.69118 4.82647 9.79118 4.86176 9.89118C4.90294 9.98529 4.95588 10.0765 5.02059 10.1647L7.23529 12.8824C7.35294 13.0353 7.47353 13.1441 7.59706 13.2088C7.72059 13.2735 7.85882 13.3059 8.01177 13.3059Z" fill="#162518"/>
+  </svg></div>
+
+  </div>
+  
+  <!-- Count Display -->
+  <div class="kv-progress-count" id="kv-progress-count">
+    <span>0/7 scents</span>
+  </div>
+</div>
+
+<!-- Footer Messages (for different states) -->
+<div class="kv-progress-footer" id="kv-progress-footer-normal" style="display: none;">
+  <div class="kv-progress-footer-message" id="kv-progress-footer-message">
+    <span>0/7 scents</span>
+  </div>
+</div>
+
+<div class="kv-progress-footer" id="kv-progress-footer-empty">
+  <div class="kv-progress-footer-message-empty">
+    <span>Start building your bundle!</span>
+  </div>
+</div>
     <div class="kv-progress-footer-message" id="kv-progress-footer-message">
           {{ section.settings.badge_text }}
         </div>
