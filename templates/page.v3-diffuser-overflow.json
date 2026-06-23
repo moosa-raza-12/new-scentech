@@ -169,7 +169,7 @@
         "enable_second_diffuser": true,
         "closed_heading": "Add a second diffuser for limited time",
         "open_heading": "Second Diffuser:",
-        "close_icon_svg": "+",
+        "close_icon_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"7\" height=\"7\" viewbox=\"0 0 7 7\" fill=\"none\">\n  <path d=\"M0 3.82974V3.17026C0 2.93719 0.114015 2.82066 0.342045 2.82066H2.82386V0.341657C2.82386 0.113886 2.94053 0 3.17386 0H3.83409C4.06212 0 4.17614 0.113886 4.17614 0.341657V2.82066H6.65795C6.88598 2.82066 7 2.93719 7 3.17026V3.82974C7 4.05751 6.88598 4.1714 6.65795 4.1714H4.17614V6.6504C4.17614 6.88347 4.06212 7 3.83409 7H3.17386C2.94053 7 2.82386 6.88347 2.82386 6.6504V4.1714H0.342045C0.114015 4.1714 0 4.05751 0 3.82974Z\" fill=\"#162518\"></path>\n</svg>",
         "open_icon_svg": "x",
         "cds_banner_bg": "#162518",
         "promo_banner_enabled": false,
