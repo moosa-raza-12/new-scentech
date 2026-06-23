@@ -162,7 +162,7 @@
         "selector_subtext": "Choose the diffuser that fits your needs best.",
         "selector_compare_text": "Compare diffusers",
         "selector_compare_link": "#open-comparison-popup",
-        "selector_banner_text": "<p><strong>Fathers Day Sale:</strong> Get 50% off the diffuser when you add 2 scents</p>",
+        "selector_banner_text": "<p><strong>Fathers Day Sale:</strong> Get your diffuser free when you add the required scents</p>",
         "cds_highlight_overflow_text": "<strong>Fathers Day Sale:</strong> Pay only <strong>[price]</strong> after adding 2 scents!",
         "cds_highlight_default_text": "<strong>Fathers Day Sale: </strong>Add [count] scents to unlock this diffuser!",
         "cds_lock_overlay_text": "Add a second diffuser for limited time",
