@@ -809,6 +809,13 @@
     hideHighlightsInGroup('primary');
     hideHighlightsInGroup('second');
 
+    // Auto-select the first primary diffuser card visually on initial load
+    var firstPrimaryCard = document.querySelector('.cds-cards[data-diffuser-group="primary"]');
+    if (firstPrimaryCard && !firstPrimaryCard.classList.contains('cds-locked')) {
+      firstPrimaryCard.classList.add(activeClass);
+      showHighlightForCard(firstPrimaryCard);
+    }
+
     // Handle info icon clicks on diffuser cards
     document.addEventListener('click', function(e) {
       var infoBtn = e.target.closest('.cds-info-btn');

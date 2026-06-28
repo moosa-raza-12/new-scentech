@@ -502,11 +502,32 @@
           updateMiniCart();
         }
       });
+
+      // Auto-select the first primary diffuser into selectedProducts on load
+      const firstPrimaryCard = document.querySelector('.cds-cards[data-diffuser-group="primary"].active');
+      if (firstPrimaryCard) {
+        document.dispatchEvent(new CustomEvent('kv:selector-product-selected', {
+          detail: {
+            productId: firstPrimaryCard.getAttribute('data-product-id'),
+            productHandle: firstPrimaryCard.getAttribute('data-product-handle'),
+            variantId: firstPrimaryCard.getAttribute('data-variant-id'),
+            variantPrice: parseInt(firstPrimaryCard.getAttribute('data-variant-price') || '0', 10),
+            variantCompareAtPrice: parseInt(firstPrimaryCard.getAttribute('data-variant-compare-at-price') || '0', 10),
+            title: firstPrimaryCard.getAttribute('data-product-title') || '',
+            image: firstPrimaryCard.getAttribute('data-product-image') || '',
+            minimumScents: parseInt(firstPrimaryCard.getAttribute('data-minimum-scents') || '1', 10)
+          }
+        }));
+      }
   
       // Second diffuser selection (from accordion)
       document.addEventListener('kv:second-selector-product-selected', function(e) {
         const data = e.detail || {};
-        if (!data.productId || !data.variantId) return;
+        console.log('[KV Bundle] Second diffuser event received:', data);
+        if (!data.productId || !data.variantId) {
+          console.warn('[KV Bundle] Second diffuser skipped — missing productId or variantId', data);
+          return;
+        }
   
         const minScents = parseInt(data.minimumScents, 10);
         if (!isNaN(minScents) && minScents > 0) {
@@ -761,11 +782,20 @@
         triggerBtn.disabled = true;
         triggerBtn.innerHTML = 'Adding to cart...';
   
-        const items = selectedProducts.map(product => ({
-          id: product.variantId,
-          quantity: product.quantity
-        }));
-  
+        console.log('[KV Bundle] selectedProducts before add-to-cart:', JSON.parse(JSON.stringify(selectedProducts)));
+
+        const itemsMap = {};
+        selectedProducts.forEach(product => {
+          const vid = String(product.variantId);
+          if (itemsMap[vid]) {
+            itemsMap[vid].quantity += product.quantity;
+          } else {
+            itemsMap[vid] = { id: parseInt(vid, 10), quantity: product.quantity };
+          }
+        });
+        const items = Object.values(itemsMap);
+        console.log('[KV Bundle] items payload:', JSON.parse(JSON.stringify(items)));
+
         fetch('/cart/add.js', {
           method: 'POST',
           headers: {
@@ -773,7 +803,12 @@
           },
           body: JSON.stringify({ items: items })
         })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            return response.json().then(err => { throw new Error(err.description || 'Failed to add items to cart'); });
+          }
+          return response.json();
+        })
         .then(data => {
           return fetch('/cart/update.js', {
             method: 'POST',
@@ -1269,19 +1304,9 @@
       const pricePerScent = getMilestonePricePerScent(scentCount);
       let runningTotal = (scentCount * pricePerScent) / 100;
   
-      // Add primary diffuser at 50% price when present
+      // Diffusers are free — do not add their price to the running total
       const diffuserProduct = selectedProducts.find(p => p.selectionSource === 'cds-selector');
-      if (diffuserProduct) {
-        const diffuserPrice = (diffuserProduct.price || 0) / 100;
-        runningTotal += diffuserPrice * 0.5;
-      }
-  
-      // Add second diffuser at 50% price when present
       const secondDiffuserProduct = selectedProducts.find(p => p.selectionSource === 'cds-selector-2');
-      if (secondDiffuserProduct) {
-        const secondDiffuserPrice = (secondDiffuserProduct.price || 0) / 100;
-        runningTotal += secondDiffuserPrice * 0.5;
-      }
   
       // Calculate original total for compare-at / savings display
       let runningCompareAtTotal = 0;
@@ -1719,14 +1744,13 @@
         let itemPrice, itemSubtotal, priceDisplay;
   
         if (product.selectionSource === 'cds-selector' || product.selectionSource === 'cds-selector-2') {
-          itemPrice = ((product.price || 0) / 100) * 0.5;
-          itemSubtotal = itemPrice * product.quantity;
-          total += itemSubtotal;
+          itemPrice = 0;
+          itemSubtotal = 0;
           const originalPrice = (product.price || 0);
           priceDisplay = product.price
-            ? `<span style="text-decoration:line-through;opacity:.5">${formatMoney(originalPrice)}</span> ${formatMoney(originalPrice * 0.5)}`
+            ? `<span style="text-decoration:line-through;opacity:.5">${formatMoney(originalPrice)}</span> ${formatMoney(0)}`
             : 'Loading...';
-  
+
           compareAtTotal += ((product.price || 0) / 100) * (product.quantity || 0);
         } else {
           itemPrice = miniCartPricePerScent / 100;
