@@ -1360,17 +1360,21 @@
   
   // Determine the message based on scent count
   let message = '';
+  let message2 = '';
   if (scentCount === 0) {
-    message = `Choose at least ${minScentsRequired} scent${minScentsRequired > 1 ? 's' : ''}`;
+    message = `Add at least ${minScentsRequired} scent${minScentsRequired > 1 ? 's' : ''}`;
+    message2 = `Choose at least ${minScentsRequired} scent${minScentsRequired > 1 ? 's' : ''}`;
   } else if (remainingScents === 1) {
-    message = 'Choose 1 more scent';
+    message = 'Add 1 more scent';
+    message2 = 'Choose 1 more scent';
   } else {
-    message = `Choose ${remainingScents} more scents`;
+    message = `Add ${remainingScents} more scents`;
+    message2 = `Choose ${remainingScents} more scents`;
   }
   
   // Update BOTH elements with the same message
   continueBtn.textContent = message;
-  if (badgeText2) badgeText2.innerHTML = message;
+  if (badgeText2) badgeText2.innerHTML = message2;
   
   
         // Hide mini trigger until minimum scent count is reached
