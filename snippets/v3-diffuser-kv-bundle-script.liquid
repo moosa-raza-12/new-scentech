@@ -502,7 +502,7 @@
           updateMiniCart();
         }
       });
-
+  
       // Auto-select the first primary diffuser into selectedProducts on load
       const firstPrimaryCard = document.querySelector('.cds-cards[data-diffuser-group="primary"].active');
       if (firstPrimaryCard) {
@@ -783,7 +783,7 @@
         triggerBtn.innerHTML = 'Adding to cart...';
   
         console.log('[KV Bundle] selectedProducts before add-to-cart:', JSON.parse(JSON.stringify(selectedProducts)));
-
+  
         const itemsMap = {};
         selectedProducts.forEach(product => {
           const vid = String(product.variantId);
@@ -795,7 +795,7 @@
         });
         const items = Object.values(itemsMap);
         console.log('[KV Bundle] items payload:', JSON.parse(JSON.stringify(items)));
-
+  
         fetch('/cart/add.js', {
           method: 'POST',
           headers: {
@@ -1281,6 +1281,7 @@
     }
   const badgeText2=document.querySelector('.scent-badge')
   
+  
     // Update thumbnail carousel with selected products
     function updateThumbnailCarousel() {
       const carousel = document.getElementById('kv-selected-products');
@@ -1334,7 +1335,14 @@
             runningGiftTotal += gift.price / 100;
           }
         });
-  
+        document.addEventListener('DOMContentLoaded', function() {
+    // Select the element you want to update
+    const element = document.getElementById('myElement');
+    // or use querySelector: document.querySelector('.myClass');
+    
+    // Update the text
+    element.textContent = 'New updated text!';
+  });
       const baseCompareAt = (runningCompareAtTotal > runningTotal) ? runningCompareAtTotal : runningTotal;
       const compareAtWithGifts = baseCompareAt + runningGiftTotal;
       const savings = Math.max(0, compareAtWithGifts - runningTotal);
@@ -1343,22 +1351,27 @@
       const badgeText=document.querySelector('.kv-progress-footer-message-empty')  
   
       // Update continue button state and text (minimum scents driven by selected diffuser)
-      const minScentsRequired = getSelectedDiffuserMinScents();
-      const scentsBelowMinimum = scentCount < minScentsRequired;
-      if (scentsBelowMinimum) {
-        continueBtn.disabled = true;
-        const remainingScents = minScentsRequired - scentCount;
-        
-        if (scentCount === 0) {
-          continueBtn.textContent = textLabels.addScents;
-          if (badgeText2) badgeText2.innerHTML = textLabels.addScents;
-        } else if (remainingScents === 1) {
-          continueBtn.textContent = 'Add 1 more scent';
-          if (badgeText2) badgeText2.innerHTML = 'Add 1 more scent';
-        } else {
-          continueBtn.textContent = `Add ${remainingScents} more scents`;
-          badgeText2.innerHTML = `Add ${remainingScents} more scents`;
-        }
+     // Update continue button state and text (minimum scents driven by selected diffuser)
+  const minScentsRequired = getSelectedDiffuserMinScents();
+  const scentsBelowMinimum = scentCount < minScentsRequired;
+  if (scentsBelowMinimum) {
+  continueBtn.disabled = true;
+  const remainingScents = minScentsRequired - scentCount;
+  
+  // Determine the message based on scent count
+  let message = '';
+  if (scentCount === 0) {
+    message = `Choose at least ${minScentsRequired} scent${minScentsRequired > 1 ? 's' : ''}`;
+  } else if (remainingScents === 1) {
+    message = 'Choose 1 more scent';
+  } else {
+    message = `Choose ${remainingScents} more scents`;
+  }
+  
+  // Update BOTH elements with the same message
+  continueBtn.textContent = message;
+  if (badgeText2) badgeText2.innerHTML = message;
+  
   
         // Hide mini trigger until minimum scent count is reached
         if (miniTrigger) {
@@ -1750,7 +1763,7 @@
           priceDisplay = product.price
             ? `<span style="text-decoration:line-through;opacity:.5">${formatMoney(originalPrice)}</span> ${formatMoney(0)}`
             : 'Loading...';
-
+  
           compareAtTotal += ((product.price || 0) / 100) * (product.quantity || 0);
         } else {
           itemPrice = miniCartPricePerScent / 100;

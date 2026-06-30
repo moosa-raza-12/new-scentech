@@ -11,6 +11,16 @@
   .kv-bundle-hero-section.sticky{
     position: fixed;
   }
+  .kv-bundle-hero-section.sticky{
+    
+    backdrop-filter: none;
+    background-image: unset !important;
+    border: none;
+    background: var(--kv-color-hero-sticky-bg);
+    padding: 24px 0 0;
+    position: sticky;
+    top: var(--kv-hero-offset, 0px);
+  }
     .kv-bundle-items-sticky{
         align-items: center;
     justify-content: center;
@@ -77,8 +87,7 @@ opacity: 0.6;
   gap: 18px;
   padding: 16px 20px;
   border-radius: 12px;
-background: rgba(255, 255, 255, 0.80);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.80);
 }
 
 /* Progress Bar Wrapper */
