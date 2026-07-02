@@ -475,6 +475,7 @@
           compareAtPrice: parseInt(data.variantCompareAtPrice, 10) || 0,
           inventoryDate: '',
           inventoryQuantity: 0,
+          requiredScents: selectedDiffuserMinScents,
           selectionSource: 'cds-selector'
         };
   
@@ -545,6 +546,7 @@
           compareAtPrice: parseInt(data.variantCompareAtPrice, 10) || 0,
           inventoryDate: '',
           inventoryQuantity: 0,
+          requiredScents: selectedSecondDiffuserMinScents,
           selectionSource: 'cds-selector-2'
         };
   
@@ -787,10 +789,17 @@
         const itemsMap = {};
         selectedProducts.forEach(product => {
           const vid = String(product.variantId);
-          if (itemsMap[vid]) {
-            itemsMap[vid].quantity += product.quantity;
+          const isDiffuser = product.selectionSource === 'cds-selector' || product.selectionSource === 'cds-selector-2';
+          const key = isDiffuser ? vid + ':' + product.selectionSource : vid;
+
+          if (itemsMap[key]) {
+            itemsMap[key].quantity += product.quantity;
           } else {
-            itemsMap[vid] = { id: parseInt(vid, 10), quantity: product.quantity };
+            const item = { id: parseInt(vid, 10), quantity: product.quantity };
+            if (isDiffuser && product.requiredScents) {
+              item.properties = { '_required_scents': String(product.requiredScents) };
+            }
+            itemsMap[key] = item;
           }
         });
         const items = Object.values(itemsMap);
