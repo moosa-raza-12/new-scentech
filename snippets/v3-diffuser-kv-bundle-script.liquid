@@ -1312,9 +1312,13 @@
         .reduce((sum, product) => sum + (product.quantity || 0), 0);
   
       const pricePerScent = getMilestonePricePerScent(scentCount);
-      let runningTotal = (scentCount * pricePerScent) / 100;
-  
-      // Diffusers are free — do not add their price to the running total
+      let runningTotal = 0;
+      selectedProducts.forEach(product => {
+        if (product.selectionSource !== 'cds-selector' && product.selectionSource !== 'cds-selector-2') {
+          runningTotal += ((product.price || 0) / 100) * (product.quantity || 0);
+        }
+      });
+
       const diffuserProduct = selectedProducts.find(p => p.selectionSource === 'cds-selector');
       const secondDiffuserProduct = selectedProducts.find(p => p.selectionSource === 'cds-selector-2');
   
