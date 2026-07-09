@@ -1,3 +1,10 @@
+{% if template.suffix == 'v3-diffuser-overflow-variant2' %}
+  <style>
+    .lp-diffuser-accordion {
+      display: none !important;
+    }
+  </style>
+{% endif %}
 <style>
   .cds-highlight {
     display: none;
@@ -287,9 +294,11 @@
     font-size: 12px;
     font-weight: 400;
   }
+  
 
   /* Second diffuser accordion */
   .lp-diffuser-accordion {
+  
     width: 100%;
     max-width: 960px;
     margin-top: 12px;
