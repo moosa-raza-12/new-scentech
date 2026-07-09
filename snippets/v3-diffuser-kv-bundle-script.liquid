@@ -1537,6 +1537,8 @@
   const progressFooterMessage = document.getElementById('kv-progress-footer-message');
   const progressFooterNormal = document.getElementById('kv-progress-footer-normal');
   const progressFooterEmpty = document.getElementById('kv-progress-footer-empty');
+  const primaryMarker = document.getElementById('kv-milestone-primary');
+  const secondaryMarker = document.getElementById('kv-milestone-secondary');
   
   if (!progressFill) return;
   
@@ -1548,8 +1550,9 @@
     }
   });
   
-  // Get the minimum scents required from the selected diffuser
+  const primaryMin = getPrimaryDiffuserMinScents();
   const minScentsRequired = getSelectedDiffuserMinScents();
+  const hasSecondDiffuser = selectedProducts.some(product => product.selectionSource === 'cds-selector-2');
   
   // Toggle footer visibility based on product selection
   if (selectedProducts.length === 0) {
@@ -1569,6 +1572,25 @@
   // Update progress bar fill
   progressFill.style.width = progressPercent + '%';
   
+  // Position milestone markers on the progress bar
+  if (primaryMarker) {
+    if (hasSecondDiffuser && selectedSecondDiffuserMinScents > 0 && minScentsRequired > 0) {
+      const primaryPos = (primaryMin / minScentsRequired) * 100;
+      primaryMarker.style.left = primaryPos + '%';
+      if (secondaryMarker) {
+        secondaryMarker.style.left = '100%';
+        secondaryMarker.style.display = 'flex';
+      }
+    } else {
+      primaryMarker.style.left = '100%';
+      if (secondaryMarker) {
+        secondaryMarker.style.display = 'none';
+        const secondaryIcon = secondaryMarker.querySelector('.complete-icon');
+        if (secondaryIcon) secondaryIcon.classList.remove('complete');
+      }
+    }
+  }
+  
   // Update count display
   const countText = minScentsRequired > 0 
     ? `${currentCount}/${minScentsRequired} scents` 
@@ -1586,12 +1608,23 @@
       }
       span.textContent = countText;
     }
-    const marker= document.querySelector('.complete-icon');
-    // Add complete class when requirement is met
-    if (minScentsRequired > 0 && currentCount >= minScentsRequired) {
-      marker.classList.add('complete');
-    } else {
-      marker.classList.remove('complete');
+  }
+
+  // Update complete state on milestone markers
+  if (primaryMarker) {
+    const primaryIcon = primaryMarker.querySelector('.complete-icon');
+    if (primaryIcon) {
+      if (hasSecondDiffuser && selectedSecondDiffuserMinScents > 0) {
+        primaryIcon.classList.toggle('complete', currentCount >= primaryMin);
+      } else {
+        primaryIcon.classList.toggle('complete', minScentsRequired > 0 && currentCount >= minScentsRequired);
+      }
+    }
+  }
+  if (secondaryMarker && hasSecondDiffuser && selectedSecondDiffuserMinScents > 0) {
+    const secondaryIcon = secondaryMarker.querySelector('.complete-icon');
+    if (secondaryIcon) {
+      secondaryIcon.classList.toggle('complete', minScentsRequired > 0 && currentCount >= minScentsRequired);
     }
   }
   
