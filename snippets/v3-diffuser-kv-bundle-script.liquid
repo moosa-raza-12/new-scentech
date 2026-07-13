@@ -1377,15 +1377,13 @@
   if (scentCount === 0) {
     message = `Add at least ${minScentsRequired} scent${minScentsRequired > 1 ? 's' : ''}`;
     message2 = `Choose at least ${minScentsRequired} scent${minScentsRequired > 1 ? 's' : ''}`;
-  } else if (scentCount < primaryMinScents) {
-  const remaining = primaryMinScents - scentCount;
-  message2 = `${remaining} more for ${primaryDiffuser.title}`;
-}
-// Primary done, second diffuser needs scents
-else if (secondDiffuser && scentCount < (primaryMinScents + secondMinScents)) {
-  const remaining = (primaryMinScents + secondMinScents) - scentCount;
-  message2 = `${remaining} more for ${secondDiffuser.title}`;
-}
+  } else if (remainingScents === 1) {
+    message = 'Add 1 more scent';
+    message2 = 'Choose 1 more scent';
+  } else {
+    message = `Add ${remainingScents} more scents`;
+    message2 = `Choose ${remainingScents} more scents`;
+  }
   
   // Update BOTH elements with the same message
   continueBtn.textContent = message;
