@@ -1377,7 +1377,7 @@
   let message2 = '';
   if (scentCount === 0) {
     message = `Add at least ${minScentsRequired} scent${minScentsRequired > 1 ? 's' : ''}`;
-    message2 = `Choose at least ${minScentsRequired} scent${minScentsRequired > 1 ? 's' : ''}`;
+    {% comment %} message2 = `Choose at least ${minScentsRequired} scent${minScentsRequired > 1 ? 's' : ''}`; {% endcomment %}
   } else if (remainingScents === 1) {
     message = 'Add 1 more scent';
    
