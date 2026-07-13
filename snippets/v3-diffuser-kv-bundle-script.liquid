@@ -1370,7 +1370,8 @@
   if (scentsBelowMinimum) {
   continueBtn.disabled = true;
   const remainingScents = minScentsRequired - scentCount;
-  
+    const primaryDiffuser = selectedProducts.find(p => p.selectionSource === 'cds-selector');
+  const secondDiffuser = selectedProducts.find(p => p.selectionSource === 'cds-selector-2');
   // Determine the message based on scent count
   let message = '';
   let message2 = '';
