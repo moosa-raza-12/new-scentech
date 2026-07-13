@@ -114,6 +114,29 @@
       }
       return selectedDiffuserMinScents;
     }
+
+    function getDiffuserCardDisplayName(card) {
+      if (!card) return '';
+      const nameEl = card.querySelector('.cds-name');
+      if (!nameEl) return card.getAttribute('data-product-title') || '';
+      const clone = nameEl.cloneNode(true);
+      clone.querySelectorAll('.cds-info-btn, .kv-bundle-product-info-icon').forEach(function(btn) {
+        btn.remove();
+      });
+      return clone.textContent.trim();
+    }
+
+    function getActivePrimaryDiffuserName() {
+      const activeCard = document.querySelector('.cds-cards[data-diffuser-group="primary"].active');
+      if (activeCard) return getDiffuserCardDisplayName(activeCard);
+      const firstCard = document.querySelector('.cds-cards[data-diffuser-group="primary"]');
+      return getDiffuserCardDisplayName(firstCard);
+    }
+
+    function getActiveSecondDiffuserName() {
+      const activeCard = document.querySelector('.cds-cards[data-diffuser-group="second"].active');
+      return getDiffuserCardDisplayName(activeCard);
+    }
   
     function getSelectedDiffuserMinScents() {
       const primaryMin = getPrimaryDiffuserMinScents();
@@ -1372,18 +1395,40 @@
   const remainingScents = minScentsRequired - scentCount;
   
   // Determine the message based on scent count
-  let message = '';
-  let message2 = '';
-  if (scentCount === 0) {
-    message = `Add at least ${minScentsRequired} scent${minScentsRequired > 1 ? 's' : ''}`;
-    message2 = `Choose at least ${minScentsRequired} scent${minScentsRequired > 1 ? 's' : ''}`;
-  } else if (remainingScents === 1) {
-    message = 'Add 1 more scent';
-    message2 = 'Choose 1 more scent';
+let message = '';
+let message2 = '';
+
+// Get diffuser details
+const primaryDiffuser = selectedProducts.find(p => p.selectionSource === 'cds-selector');
+const secondDiffuser = selectedProducts.find(p => p.selectionSource === 'cds-selector-2');
+const primaryMinScents = primaryDiffuser ? parseInt(primaryDiffuser.requiredScents) || 0 : 0;
+const secondMinScents = secondDiffuser ? parseInt(secondDiffuser.requiredScents) || 0 : 0;
+const primaryDiffuserName = getActivePrimaryDiffuserName() || (primaryDiffuser ? primaryDiffuser.title : '');
+const secondDiffuserName = getActiveSecondDiffuserName() || (secondDiffuser ? secondDiffuser.title : '');
+
+if (scentCount === 0) {
+  message = `Add at least ${minScentsRequired} scent${minScentsRequired > 1 ? 's' : ''}`;
+  if (primaryDiffuser) {
+    message2 = `Add ${primaryMinScents} scent${primaryMinScents > 1 ? 's' : ''} for ${primaryDiffuserName}`;
   } else {
-    message = `Add ${remainingScents} more scents`;
-    message2 = `Choose ${remainingScents} more scents`;
+    message2 = `Choose at least ${minScentsRequired} scent${minScentsRequired > 1 ? 's' : ''}`;
   }
+} else if (scentCount < primaryMinScents) {
+  const remaining = primaryMinScents - scentCount;
+  message = `Add ${remaining} more scent${remaining > 1 ? 's' : ''}`;
+  if (primaryDiffuser) {
+    message2 = `Add ${remaining} more scent${remaining > 1 ? 's' : ''} for ${primaryDiffuserName}`;
+  }
+} else if (secondDiffuser && scentCount < (primaryMinScents + secondMinScents)) {
+  const remaining = (primaryMinScents + secondMinScents) - scentCount;
+  message = `Add ${remaining} more scent${remaining > 1 ? 's' : ''}`;
+  message2 = `Add ${remaining} more scent${remaining > 1 ? 's' : ''} for ${secondDiffuserName}`;
+} else {
+  // Fallback
+  const remainingScents = minScentsRequired - scentCount;
+  message = `Add ${remainingScents} more scent${remainingScents > 1 ? 's' : ''}`;
+  message2 = `Choose ${remainingScents} more scent${remainingScents > 1 ? 's' : ''}`;
+}
   
   // Update BOTH elements with the same message
   continueBtn.textContent = message;
